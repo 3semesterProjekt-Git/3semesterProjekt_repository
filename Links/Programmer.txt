@@ -1,0 +1,3 @@
+Trello til Scrum
+Overleaf til rapport
+Git til kode
