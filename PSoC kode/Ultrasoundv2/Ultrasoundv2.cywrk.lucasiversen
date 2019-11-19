@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Ultrasoundv2\Ultrasoundv2\Source Files\scale.c">
+<ExpandedNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2\TopDesign</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Pins</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Analog</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Clocks</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Interrupts</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\DMA</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\System</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Directives</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Flash Security</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\EEPROM</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\cyapicallbacks.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\edgeSensorApp.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\MotorApp.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\rpiCommunication.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\scale.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\soundApp.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\waitingState.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\edgeSensorApp.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\main.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\MotorApp.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\rpiCommunication.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\scale.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\soundApp.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\waitingState.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Generated_Source\PSoC5</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2\TopDesign</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Pins</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Analog</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Clocks</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Interrupts</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\DMA</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\System</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Directives</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\Flash Security</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.cydwr\EEPROM</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\cyapicallbacks.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\edgeSensorApp.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\MotorApp.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\rpiCommunication.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\scale.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\soundApp.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Header Files\waitingState.h</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\edgeSensorApp.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\main.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\MotorApp.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\rpiCommunication.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\scale.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\soundApp.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Source Files\waitingState.c</v>
+<v>Ultrasoundv2\Ultrasoundv2\Generated_Source</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2\TopDesign</v>
+<v>Ultrasoundv2\Ultrasoundv2\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2\TopDesign</v>
+<v>Ultrasoundv2\Ultrasoundv2\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_INT.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_IRQ.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_PM.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_theACLK.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\ball_int.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\ballsig.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\CLK_24MHz.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\CLK_500kHz.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\clock_motor.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_1.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_2.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_3.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_4.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_1.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_2.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_3.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_4.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\edgeSensorApp.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_rpi_start.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_rpi_stop.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\LED.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\MotorApp.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_1.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_1_PM.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_2.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_2_PM.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_pwm1.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_pwm2.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_rpi_start_stop.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_score.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin1_dir1.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin1_dir2.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin2_dir1.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin2_dir2.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\pulseCounter.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\pulseCounter_PM.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\pulseInt.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\rpiCommunication.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\scale.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\Scale_input.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\soundApp.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_BOOT.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_INT.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_IntClock.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_PM.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\trigger.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\triggerPWM.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\triggerPWM_PM.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Listing Files\waitingState.lst</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Ultrasoundv2.elf</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Ultrasoundv2.hex</v>
+<v>Ultrasoundv2\Ultrasoundv2\CortexM3\ARM_GCC_541\Debug\Ultrasoundv2.map</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.gpdsc</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2.rpt</v>
+<v>Ultrasoundv2\Ultrasoundv2\Ultrasoundv2_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2\PSoC 5LP Architecture TRM</v>
+<v>Ultrasoundv2\Ultrasoundv2\CY8C58LP Family Datasheet</v>
+<v>Ultrasoundv2\Ultrasoundv2\System Reference Guides</v>
+<v>Ultrasoundv2\Ultrasoundv2\System Reference Guides\cy_boot_v5_70</v>
+<v>Ultrasoundv2\Ultrasoundv2\ADC_SAR_v3_10.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\Counter_v3_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_clock_v2_20</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_isr_v1_70</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_pins_v2_20</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cydff_v1_30.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\nand_v1_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\not_v1_0</v>
+<v>Ultrasoundv2\Ultrasoundv2\not_v1_0\not_v1_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\or_v1_0</v>
+<v>Ultrasoundv2\Ultrasoundv2\or_v1_0\or_v1_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\PWM_v3_30</v>
+<v>Ultrasoundv2\Ultrasoundv2\PWM_v3_30\PWM_v3_30.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\UART_v2_50.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\ZeroTerminal</v>
+<v>Ultrasoundv2\Ultrasoundv2\ZeroTerminal\ZeroTerminal.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2</v>
+<v>Ultrasoundv2\Ultrasoundv2\PSoC 5LP Architecture TRM</v>
+<v>Ultrasoundv2\Ultrasoundv2\CY8C58LP Family Datasheet</v>
+<v>Ultrasoundv2\Ultrasoundv2\System Reference Guides</v>
+<v>Ultrasoundv2\Ultrasoundv2\System Reference Guides\cy_boot_v5_70</v>
+<v>Ultrasoundv2\Ultrasoundv2\ADC_SAR_v3_10.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\Counter_v3_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_clock_v2_20</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_isr_v1_70</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_pins_v2_20</v>
+<v>Ultrasoundv2\Ultrasoundv2\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\cydff_v1_30.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\nand_v1_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\not_v1_0</v>
+<v>Ultrasoundv2\Ultrasoundv2\not_v1_0\not_v1_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\or_v1_0</v>
+<v>Ultrasoundv2\Ultrasoundv2\or_v1_0\or_v1_0.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\PWM_v3_30</v>
+<v>Ultrasoundv2\Ultrasoundv2\PWM_v3_30\PWM_v3_30.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\UART_v2_50.pdf</v>
+<v>Ultrasoundv2\Ultrasoundv2\ZeroTerminal</v>
+<v>Ultrasoundv2\Ultrasoundv2\ZeroTerminal\ZeroTerminal.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+<dataGuid v="5f2be1a5-0687-4501-bb8c-cf21cb8211bf">
+<CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf type_name="CyDesigner.Common.ProjMgmt.GUI.CyBookmarkData" version="1">
+<indicators />
+</CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\Ultrasoundv2.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\Ultrasoundv2.cydsn\MotorApp.h" />
+<name v=".\Ultrasoundv2.cydsn\edgeSensorApp.c" />
+<name v=".\Ultrasoundv2.cydsn\MotorApp.c" />
+<name v=".\Ultrasoundv2.cydsn\main.c" />
+<name v=".\Ultrasoundv2.cydsn\cyapicallbacks.h" />
+<name v=".\Ultrasoundv2.cydsn\edgeSensorApp.h" />
+<name v=".\Ultrasoundv2.cydsn\Ultrasoundv2.cydwr" />
+<name v=".\Ultrasoundv2.cydsn\rpiCommunication.h" />
+<name v=".\Ultrasoundv2.cydsn\rpiCommunication.c" />
+<name v=".\Ultrasoundv2.cydsn\scale.h" />
+<name v=".\Ultrasoundv2.cydsn\scale.c" />
+<name v=".\Ultrasoundv2.cydsn\waitingState.h" />
+<name v=".\Ultrasoundv2.cydsn\waitingState.c" />
+<name v=".\Ultrasoundv2.cydsn\Generated_Source\PSoC5\cm3gcc.ld" />
+<name v=".\DillerDaller.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\DillerDaller.cydsn\Generated_Source\PSoC5\cydeviceiar_trm.inc" />
+<name v=".\DillerDaller.cydsn\main.c" />
+<name v=".\DillerDaller.cydsn\DillerDaller.cydwr" />
+<name v=".\DillerDaller.cydsn\Generated_Source\PSoC5\motorPWM_1.c" />
+<name v=".\DillerDaller.cydsn\Generated_Source\PSoC5\motorPWM_1.h" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1288, 681" SelectedTabbedMdiWindow="1a929014-7c4d-481c-a46d-d2377a8bb65a"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="62bc510a-bb1e-49c5-be62-0c25cf36ed83" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\TopDesign\TopDesign.cysch" Guid="369baad5-274f-467e-a988-946b17e2a114" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\MotorApp.h" Guid="f339c725-d115-4325-b17c-23122796ed50" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\edgeSensorApp.c" Guid="600860e6-3493-4497-9773-947a1761d8c3" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\MotorApp.c" Guid="1a929014-7c4d-481c-a46d-d2377a8bb65a" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\main.c" Guid="cd0a3fd5-0901-4453-b7dd-5de154d1aad6" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\cyapicallbacks.h" Guid="6cba4456-b165-4694-9480-26e69debb55f" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\edgeSensorApp.h" Guid="28b12477-28b5-4d9c-88c5-3c42730ea2dd" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\Ultrasoundv2.cydwr" Guid="301d2913-fd79-45ff-b25b-c09a5c69925f" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\rpiCommunication.h" Guid="231e98e6-745a-4c8d-8e66-7232efb80340" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\rpiCommunication.c" Guid="96943147-dba1-45f5-b214-caf326a5f7e1" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\scale.h" Guid="91e82c3c-0c6a-4843-ab97-9fb7b1cc0737" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\scale.c" Guid="f84c6159-b57f-45a7-a1ad-1932717bd26e" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\waitingState.h" Guid="a34176e4-6fee-441a-b77c-10fb6cf7b53f" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\waitingState.c" Guid="c3bf360e-26a2-4145-925a-674a56f24b60" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\Generated_Source\PSoC5\cm3gcc.ld" Guid="79a9ef26-9c2a-421d-adbf-6a96d9b5b7c9" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\DillerDaller.cydsn\TopDesign\TopDesign.cysch" Guid="186e4c3e-d8f8-4a00-bd5d-efaf138f0383" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\DillerDaller.cydsn\Generated_Source\PSoC5\cydeviceiar_trm.inc" Guid="cfa6d59c-01b5-49d2-b9b7-a594e7b2c501" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\DillerDaller.cydsn\main.c" Guid="803752c5-5854-4be1-832d-c82264f7f0c3" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\DillerDaller.cydsn\DillerDaller.cydwr" Guid="2508257a-fd20-45f9-b32f-b894c5e772e3" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\DillerDaller.cydsn\Generated_Source\PSoC5\motorPWM_1.c" Guid="a2002586-09a0-4a97-aea2-d9959d971ad7" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\Ultrasoundv2\DillerDaller.cydsn\Generated_Source\PSoC5\motorPWM_1.h" Guid="43cf83bc-9eeb-4b7b-b42f-0d18893a4d59" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

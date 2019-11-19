@@ -1,0 +1,6 @@
+C:\Users\lucasiversen\Desktop\Ultrasoundv2\Ultrasoundv2.cydsn\Ultrasoundv2.cyprj|0e9a33bc-215c-4940-b3c6-e794c3be5d0e
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|a2ca4424-b456-45c0-bc0d-aadae52d63dd
+C:\Users\lucasiversen\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|00b5f4f4-3abd-4b3e-b3a1-60a43b14eeb0
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|2bd09c79-17e6-4bfd-a5b8-a529de100904
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|ccc102ee-6898-4eb8-b967-8c7df65a9f22
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|bfdfdea2-980f-47b0-b7db-85cc0fadfb15

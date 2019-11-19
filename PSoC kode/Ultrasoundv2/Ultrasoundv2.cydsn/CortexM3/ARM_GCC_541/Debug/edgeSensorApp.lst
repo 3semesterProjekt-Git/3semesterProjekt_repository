@@ -1,0 +1,1761 @@
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"edgeSensorApp.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.echoInt1_handler,"ax",%progbits
+  20              		.align	2
+  21              		.global	echoInt1_handler
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	echoInt1_handler, %function
+  25              	echoInt1_handler:
+  26              	.LFB65:
+  27              		.file 1 "edgeSensorApp.c"
+   1:edgeSensorApp.c **** #include "edgeSensorApp.h"
+   2:edgeSensorApp.c **** 
+   3:edgeSensorApp.c **** volatile uint32_t pulseWidth;
+   4:edgeSensorApp.c **** volatile int time_us;
+   5:edgeSensorApp.c **** volatile int e1 = 0, e2 = 0, e3 = 0, e4 = 0;
+   6:edgeSensorApp.c **** volatile int status = 0;
+   7:edgeSensorApp.c **** 
+   8:edgeSensorApp.c **** CY_ISR(pulseInt_handler)
+   9:edgeSensorApp.c **** {
+  10:edgeSensorApp.c ****     triggerPWM_Stop();
+  11:edgeSensorApp.c ****     //Reads number of counts in pulse
+  12:edgeSensorApp.c ****     pulseWidth = pulseCounter_ReadCapture();
+  13:edgeSensorApp.c ****     //Converts data to an integer of us
+  14:edgeSensorApp.c ****     time_us = (uint32_t)pulseWidth * 2;
+  15:edgeSensorApp.c ****     //About 30 cm    
+  16:edgeSensorApp.c ****     if(time_us > 1800)
+  17:edgeSensorApp.c ****     {
+  18:edgeSensorApp.c ****         status = status + 1;
+  19:edgeSensorApp.c ****     }
+  20:edgeSensorApp.c ****     
+  21:edgeSensorApp.c ****     switch (status)
+  22:edgeSensorApp.c ****     {
+  23:edgeSensorApp.c ****         case 11:    //LED_Write(1);     //Forreste venstre sensor
+  24:edgeSensorApp.c ****                     DelayBased180Turn();
+  25:edgeSensorApp.c ****                 break;
+  26:edgeSensorApp.c ****         case 21:    //LED_Write(1);     //Venstre sensor
+  27:edgeSensorApp.c ****                     DelayBased90Turn(1);
+  28:edgeSensorApp.c ****                 break;
+  29:edgeSensorApp.c ****         case 31:    //LED_Write(1);     //Højre sensor
+  30:edgeSensorApp.c ****                     DelayBased90Turn(2);
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 2
+
+
+  31:edgeSensorApp.c ****                 break;
+  32:edgeSensorApp.c ****         case 41:    //LED_Write(1);     //Forreste højre sensor
+  33:edgeSensorApp.c ****                     DelayBased180Turn();
+  34:edgeSensorApp.c ****                 break;
+  35:edgeSensorApp.c ****         default:    //LED_Write(0);
+  36:edgeSensorApp.c ****                     driveForwards();
+  37:edgeSensorApp.c ****                 break;
+  38:edgeSensorApp.c ****     }
+  39:edgeSensorApp.c ****     
+  40:edgeSensorApp.c ****     //Resetting variables
+  41:edgeSensorApp.c ****     getStatus();
+  42:edgeSensorApp.c ****     //Clear capture flag
+  43:edgeSensorApp.c ****     pulseCounter_ReadStatusRegister();
+  44:edgeSensorApp.c ****     triggerPWM_Start();
+  45:edgeSensorApp.c **** }
+  46:edgeSensorApp.c **** 
+  47:edgeSensorApp.c **** CY_ISR(echoInt1_handler)
+  48:edgeSensorApp.c **** {
+  28              		.loc 1 48 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  49:edgeSensorApp.c ****     e1 = 1;
+  33              		.loc 1 49 0
+  34 0000 074B     		ldr	r3, .L3
+  35 0002 0122     		movs	r2, #1
+  36 0004 1A60     		str	r2, [r3]
+  50:edgeSensorApp.c ****     if((e1+e2+e3+e4) == 4 )
+  37              		.loc 1 50 0
+  38 0006 1968     		ldr	r1, [r3]
+  39 0008 5A68     		ldr	r2, [r3, #4]
+  40 000a 1144     		add	r1, r1, r2
+  41 000c 9A68     		ldr	r2, [r3, #8]
+  42 000e 0A44     		add	r2, r2, r1
+  43 0010 DB68     		ldr	r3, [r3, #12]
+  44 0012 1344     		add	r3, r3, r2
+  45 0014 042B     		cmp	r3, #4
+  46 0016 02D1     		bne	.L1
+  51:edgeSensorApp.c ****     {
+  52:edgeSensorApp.c ****         status = 10;
+  47              		.loc 1 52 0
+  48 0018 0A22     		movs	r2, #10
+  49 001a 014B     		ldr	r3, .L3
+  50 001c 1A61     		str	r2, [r3, #16]
+  51              	.L1:
+  52 001e 7047     		bx	lr
+  53              	.L4:
+  54              		.align	2
+  55              	.L3:
+  56 0020 00000000 		.word	.LANCHOR0
+  57              		.cfi_endproc
+  58              	.LFE65:
+  59              		.size	echoInt1_handler, .-echoInt1_handler
+  60              		.section	.text.echoInt2_handler,"ax",%progbits
+  61              		.align	2
+  62              		.global	echoInt2_handler
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 3
+
+
+  63              		.thumb
+  64              		.thumb_func
+  65              		.type	echoInt2_handler, %function
+  66              	echoInt2_handler:
+  67              	.LFB66:
+  53:edgeSensorApp.c ****     }
+  54:edgeSensorApp.c **** }
+  55:edgeSensorApp.c **** 
+  56:edgeSensorApp.c **** CY_ISR(echoInt2_handler)
+  57:edgeSensorApp.c **** {
+  68              		.loc 1 57 0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              		@ link register save eliminated.
+  58:edgeSensorApp.c ****     e2 = 1;
+  73              		.loc 1 58 0
+  74 0000 074B     		ldr	r3, .L7
+  75 0002 0122     		movs	r2, #1
+  76 0004 5A60     		str	r2, [r3, #4]
+  59:edgeSensorApp.c ****     if((e1+e2+e3+e4) == 4 )
+  77              		.loc 1 59 0
+  78 0006 1968     		ldr	r1, [r3]
+  79 0008 5A68     		ldr	r2, [r3, #4]
+  80 000a 1144     		add	r1, r1, r2
+  81 000c 9A68     		ldr	r2, [r3, #8]
+  82 000e 0A44     		add	r2, r2, r1
+  83 0010 DB68     		ldr	r3, [r3, #12]
+  84 0012 1344     		add	r3, r3, r2
+  85 0014 042B     		cmp	r3, #4
+  86 0016 02D1     		bne	.L5
+  60:edgeSensorApp.c ****     {
+  61:edgeSensorApp.c ****         status = 20;
+  87              		.loc 1 61 0
+  88 0018 1422     		movs	r2, #20
+  89 001a 014B     		ldr	r3, .L7
+  90 001c 1A61     		str	r2, [r3, #16]
+  91              	.L5:
+  92 001e 7047     		bx	lr
+  93              	.L8:
+  94              		.align	2
+  95              	.L7:
+  96 0020 00000000 		.word	.LANCHOR0
+  97              		.cfi_endproc
+  98              	.LFE66:
+  99              		.size	echoInt2_handler, .-echoInt2_handler
+ 100              		.section	.text.echoInt3_handler,"ax",%progbits
+ 101              		.align	2
+ 102              		.global	echoInt3_handler
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.type	echoInt3_handler, %function
+ 106              	echoInt3_handler:
+ 107              	.LFB67:
+  62:edgeSensorApp.c ****     }
+  63:edgeSensorApp.c **** }
+  64:edgeSensorApp.c **** 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 4
+
+
+  65:edgeSensorApp.c **** CY_ISR(echoInt3_handler)
+  66:edgeSensorApp.c **** {   
+ 108              		.loc 1 66 0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		@ link register save eliminated.
+  67:edgeSensorApp.c ****     e3 = 1;
+ 113              		.loc 1 67 0
+ 114 0000 074B     		ldr	r3, .L11
+ 115 0002 0122     		movs	r2, #1
+ 116 0004 9A60     		str	r2, [r3, #8]
+  68:edgeSensorApp.c ****     if((e1+e2+e3+e4) == 4 )
+ 117              		.loc 1 68 0
+ 118 0006 1968     		ldr	r1, [r3]
+ 119 0008 5A68     		ldr	r2, [r3, #4]
+ 120 000a 1144     		add	r1, r1, r2
+ 121 000c 9A68     		ldr	r2, [r3, #8]
+ 122 000e 0A44     		add	r2, r2, r1
+ 123 0010 DB68     		ldr	r3, [r3, #12]
+ 124 0012 1344     		add	r3, r3, r2
+ 125 0014 042B     		cmp	r3, #4
+ 126 0016 02D1     		bne	.L9
+  69:edgeSensorApp.c ****     {
+  70:edgeSensorApp.c ****         status = 30;
+ 127              		.loc 1 70 0
+ 128 0018 1E22     		movs	r2, #30
+ 129 001a 014B     		ldr	r3, .L11
+ 130 001c 1A61     		str	r2, [r3, #16]
+ 131              	.L9:
+ 132 001e 7047     		bx	lr
+ 133              	.L12:
+ 134              		.align	2
+ 135              	.L11:
+ 136 0020 00000000 		.word	.LANCHOR0
+ 137              		.cfi_endproc
+ 138              	.LFE67:
+ 139              		.size	echoInt3_handler, .-echoInt3_handler
+ 140              		.section	.text.echoInt4_handler,"ax",%progbits
+ 141              		.align	2
+ 142              		.global	echoInt4_handler
+ 143              		.thumb
+ 144              		.thumb_func
+ 145              		.type	echoInt4_handler, %function
+ 146              	echoInt4_handler:
+ 147              	.LFB68:
+  71:edgeSensorApp.c ****     }
+  72:edgeSensorApp.c **** }
+  73:edgeSensorApp.c **** 
+  74:edgeSensorApp.c **** CY_ISR(echoInt4_handler)
+  75:edgeSensorApp.c **** {
+ 148              		.loc 1 75 0
+ 149              		.cfi_startproc
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 152              		@ link register save eliminated.
+  76:edgeSensorApp.c ****     e4 = 1;
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 5
+
+
+ 153              		.loc 1 76 0
+ 154 0000 074B     		ldr	r3, .L15
+ 155 0002 0122     		movs	r2, #1
+ 156 0004 DA60     		str	r2, [r3, #12]
+  77:edgeSensorApp.c ****     if((e1+e2+e3+e4) == 4 )
+ 157              		.loc 1 77 0
+ 158 0006 1968     		ldr	r1, [r3]
+ 159 0008 5A68     		ldr	r2, [r3, #4]
+ 160 000a 1144     		add	r1, r1, r2
+ 161 000c 9A68     		ldr	r2, [r3, #8]
+ 162 000e 0A44     		add	r2, r2, r1
+ 163 0010 DB68     		ldr	r3, [r3, #12]
+ 164 0012 1344     		add	r3, r3, r2
+ 165 0014 042B     		cmp	r3, #4
+ 166 0016 02D1     		bne	.L13
+  78:edgeSensorApp.c ****     {
+  79:edgeSensorApp.c ****         status = 40;
+ 167              		.loc 1 79 0
+ 168 0018 2822     		movs	r2, #40
+ 169 001a 014B     		ldr	r3, .L15
+ 170 001c 1A61     		str	r2, [r3, #16]
+ 171              	.L13:
+ 172 001e 7047     		bx	lr
+ 173              	.L16:
+ 174              		.align	2
+ 175              	.L15:
+ 176 0020 00000000 		.word	.LANCHOR0
+ 177              		.cfi_endproc
+ 178              	.LFE68:
+ 179              		.size	echoInt4_handler, .-echoInt4_handler
+ 180              		.section	.text.edgeSensorInit,"ax",%progbits
+ 181              		.align	2
+ 182              		.global	edgeSensorInit
+ 183              		.thumb
+ 184              		.thumb_func
+ 185              		.type	edgeSensorInit, %function
+ 186              	edgeSensorInit:
+ 187              	.LFB69:
+  80:edgeSensorApp.c ****     }
+  81:edgeSensorApp.c **** }
+  82:edgeSensorApp.c **** 
+  83:edgeSensorApp.c **** void edgeSensorInit()
+  84:edgeSensorApp.c **** {
+ 188              		.loc 1 84 0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192 0000 08B5     		push	{r3, lr}
+ 193              		.cfi_def_cfa_offset 8
+ 194              		.cfi_offset 3, -8
+ 195              		.cfi_offset 14, -4
+  85:edgeSensorApp.c ****     //Start 500kHz clock
+  86:edgeSensorApp.c ****     CLK_500kHz_Start();
+ 196              		.loc 1 86 0
+ 197 0002 FFF7FEFF 		bl	CLK_500kHz_Start
+ 198              	.LVL0:
+  87:edgeSensorApp.c ****     //Start 24MHz clock
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 6
+
+
+  88:edgeSensorApp.c ****     CLK_24MHz_Start();
+ 199              		.loc 1 88 0
+ 200 0006 FFF7FEFF 		bl	CLK_24MHz_Start
+ 201              	.LVL1:
+  89:edgeSensorApp.c ****     //Start trigger
+  90:edgeSensorApp.c ****     triggerPWM_Start();
+ 202              		.loc 1 90 0
+ 203 000a FFF7FEFF 		bl	triggerPWM_Start
+ 204              	.LVL2:
+  91:edgeSensorApp.c ****     //Start counters
+  92:edgeSensorApp.c ****     pulseCounter_Start();
+ 205              		.loc 1 92 0
+ 206 000e FFF7FEFF 		bl	pulseCounter_Start
+ 207              	.LVL3:
+  93:edgeSensorApp.c ****     //Start interrupts
+  94:edgeSensorApp.c ****     pulseInt_StartEx(pulseInt_handler);
+ 208              		.loc 1 94 0
+ 209 0012 0848     		ldr	r0, .L19
+ 210 0014 FFF7FEFF 		bl	pulseInt_StartEx
+ 211              	.LVL4:
+  95:edgeSensorApp.c ****     echoInt_1_StartEx(echoInt1_handler);
+ 212              		.loc 1 95 0
+ 213 0018 0748     		ldr	r0, .L19+4
+ 214 001a FFF7FEFF 		bl	echoInt_1_StartEx
+ 215              	.LVL5:
+  96:edgeSensorApp.c ****     echoInt_2_StartEx(echoInt2_handler);
+ 216              		.loc 1 96 0
+ 217 001e 0748     		ldr	r0, .L19+8
+ 218 0020 FFF7FEFF 		bl	echoInt_2_StartEx
+ 219              	.LVL6:
+  97:edgeSensorApp.c ****     echoInt_3_StartEx(echoInt3_handler);
+ 220              		.loc 1 97 0
+ 221 0024 0648     		ldr	r0, .L19+12
+ 222 0026 FFF7FEFF 		bl	echoInt_3_StartEx
+ 223              	.LVL7:
+  98:edgeSensorApp.c ****     echoInt_4_StartEx(echoInt4_handler);
+ 224              		.loc 1 98 0
+ 225 002a 0648     		ldr	r0, .L19+16
+ 226 002c FFF7FEFF 		bl	echoInt_4_StartEx
+ 227              	.LVL8:
+ 228 0030 08BD     		pop	{r3, pc}
+ 229              	.L20:
+ 230 0032 00BF     		.align	2
+ 231              	.L19:
+ 232 0034 00000000 		.word	pulseInt_handler
+ 233 0038 00000000 		.word	echoInt1_handler
+ 234 003c 00000000 		.word	echoInt2_handler
+ 235 0040 00000000 		.word	echoInt3_handler
+ 236 0044 00000000 		.word	echoInt4_handler
+ 237              		.cfi_endproc
+ 238              	.LFE69:
+ 239              		.size	edgeSensorInit, .-edgeSensorInit
+ 240              		.section	.text.getStatus,"ax",%progbits
+ 241              		.align	2
+ 242              		.global	getStatus
+ 243              		.thumb
+ 244              		.thumb_func
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 7
+
+
+ 245              		.type	getStatus, %function
+ 246              	getStatus:
+ 247              	.LFB70:
+  99:edgeSensorApp.c **** }
+ 100:edgeSensorApp.c **** 
+ 101:edgeSensorApp.c **** int getStatus()
+ 102:edgeSensorApp.c **** {
+ 248              		.loc 1 102 0
+ 249              		.cfi_startproc
+ 250              		@ args = 0, pretend = 0, frame = 0
+ 251              		@ frame_needed = 0, uses_anonymous_args = 0
+ 252              		@ link register save eliminated.
+ 103:edgeSensorApp.c ****     int tempStatus = status;
+ 253              		.loc 1 103 0
+ 254 0000 044B     		ldr	r3, .L22
+ 255 0002 1869     		ldr	r0, [r3, #16]
+ 256              	.LVL9:
+ 104:edgeSensorApp.c ****     
+ 105:edgeSensorApp.c ****     //Resetting variables
+ 106:edgeSensorApp.c ****     status = 0;
+ 257              		.loc 1 106 0
+ 258 0004 0022     		movs	r2, #0
+ 259 0006 1A61     		str	r2, [r3, #16]
+ 107:edgeSensorApp.c ****     e1 = 0;
+ 260              		.loc 1 107 0
+ 261 0008 1A60     		str	r2, [r3]
+ 108:edgeSensorApp.c ****     e2 = 0;
+ 262              		.loc 1 108 0
+ 263 000a 5A60     		str	r2, [r3, #4]
+ 109:edgeSensorApp.c ****     e3 = 0;
+ 264              		.loc 1 109 0
+ 265 000c 9A60     		str	r2, [r3, #8]
+ 110:edgeSensorApp.c ****     e4 = 0;
+ 266              		.loc 1 110 0
+ 267 000e DA60     		str	r2, [r3, #12]
+ 111:edgeSensorApp.c ****     
+ 112:edgeSensorApp.c ****     return tempStatus;
+ 113:edgeSensorApp.c **** }...
+ 268              		.loc 1 113 0
+ 269 0010 7047     		bx	lr
+ 270              	.L23:
+ 271 0012 00BF     		.align	2
+ 272              	.L22:
+ 273 0014 00000000 		.word	.LANCHOR0
+ 274              		.cfi_endproc
+ 275              	.LFE70:
+ 276              		.size	getStatus, .-getStatus
+ 277              		.section	.text.pulseInt_handler,"ax",%progbits
+ 278              		.align	2
+ 279              		.global	pulseInt_handler
+ 280              		.thumb
+ 281              		.thumb_func
+ 282              		.type	pulseInt_handler, %function
+ 283              	pulseInt_handler:
+ 284              	.LFB64:
+   9:edgeSensorApp.c **** {
+ 285              		.loc 1 9 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 8
+
+
+ 286              		.cfi_startproc
+ 287              		@ args = 0, pretend = 0, frame = 0
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289 0000 08B5     		push	{r3, lr}
+ 290              		.cfi_def_cfa_offset 8
+ 291              		.cfi_offset 3, -8
+ 292              		.cfi_offset 14, -4
+  10:edgeSensorApp.c ****     triggerPWM_Stop();
+ 293              		.loc 1 10 0
+ 294 0002 FFF7FEFF 		bl	triggerPWM_Stop
+ 295              	.LVL10:
+  12:edgeSensorApp.c ****     pulseWidth = pulseCounter_ReadCapture();
+ 296              		.loc 1 12 0
+ 297 0006 FFF7FEFF 		bl	pulseCounter_ReadCapture
+ 298              	.LVL11:
+ 299 000a 1E4B     		ldr	r3, .L34
+ 300 000c 1860     		str	r0, [r3]
+  14:edgeSensorApp.c ****     time_us = (uint32_t)pulseWidth * 2;
+ 301              		.loc 1 14 0
+ 302 000e 1B68     		ldr	r3, [r3]
+ 303 0010 5B00     		lsls	r3, r3, #1
+ 304 0012 1D4A     		ldr	r2, .L34+4
+ 305 0014 1360     		str	r3, [r2]
+  16:edgeSensorApp.c ****     if(time_us > 1800)
+ 306              		.loc 1 16 0
+ 307 0016 1368     		ldr	r3, [r2]
+ 308 0018 B3F5E16F 		cmp	r3, #1800
+ 309 001c 03DD     		ble	.L25
+  18:edgeSensorApp.c ****         status = status + 1;
+ 310              		.loc 1 18 0
+ 311 001e 1B4A     		ldr	r2, .L34+8
+ 312 0020 1369     		ldr	r3, [r2, #16]
+ 313 0022 0133     		adds	r3, r3, #1
+ 314 0024 1361     		str	r3, [r2, #16]
+ 315              	.L25:
+  21:edgeSensorApp.c ****     switch (status)
+ 316              		.loc 1 21 0
+ 317 0026 194B     		ldr	r3, .L34+8
+ 318 0028 1B69     		ldr	r3, [r3, #16]
+ 319 002a 0B3B     		subs	r3, r3, #11
+ 320 002c 1E2B     		cmp	r3, #30
+ 321 002e 1FD8     		bhi	.L26
+ 322 0030 DFE803F0 		tbb	[pc, r3]
+ 323              	.L28:
+ 324 0034 10       		.byte	(.L27-.L28)/2
+ 325 0035 1E       		.byte	(.L26-.L28)/2
+ 326 0036 1E       		.byte	(.L26-.L28)/2
+ 327 0037 1E       		.byte	(.L26-.L28)/2
+ 328 0038 1E       		.byte	(.L26-.L28)/2
+ 329 0039 1E       		.byte	(.L26-.L28)/2
+ 330 003a 1E       		.byte	(.L26-.L28)/2
+ 331 003b 1E       		.byte	(.L26-.L28)/2
+ 332 003c 1E       		.byte	(.L26-.L28)/2
+ 333 003d 1E       		.byte	(.L26-.L28)/2
+ 334 003e 13       		.byte	(.L29-.L28)/2
+ 335 003f 1E       		.byte	(.L26-.L28)/2
+ 336 0040 1E       		.byte	(.L26-.L28)/2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 9
+
+
+ 337 0041 1E       		.byte	(.L26-.L28)/2
+ 338 0042 1E       		.byte	(.L26-.L28)/2
+ 339 0043 1E       		.byte	(.L26-.L28)/2
+ 340 0044 1E       		.byte	(.L26-.L28)/2
+ 341 0045 1E       		.byte	(.L26-.L28)/2
+ 342 0046 1E       		.byte	(.L26-.L28)/2
+ 343 0047 1E       		.byte	(.L26-.L28)/2
+ 344 0048 17       		.byte	(.L30-.L28)/2
+ 345 0049 1E       		.byte	(.L26-.L28)/2
+ 346 004a 1E       		.byte	(.L26-.L28)/2
+ 347 004b 1E       		.byte	(.L26-.L28)/2
+ 348 004c 1E       		.byte	(.L26-.L28)/2
+ 349 004d 1E       		.byte	(.L26-.L28)/2
+ 350 004e 1E       		.byte	(.L26-.L28)/2
+ 351 004f 1E       		.byte	(.L26-.L28)/2
+ 352 0050 1E       		.byte	(.L26-.L28)/2
+ 353 0051 1E       		.byte	(.L26-.L28)/2
+ 354 0052 1B       		.byte	(.L31-.L28)/2
+ 355 0053 00       		.p2align 1
+ 356              	.L27:
+  24:edgeSensorApp.c ****                     DelayBased180Turn();
+ 357              		.loc 1 24 0
+ 358 0054 FFF7FEFF 		bl	DelayBased180Turn
+ 359              	.LVL12:
+  25:edgeSensorApp.c ****                 break;
+ 360              		.loc 1 25 0
+ 361 0058 0CE0     		b	.L32
+ 362              	.L29:
+  27:edgeSensorApp.c ****                     DelayBased90Turn(1);
+ 363              		.loc 1 27 0
+ 364 005a 0120     		movs	r0, #1
+ 365 005c FFF7FEFF 		bl	DelayBased90Turn
+ 366              	.LVL13:
+  28:edgeSensorApp.c ****                 break;
+ 367              		.loc 1 28 0
+ 368 0060 08E0     		b	.L32
+ 369              	.L30:
+  30:edgeSensorApp.c ****                     DelayBased90Turn(2);
+ 370              		.loc 1 30 0
+ 371 0062 0220     		movs	r0, #2
+ 372 0064 FFF7FEFF 		bl	DelayBased90Turn
+ 373              	.LVL14:
+  31:edgeSensorApp.c ****                 break;
+ 374              		.loc 1 31 0
+ 375 0068 04E0     		b	.L32
+ 376              	.L31:
+  33:edgeSensorApp.c ****                     DelayBased180Turn();
+ 377              		.loc 1 33 0
+ 378 006a FFF7FEFF 		bl	DelayBased180Turn
+ 379              	.LVL15:
+  34:edgeSensorApp.c ****                 break;
+ 380              		.loc 1 34 0
+ 381 006e 01E0     		b	.L32
+ 382              	.L26:
+  36:edgeSensorApp.c ****                     driveForwards();
+ 383              		.loc 1 36 0
+ 384 0070 FFF7FEFF 		bl	driveForwards
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 10
+
+
+ 385              	.LVL16:
+ 386              	.L32:
+  41:edgeSensorApp.c ****     getStatus();
+ 387              		.loc 1 41 0
+ 388 0074 FFF7FEFF 		bl	getStatus
+ 389              	.LVL17:
+  43:edgeSensorApp.c ****     pulseCounter_ReadStatusRegister();
+ 390              		.loc 1 43 0
+ 391 0078 FFF7FEFF 		bl	pulseCounter_ReadStatusRegister
+ 392              	.LVL18:
+  44:edgeSensorApp.c ****     triggerPWM_Start();
+ 393              		.loc 1 44 0
+ 394 007c FFF7FEFF 		bl	triggerPWM_Start
+ 395              	.LVL19:
+ 396 0080 08BD     		pop	{r3, pc}
+ 397              	.L35:
+ 398 0082 00BF     		.align	2
+ 399              	.L34:
+ 400 0084 00000000 		.word	pulseWidth
+ 401 0088 00000000 		.word	time_us
+ 402 008c 00000000 		.word	.LANCHOR0
+ 403              		.cfi_endproc
+ 404              	.LFE64:
+ 405              		.size	pulseInt_handler, .-pulseInt_handler
+ 406              		.global	status
+ 407              		.global	e4
+ 408              		.global	e3
+ 409              		.global	e2
+ 410              		.global	e1
+ 411              		.comm	time_us,4,4
+ 412              		.comm	pulseWidth,4,4
+ 413              		.comm	randturn,4,4
+ 414              		.comm	randState,4,4
+ 415              		.comm	state,4,4
+ 416              		.comm	difficulty,4,4
+ 417              		.comm	buffer,250,4
+ 418              		.bss
+ 419              		.align	2
+ 420              		.set	.LANCHOR0,. + 0
+ 421              		.type	e1, %object
+ 422              		.size	e1, 4
+ 423              	e1:
+ 424 0000 00000000 		.space	4
+ 425              		.type	e2, %object
+ 426              		.size	e2, 4
+ 427              	e2:
+ 428 0004 00000000 		.space	4
+ 429              		.type	e3, %object
+ 430              		.size	e3, 4
+ 431              	e3:
+ 432 0008 00000000 		.space	4
+ 433              		.type	e4, %object
+ 434              		.size	e4, 4
+ 435              	e4:
+ 436 000c 00000000 		.space	4
+ 437              		.type	status, %object
+ 438              		.size	status, 4
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 11
+
+
+ 439              	status:
+ 440 0010 00000000 		.space	4
+ 441              		.text
+ 442              	.Letext0:
+ 443              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 444              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 445              		.file 4 "Generated_Source\\PSoC5/core_cm3.h"
+ 446              		.file 5 "MotorApp.h"
+ 447              		.file 6 "Generated_Source\\PSoC5/CLK_500kHz.h"
+ 448              		.file 7 "Generated_Source\\PSoC5/CLK_24MHz.h"
+ 449              		.file 8 "Generated_Source\\PSoC5/triggerPWM.h"
+ 450              		.file 9 "Generated_Source\\PSoC5/pulseCounter.h"
+ 451              		.file 10 "Generated_Source\\PSoC5/pulseInt.h"
+ 452              		.file 11 "Generated_Source\\PSoC5/echoInt_1.h"
+ 453              		.file 12 "Generated_Source\\PSoC5/echoInt_2.h"
+ 454              		.file 13 "Generated_Source\\PSoC5/echoInt_3.h"
+ 455              		.file 14 "Generated_Source\\PSoC5/echoInt_4.h"
+ 456              		.section	.debug_info,"",%progbits
+ 457              	.Ldebug_info0:
+ 458 0000 E7030000 		.4byte	0x3e7
+ 459 0004 0400     		.2byte	0x4
+ 460 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 461 000a 04       		.byte	0x4
+ 462 000b 01       		.uleb128 0x1
+ 463 000c 12020000 		.4byte	.LASF48
+ 464 0010 0C       		.byte	0xc
+ 465 0011 B1020000 		.4byte	.LASF49
+ 466 0015 C4010000 		.4byte	.LASF50
+ 467 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 468 001d 00000000 		.4byte	0
+ 469 0021 00000000 		.4byte	.Ldebug_line0
+ 470 0025 02       		.uleb128 0x2
+ 471 0026 01       		.byte	0x1
+ 472 0027 06       		.byte	0x6
+ 473 0028 60030000 		.4byte	.LASF0
+ 474 002c 02       		.uleb128 0x2
+ 475 002d 01       		.byte	0x1
+ 476 002e 08       		.byte	0x8
+ 477 002f 64010000 		.4byte	.LASF1
+ 478 0033 02       		.uleb128 0x2
+ 479 0034 02       		.byte	0x2
+ 480 0035 05       		.byte	0x5
+ 481 0036 00030000 		.4byte	.LASF2
+ 482 003a 02       		.uleb128 0x2
+ 483 003b 02       		.byte	0x2
+ 484 003c 07       		.byte	0x7
+ 485 003d DB000000 		.4byte	.LASF3
+ 486 0041 03       		.uleb128 0x3
+ 487 0042 4C000000 		.4byte	.LASF5
+ 488 0046 02       		.byte	0x2
+ 489 0047 3F       		.byte	0x3f
+ 490 0048 4C000000 		.4byte	0x4c
+ 491 004c 02       		.uleb128 0x2
+ 492 004d 04       		.byte	0x4
+ 493 004e 05       		.byte	0x5
+ 494 004f 46030000 		.4byte	.LASF4
+ 495 0053 03       		.uleb128 0x3
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 12
+
+
+ 496 0054 4C010000 		.4byte	.LASF6
+ 497 0058 02       		.byte	0x2
+ 498 0059 41       		.byte	0x41
+ 499 005a 5E000000 		.4byte	0x5e
+ 500 005e 02       		.uleb128 0x2
+ 501 005f 04       		.byte	0x4
+ 502 0060 07       		.byte	0x7
+ 503 0061 C9000000 		.4byte	.LASF7
+ 504 0065 02       		.uleb128 0x2
+ 505 0066 08       		.byte	0x8
+ 506 0067 05       		.byte	0x5
+ 507 0068 C1020000 		.4byte	.LASF8
+ 508 006c 02       		.uleb128 0x2
+ 509 006d 08       		.byte	0x8
+ 510 006e 07       		.byte	0x7
+ 511 006f 8D010000 		.4byte	.LASF9
+ 512 0073 04       		.uleb128 0x4
+ 513 0074 04       		.byte	0x4
+ 514 0075 05       		.byte	0x5
+ 515 0076 696E7400 		.ascii	"int\000"
+ 516 007a 02       		.uleb128 0x2
+ 517 007b 04       		.byte	0x4
+ 518 007c 07       		.byte	0x7
+ 519 007d 72010000 		.4byte	.LASF10
+ 520 0081 03       		.uleb128 0x3
+ 521 0082 A0020000 		.4byte	.LASF11
+ 522 0086 03       		.byte	0x3
+ 523 0087 2C       		.byte	0x2c
+ 524 0088 41000000 		.4byte	0x41
+ 525 008c 03       		.uleb128 0x3
+ 526 008d 3D030000 		.4byte	.LASF12
+ 527 0091 03       		.byte	0x3
+ 528 0092 30       		.byte	0x30
+ 529 0093 53000000 		.4byte	0x53
+ 530 0097 02       		.uleb128 0x2
+ 531 0098 04       		.byte	0x4
+ 532 0099 04       		.byte	0x4
+ 533 009a A2000000 		.4byte	.LASF13
+ 534 009e 02       		.uleb128 0x2
+ 535 009f 08       		.byte	0x8
+ 536 00a0 04       		.byte	0x4
+ 537 00a1 34010000 		.4byte	.LASF14
+ 538 00a5 02       		.uleb128 0x2
+ 539 00a6 01       		.byte	0x1
+ 540 00a7 08       		.byte	0x8
+ 541 00a8 4F030000 		.4byte	.LASF15
+ 542 00ac 02       		.uleb128 0x2
+ 543 00ad 08       		.byte	0x8
+ 544 00ae 04       		.byte	0x4
+ 545 00af 54030000 		.4byte	.LASF16
+ 546 00b3 02       		.uleb128 0x2
+ 547 00b4 04       		.byte	0x4
+ 548 00b5 07       		.byte	0x7
+ 549 00b6 A8020000 		.4byte	.LASF17
+ 550 00ba 05       		.uleb128 0x5
+ 551 00bb 8C000000 		.4byte	0x8c
+ 552 00bf 06       		.uleb128 0x6
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 13
+
+
+ 553 00c0 29000000 		.4byte	.LASF18
+ 554 00c4 01       		.byte	0x1
+ 555 00c5 2F       		.byte	0x2f
+ 556 00c6 00000000 		.4byte	.LFB65
+ 557 00ca 24000000 		.4byte	.LFE65-.LFB65
+ 558 00ce 01       		.uleb128 0x1
+ 559 00cf 9C       		.byte	0x9c
+ 560 00d0 06       		.uleb128 0x6
+ 561 00d1 3B010000 		.4byte	.LASF19
+ 562 00d5 01       		.byte	0x1
+ 563 00d6 38       		.byte	0x38
+ 564 00d7 00000000 		.4byte	.LFB66
+ 565 00db 24000000 		.4byte	.LFE66-.LFB66
+ 566 00df 01       		.uleb128 0x1
+ 567 00e0 9C       		.byte	0x9c
+ 568 00e1 06       		.uleb128 0x6
+ 569 00e2 23030000 		.4byte	.LASF20
+ 570 00e6 01       		.byte	0x1
+ 571 00e7 41       		.byte	0x41
+ 572 00e8 00000000 		.4byte	.LFB67
+ 573 00ec 24000000 		.4byte	.LFE67-.LFB67
+ 574 00f0 01       		.uleb128 0x1
+ 575 00f1 9C       		.byte	0x9c
+ 576 00f2 06       		.uleb128 0x6
+ 577 00f3 91000000 		.4byte	.LASF21
+ 578 00f7 01       		.byte	0x1
+ 579 00f8 4A       		.byte	0x4a
+ 580 00f9 00000000 		.4byte	.LFB68
+ 581 00fd 24000000 		.4byte	.LFE68-.LFB68
+ 582 0101 01       		.uleb128 0x1
+ 583 0102 9C       		.byte	0x9c
+ 584 0103 07       		.uleb128 0x7
+ 585 0104 82000000 		.4byte	.LASF51
+ 586 0108 01       		.byte	0x1
+ 587 0109 53       		.byte	0x53
+ 588 010a 00000000 		.4byte	.LFB69
+ 589 010e 48000000 		.4byte	.LFE69-.LFB69
+ 590 0112 01       		.uleb128 0x1
+ 591 0113 9C       		.byte	0x9c
+ 592 0114 AC010000 		.4byte	0x1ac
+ 593 0118 08       		.uleb128 0x8
+ 594 0119 06000000 		.4byte	.LVL0
+ 595 011d 45030000 		.4byte	0x345
+ 596 0121 08       		.uleb128 0x8
+ 597 0122 0A000000 		.4byte	.LVL1
+ 598 0126 50030000 		.4byte	0x350
+ 599 012a 08       		.uleb128 0x8
+ 600 012b 0E000000 		.4byte	.LVL2
+ 601 012f 5B030000 		.4byte	0x35b
+ 602 0133 08       		.uleb128 0x8
+ 603 0134 12000000 		.4byte	.LVL3
+ 604 0138 66030000 		.4byte	0x366
+ 605 013c 09       		.uleb128 0x9
+ 606 013d 18000000 		.4byte	.LVL4
+ 607 0141 71030000 		.4byte	0x371
+ 608 0145 53010000 		.4byte	0x153
+ 609 0149 0A       		.uleb128 0xa
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 14
+
+
+ 610 014a 01       		.uleb128 0x1
+ 611 014b 50       		.byte	0x50
+ 612 014c 05       		.uleb128 0x5
+ 613 014d 03       		.byte	0x3
+ 614 014e 00000000 		.4byte	pulseInt_handler
+ 615 0152 00       		.byte	0
+ 616 0153 09       		.uleb128 0x9
+ 617 0154 1E000000 		.4byte	.LVL5
+ 618 0158 7C030000 		.4byte	0x37c
+ 619 015c 6A010000 		.4byte	0x16a
+ 620 0160 0A       		.uleb128 0xa
+ 621 0161 01       		.uleb128 0x1
+ 622 0162 50       		.byte	0x50
+ 623 0163 05       		.uleb128 0x5
+ 624 0164 03       		.byte	0x3
+ 625 0165 00000000 		.4byte	echoInt1_handler
+ 626 0169 00       		.byte	0
+ 627 016a 09       		.uleb128 0x9
+ 628 016b 24000000 		.4byte	.LVL6
+ 629 016f 87030000 		.4byte	0x387
+ 630 0173 81010000 		.4byte	0x181
+ 631 0177 0A       		.uleb128 0xa
+ 632 0178 01       		.uleb128 0x1
+ 633 0179 50       		.byte	0x50
+ 634 017a 05       		.uleb128 0x5
+ 635 017b 03       		.byte	0x3
+ 636 017c 00000000 		.4byte	echoInt2_handler
+ 637 0180 00       		.byte	0
+ 638 0181 09       		.uleb128 0x9
+ 639 0182 2A000000 		.4byte	.LVL7
+ 640 0186 92030000 		.4byte	0x392
+ 641 018a 98010000 		.4byte	0x198
+ 642 018e 0A       		.uleb128 0xa
+ 643 018f 01       		.uleb128 0x1
+ 644 0190 50       		.byte	0x50
+ 645 0191 05       		.uleb128 0x5
+ 646 0192 03       		.byte	0x3
+ 647 0193 00000000 		.4byte	echoInt3_handler
+ 648 0197 00       		.byte	0
+ 649 0198 0B       		.uleb128 0xb
+ 650 0199 30000000 		.4byte	.LVL8
+ 651 019d 9D030000 		.4byte	0x39d
+ 652 01a1 0A       		.uleb128 0xa
+ 653 01a2 01       		.uleb128 0x1
+ 654 01a3 50       		.byte	0x50
+ 655 01a4 05       		.uleb128 0x5
+ 656 01a5 03       		.byte	0x3
+ 657 01a6 00000000 		.4byte	echoInt4_handler
+ 658 01aa 00       		.byte	0
+ 659 01ab 00       		.byte	0
+ 660 01ac 0C       		.uleb128 0xc
+ 661 01ad DA020000 		.4byte	.LASF22
+ 662 01b1 01       		.byte	0x1
+ 663 01b2 65       		.byte	0x65
+ 664 01b3 73000000 		.4byte	0x73
+ 665 01b7 00000000 		.4byte	.LFB70
+ 666 01bb 18000000 		.4byte	.LFE70-.LFB70
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 15
+
+
+ 667 01bf 01       		.uleb128 0x1
+ 668 01c0 9C       		.byte	0x9c
+ 669 01c1 D3010000 		.4byte	0x1d3
+ 670 01c5 0D       		.uleb128 0xd
+ 671 01c6 E4020000 		.4byte	.LASF52
+ 672 01ca 01       		.byte	0x1
+ 673 01cb 67       		.byte	0x67
+ 674 01cc 73000000 		.4byte	0x73
+ 675 01d0 01       		.uleb128 0x1
+ 676 01d1 50       		.byte	0x50
+ 677 01d2 00       		.byte	0
+ 678 01d3 0E       		.uleb128 0xe
+ 679 01d4 12000000 		.4byte	.LASF23
+ 680 01d8 01       		.byte	0x1
+ 681 01d9 08       		.byte	0x8
+ 682 01da 00000000 		.4byte	.LFB64
+ 683 01de 90000000 		.4byte	.LFE64-.LFB64
+ 684 01e2 01       		.uleb128 0x1
+ 685 01e3 9C       		.byte	0x9c
+ 686 01e4 57020000 		.4byte	0x257
+ 687 01e8 08       		.uleb128 0x8
+ 688 01e9 06000000 		.4byte	.LVL10
+ 689 01ed A8030000 		.4byte	0x3a8
+ 690 01f1 08       		.uleb128 0x8
+ 691 01f2 0A000000 		.4byte	.LVL11
+ 692 01f6 B3030000 		.4byte	0x3b3
+ 693 01fa 08       		.uleb128 0x8
+ 694 01fb 58000000 		.4byte	.LVL12
+ 695 01ff BE030000 		.4byte	0x3be
+ 696 0203 09       		.uleb128 0x9
+ 697 0204 60000000 		.4byte	.LVL13
+ 698 0208 C9030000 		.4byte	0x3c9
+ 699 020c 16020000 		.4byte	0x216
+ 700 0210 0A       		.uleb128 0xa
+ 701 0211 01       		.uleb128 0x1
+ 702 0212 50       		.byte	0x50
+ 703 0213 01       		.uleb128 0x1
+ 704 0214 31       		.byte	0x31
+ 705 0215 00       		.byte	0
+ 706 0216 09       		.uleb128 0x9
+ 707 0217 68000000 		.4byte	.LVL14
+ 708 021b C9030000 		.4byte	0x3c9
+ 709 021f 29020000 		.4byte	0x229
+ 710 0223 0A       		.uleb128 0xa
+ 711 0224 01       		.uleb128 0x1
+ 712 0225 50       		.byte	0x50
+ 713 0226 01       		.uleb128 0x1
+ 714 0227 32       		.byte	0x32
+ 715 0228 00       		.byte	0
+ 716 0229 08       		.uleb128 0x8
+ 717 022a 6E000000 		.4byte	.LVL15
+ 718 022e BE030000 		.4byte	0x3be
+ 719 0232 08       		.uleb128 0x8
+ 720 0233 74000000 		.4byte	.LVL16
+ 721 0237 D4030000 		.4byte	0x3d4
+ 722 023b 08       		.uleb128 0x8
+ 723 023c 78000000 		.4byte	.LVL17
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 16
+
+
+ 724 0240 AC010000 		.4byte	0x1ac
+ 725 0244 08       		.uleb128 0x8
+ 726 0245 7C000000 		.4byte	.LVL18
+ 727 0249 DF030000 		.4byte	0x3df
+ 728 024d 08       		.uleb128 0x8
+ 729 024e 80000000 		.4byte	.LVL19
+ 730 0252 5B030000 		.4byte	0x35b
+ 731 0256 00       		.byte	0
+ 732 0257 0F       		.uleb128 0xf
+ 733 0258 57010000 		.4byte	.LASF24
+ 734 025c 04       		.byte	0x4
+ 735 025d 1207     		.2byte	0x712
+ 736 025f 63020000 		.4byte	0x263
+ 737 0263 05       		.uleb128 0x5
+ 738 0264 81000000 		.4byte	0x81
+ 739 0268 10       		.uleb128 0x10
+ 740 0269 A5000000 		.4byte	0xa5
+ 741 026d 78020000 		.4byte	0x278
+ 742 0271 11       		.uleb128 0x11
+ 743 0272 B3000000 		.4byte	0xb3
+ 744 0276 F9       		.byte	0xf9
+ 745 0277 00       		.byte	0
+ 746 0278 12       		.uleb128 0x12
+ 747 0279 0A030000 		.4byte	.LASF25
+ 748 027d 05       		.byte	0x5
+ 749 027e 05       		.byte	0x5
+ 750 027f 68020000 		.4byte	0x268
+ 751 0283 05       		.uleb128 0x5
+ 752 0284 03       		.byte	0x3
+ 753 0285 00000000 		.4byte	buffer
+ 754 0289 12       		.uleb128 0x12
+ 755 028a CF020000 		.4byte	.LASF26
+ 756 028e 05       		.byte	0x5
+ 757 028f 08       		.byte	0x8
+ 758 0290 73000000 		.4byte	0x73
+ 759 0294 05       		.uleb128 0x5
+ 760 0295 03       		.byte	0x3
+ 761 0296 00000000 		.4byte	difficulty
+ 762 029a 12       		.uleb128 0x12
+ 763 029b 23000000 		.4byte	.LASF27
+ 764 029f 05       		.byte	0x5
+ 765 02a0 0A       		.byte	0xa
+ 766 02a1 73000000 		.4byte	0x73
+ 767 02a5 05       		.uleb128 0x5
+ 768 02a6 03       		.byte	0x3
+ 769 02a7 00000000 		.4byte	state
+ 770 02ab 12       		.uleb128 0x12
+ 771 02ac EE000000 		.4byte	.LASF28
+ 772 02b0 05       		.byte	0x5
+ 773 02b1 0B       		.byte	0xb
+ 774 02b2 73000000 		.4byte	0x73
+ 775 02b6 05       		.uleb128 0x5
+ 776 02b7 03       		.byte	0x3
+ 777 02b8 00000000 		.4byte	randState
+ 778 02bc 12       		.uleb128 0x12
+ 779 02bd 34030000 		.4byte	.LASF29
+ 780 02c1 05       		.byte	0x5
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 17
+
+
+ 781 02c2 0C       		.byte	0xc
+ 782 02c3 73000000 		.4byte	0x73
+ 783 02c7 05       		.uleb128 0x5
+ 784 02c8 03       		.byte	0x3
+ 785 02c9 00000000 		.4byte	randturn
+ 786 02cd 12       		.uleb128 0x12
+ 787 02ce 56000000 		.4byte	.LASF30
+ 788 02d2 01       		.byte	0x1
+ 789 02d3 03       		.byte	0x3
+ 790 02d4 BA000000 		.4byte	0xba
+ 791 02d8 05       		.uleb128 0x5
+ 792 02d9 03       		.byte	0x3
+ 793 02da 00000000 		.4byte	pulseWidth
+ 794 02de 12       		.uleb128 0x12
+ 795 02df 61000000 		.4byte	.LASF31
+ 796 02e3 01       		.byte	0x1
+ 797 02e4 04       		.byte	0x4
+ 798 02e5 EF020000 		.4byte	0x2ef
+ 799 02e9 05       		.uleb128 0x5
+ 800 02ea 03       		.byte	0x3
+ 801 02eb 00000000 		.4byte	time_us
+ 802 02ef 05       		.uleb128 0x5
+ 803 02f0 73000000 		.4byte	0x73
+ 804 02f4 13       		.uleb128 0x13
+ 805 02f5 653100   		.ascii	"e1\000"
+ 806 02f8 01       		.byte	0x1
+ 807 02f9 05       		.byte	0x5
+ 808 02fa EF020000 		.4byte	0x2ef
+ 809 02fe 05       		.uleb128 0x5
+ 810 02ff 03       		.byte	0x3
+ 811 0300 00000000 		.4byte	e1
+ 812 0304 13       		.uleb128 0x13
+ 813 0305 653200   		.ascii	"e2\000"
+ 814 0308 01       		.byte	0x1
+ 815 0309 05       		.byte	0x5
+ 816 030a EF020000 		.4byte	0x2ef
+ 817 030e 05       		.uleb128 0x5
+ 818 030f 03       		.byte	0x3
+ 819 0310 00000000 		.4byte	e2
+ 820 0314 13       		.uleb128 0x13
+ 821 0315 653300   		.ascii	"e3\000"
+ 822 0318 01       		.byte	0x1
+ 823 0319 05       		.byte	0x5
+ 824 031a EF020000 		.4byte	0x2ef
+ 825 031e 05       		.uleb128 0x5
+ 826 031f 03       		.byte	0x3
+ 827 0320 00000000 		.4byte	e3
+ 828 0324 13       		.uleb128 0x13
+ 829 0325 653400   		.ascii	"e4\000"
+ 830 0328 01       		.byte	0x1
+ 831 0329 05       		.byte	0x5
+ 832 032a EF020000 		.4byte	0x2ef
+ 833 032e 05       		.uleb128 0x5
+ 834 032f 03       		.byte	0x3
+ 835 0330 00000000 		.4byte	e4
+ 836 0334 12       		.uleb128 0x12
+ 837 0335 69000000 		.4byte	.LASF32
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 18
+
+
+ 838 0339 01       		.byte	0x1
+ 839 033a 06       		.byte	0x6
+ 840 033b EF020000 		.4byte	0x2ef
+ 841 033f 05       		.uleb128 0x5
+ 842 0340 03       		.byte	0x3
+ 843 0341 00000000 		.4byte	status
+ 844 0345 14       		.uleb128 0x14
+ 845 0346 EF020000 		.4byte	.LASF33
+ 846 034a EF020000 		.4byte	.LASF33
+ 847 034e 06       		.byte	0x6
+ 848 034f 27       		.byte	0x27
+ 849 0350 14       		.uleb128 0x14
+ 850 0351 A8000000 		.4byte	.LASF34
+ 851 0355 A8000000 		.4byte	.LASF34
+ 852 0359 07       		.byte	0x7
+ 853 035a 27       		.byte	0x27
+ 854 035b 14       		.uleb128 0x14
+ 855 035c F8000000 		.4byte	.LASF35
+ 856 0360 F8000000 		.4byte	.LASF35
+ 857 0364 08       		.byte	0x8
+ 858 0365 92       		.byte	0x92
+ 859 0366 14       		.uleb128 0x14
+ 860 0367 7D030000 		.4byte	.LASF36
+ 861 036b 7D030000 		.4byte	.LASF36
+ 862 036f 09       		.byte	0x9
+ 863 0370 4F       		.byte	0x4f
+ 864 0371 14       		.uleb128 0x14
+ 865 0372 6C030000 		.4byte	.LASF37
+ 866 0376 6C030000 		.4byte	.LASF37
+ 867 037a 0A       		.byte	0xa
+ 868 037b 18       		.byte	0x18
+ 869 037c 14       		.uleb128 0x14
+ 870 037d 00000000 		.4byte	.LASF38
+ 871 0381 00000000 		.4byte	.LASF38
+ 872 0385 0B       		.byte	0xb
+ 873 0386 18       		.byte	0x18
+ 874 0387 14       		.uleb128 0x14
+ 875 0388 09010000 		.4byte	.LASF39
+ 876 038c 09010000 		.4byte	.LASF39
+ 877 0390 0C       		.byte	0xc
+ 878 0391 18       		.byte	0x18
+ 879 0392 14       		.uleb128 0x14
+ 880 0393 11030000 		.4byte	.LASF40
+ 881 0397 11030000 		.4byte	.LASF40
+ 882 039b 0D       		.byte	0xd
+ 883 039c 18       		.byte	0x18
+ 884 039d 14       		.uleb128 0x14
+ 885 039e 70000000 		.4byte	.LASF41
+ 886 03a2 70000000 		.4byte	.LASF41
+ 887 03a6 0E       		.byte	0xe
+ 888 03a7 18       		.byte	0x18
+ 889 03a8 14       		.uleb128 0x14
+ 890 03a9 02020000 		.4byte	.LASF42
+ 891 03ad 02020000 		.4byte	.LASF42
+ 892 03b1 08       		.byte	0x8
+ 893 03b2 93       		.byte	0x93
+ 894 03b3 14       		.uleb128 0x14
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 19
+
+
+ 895 03b4 1B010000 		.4byte	.LASF43
+ 896 03b8 1B010000 		.4byte	.LASF43
+ 897 03bc 09       		.byte	0x9
+ 898 03bd 5E       		.byte	0x5e
+ 899 03be 14       		.uleb128 0x14
+ 900 03bf 3A000000 		.4byte	.LASF44
+ 901 03c3 3A000000 		.4byte	.LASF44
+ 902 03c7 05       		.byte	0x5
+ 903 03c8 15       		.byte	0x15
+ 904 03c9 14       		.uleb128 0x14
+ 905 03ca B8000000 		.4byte	.LASF45
+ 906 03ce B8000000 		.4byte	.LASF45
+ 907 03d2 05       		.byte	0x5
+ 908 03d3 14       		.byte	0x14
+ 909 03d4 14       		.uleb128 0x14
+ 910 03d5 7F010000 		.4byte	.LASF46
+ 911 03d9 7F010000 		.4byte	.LASF46
+ 912 03dd 05       		.byte	0x5
+ 913 03de 10       		.byte	0x10
+ 914 03df 14       		.uleb128 0x14
+ 915 03e0 A4010000 		.4byte	.LASF47
+ 916 03e4 A4010000 		.4byte	.LASF47
+ 917 03e8 09       		.byte	0x9
+ 918 03e9 52       		.byte	0x52
+ 919 03ea 00       		.byte	0
+ 920              		.section	.debug_abbrev,"",%progbits
+ 921              	.Ldebug_abbrev0:
+ 922 0000 01       		.uleb128 0x1
+ 923 0001 11       		.uleb128 0x11
+ 924 0002 01       		.byte	0x1
+ 925 0003 25       		.uleb128 0x25
+ 926 0004 0E       		.uleb128 0xe
+ 927 0005 13       		.uleb128 0x13
+ 928 0006 0B       		.uleb128 0xb
+ 929 0007 03       		.uleb128 0x3
+ 930 0008 0E       		.uleb128 0xe
+ 931 0009 1B       		.uleb128 0x1b
+ 932 000a 0E       		.uleb128 0xe
+ 933 000b 55       		.uleb128 0x55
+ 934 000c 17       		.uleb128 0x17
+ 935 000d 11       		.uleb128 0x11
+ 936 000e 01       		.uleb128 0x1
+ 937 000f 10       		.uleb128 0x10
+ 938 0010 17       		.uleb128 0x17
+ 939 0011 00       		.byte	0
+ 940 0012 00       		.byte	0
+ 941 0013 02       		.uleb128 0x2
+ 942 0014 24       		.uleb128 0x24
+ 943 0015 00       		.byte	0
+ 944 0016 0B       		.uleb128 0xb
+ 945 0017 0B       		.uleb128 0xb
+ 946 0018 3E       		.uleb128 0x3e
+ 947 0019 0B       		.uleb128 0xb
+ 948 001a 03       		.uleb128 0x3
+ 949 001b 0E       		.uleb128 0xe
+ 950 001c 00       		.byte	0
+ 951 001d 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 20
+
+
+ 952 001e 03       		.uleb128 0x3
+ 953 001f 16       		.uleb128 0x16
+ 954 0020 00       		.byte	0
+ 955 0021 03       		.uleb128 0x3
+ 956 0022 0E       		.uleb128 0xe
+ 957 0023 3A       		.uleb128 0x3a
+ 958 0024 0B       		.uleb128 0xb
+ 959 0025 3B       		.uleb128 0x3b
+ 960 0026 0B       		.uleb128 0xb
+ 961 0027 49       		.uleb128 0x49
+ 962 0028 13       		.uleb128 0x13
+ 963 0029 00       		.byte	0
+ 964 002a 00       		.byte	0
+ 965 002b 04       		.uleb128 0x4
+ 966 002c 24       		.uleb128 0x24
+ 967 002d 00       		.byte	0
+ 968 002e 0B       		.uleb128 0xb
+ 969 002f 0B       		.uleb128 0xb
+ 970 0030 3E       		.uleb128 0x3e
+ 971 0031 0B       		.uleb128 0xb
+ 972 0032 03       		.uleb128 0x3
+ 973 0033 08       		.uleb128 0x8
+ 974 0034 00       		.byte	0
+ 975 0035 00       		.byte	0
+ 976 0036 05       		.uleb128 0x5
+ 977 0037 35       		.uleb128 0x35
+ 978 0038 00       		.byte	0
+ 979 0039 49       		.uleb128 0x49
+ 980 003a 13       		.uleb128 0x13
+ 981 003b 00       		.byte	0
+ 982 003c 00       		.byte	0
+ 983 003d 06       		.uleb128 0x6
+ 984 003e 2E       		.uleb128 0x2e
+ 985 003f 00       		.byte	0
+ 986 0040 3F       		.uleb128 0x3f
+ 987 0041 19       		.uleb128 0x19
+ 988 0042 03       		.uleb128 0x3
+ 989 0043 0E       		.uleb128 0xe
+ 990 0044 3A       		.uleb128 0x3a
+ 991 0045 0B       		.uleb128 0xb
+ 992 0046 3B       		.uleb128 0x3b
+ 993 0047 0B       		.uleb128 0xb
+ 994 0048 27       		.uleb128 0x27
+ 995 0049 19       		.uleb128 0x19
+ 996 004a 11       		.uleb128 0x11
+ 997 004b 01       		.uleb128 0x1
+ 998 004c 12       		.uleb128 0x12
+ 999 004d 06       		.uleb128 0x6
+ 1000 004e 40       		.uleb128 0x40
+ 1001 004f 18       		.uleb128 0x18
+ 1002 0050 9742     		.uleb128 0x2117
+ 1003 0052 19       		.uleb128 0x19
+ 1004 0053 00       		.byte	0
+ 1005 0054 00       		.byte	0
+ 1006 0055 07       		.uleb128 0x7
+ 1007 0056 2E       		.uleb128 0x2e
+ 1008 0057 01       		.byte	0x1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 21
+
+
+ 1009 0058 3F       		.uleb128 0x3f
+ 1010 0059 19       		.uleb128 0x19
+ 1011 005a 03       		.uleb128 0x3
+ 1012 005b 0E       		.uleb128 0xe
+ 1013 005c 3A       		.uleb128 0x3a
+ 1014 005d 0B       		.uleb128 0xb
+ 1015 005e 3B       		.uleb128 0x3b
+ 1016 005f 0B       		.uleb128 0xb
+ 1017 0060 11       		.uleb128 0x11
+ 1018 0061 01       		.uleb128 0x1
+ 1019 0062 12       		.uleb128 0x12
+ 1020 0063 06       		.uleb128 0x6
+ 1021 0064 40       		.uleb128 0x40
+ 1022 0065 18       		.uleb128 0x18
+ 1023 0066 9742     		.uleb128 0x2117
+ 1024 0068 19       		.uleb128 0x19
+ 1025 0069 01       		.uleb128 0x1
+ 1026 006a 13       		.uleb128 0x13
+ 1027 006b 00       		.byte	0
+ 1028 006c 00       		.byte	0
+ 1029 006d 08       		.uleb128 0x8
+ 1030 006e 898201   		.uleb128 0x4109
+ 1031 0071 00       		.byte	0
+ 1032 0072 11       		.uleb128 0x11
+ 1033 0073 01       		.uleb128 0x1
+ 1034 0074 31       		.uleb128 0x31
+ 1035 0075 13       		.uleb128 0x13
+ 1036 0076 00       		.byte	0
+ 1037 0077 00       		.byte	0
+ 1038 0078 09       		.uleb128 0x9
+ 1039 0079 898201   		.uleb128 0x4109
+ 1040 007c 01       		.byte	0x1
+ 1041 007d 11       		.uleb128 0x11
+ 1042 007e 01       		.uleb128 0x1
+ 1043 007f 31       		.uleb128 0x31
+ 1044 0080 13       		.uleb128 0x13
+ 1045 0081 01       		.uleb128 0x1
+ 1046 0082 13       		.uleb128 0x13
+ 1047 0083 00       		.byte	0
+ 1048 0084 00       		.byte	0
+ 1049 0085 0A       		.uleb128 0xa
+ 1050 0086 8A8201   		.uleb128 0x410a
+ 1051 0089 00       		.byte	0
+ 1052 008a 02       		.uleb128 0x2
+ 1053 008b 18       		.uleb128 0x18
+ 1054 008c 9142     		.uleb128 0x2111
+ 1055 008e 18       		.uleb128 0x18
+ 1056 008f 00       		.byte	0
+ 1057 0090 00       		.byte	0
+ 1058 0091 0B       		.uleb128 0xb
+ 1059 0092 898201   		.uleb128 0x4109
+ 1060 0095 01       		.byte	0x1
+ 1061 0096 11       		.uleb128 0x11
+ 1062 0097 01       		.uleb128 0x1
+ 1063 0098 31       		.uleb128 0x31
+ 1064 0099 13       		.uleb128 0x13
+ 1065 009a 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 22
+
+
+ 1066 009b 00       		.byte	0
+ 1067 009c 0C       		.uleb128 0xc
+ 1068 009d 2E       		.uleb128 0x2e
+ 1069 009e 01       		.byte	0x1
+ 1070 009f 3F       		.uleb128 0x3f
+ 1071 00a0 19       		.uleb128 0x19
+ 1072 00a1 03       		.uleb128 0x3
+ 1073 00a2 0E       		.uleb128 0xe
+ 1074 00a3 3A       		.uleb128 0x3a
+ 1075 00a4 0B       		.uleb128 0xb
+ 1076 00a5 3B       		.uleb128 0x3b
+ 1077 00a6 0B       		.uleb128 0xb
+ 1078 00a7 49       		.uleb128 0x49
+ 1079 00a8 13       		.uleb128 0x13
+ 1080 00a9 11       		.uleb128 0x11
+ 1081 00aa 01       		.uleb128 0x1
+ 1082 00ab 12       		.uleb128 0x12
+ 1083 00ac 06       		.uleb128 0x6
+ 1084 00ad 40       		.uleb128 0x40
+ 1085 00ae 18       		.uleb128 0x18
+ 1086 00af 9742     		.uleb128 0x2117
+ 1087 00b1 19       		.uleb128 0x19
+ 1088 00b2 01       		.uleb128 0x1
+ 1089 00b3 13       		.uleb128 0x13
+ 1090 00b4 00       		.byte	0
+ 1091 00b5 00       		.byte	0
+ 1092 00b6 0D       		.uleb128 0xd
+ 1093 00b7 34       		.uleb128 0x34
+ 1094 00b8 00       		.byte	0
+ 1095 00b9 03       		.uleb128 0x3
+ 1096 00ba 0E       		.uleb128 0xe
+ 1097 00bb 3A       		.uleb128 0x3a
+ 1098 00bc 0B       		.uleb128 0xb
+ 1099 00bd 3B       		.uleb128 0x3b
+ 1100 00be 0B       		.uleb128 0xb
+ 1101 00bf 49       		.uleb128 0x49
+ 1102 00c0 13       		.uleb128 0x13
+ 1103 00c1 02       		.uleb128 0x2
+ 1104 00c2 18       		.uleb128 0x18
+ 1105 00c3 00       		.byte	0
+ 1106 00c4 00       		.byte	0
+ 1107 00c5 0E       		.uleb128 0xe
+ 1108 00c6 2E       		.uleb128 0x2e
+ 1109 00c7 01       		.byte	0x1
+ 1110 00c8 3F       		.uleb128 0x3f
+ 1111 00c9 19       		.uleb128 0x19
+ 1112 00ca 03       		.uleb128 0x3
+ 1113 00cb 0E       		.uleb128 0xe
+ 1114 00cc 3A       		.uleb128 0x3a
+ 1115 00cd 0B       		.uleb128 0xb
+ 1116 00ce 3B       		.uleb128 0x3b
+ 1117 00cf 0B       		.uleb128 0xb
+ 1118 00d0 27       		.uleb128 0x27
+ 1119 00d1 19       		.uleb128 0x19
+ 1120 00d2 11       		.uleb128 0x11
+ 1121 00d3 01       		.uleb128 0x1
+ 1122 00d4 12       		.uleb128 0x12
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 23
+
+
+ 1123 00d5 06       		.uleb128 0x6
+ 1124 00d6 40       		.uleb128 0x40
+ 1125 00d7 18       		.uleb128 0x18
+ 1126 00d8 9742     		.uleb128 0x2117
+ 1127 00da 19       		.uleb128 0x19
+ 1128 00db 01       		.uleb128 0x1
+ 1129 00dc 13       		.uleb128 0x13
+ 1130 00dd 00       		.byte	0
+ 1131 00de 00       		.byte	0
+ 1132 00df 0F       		.uleb128 0xf
+ 1133 00e0 34       		.uleb128 0x34
+ 1134 00e1 00       		.byte	0
+ 1135 00e2 03       		.uleb128 0x3
+ 1136 00e3 0E       		.uleb128 0xe
+ 1137 00e4 3A       		.uleb128 0x3a
+ 1138 00e5 0B       		.uleb128 0xb
+ 1139 00e6 3B       		.uleb128 0x3b
+ 1140 00e7 05       		.uleb128 0x5
+ 1141 00e8 49       		.uleb128 0x49
+ 1142 00e9 13       		.uleb128 0x13
+ 1143 00ea 3F       		.uleb128 0x3f
+ 1144 00eb 19       		.uleb128 0x19
+ 1145 00ec 3C       		.uleb128 0x3c
+ 1146 00ed 19       		.uleb128 0x19
+ 1147 00ee 00       		.byte	0
+ 1148 00ef 00       		.byte	0
+ 1149 00f0 10       		.uleb128 0x10
+ 1150 00f1 01       		.uleb128 0x1
+ 1151 00f2 01       		.byte	0x1
+ 1152 00f3 49       		.uleb128 0x49
+ 1153 00f4 13       		.uleb128 0x13
+ 1154 00f5 01       		.uleb128 0x1
+ 1155 00f6 13       		.uleb128 0x13
+ 1156 00f7 00       		.byte	0
+ 1157 00f8 00       		.byte	0
+ 1158 00f9 11       		.uleb128 0x11
+ 1159 00fa 21       		.uleb128 0x21
+ 1160 00fb 00       		.byte	0
+ 1161 00fc 49       		.uleb128 0x49
+ 1162 00fd 13       		.uleb128 0x13
+ 1163 00fe 2F       		.uleb128 0x2f
+ 1164 00ff 0B       		.uleb128 0xb
+ 1165 0100 00       		.byte	0
+ 1166 0101 00       		.byte	0
+ 1167 0102 12       		.uleb128 0x12
+ 1168 0103 34       		.uleb128 0x34
+ 1169 0104 00       		.byte	0
+ 1170 0105 03       		.uleb128 0x3
+ 1171 0106 0E       		.uleb128 0xe
+ 1172 0107 3A       		.uleb128 0x3a
+ 1173 0108 0B       		.uleb128 0xb
+ 1174 0109 3B       		.uleb128 0x3b
+ 1175 010a 0B       		.uleb128 0xb
+ 1176 010b 49       		.uleb128 0x49
+ 1177 010c 13       		.uleb128 0x13
+ 1178 010d 3F       		.uleb128 0x3f
+ 1179 010e 19       		.uleb128 0x19
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 24
+
+
+ 1180 010f 02       		.uleb128 0x2
+ 1181 0110 18       		.uleb128 0x18
+ 1182 0111 00       		.byte	0
+ 1183 0112 00       		.byte	0
+ 1184 0113 13       		.uleb128 0x13
+ 1185 0114 34       		.uleb128 0x34
+ 1186 0115 00       		.byte	0
+ 1187 0116 03       		.uleb128 0x3
+ 1188 0117 08       		.uleb128 0x8
+ 1189 0118 3A       		.uleb128 0x3a
+ 1190 0119 0B       		.uleb128 0xb
+ 1191 011a 3B       		.uleb128 0x3b
+ 1192 011b 0B       		.uleb128 0xb
+ 1193 011c 49       		.uleb128 0x49
+ 1194 011d 13       		.uleb128 0x13
+ 1195 011e 3F       		.uleb128 0x3f
+ 1196 011f 19       		.uleb128 0x19
+ 1197 0120 02       		.uleb128 0x2
+ 1198 0121 18       		.uleb128 0x18
+ 1199 0122 00       		.byte	0
+ 1200 0123 00       		.byte	0
+ 1201 0124 14       		.uleb128 0x14
+ 1202 0125 2E       		.uleb128 0x2e
+ 1203 0126 00       		.byte	0
+ 1204 0127 3F       		.uleb128 0x3f
+ 1205 0128 19       		.uleb128 0x19
+ 1206 0129 3C       		.uleb128 0x3c
+ 1207 012a 19       		.uleb128 0x19
+ 1208 012b 6E       		.uleb128 0x6e
+ 1209 012c 0E       		.uleb128 0xe
+ 1210 012d 03       		.uleb128 0x3
+ 1211 012e 0E       		.uleb128 0xe
+ 1212 012f 3A       		.uleb128 0x3a
+ 1213 0130 0B       		.uleb128 0xb
+ 1214 0131 3B       		.uleb128 0x3b
+ 1215 0132 0B       		.uleb128 0xb
+ 1216 0133 00       		.byte	0
+ 1217 0134 00       		.byte	0
+ 1218 0135 00       		.byte	0
+ 1219              		.section	.debug_aranges,"",%progbits
+ 1220 0000 4C000000 		.4byte	0x4c
+ 1221 0004 0200     		.2byte	0x2
+ 1222 0006 00000000 		.4byte	.Ldebug_info0
+ 1223 000a 04       		.byte	0x4
+ 1224 000b 00       		.byte	0
+ 1225 000c 0000     		.2byte	0
+ 1226 000e 0000     		.2byte	0
+ 1227 0010 00000000 		.4byte	.LFB65
+ 1228 0014 24000000 		.4byte	.LFE65-.LFB65
+ 1229 0018 00000000 		.4byte	.LFB66
+ 1230 001c 24000000 		.4byte	.LFE66-.LFB66
+ 1231 0020 00000000 		.4byte	.LFB67
+ 1232 0024 24000000 		.4byte	.LFE67-.LFB67
+ 1233 0028 00000000 		.4byte	.LFB68
+ 1234 002c 24000000 		.4byte	.LFE68-.LFB68
+ 1235 0030 00000000 		.4byte	.LFB69
+ 1236 0034 48000000 		.4byte	.LFE69-.LFB69
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 25
+
+
+ 1237 0038 00000000 		.4byte	.LFB70
+ 1238 003c 18000000 		.4byte	.LFE70-.LFB70
+ 1239 0040 00000000 		.4byte	.LFB64
+ 1240 0044 90000000 		.4byte	.LFE64-.LFB64
+ 1241 0048 00000000 		.4byte	0
+ 1242 004c 00000000 		.4byte	0
+ 1243              		.section	.debug_ranges,"",%progbits
+ 1244              	.Ldebug_ranges0:
+ 1245 0000 00000000 		.4byte	.LFB65
+ 1246 0004 24000000 		.4byte	.LFE65
+ 1247 0008 00000000 		.4byte	.LFB66
+ 1248 000c 24000000 		.4byte	.LFE66
+ 1249 0010 00000000 		.4byte	.LFB67
+ 1250 0014 24000000 		.4byte	.LFE67
+ 1251 0018 00000000 		.4byte	.LFB68
+ 1252 001c 24000000 		.4byte	.LFE68
+ 1253 0020 00000000 		.4byte	.LFB69
+ 1254 0024 48000000 		.4byte	.LFE69
+ 1255 0028 00000000 		.4byte	.LFB70
+ 1256 002c 18000000 		.4byte	.LFE70
+ 1257 0030 00000000 		.4byte	.LFB64
+ 1258 0034 90000000 		.4byte	.LFE64
+ 1259 0038 00000000 		.4byte	0
+ 1260 003c 00000000 		.4byte	0
+ 1261              		.section	.debug_line,"",%progbits
+ 1262              	.Ldebug_line0:
+ 1263 0000 81020000 		.section	.debug_str,"MS",%progbits,1
+ 1263      0200E101 
+ 1263      00000201 
+ 1263      FB0E0D00 
+ 1263      01010101 
+ 1264              	.LASF38:
+ 1265 0000 6563686F 		.ascii	"echoInt_1_StartEx\000"
+ 1265      496E745F 
+ 1265      315F5374 
+ 1265      61727445 
+ 1265      7800
+ 1266              	.LASF23:
+ 1267 0012 70756C73 		.ascii	"pulseInt_handler\000"
+ 1267      65496E74 
+ 1267      5F68616E 
+ 1267      646C6572 
+ 1267      00
+ 1268              	.LASF27:
+ 1269 0023 73746174 		.ascii	"state\000"
+ 1269      6500
+ 1270              	.LASF18:
+ 1271 0029 6563686F 		.ascii	"echoInt1_handler\000"
+ 1271      496E7431 
+ 1271      5F68616E 
+ 1271      646C6572 
+ 1271      00
+ 1272              	.LASF44:
+ 1273 003a 44656C61 		.ascii	"DelayBased180Turn\000"
+ 1273      79426173 
+ 1273      65643138 
+ 1273      30547572 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 26
+
+
+ 1273      6E00
+ 1274              	.LASF5:
+ 1275 004c 5F5F696E 		.ascii	"__int32_t\000"
+ 1275      7433325F 
+ 1275      7400
+ 1276              	.LASF30:
+ 1277 0056 70756C73 		.ascii	"pulseWidth\000"
+ 1277      65576964 
+ 1277      746800
+ 1278              	.LASF31:
+ 1279 0061 74696D65 		.ascii	"time_us\000"
+ 1279      5F757300 
+ 1280              	.LASF32:
+ 1281 0069 73746174 		.ascii	"status\000"
+ 1281      757300
+ 1282              	.LASF41:
+ 1283 0070 6563686F 		.ascii	"echoInt_4_StartEx\000"
+ 1283      496E745F 
+ 1283      345F5374 
+ 1283      61727445 
+ 1283      7800
+ 1284              	.LASF51:
+ 1285 0082 65646765 		.ascii	"edgeSensorInit\000"
+ 1285      53656E73 
+ 1285      6F72496E 
+ 1285      697400
+ 1286              	.LASF21:
+ 1287 0091 6563686F 		.ascii	"echoInt4_handler\000"
+ 1287      496E7434 
+ 1287      5F68616E 
+ 1287      646C6572 
+ 1287      00
+ 1288              	.LASF13:
+ 1289 00a2 666C6F61 		.ascii	"float\000"
+ 1289      7400
+ 1290              	.LASF34:
+ 1291 00a8 434C4B5F 		.ascii	"CLK_24MHz_Start\000"
+ 1291      32344D48 
+ 1291      7A5F5374 
+ 1291      61727400 
+ 1292              	.LASF45:
+ 1293 00b8 44656C61 		.ascii	"DelayBased90Turn\000"
+ 1293      79426173 
+ 1293      65643930 
+ 1293      5475726E 
+ 1293      00
+ 1294              	.LASF7:
+ 1295 00c9 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1295      20756E73 
+ 1295      69676E65 
+ 1295      6420696E 
+ 1295      7400
+ 1296              	.LASF3:
+ 1297 00db 73686F72 		.ascii	"short unsigned int\000"
+ 1297      7420756E 
+ 1297      7369676E 
+ 1297      65642069 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 27
+
+
+ 1297      6E7400
+ 1298              	.LASF28:
+ 1299 00ee 72616E64 		.ascii	"randState\000"
+ 1299      53746174 
+ 1299      6500
+ 1300              	.LASF35:
+ 1301 00f8 74726967 		.ascii	"triggerPWM_Start\000"
+ 1301      67657250 
+ 1301      574D5F53 
+ 1301      74617274 
+ 1301      00
+ 1302              	.LASF39:
+ 1303 0109 6563686F 		.ascii	"echoInt_2_StartEx\000"
+ 1303      496E745F 
+ 1303      325F5374 
+ 1303      61727445 
+ 1303      7800
+ 1304              	.LASF43:
+ 1305 011b 70756C73 		.ascii	"pulseCounter_ReadCapture\000"
+ 1305      65436F75 
+ 1305      6E746572 
+ 1305      5F526561 
+ 1305      64436170 
+ 1306              	.LASF14:
+ 1307 0134 646F7562 		.ascii	"double\000"
+ 1307      6C6500
+ 1308              	.LASF19:
+ 1309 013b 6563686F 		.ascii	"echoInt2_handler\000"
+ 1309      496E7432 
+ 1309      5F68616E 
+ 1309      646C6572 
+ 1309      00
+ 1310              	.LASF6:
+ 1311 014c 5F5F7569 		.ascii	"__uint32_t\000"
+ 1311      6E743332 
+ 1311      5F7400
+ 1312              	.LASF24:
+ 1313 0157 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1313      52784275 
+ 1313      66666572 
+ 1313      00
+ 1314              	.LASF1:
+ 1315 0164 756E7369 		.ascii	"unsigned char\000"
+ 1315      676E6564 
+ 1315      20636861 
+ 1315      7200
+ 1316              	.LASF10:
+ 1317 0172 756E7369 		.ascii	"unsigned int\000"
+ 1317      676E6564 
+ 1317      20696E74 
+ 1317      00
+ 1318              	.LASF46:
+ 1319 017f 64726976 		.ascii	"driveForwards\000"
+ 1319      65466F72 
+ 1319      77617264 
+ 1319      7300
+ 1320              	.LASF9:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 28
+
+
+ 1321 018d 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1321      206C6F6E 
+ 1321      6720756E 
+ 1321      7369676E 
+ 1321      65642069 
+ 1322              	.LASF47:
+ 1323 01a4 70756C73 		.ascii	"pulseCounter_ReadStatusRegister\000"
+ 1323      65436F75 
+ 1323      6E746572 
+ 1323      5F526561 
+ 1323      64537461 
+ 1324              	.LASF50:
+ 1325 01c4 433A5C55 		.ascii	"C:\\Users\\lucasiversen\\Desktop\\Ultrasoundv2\\Ult"
+ 1325      73657273 
+ 1325      5C6C7563 
+ 1325      61736976 
+ 1325      65727365 
+ 1326 01f2 7261736F 		.ascii	"rasoundv2.cydsn\000"
+ 1326      756E6476 
+ 1326      322E6379 
+ 1326      64736E00 
+ 1327              	.LASF42:
+ 1328 0202 74726967 		.ascii	"triggerPWM_Stop\000"
+ 1328      67657250 
+ 1328      574D5F53 
+ 1328      746F7000 
+ 1329              	.LASF48:
+ 1330 0212 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1330      43313120 
+ 1330      352E342E 
+ 1330      31203230 
+ 1330      31363036 
+ 1331 0245 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1331      20726576 
+ 1331      6973696F 
+ 1331      6E203233 
+ 1331      37373135 
+ 1332 0278 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1332      66756E63 
+ 1332      74696F6E 
+ 1332      2D736563 
+ 1332      74696F6E 
+ 1333              	.LASF11:
+ 1334 02a0 696E7433 		.ascii	"int32_t\000"
+ 1334      325F7400 
+ 1335              	.LASF17:
+ 1336 02a8 73697A65 		.ascii	"sizetype\000"
+ 1336      74797065 
+ 1336      00
+ 1337              	.LASF49:
+ 1338 02b1 65646765 		.ascii	"edgeSensorApp.c\000"
+ 1338      53656E73 
+ 1338      6F724170 
+ 1338      702E6300 
+ 1339              	.LASF8:
+ 1340 02c1 6C6F6E67 		.ascii	"long long int\000"
+ 1340      206C6F6E 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 29
+
+
+ 1340      6720696E 
+ 1340      7400
+ 1341              	.LASF26:
+ 1342 02cf 64696666 		.ascii	"difficulty\000"
+ 1342      6963756C 
+ 1342      747900
+ 1343              	.LASF22:
+ 1344 02da 67657453 		.ascii	"getStatus\000"
+ 1344      74617475 
+ 1344      7300
+ 1345              	.LASF52:
+ 1346 02e4 74656D70 		.ascii	"tempStatus\000"
+ 1346      53746174 
+ 1346      757300
+ 1347              	.LASF33:
+ 1348 02ef 434C4B5F 		.ascii	"CLK_500kHz_Start\000"
+ 1348      3530306B 
+ 1348      487A5F53 
+ 1348      74617274 
+ 1348      00
+ 1349              	.LASF2:
+ 1350 0300 73686F72 		.ascii	"short int\000"
+ 1350      7420696E 
+ 1350      7400
+ 1351              	.LASF25:
+ 1352 030a 62756666 		.ascii	"buffer\000"
+ 1352      657200
+ 1353              	.LASF40:
+ 1354 0311 6563686F 		.ascii	"echoInt_3_StartEx\000"
+ 1354      496E745F 
+ 1354      335F5374 
+ 1354      61727445 
+ 1354      7800
+ 1355              	.LASF20:
+ 1356 0323 6563686F 		.ascii	"echoInt3_handler\000"
+ 1356      496E7433 
+ 1356      5F68616E 
+ 1356      646C6572 
+ 1356      00
+ 1357              	.LASF29:
+ 1358 0334 72616E64 		.ascii	"randturn\000"
+ 1358      7475726E 
+ 1358      00
+ 1359              	.LASF12:
+ 1360 033d 75696E74 		.ascii	"uint32_t\000"
+ 1360      33325F74 
+ 1360      00
+ 1361              	.LASF4:
+ 1362 0346 6C6F6E67 		.ascii	"long int\000"
+ 1362      20696E74 
+ 1362      00
+ 1363              	.LASF15:
+ 1364 034f 63686172 		.ascii	"char\000"
+ 1364      00
+ 1365              	.LASF16:
+ 1366 0354 6C6F6E67 		.ascii	"long double\000"
+ 1366      20646F75 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc66tKMa.s 			page 30
+
+
+ 1366      626C6500 
+ 1367              	.LASF0:
+ 1368 0360 7369676E 		.ascii	"signed char\000"
+ 1368      65642063 
+ 1368      68617200 
+ 1369              	.LASF37:
+ 1370 036c 70756C73 		.ascii	"pulseInt_StartEx\000"
+ 1370      65496E74 
+ 1370      5F537461 
+ 1370      72744578 
+ 1370      00
+ 1371              	.LASF36:
+ 1372 037d 70756C73 		.ascii	"pulseCounter_Start\000"
+ 1372      65436F75 
+ 1372      6E746572 
+ 1372      5F537461 
+ 1372      727400
+ 1373              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
