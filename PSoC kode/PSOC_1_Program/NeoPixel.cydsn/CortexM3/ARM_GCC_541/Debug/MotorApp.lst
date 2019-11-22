@@ -1,0 +1,2624 @@
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"MotorApp.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.driveForwards,"ax",%progbits
+  20              		.align	2
+  21              		.global	driveForwards
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	driveForwards, %function
+  25              	driveForwards:
+  26              	.LFB66:
+  27              		.file 1 "..\\..\\..\\3semesterProjekt_repository\\Ultrasoundv2\\Ultrasoundv2.cydsn\\MotorApp.c"
+   1:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** #include "MotorApp.h"
+   2:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** #include "waitingState.h"
+   3:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** #include <time.h>
+   4:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** #include <stdlib.h> 
+   5:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+   6:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** /*
+   7:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** Dette er et to dimensionelt array der indeholder de forskellige duty cycles der kan sendes til de t
+   8:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** og vil altid køre således. Ved at skifte rundt rundt i første dimension vil beerdroid dreje endt
+   9:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** */
+  10:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** int driveState[7][2] = {{10, 100},
+  11:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****                         {30, 100},
+  12:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****                         {50, 100},
+  13:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****                         {70, 100},
+  14:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****                         {70, 80},
+  15:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****                         {70, 60},
+  16:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****                         {70, 40}};
+  17:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+  18:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+  19:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** //denne funktion skifter tilfældigt rundt i driveState arrayet
+  20:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void speedSelect()
+  21:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {    
+  22:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(randState == 0)                      //Når randstate er 0, laves en ny randstate værdi ime
+  23:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+  24:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         srand(time(NULL));
+  25:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         randState = rand() % 7 - 3;
+  26:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+  27:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(randState < 0)                       //Hvis randstate er under 0 rykkes en gang ned i arraye
+  28:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+  29:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         changeState(-1);
+  30:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         randState++;                        //randsdtate forøges så den til sidst rammer 0 og der
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 2
+
+
+  31:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+  32:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     else if(randState > 0)                  //Hvis randstate er over 0 rykkes en gang op i arrayet
+  33:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+  34:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         changeState(1);
+  35:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         randState--;                        //randsdtate trækkes 1 fra så den til sidst rammer 0 
+  36:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+  37:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** }
+  38:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+  39:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void changeState(int change)                //Denne funktion sikre at state ikke forlader driveStat
+  40:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {
+  41:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****   
+  42:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  43:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(change == 1 || change == -1)
+  44:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+  45:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         if(state > 0 && change == -1)
+  46:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         {
+  47:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             state += change;
+  48:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             changeSpeed();
+  49:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         }
+  50:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         else if(state < 6 && change == 1)
+  51:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         {
+  52:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             state += change;
+  53:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             changeSpeed();
+  54:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         } 
+  55:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+  56:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** }
+  57:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+  58:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+  59:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void driveForwards()                        //Denne funktion sætter motoren til at køre fremad
+  60:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {
+  28              		.loc 1 60 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  61:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(running_ == 1)
+  36              		.loc 1 61 0
+  37 0002 0F4B     		ldr	r3, .L4
+  38 0004 1B68     		ldr	r3, [r3]
+  39 0006 012B     		cmp	r3, #1
+  40 0008 19D1     		bne	.L1
+  62:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+  63:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+  41              		.loc 1 63 0
+  42 000a FFF7FEFF 		bl	motorPWM_1_Stop
+  43              	.LVL0:
+  64:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+  44              		.loc 1 64 0
+  45 000e FFF7FEFF 		bl	motorPWM_2_Stop
+  46              	.LVL1:
+  65:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  66:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin1_dir1_Write(0);
+  47              		.loc 1 66 0
+  48 0012 0020     		movs	r0, #0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 3
+
+
+  49 0014 FFF7FEFF 		bl	Pin1_dir1_Write
+  50              	.LVL2:
+  67:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin1_dir2_Write(1);
+  51              		.loc 1 67 0
+  52 0018 0120     		movs	r0, #1
+  53 001a FFF7FEFF 		bl	Pin1_dir2_Write
+  54              	.LVL3:
+  68:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin2_dir1_Write(0);
+  55              		.loc 1 68 0
+  56 001e 0020     		movs	r0, #0
+  57 0020 FFF7FEFF 		bl	Pin2_dir1_Write
+  58              	.LVL4:
+  69:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin2_dir2_Write(1);
+  59              		.loc 1 69 0
+  60 0024 0120     		movs	r0, #1
+  61 0026 FFF7FEFF 		bl	Pin2_dir2_Write
+  62              	.LVL5:
+  70:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  71:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  72:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_WriteCompare(80); //Set speed to current drive state on PWM 1
+  63              		.loc 1 72 0
+  64 002a 5020     		movs	r0, #80
+  65 002c FFF7FEFF 		bl	motorPWM_1_WriteCompare
+  66              	.LVL6:
+  73:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_WriteCompare(80); //Set speed to current drive state on PWM 2
+  67              		.loc 1 73 0
+  68 0030 5020     		movs	r0, #80
+  69 0032 FFF7FEFF 		bl	motorPWM_2_WriteCompare
+  70              	.LVL7:
+  74:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  75:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Start();
+  71              		.loc 1 75 0
+  72 0036 FFF7FEFF 		bl	motorPWM_1_Start
+  73              	.LVL8:
+  76:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Start();
+  74              		.loc 1 76 0
+  75 003a FFF7FEFF 		bl	motorPWM_2_Start
+  76              	.LVL9:
+  77              	.L1:
+  78 003e 08BD     		pop	{r3, pc}
+  79              	.L5:
+  80              		.align	2
+  81              	.L4:
+  82 0040 00000000 		.word	running_
+  83              		.cfi_endproc
+  84              	.LFE66:
+  85              		.size	driveForwards, .-driveForwards
+  86              		.section	.text.driveBackwards,"ax",%progbits
+  87              		.align	2
+  88              		.global	driveBackwards
+  89              		.thumb
+  90              		.thumb_func
+  91              		.type	driveBackwards, %function
+  92              	driveBackwards:
+  93              	.LFB67:
+  77:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+  78:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** }
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 4
+
+
+  79:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+  80:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void driveBackwards()                       //Denne funktion sætter motoren til at køre bagud
+  81:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {
+  94              		.loc 1 81 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98 0000 08B5     		push	{r3, lr}
+  99              		.cfi_def_cfa_offset 8
+ 100              		.cfi_offset 3, -8
+ 101              		.cfi_offset 14, -4
+  82:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(running_ == 1)
+ 102              		.loc 1 82 0
+ 103 0002 0F4B     		ldr	r3, .L9
+ 104 0004 1B68     		ldr	r3, [r3]
+ 105 0006 012B     		cmp	r3, #1
+ 106 0008 19D1     		bne	.L6
+  83:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+  84:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 107              		.loc 1 84 0
+ 108 000a FFF7FEFF 		bl	motorPWM_1_Stop
+ 109              	.LVL10:
+  85:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 110              		.loc 1 85 0
+ 111 000e FFF7FEFF 		bl	motorPWM_2_Stop
+ 112              	.LVL11:
+  86:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  87:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin1_dir1_Write(1);
+ 113              		.loc 1 87 0
+ 114 0012 0120     		movs	r0, #1
+ 115 0014 FFF7FEFF 		bl	Pin1_dir1_Write
+ 116              	.LVL12:
+  88:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin1_dir2_Write(0);
+ 117              		.loc 1 88 0
+ 118 0018 0020     		movs	r0, #0
+ 119 001a FFF7FEFF 		bl	Pin1_dir2_Write
+ 120              	.LVL13:
+  89:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin2_dir1_Write(1);
+ 121              		.loc 1 89 0
+ 122 001e 0120     		movs	r0, #1
+ 123 0020 FFF7FEFF 		bl	Pin2_dir1_Write
+ 124              	.LVL14:
+  90:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin2_dir2_Write(0);
+ 125              		.loc 1 90 0
+ 126 0024 0020     		movs	r0, #0
+ 127 0026 FFF7FEFF 		bl	Pin2_dir2_Write
+ 128              	.LVL15:
+  91:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  92:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_WriteCompare(80); //Set speed to current drive state on PWM 1
+ 129              		.loc 1 92 0
+ 130 002a 5020     		movs	r0, #80
+ 131 002c FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 132              	.LVL16:
+  93:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_WriteCompare(80); //Set speed to current drive state on PWM 2
+ 133              		.loc 1 93 0
+ 134 0030 5020     		movs	r0, #80
+ 135 0032 FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 5
+
+
+ 136              	.LVL17:
+  94:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+  95:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Start();
+ 137              		.loc 1 95 0
+ 138 0036 FFF7FEFF 		bl	motorPWM_1_Start
+ 139              	.LVL18:
+  96:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Start();
+ 140              		.loc 1 96 0
+ 141 003a FFF7FEFF 		bl	motorPWM_2_Start
+ 142              	.LVL19:
+ 143              	.L6:
+ 144 003e 08BD     		pop	{r3, pc}
+ 145              	.L10:
+ 146              		.align	2
+ 147              	.L9:
+ 148 0040 00000000 		.word	running_
+ 149              		.cfi_endproc
+ 150              	.LFE67:
+ 151              		.size	driveBackwards, .-driveBackwards
+ 152              		.section	.text.motorStop,"ax",%progbits
+ 153              		.align	2
+ 154              		.global	motorStop
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.type	motorStop, %function
+ 158              	motorStop:
+ 159              	.LFB68:
+  97:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+  98:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** }
+  99:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+ 100:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void motorStop()
+ 101:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {
+ 160              		.loc 1 101 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164 0000 08B5     		push	{r3, lr}
+ 165              		.cfi_def_cfa_offset 8
+ 166              		.cfi_offset 3, -8
+ 167              		.cfi_offset 14, -4
+ 102:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 103:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 104:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 168              		.loc 1 104 0
+ 169 0002 FFF7FEFF 		bl	motorPWM_1_Stop
+ 170              	.LVL20:
+ 105:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 171              		.loc 1 105 0
+ 172 0006 FFF7FEFF 		bl	motorPWM_2_Stop
+ 173              	.LVL21:
+ 174 000a 08BD     		pop	{r3, pc}
+ 175              		.cfi_endproc
+ 176              	.LFE68:
+ 177              		.size	motorStop, .-motorStop
+ 178              		.section	.text.changeSpeed,"ax",%progbits
+ 179              		.align	2
+ 180              		.global	changeSpeed
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 6
+
+
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.type	changeSpeed, %function
+ 184              	changeSpeed:
+ 185              	.LFB69:
+ 106:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 107:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** }
+ 108:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+ 109:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void changeSpeed()                          //Denne funktion ændre placering i driveState, og herm
+ 110:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {
+ 186              		.loc 1 110 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190 0000 08B5     		push	{r3, lr}
+ 191              		.cfi_def_cfa_offset 8
+ 192              		.cfi_offset 3, -8
+ 193              		.cfi_offset 14, -4
+ 111:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     //state = 3;
+ 112:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+ 113:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 194              		.loc 1 113 0
+ 195 0002 FFF7FEFF 		bl	motorPWM_1_Stop
+ 196              	.LVL22:
+ 114:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 197              		.loc 1 114 0
+ 198 0006 FFF7FEFF 		bl	motorPWM_2_Stop
+ 199              	.LVL23:
+ 115:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 116:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(driveState[state][0] > 9 && driveState[state][0] < 71)     //sikre at arrayet ikke forlades
+ 200              		.loc 1 116 0
+ 201 000a 154B     		ldr	r3, .L17
+ 202 000c 1A68     		ldr	r2, [r3]
+ 203 000e 154B     		ldr	r3, .L17+4
+ 204 0010 53F83230 		ldr	r3, [r3, r2, lsl #3]
+ 205 0014 0A3B     		subs	r3, r3, #10
+ 206 0016 3C2B     		cmp	r3, #60
+ 207 0018 09D8     		bhi	.L14
+ 117:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 118:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         motorPWM_1_WritePeriod(170);
+ 208              		.loc 1 118 0
+ 209 001a AA20     		movs	r0, #170
+ 210 001c FFF7FEFF 		bl	motorPWM_1_WritePeriod
+ 211              	.LVL24:
+ 119:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         motorPWM_1_WriteCompare(driveState[state][0]); //Set speed to current drive state on PWM 1 
+ 212              		.loc 1 119 0
+ 213 0020 0F4B     		ldr	r3, .L17
+ 214 0022 1A68     		ldr	r2, [r3]
+ 215 0024 0F4B     		ldr	r3, .L17+4
+ 216 0026 13F83200 		ldrb	r0, [r3, r2, lsl #3]	@ zero_extendqisi2
+ 217 002a FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 218              	.LVL25:
+ 219              	.L14:
+ 120:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+ 121:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(driveState[state][1] > 39 && driveState[state][1] < 101)     //sikre at arrayet ikke forlade
+ 220              		.loc 1 121 0
+ 221 002e 0C4B     		ldr	r3, .L17
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 7
+
+
+ 222 0030 1A68     		ldr	r2, [r3]
+ 223 0032 0C4B     		ldr	r3, .L17+4
+ 224 0034 03EBC203 		add	r3, r3, r2, lsl #3
+ 225 0038 5B68     		ldr	r3, [r3, #4]
+ 226 003a 283B     		subs	r3, r3, #40
+ 227 003c 3C2B     		cmp	r3, #60
+ 228 003e 0AD8     		bhi	.L15
+ 122:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 123:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         motorPWM_2_WritePeriod(170);
+ 229              		.loc 1 123 0
+ 230 0040 AA20     		movs	r0, #170
+ 231 0042 FFF7FEFF 		bl	motorPWM_2_WritePeriod
+ 232              	.LVL26:
+ 124:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         motorPWM_2_WriteCompare(driveState[state][1]); //Set speed to current drive state on PWM 2 
+ 233              		.loc 1 124 0
+ 234 0046 064B     		ldr	r3, .L17
+ 235 0048 1A68     		ldr	r2, [r3]
+ 236 004a 064B     		ldr	r3, .L17+4
+ 237 004c 03EBC203 		add	r3, r3, r2, lsl #3
+ 238 0050 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 239 0052 FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ 240              	.LVL27:
+ 241              	.L15:
+ 125:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+ 126:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 127:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Start();
+ 242              		.loc 1 127 0
+ 243 0056 FFF7FEFF 		bl	motorPWM_1_Start
+ 244              	.LVL28:
+ 128:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Start();
+ 245              		.loc 1 128 0
+ 246 005a FFF7FEFF 		bl	motorPWM_2_Start
+ 247              	.LVL29:
+ 248 005e 08BD     		pop	{r3, pc}
+ 249              	.L18:
+ 250              		.align	2
+ 251              	.L17:
+ 252 0060 00000000 		.word	state
+ 253 0064 00000000 		.word	.LANCHOR0
+ 254              		.cfi_endproc
+ 255              	.LFE69:
+ 256              		.size	changeSpeed, .-changeSpeed
+ 257              		.section	.text.changeState,"ax",%progbits
+ 258              		.align	2
+ 259              		.global	changeState
+ 260              		.thumb
+ 261              		.thumb_func
+ 262              		.type	changeState, %function
+ 263              	changeState:
+ 264              	.LFB65:
+  40:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****   
+ 265              		.loc 1 40 0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              	.LVL30:
+ 270 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 8
+
+
+ 271              		.cfi_def_cfa_offset 8
+ 272              		.cfi_offset 3, -8
+ 273              		.cfi_offset 14, -4
+  43:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 274              		.loc 1 43 0
+ 275 0002 0128     		cmp	r0, #1
+ 276 0004 02D0     		beq	.L20
+  43:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 277              		.loc 1 43 0 is_stmt 0 discriminator 1
+ 278 0006 B0F1FF3F 		cmp	r0, #-1
+ 279 000a 15D1     		bne	.L19
+ 280              	.L20:
+  45:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         {
+ 281              		.loc 1 45 0 is_stmt 1
+ 282 000c 0B4B     		ldr	r3, .L24
+ 283 000e 1B68     		ldr	r3, [r3]
+ 284 0010 002B     		cmp	r3, #0
+ 285 0012 08DD     		ble	.L22
+  45:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         {
+ 286              		.loc 1 45 0 is_stmt 0 discriminator 1
+ 287 0014 B0F1FF3F 		cmp	r0, #-1
+ 288 0018 05D1     		bne	.L22
+  47:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             changeSpeed();
+ 289              		.loc 1 47 0 is_stmt 1
+ 290 001a 1844     		add	r0, r0, r3
+ 291              	.LVL31:
+ 292 001c 074B     		ldr	r3, .L24
+ 293 001e 1860     		str	r0, [r3]
+  48:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         }
+ 294              		.loc 1 48 0
+ 295 0020 FFF7FEFF 		bl	changeSpeed
+ 296              	.LVL32:
+ 297 0024 08BD     		pop	{r3, pc}
+ 298              	.LVL33:
+ 299              	.L22:
+  50:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         {
+ 300              		.loc 1 50 0
+ 301 0026 052B     		cmp	r3, #5
+ 302 0028 06DC     		bgt	.L19
+  50:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         {
+ 303              		.loc 1 50 0 is_stmt 0 discriminator 1
+ 304 002a 0128     		cmp	r0, #1
+ 305 002c 04D1     		bne	.L19
+  52:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             changeSpeed();
+ 306              		.loc 1 52 0 is_stmt 1
+ 307 002e 1844     		add	r0, r0, r3
+ 308              	.LVL34:
+ 309 0030 024B     		ldr	r3, .L24
+ 310 0032 1860     		str	r0, [r3]
+  53:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         } 
+ 311              		.loc 1 53 0
+ 312 0034 FFF7FEFF 		bl	changeSpeed
+ 313              	.LVL35:
+ 314              	.L19:
+ 315 0038 08BD     		pop	{r3, pc}
+ 316              	.L25:
+ 317 003a 00BF     		.align	2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 9
+
+
+ 318              	.L24:
+ 319 003c 00000000 		.word	state
+ 320              		.cfi_endproc
+ 321              	.LFE65:
+ 322              		.size	changeState, .-changeState
+ 323              		.section	.text.speedSelect,"ax",%progbits
+ 324              		.align	2
+ 325              		.global	speedSelect
+ 326              		.thumb
+ 327              		.thumb_func
+ 328              		.type	speedSelect, %function
+ 329              	speedSelect:
+ 330              	.LFB64:
+  21:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(randState == 0)                      //Når randstate er 0, laves en ny randstate værdi ime
+ 331              		.loc 1 21 0
+ 332              		.cfi_startproc
+ 333              		@ args = 0, pretend = 0, frame = 0
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+ 335 0000 08B5     		push	{r3, lr}
+ 336              		.cfi_def_cfa_offset 8
+ 337              		.cfi_offset 3, -8
+ 338              		.cfi_offset 14, -4
+  22:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 339              		.loc 1 22 0
+ 340 0002 174B     		ldr	r3, .L31
+ 341 0004 1B68     		ldr	r3, [r3]
+ 342 0006 9BB9     		cbnz	r3, .L27
+  24:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         randState = rand() % 7 - 3;
+ 343              		.loc 1 24 0
+ 344 0008 0020     		movs	r0, #0
+ 345 000a FFF7FEFF 		bl	time
+ 346              	.LVL36:
+ 347 000e FFF7FEFF 		bl	srand
+ 348              	.LVL37:
+  25:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+ 349              		.loc 1 25 0
+ 350 0012 FFF7FEFF 		bl	rand
+ 351              	.LVL38:
+ 352 0016 134A     		ldr	r2, .L31+4
+ 353 0018 80FB0223 		smull	r2, r3, r0, r2
+ 354 001c C218     		adds	r2, r0, r3
+ 355 001e C317     		asrs	r3, r0, #31
+ 356 0020 C3EBA203 		rsb	r3, r3, r2, asr #2
+ 357 0024 C3EBC303 		rsb	r3, r3, r3, lsl #3
+ 358 0028 C31A     		subs	r3, r0, r3
+ 359 002a 033B     		subs	r3, r3, #3
+ 360 002c 0C4A     		ldr	r2, .L31
+ 361 002e 1360     		str	r3, [r2]
+ 362              	.L27:
+  27:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 363              		.loc 1 27 0
+ 364 0030 0B4B     		ldr	r3, .L31
+ 365 0032 1B68     		ldr	r3, [r3]
+ 366 0034 002B     		cmp	r3, #0
+ 367 0036 08DA     		bge	.L28
+  29:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         randState++;                        //randsdtate forøges så den til sidst rammer 0 og der
+ 368              		.loc 1 29 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 10
+
+
+ 369 0038 4FF0FF30 		mov	r0, #-1
+ 370 003c FFF7FEFF 		bl	changeState
+ 371              	.LVL39:
+  30:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+ 372              		.loc 1 30 0
+ 373 0040 074A     		ldr	r2, .L31
+ 374 0042 1368     		ldr	r3, [r2]
+ 375 0044 0133     		adds	r3, r3, #1
+ 376 0046 1360     		str	r3, [r2]
+ 377 0048 08BD     		pop	{r3, pc}
+ 378              	.L28:
+  32:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 379              		.loc 1 32 0
+ 380 004a 002B     		cmp	r3, #0
+ 381 004c 06DD     		ble	.L26
+  34:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         randState--;                        //randsdtate trækkes 1 fra så den til sidst rammer 0 
+ 382              		.loc 1 34 0
+ 383 004e 0120     		movs	r0, #1
+ 384 0050 FFF7FEFF 		bl	changeState
+ 385              	.LVL40:
+  35:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+ 386              		.loc 1 35 0
+ 387 0054 024A     		ldr	r2, .L31
+ 388 0056 1368     		ldr	r3, [r2]
+ 389 0058 013B     		subs	r3, r3, #1
+ 390 005a 1360     		str	r3, [r2]
+ 391              	.L26:
+ 392 005c 08BD     		pop	{r3, pc}
+ 393              	.L32:
+ 394 005e 00BF     		.align	2
+ 395              	.L31:
+ 396 0060 00000000 		.word	randState
+ 397 0064 93244992 		.word	-1840700269
+ 398              		.cfi_endproc
+ 399              	.LFE64:
+ 400              		.size	speedSelect, .-speedSelect
+ 401              		.section	.text.DelayBased90Turn,"ax",%progbits
+ 402              		.align	2
+ 403              		.global	DelayBased90Turn
+ 404              		.thumb
+ 405              		.thumb_func
+ 406              		.type	DelayBased90Turn, %function
+ 407              	DelayBased90Turn:
+ 408              	.LFB70:
+ 129:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** }
+ 130:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+ 131:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void DelayBased90Turn(int dir)
+ 132:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {
+ 409              		.loc 1 132 0
+ 410              		.cfi_startproc
+ 411              		@ args = 0, pretend = 0, frame = 0
+ 412              		@ frame_needed = 0, uses_anonymous_args = 0
+ 413              	.LVL41:
+ 133:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(running_ == 1)
+ 414              		.loc 1 133 0
+ 415 0000 214B     		ldr	r3, .L40
+ 416 0002 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 11
+
+
+ 417 0004 012B     		cmp	r3, #1
+ 418 0006 3ED1     		bne	.L39
+ 132:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(running_ == 1)
+ 419              		.loc 1 132 0
+ 420 0008 10B5     		push	{r4, lr}
+ 421              		.cfi_def_cfa_offset 8
+ 422              		.cfi_offset 4, -8
+ 423              		.cfi_offset 14, -4
+ 424 000a 0446     		mov	r4, r0
+ 134:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 135:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 425              		.loc 1 135 0
+ 426 000c FFF7FEFF 		bl	motorPWM_1_Stop
+ 427              	.LVL42:
+ 136:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 428              		.loc 1 136 0
+ 429 0010 FFF7FEFF 		bl	motorPWM_2_Stop
+ 430              	.LVL43:
+ 137:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 138:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(250);
+ 431              		.loc 1 138 0
+ 432 0014 FA20     		movs	r0, #250
+ 433 0016 FFF7FEFF 		bl	CyDelay
+ 434              	.LVL44:
+ 139:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 140:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     switch(dir)
+ 435              		.loc 1 140 0
+ 436 001a 012C     		cmp	r4, #1
+ 437 001c 02D0     		beq	.L36
+ 438 001e 022C     		cmp	r4, #2
+ 439 0020 0DD0     		beq	.L37
+ 440 0022 18E0     		b	.L35
+ 441              	.L36:
+ 141:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 142:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         case 1 :
+ 143:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin1_dir1_Write(0);
+ 442              		.loc 1 143 0
+ 443 0024 0020     		movs	r0, #0
+ 444 0026 FFF7FEFF 		bl	Pin1_dir1_Write
+ 445              	.LVL45:
+ 144:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin1_dir2_Write(1);
+ 446              		.loc 1 144 0
+ 447 002a 0120     		movs	r0, #1
+ 448 002c FFF7FEFF 		bl	Pin1_dir2_Write
+ 449              	.LVL46:
+ 145:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin2_dir1_Write(1);
+ 450              		.loc 1 145 0
+ 451 0030 0120     		movs	r0, #1
+ 452 0032 FFF7FEFF 		bl	Pin2_dir1_Write
+ 453              	.LVL47:
+ 146:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin2_dir2_Write(0);
+ 454              		.loc 1 146 0
+ 455 0036 0020     		movs	r0, #0
+ 456 0038 FFF7FEFF 		bl	Pin2_dir2_Write
+ 457              	.LVL48:
+ 147:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             break;
+ 458              		.loc 1 147 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 12
+
+
+ 459 003c 0BE0     		b	.L35
+ 460              	.L37:
+ 148:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****         case 2 :
+ 149:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin1_dir2_Write(0);
+ 461              		.loc 1 149 0
+ 462 003e 0020     		movs	r0, #0
+ 463 0040 FFF7FEFF 		bl	Pin1_dir2_Write
+ 464              	.LVL49:
+ 150:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin1_dir1_Write(1);
+ 465              		.loc 1 150 0
+ 466 0044 0120     		movs	r0, #1
+ 467 0046 FFF7FEFF 		bl	Pin1_dir1_Write
+ 468              	.LVL50:
+ 151:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin2_dir2_Write(1);
+ 469              		.loc 1 151 0
+ 470 004a 0120     		movs	r0, #1
+ 471 004c FFF7FEFF 		bl	Pin2_dir2_Write
+ 472              	.LVL51:
+ 152:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             Pin2_dir1_Write(0);
+ 473              		.loc 1 152 0
+ 474 0050 0020     		movs	r0, #0
+ 475 0052 FFF7FEFF 		bl	Pin2_dir1_Write
+ 476              	.LVL52:
+ 477              	.L35:
+ 153:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****             break;
+ 154:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+ 155:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 156:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 157:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_WriteCompare(100);
+ 478              		.loc 1 157 0
+ 479 0056 6420     		movs	r0, #100
+ 480 0058 FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 481              	.LVL53:
+ 158:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_WriteCompare(100);
+ 482              		.loc 1 158 0
+ 483 005c 6420     		movs	r0, #100
+ 484 005e FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ 485              	.LVL54:
+ 159:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 160:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Start();
+ 486              		.loc 1 160 0
+ 487 0062 FFF7FEFF 		bl	motorPWM_1_Start
+ 488              	.LVL55:
+ 161:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Start();
+ 489              		.loc 1 161 0
+ 490 0066 FFF7FEFF 		bl	motorPWM_2_Start
+ 491              	.LVL56:
+ 162:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 163:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(500);
+ 492              		.loc 1 163 0
+ 493 006a 4FF4FA70 		mov	r0, #500
+ 494 006e FFF7FEFF 		bl	CyDelay
+ 495              	.LVL57:
+ 164:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 165:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 496              		.loc 1 165 0
+ 497 0072 FFF7FEFF 		bl	motorPWM_1_Stop
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 13
+
+
+ 498              	.LVL58:
+ 166:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 499              		.loc 1 166 0
+ 500 0076 FFF7FEFF 		bl	motorPWM_2_Stop
+ 501              	.LVL59:
+ 167:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 168:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(250);
+ 502              		.loc 1 168 0
+ 503 007a FA20     		movs	r0, #250
+ 504 007c FFF7FEFF 		bl	CyDelay
+ 505              	.LVL60:
+ 169:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 170:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     driveForwards(); 
+ 506              		.loc 1 170 0
+ 507 0080 FFF7FEFF 		bl	driveForwards
+ 508              	.LVL61:
+ 509 0084 10BD     		pop	{r4, pc}
+ 510              	.LVL62:
+ 511              	.L39:
+ 512              		.cfi_def_cfa_offset 0
+ 513              		.cfi_restore 4
+ 514              		.cfi_restore 14
+ 515 0086 7047     		bx	lr
+ 516              	.L41:
+ 517              		.align	2
+ 518              	.L40:
+ 519 0088 00000000 		.word	running_
+ 520              		.cfi_endproc
+ 521              	.LFE70:
+ 522              		.size	DelayBased90Turn, .-DelayBased90Turn
+ 523              		.section	.text.DelayBased180Turn,"ax",%progbits
+ 524              		.align	2
+ 525              		.global	DelayBased180Turn
+ 526              		.thumb
+ 527              		.thumb_func
+ 528              		.type	DelayBased180Turn, %function
+ 529              	DelayBased180Turn:
+ 530              	.LFB71:
+ 171:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     }
+ 172:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** }
+ 173:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+ 174:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** 
+ 175:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** void DelayBased180Turn()
+ 176:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c **** {
+ 531              		.loc 1 176 0
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 0
+ 534              		@ frame_needed = 0, uses_anonymous_args = 0
+ 535 0000 08B5     		push	{r3, lr}
+ 536              		.cfi_def_cfa_offset 8
+ 537              		.cfi_offset 3, -8
+ 538              		.cfi_offset 14, -4
+ 177:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     if(running_ == 1)
+ 539              		.loc 1 177 0
+ 540 0002 1E4B     		ldr	r3, .L45
+ 541 0004 1B68     		ldr	r3, [r3]
+ 542 0006 012B     		cmp	r3, #1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 14
+
+
+ 543 0008 36D1     		bne	.L42
+ 178:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     {
+ 179:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 544              		.loc 1 179 0
+ 545 000a FFF7FEFF 		bl	motorPWM_1_Stop
+ 546              	.LVL63:
+ 180:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 547              		.loc 1 180 0
+ 548 000e FFF7FEFF 		bl	motorPWM_2_Stop
+ 549              	.LVL64:
+ 181:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 182:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(250);
+ 550              		.loc 1 182 0
+ 551 0012 FA20     		movs	r0, #250
+ 552 0014 FFF7FEFF 		bl	CyDelay
+ 553              	.LVL65:
+ 183:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 184:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     driveBackwards();
+ 554              		.loc 1 184 0
+ 555 0018 FFF7FEFF 		bl	driveBackwards
+ 556              	.LVL66:
+ 185:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 186:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(1000);
+ 557              		.loc 1 186 0
+ 558 001c 4FF47A70 		mov	r0, #1000
+ 559 0020 FFF7FEFF 		bl	CyDelay
+ 560              	.LVL67:
+ 187:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 188:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 561              		.loc 1 188 0
+ 562 0024 FFF7FEFF 		bl	motorPWM_1_Stop
+ 563              	.LVL68:
+ 189:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 564              		.loc 1 189 0
+ 565 0028 FFF7FEFF 		bl	motorPWM_2_Stop
+ 566              	.LVL69:
+ 190:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 191:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(250);
+ 567              		.loc 1 191 0
+ 568 002c FA20     		movs	r0, #250
+ 569 002e FFF7FEFF 		bl	CyDelay
+ 570              	.LVL70:
+ 192:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 193:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin1_dir1_Write(0);
+ 571              		.loc 1 193 0
+ 572 0032 0020     		movs	r0, #0
+ 573 0034 FFF7FEFF 		bl	Pin1_dir1_Write
+ 574              	.LVL71:
+ 194:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin1_dir2_Write(1);
+ 575              		.loc 1 194 0
+ 576 0038 0120     		movs	r0, #1
+ 577 003a FFF7FEFF 		bl	Pin1_dir2_Write
+ 578              	.LVL72:
+ 195:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin2_dir1_Write(1);
+ 579              		.loc 1 195 0
+ 580 003e 0120     		movs	r0, #1
+ 581 0040 FFF7FEFF 		bl	Pin2_dir1_Write
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 15
+
+
+ 582              	.LVL73:
+ 196:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     Pin2_dir2_Write(0);
+ 583              		.loc 1 196 0
+ 584 0044 0020     		movs	r0, #0
+ 585 0046 FFF7FEFF 		bl	Pin2_dir2_Write
+ 586              	.LVL74:
+ 197:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 198:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Start();
+ 587              		.loc 1 198 0
+ 588 004a FFF7FEFF 		bl	motorPWM_1_Start
+ 589              	.LVL75:
+ 199:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Start();
+ 590              		.loc 1 199 0
+ 591 004e FFF7FEFF 		bl	motorPWM_2_Start
+ 592              	.LVL76:
+ 200:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 201:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_WriteCompare(100);
+ 593              		.loc 1 201 0
+ 594 0052 6420     		movs	r0, #100
+ 595 0054 FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 596              	.LVL77:
+ 202:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_WriteCompare(100);
+ 597              		.loc 1 202 0
+ 598 0058 6420     		movs	r0, #100
+ 599 005a FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ 600              	.LVL78:
+ 203:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 204:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(1000);
+ 601              		.loc 1 204 0
+ 602 005e 4FF47A70 		mov	r0, #1000
+ 603 0062 FFF7FEFF 		bl	CyDelay
+ 604              	.LVL79:
+ 205:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 206:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_1_Stop();
+ 605              		.loc 1 206 0
+ 606 0066 FFF7FEFF 		bl	motorPWM_1_Stop
+ 607              	.LVL80:
+ 207:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     motorPWM_2_Stop();
+ 608              		.loc 1 207 0
+ 609 006a FFF7FEFF 		bl	motorPWM_2_Stop
+ 610              	.LVL81:
+ 208:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 209:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     CyDelay(250);
+ 611              		.loc 1 209 0
+ 612 006e FA20     		movs	r0, #250
+ 613 0070 FFF7FEFF 		bl	CyDelay
+ 614              	.LVL82:
+ 210:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     
+ 211:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/MotorApp.c ****     driveForwards();
+ 615              		.loc 1 211 0
+ 616 0074 FFF7FEFF 		bl	driveForwards
+ 617              	.LVL83:
+ 618              	.L42:
+ 619 0078 08BD     		pop	{r3, pc}
+ 620              	.L46:
+ 621 007a 00BF     		.align	2
+ 622              	.L45:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 16
+
+
+ 623 007c 00000000 		.word	running_
+ 624              		.cfi_endproc
+ 625              	.LFE71:
+ 626              		.size	DelayBased180Turn, .-DelayBased180Turn
+ 627              		.global	driveState
+ 628              		.comm	running_,4,4
+ 629              		.comm	randturn,4,4
+ 630              		.comm	randState,4,4
+ 631              		.comm	state,4,4
+ 632              		.comm	difficulty,4,4
+ 633              		.comm	buffer,250,4
+ 634              		.comm	NP_g_nFrameBufferSize,4,4
+ 635              		.comm	NP_g_pFrameBuffer,4,4
+ 636              		.comm	NP_g_bOwnsBuffer,1,1
+ 637              		.comm	NP_g_nDMA_TD,1,1
+ 638              		.comm	NP_g_nDMA_Chan,1,1
+ 639              		.comm	NP_g_nNumberOfPixels,4,4
+ 640              		.data
+ 641              		.align	2
+ 642              		.set	.LANCHOR0,. + 0
+ 643              		.type	driveState, %object
+ 644              		.size	driveState, 56
+ 645              	driveState:
+ 646 0000 0A000000 		.word	10
+ 647 0004 64000000 		.word	100
+ 648 0008 1E000000 		.word	30
+ 649 000c 64000000 		.word	100
+ 650 0010 32000000 		.word	50
+ 651 0014 64000000 		.word	100
+ 652 0018 46000000 		.word	70
+ 653 001c 64000000 		.word	100
+ 654 0020 46000000 		.word	70
+ 655 0024 50000000 		.word	80
+ 656 0028 46000000 		.word	70
+ 657 002c 3C000000 		.word	60
+ 658 0030 46000000 		.word	70
+ 659 0034 28000000 		.word	40
+ 660              		.text
+ 661              	.Letext0:
+ 662              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 663              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 664              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 665              		.file 5 "Generated_Source\\PSoC5/NP_funcs.h"
+ 666              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 667              		.file 7 "..\\..\\..\\3semesterProjekt_repository\\Ultrasoundv2\\Ultrasoundv2.cydsn\\MotorApp.h"
+ 668              		.file 8 "..\\..\\..\\3semesterProjekt_repository\\Ultrasoundv2\\Ultrasoundv2.cydsn\\waitingState.h
+ 669              		.file 9 "Generated_Source\\PSoC5/motorPWM_1.h"
+ 670              		.file 10 "Generated_Source\\PSoC5/motorPWM_2.h"
+ 671              		.file 11 "Generated_Source\\PSoC5/Pin1_dir1.h"
+ 672              		.file 12 "Generated_Source\\PSoC5/Pin1_dir2.h"
+ 673              		.file 13 "Generated_Source\\PSoC5/Pin2_dir1.h"
+ 674              		.file 14 "Generated_Source\\PSoC5/Pin2_dir2.h"
+ 675              		.file 15 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4
+ 676              		.file 16 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4
+ 677              		.file 17 "Generated_Source\\PSoC5/CyLib.h"
+ 678              		.section	.debug_info,"",%progbits
+ 679              	.Ldebug_info0:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 17
+
+
+ 680 0000 B3070000 		.4byte	0x7b3
+ 681 0004 0400     		.2byte	0x4
+ 682 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 683 000a 04       		.byte	0x4
+ 684 000b 01       		.uleb128 0x1
+ 685 000c BF000000 		.4byte	.LASF56
+ 686 0010 0C       		.byte	0xc
+ 687 0011 58020000 		.4byte	.LASF57
+ 688 0015 94030000 		.4byte	.LASF58
+ 689 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 690 001d 00000000 		.4byte	0
+ 691 0021 00000000 		.4byte	.Ldebug_line0
+ 692 0025 02       		.uleb128 0x2
+ 693 0026 01       		.byte	0x1
+ 694 0027 06       		.byte	0x6
+ 695 0028 DF030000 		.4byte	.LASF0
+ 696 002c 02       		.uleb128 0x2
+ 697 002d 01       		.byte	0x1
+ 698 002e 08       		.byte	0x8
+ 699 002f A7010000 		.4byte	.LASF1
+ 700 0033 02       		.uleb128 0x2
+ 701 0034 02       		.byte	0x2
+ 702 0035 05       		.byte	0x5
+ 703 0036 31030000 		.4byte	.LASF2
+ 704 003a 02       		.uleb128 0x2
+ 705 003b 02       		.byte	0x2
+ 706 003c 07       		.byte	0x7
+ 707 003d 81010000 		.4byte	.LASF3
+ 708 0041 03       		.uleb128 0x3
+ 709 0042 22000000 		.4byte	.LASF12
+ 710 0046 02       		.byte	0x2
+ 711 0047 3F       		.byte	0x3f
+ 712 0048 4C000000 		.4byte	0x4c
+ 713 004c 02       		.uleb128 0x2
+ 714 004d 04       		.byte	0x4
+ 715 004e 05       		.byte	0x5
+ 716 004f 7A030000 		.4byte	.LASF4
+ 717 0053 02       		.uleb128 0x2
+ 718 0054 04       		.byte	0x4
+ 719 0055 07       		.byte	0x7
+ 720 0056 B5010000 		.4byte	.LASF5
+ 721 005a 02       		.uleb128 0x2
+ 722 005b 08       		.byte	0x8
+ 723 005c 05       		.byte	0x5
+ 724 005d D3020000 		.4byte	.LASF6
+ 725 0061 02       		.uleb128 0x2
+ 726 0062 08       		.byte	0x8
+ 727 0063 07       		.byte	0x7
+ 728 0064 30020000 		.4byte	.LASF7
+ 729 0068 04       		.uleb128 0x4
+ 730 0069 04       		.byte	0x4
+ 731 006a 05       		.byte	0x5
+ 732 006b 696E7400 		.ascii	"int\000"
+ 733 006f 02       		.uleb128 0x2
+ 734 0070 04       		.byte	0x4
+ 735 0071 07       		.byte	0x7
+ 736 0072 15020000 		.4byte	.LASF8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 18
+
+
+ 737 0076 02       		.uleb128 0x2
+ 738 0077 08       		.byte	0x8
+ 739 0078 04       		.byte	0x4
+ 740 0079 88030000 		.4byte	.LASF9
+ 741 007d 02       		.uleb128 0x2
+ 742 007e 04       		.byte	0x4
+ 743 007f 07       		.byte	0x7
+ 744 0080 CA020000 		.4byte	.LASF10
+ 745 0084 02       		.uleb128 0x2
+ 746 0085 01       		.byte	0x1
+ 747 0086 08       		.byte	0x8
+ 748 0087 83030000 		.4byte	.LASF11
+ 749 008b 03       		.uleb128 0x3
+ 750 008c A8020000 		.4byte	.LASF13
+ 751 0090 03       		.byte	0x3
+ 752 0091 2C       		.byte	0x2c
+ 753 0092 41000000 		.4byte	0x41
+ 754 0096 03       		.uleb128 0x3
+ 755 0097 42030000 		.4byte	.LASF14
+ 756 009b 04       		.byte	0x4
+ 757 009c C2       		.byte	0xc2
+ 758 009d 2C000000 		.4byte	0x2c
+ 759 00a1 02       		.uleb128 0x2
+ 760 00a2 04       		.byte	0x4
+ 761 00a3 04       		.byte	0x4
+ 762 00a4 97000000 		.4byte	.LASF15
+ 763 00a8 02       		.uleb128 0x2
+ 764 00a9 08       		.byte	0x8
+ 765 00aa 04       		.byte	0x4
+ 766 00ab 4D000000 		.4byte	.LASF16
+ 767 00af 05       		.uleb128 0x5
+ 768 00b0 96000000 		.4byte	0x96
+ 769 00b4 06       		.uleb128 0x6
+ 770 00b5 22020000 		.4byte	.LASF17
+ 771 00b9 01       		.byte	0x1
+ 772 00ba 3B       		.byte	0x3b
+ 773 00bb 00000000 		.4byte	.LFB66
+ 774 00bf 44000000 		.4byte	.LFE66-.LFB66
+ 775 00c3 01       		.uleb128 0x1
+ 776 00c4 9C       		.byte	0x9c
+ 777 00c5 62010000 		.4byte	0x162
+ 778 00c9 07       		.uleb128 0x7
+ 779 00ca 0E000000 		.4byte	.LVL0
+ 780 00ce 06070000 		.4byte	0x706
+ 781 00d2 07       		.uleb128 0x7
+ 782 00d3 12000000 		.4byte	.LVL1
+ 783 00d7 11070000 		.4byte	0x711
+ 784 00db 08       		.uleb128 0x8
+ 785 00dc 18000000 		.4byte	.LVL2
+ 786 00e0 1C070000 		.4byte	0x71c
+ 787 00e4 EE000000 		.4byte	0xee
+ 788 00e8 09       		.uleb128 0x9
+ 789 00e9 01       		.uleb128 0x1
+ 790 00ea 50       		.byte	0x50
+ 791 00eb 01       		.uleb128 0x1
+ 792 00ec 30       		.byte	0x30
+ 793 00ed 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 19
+
+
+ 794 00ee 08       		.uleb128 0x8
+ 795 00ef 1E000000 		.4byte	.LVL3
+ 796 00f3 27070000 		.4byte	0x727
+ 797 00f7 01010000 		.4byte	0x101
+ 798 00fb 09       		.uleb128 0x9
+ 799 00fc 01       		.uleb128 0x1
+ 800 00fd 50       		.byte	0x50
+ 801 00fe 01       		.uleb128 0x1
+ 802 00ff 31       		.byte	0x31
+ 803 0100 00       		.byte	0
+ 804 0101 08       		.uleb128 0x8
+ 805 0102 24000000 		.4byte	.LVL4
+ 806 0106 32070000 		.4byte	0x732
+ 807 010a 14010000 		.4byte	0x114
+ 808 010e 09       		.uleb128 0x9
+ 809 010f 01       		.uleb128 0x1
+ 810 0110 50       		.byte	0x50
+ 811 0111 01       		.uleb128 0x1
+ 812 0112 30       		.byte	0x30
+ 813 0113 00       		.byte	0
+ 814 0114 08       		.uleb128 0x8
+ 815 0115 2A000000 		.4byte	.LVL5
+ 816 0119 3D070000 		.4byte	0x73d
+ 817 011d 27010000 		.4byte	0x127
+ 818 0121 09       		.uleb128 0x9
+ 819 0122 01       		.uleb128 0x1
+ 820 0123 50       		.byte	0x50
+ 821 0124 01       		.uleb128 0x1
+ 822 0125 31       		.byte	0x31
+ 823 0126 00       		.byte	0
+ 824 0127 08       		.uleb128 0x8
+ 825 0128 30000000 		.4byte	.LVL6
+ 826 012c 48070000 		.4byte	0x748
+ 827 0130 3B010000 		.4byte	0x13b
+ 828 0134 09       		.uleb128 0x9
+ 829 0135 01       		.uleb128 0x1
+ 830 0136 50       		.byte	0x50
+ 831 0137 02       		.uleb128 0x2
+ 832 0138 08       		.byte	0x8
+ 833 0139 50       		.byte	0x50
+ 834 013a 00       		.byte	0
+ 835 013b 08       		.uleb128 0x8
+ 836 013c 36000000 		.4byte	.LVL7
+ 837 0140 53070000 		.4byte	0x753
+ 838 0144 4F010000 		.4byte	0x14f
+ 839 0148 09       		.uleb128 0x9
+ 840 0149 01       		.uleb128 0x1
+ 841 014a 50       		.byte	0x50
+ 842 014b 02       		.uleb128 0x2
+ 843 014c 08       		.byte	0x8
+ 844 014d 50       		.byte	0x50
+ 845 014e 00       		.byte	0
+ 846 014f 07       		.uleb128 0x7
+ 847 0150 3A000000 		.4byte	.LVL8
+ 848 0154 5E070000 		.4byte	0x75e
+ 849 0158 07       		.uleb128 0x7
+ 850 0159 3E000000 		.4byte	.LVL9
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 20
+
+
+ 851 015d 69070000 		.4byte	0x769
+ 852 0161 00       		.byte	0
+ 853 0162 06       		.uleb128 0x6
+ 854 0163 B0020000 		.4byte	.LASF18
+ 855 0167 01       		.byte	0x1
+ 856 0168 50       		.byte	0x50
+ 857 0169 00000000 		.4byte	.LFB67
+ 858 016d 44000000 		.4byte	.LFE67-.LFB67
+ 859 0171 01       		.uleb128 0x1
+ 860 0172 9C       		.byte	0x9c
+ 861 0173 10020000 		.4byte	0x210
+ 862 0177 07       		.uleb128 0x7
+ 863 0178 0E000000 		.4byte	.LVL10
+ 864 017c 06070000 		.4byte	0x706
+ 865 0180 07       		.uleb128 0x7
+ 866 0181 12000000 		.4byte	.LVL11
+ 867 0185 11070000 		.4byte	0x711
+ 868 0189 08       		.uleb128 0x8
+ 869 018a 18000000 		.4byte	.LVL12
+ 870 018e 1C070000 		.4byte	0x71c
+ 871 0192 9C010000 		.4byte	0x19c
+ 872 0196 09       		.uleb128 0x9
+ 873 0197 01       		.uleb128 0x1
+ 874 0198 50       		.byte	0x50
+ 875 0199 01       		.uleb128 0x1
+ 876 019a 31       		.byte	0x31
+ 877 019b 00       		.byte	0
+ 878 019c 08       		.uleb128 0x8
+ 879 019d 1E000000 		.4byte	.LVL13
+ 880 01a1 27070000 		.4byte	0x727
+ 881 01a5 AF010000 		.4byte	0x1af
+ 882 01a9 09       		.uleb128 0x9
+ 883 01aa 01       		.uleb128 0x1
+ 884 01ab 50       		.byte	0x50
+ 885 01ac 01       		.uleb128 0x1
+ 886 01ad 30       		.byte	0x30
+ 887 01ae 00       		.byte	0
+ 888 01af 08       		.uleb128 0x8
+ 889 01b0 24000000 		.4byte	.LVL14
+ 890 01b4 32070000 		.4byte	0x732
+ 891 01b8 C2010000 		.4byte	0x1c2
+ 892 01bc 09       		.uleb128 0x9
+ 893 01bd 01       		.uleb128 0x1
+ 894 01be 50       		.byte	0x50
+ 895 01bf 01       		.uleb128 0x1
+ 896 01c0 31       		.byte	0x31
+ 897 01c1 00       		.byte	0
+ 898 01c2 08       		.uleb128 0x8
+ 899 01c3 2A000000 		.4byte	.LVL15
+ 900 01c7 3D070000 		.4byte	0x73d
+ 901 01cb D5010000 		.4byte	0x1d5
+ 902 01cf 09       		.uleb128 0x9
+ 903 01d0 01       		.uleb128 0x1
+ 904 01d1 50       		.byte	0x50
+ 905 01d2 01       		.uleb128 0x1
+ 906 01d3 30       		.byte	0x30
+ 907 01d4 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 21
+
+
+ 908 01d5 08       		.uleb128 0x8
+ 909 01d6 30000000 		.4byte	.LVL16
+ 910 01da 48070000 		.4byte	0x748
+ 911 01de E9010000 		.4byte	0x1e9
+ 912 01e2 09       		.uleb128 0x9
+ 913 01e3 01       		.uleb128 0x1
+ 914 01e4 50       		.byte	0x50
+ 915 01e5 02       		.uleb128 0x2
+ 916 01e6 08       		.byte	0x8
+ 917 01e7 50       		.byte	0x50
+ 918 01e8 00       		.byte	0
+ 919 01e9 08       		.uleb128 0x8
+ 920 01ea 36000000 		.4byte	.LVL17
+ 921 01ee 53070000 		.4byte	0x753
+ 922 01f2 FD010000 		.4byte	0x1fd
+ 923 01f6 09       		.uleb128 0x9
+ 924 01f7 01       		.uleb128 0x1
+ 925 01f8 50       		.byte	0x50
+ 926 01f9 02       		.uleb128 0x2
+ 927 01fa 08       		.byte	0x8
+ 928 01fb 50       		.byte	0x50
+ 929 01fc 00       		.byte	0
+ 930 01fd 07       		.uleb128 0x7
+ 931 01fe 3A000000 		.4byte	.LVL18
+ 932 0202 5E070000 		.4byte	0x75e
+ 933 0206 07       		.uleb128 0x7
+ 934 0207 3E000000 		.4byte	.LVL19
+ 935 020b 69070000 		.4byte	0x769
+ 936 020f 00       		.byte	0
+ 937 0210 06       		.uleb128 0x6
+ 938 0211 5F010000 		.4byte	.LASF19
+ 939 0215 01       		.byte	0x1
+ 940 0216 64       		.byte	0x64
+ 941 0217 00000000 		.4byte	.LFB68
+ 942 021b 0C000000 		.4byte	.LFE68-.LFB68
+ 943 021f 01       		.uleb128 0x1
+ 944 0220 9C       		.byte	0x9c
+ 945 0221 38020000 		.4byte	0x238
+ 946 0225 07       		.uleb128 0x7
+ 947 0226 06000000 		.4byte	.LVL20
+ 948 022a 06070000 		.4byte	0x706
+ 949 022e 07       		.uleb128 0x7
+ 950 022f 0A000000 		.4byte	.LVL21
+ 951 0233 11070000 		.4byte	0x711
+ 952 0237 00       		.byte	0
+ 953 0238 06       		.uleb128 0x6
+ 954 0239 8B000000 		.4byte	.LASF20
+ 955 023d 01       		.byte	0x1
+ 956 023e 6D       		.byte	0x6d
+ 957 023f 00000000 		.4byte	.LFB69
+ 958 0243 68000000 		.4byte	.LFE69-.LFB69
+ 959 0247 01       		.uleb128 0x1
+ 960 0248 9C       		.byte	0x9c
+ 961 0249 AC020000 		.4byte	0x2ac
+ 962 024d 07       		.uleb128 0x7
+ 963 024e 06000000 		.4byte	.LVL22
+ 964 0252 06070000 		.4byte	0x706
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 22
+
+
+ 965 0256 07       		.uleb128 0x7
+ 966 0257 0A000000 		.4byte	.LVL23
+ 967 025b 11070000 		.4byte	0x711
+ 968 025f 08       		.uleb128 0x8
+ 969 0260 20000000 		.4byte	.LVL24
+ 970 0264 74070000 		.4byte	0x774
+ 971 0268 73020000 		.4byte	0x273
+ 972 026c 09       		.uleb128 0x9
+ 973 026d 01       		.uleb128 0x1
+ 974 026e 50       		.byte	0x50
+ 975 026f 02       		.uleb128 0x2
+ 976 0270 09       		.byte	0x9
+ 977 0271 AA       		.byte	0xaa
+ 978 0272 00       		.byte	0
+ 979 0273 07       		.uleb128 0x7
+ 980 0274 2E000000 		.4byte	.LVL25
+ 981 0278 48070000 		.4byte	0x748
+ 982 027c 08       		.uleb128 0x8
+ 983 027d 46000000 		.4byte	.LVL26
+ 984 0281 7F070000 		.4byte	0x77f
+ 985 0285 90020000 		.4byte	0x290
+ 986 0289 09       		.uleb128 0x9
+ 987 028a 01       		.uleb128 0x1
+ 988 028b 50       		.byte	0x50
+ 989 028c 02       		.uleb128 0x2
+ 990 028d 09       		.byte	0x9
+ 991 028e AA       		.byte	0xaa
+ 992 028f 00       		.byte	0
+ 993 0290 07       		.uleb128 0x7
+ 994 0291 56000000 		.4byte	.LVL27
+ 995 0295 53070000 		.4byte	0x753
+ 996 0299 07       		.uleb128 0x7
+ 997 029a 5A000000 		.4byte	.LVL28
+ 998 029e 5E070000 		.4byte	0x75e
+ 999 02a2 07       		.uleb128 0x7
+ 1000 02a3 5E000000 		.4byte	.LVL29
+ 1001 02a7 69070000 		.4byte	0x769
+ 1002 02ab 00       		.byte	0
+ 1003 02ac 0A       		.uleb128 0xa
+ 1004 02ad 47020000 		.4byte	.LASF22
+ 1005 02b1 01       		.byte	0x1
+ 1006 02b2 27       		.byte	0x27
+ 1007 02b3 00000000 		.4byte	.LFB65
+ 1008 02b7 40000000 		.4byte	.LFE65-.LFB65
+ 1009 02bb 01       		.uleb128 0x1
+ 1010 02bc 9C       		.byte	0x9c
+ 1011 02bd E3020000 		.4byte	0x2e3
+ 1012 02c1 0B       		.uleb128 0xb
+ 1013 02c2 FB030000 		.4byte	.LASF24
+ 1014 02c6 01       		.byte	0x1
+ 1015 02c7 27       		.byte	0x27
+ 1016 02c8 68000000 		.4byte	0x68
+ 1017 02cc 00000000 		.4byte	.LLST0
+ 1018 02d0 07       		.uleb128 0x7
+ 1019 02d1 24000000 		.4byte	.LVL32
+ 1020 02d5 38020000 		.4byte	0x238
+ 1021 02d9 07       		.uleb128 0x7
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 23
+
+
+ 1022 02da 38000000 		.4byte	.LVL35
+ 1023 02de 38020000 		.4byte	0x238
+ 1024 02e2 00       		.byte	0
+ 1025 02e3 06       		.uleb128 0x6
+ 1026 02e4 16000000 		.4byte	.LASF21
+ 1027 02e8 01       		.byte	0x1
+ 1028 02e9 14       		.byte	0x14
+ 1029 02ea 00000000 		.4byte	.LFB64
+ 1030 02ee 68000000 		.4byte	.LFE64-.LFB64
+ 1031 02f2 01       		.uleb128 0x1
+ 1032 02f3 9C       		.byte	0x9c
+ 1033 02f4 41030000 		.4byte	0x341
+ 1034 02f8 08       		.uleb128 0x8
+ 1035 02f9 0E000000 		.4byte	.LVL36
+ 1036 02fd 8A070000 		.4byte	0x78a
+ 1037 0301 0B030000 		.4byte	0x30b
+ 1038 0305 09       		.uleb128 0x9
+ 1039 0306 01       		.uleb128 0x1
+ 1040 0307 50       		.byte	0x50
+ 1041 0308 01       		.uleb128 0x1
+ 1042 0309 30       		.byte	0x30
+ 1043 030a 00       		.byte	0
+ 1044 030b 07       		.uleb128 0x7
+ 1045 030c 12000000 		.4byte	.LVL37
+ 1046 0310 95070000 		.4byte	0x795
+ 1047 0314 07       		.uleb128 0x7
+ 1048 0315 16000000 		.4byte	.LVL38
+ 1049 0319 A0070000 		.4byte	0x7a0
+ 1050 031d 08       		.uleb128 0x8
+ 1051 031e 40000000 		.4byte	.LVL39
+ 1052 0322 AC020000 		.4byte	0x2ac
+ 1053 0326 31030000 		.4byte	0x331
+ 1054 032a 09       		.uleb128 0x9
+ 1055 032b 01       		.uleb128 0x1
+ 1056 032c 50       		.byte	0x50
+ 1057 032d 02       		.uleb128 0x2
+ 1058 032e 09       		.byte	0x9
+ 1059 032f FF       		.byte	0xff
+ 1060 0330 00       		.byte	0
+ 1061 0331 0C       		.uleb128 0xc
+ 1062 0332 54000000 		.4byte	.LVL40
+ 1063 0336 AC020000 		.4byte	0x2ac
+ 1064 033a 09       		.uleb128 0x9
+ 1065 033b 01       		.uleb128 0x1
+ 1066 033c 50       		.byte	0x50
+ 1067 033d 01       		.uleb128 0x1
+ 1068 033e 31       		.byte	0x31
+ 1069 033f 00       		.byte	0
+ 1070 0340 00       		.byte	0
+ 1071 0341 0A       		.uleb128 0xa
+ 1072 0342 48030000 		.4byte	.LASF23
+ 1073 0346 01       		.byte	0x1
+ 1074 0347 83       		.byte	0x83
+ 1075 0348 00000000 		.4byte	.LFB70
+ 1076 034c 8C000000 		.4byte	.LFE70-.LFB70
+ 1077 0350 01       		.uleb128 0x1
+ 1078 0351 9C       		.byte	0x9c
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 24
+
+
+ 1079 0352 A2040000 		.4byte	0x4a2
+ 1080 0356 0D       		.uleb128 0xd
+ 1081 0357 64697200 		.ascii	"dir\000"
+ 1082 035b 01       		.byte	0x1
+ 1083 035c 83       		.byte	0x83
+ 1084 035d 68000000 		.4byte	0x68
+ 1085 0361 3A000000 		.4byte	.LLST1
+ 1086 0365 07       		.uleb128 0x7
+ 1087 0366 10000000 		.4byte	.LVL42
+ 1088 036a 06070000 		.4byte	0x706
+ 1089 036e 07       		.uleb128 0x7
+ 1090 036f 14000000 		.4byte	.LVL43
+ 1091 0373 11070000 		.4byte	0x711
+ 1092 0377 08       		.uleb128 0x8
+ 1093 0378 1A000000 		.4byte	.LVL44
+ 1094 037c AB070000 		.4byte	0x7ab
+ 1095 0380 8B030000 		.4byte	0x38b
+ 1096 0384 09       		.uleb128 0x9
+ 1097 0385 01       		.uleb128 0x1
+ 1098 0386 50       		.byte	0x50
+ 1099 0387 02       		.uleb128 0x2
+ 1100 0388 08       		.byte	0x8
+ 1101 0389 FA       		.byte	0xfa
+ 1102 038a 00       		.byte	0
+ 1103 038b 08       		.uleb128 0x8
+ 1104 038c 2A000000 		.4byte	.LVL45
+ 1105 0390 1C070000 		.4byte	0x71c
+ 1106 0394 9E030000 		.4byte	0x39e
+ 1107 0398 09       		.uleb128 0x9
+ 1108 0399 01       		.uleb128 0x1
+ 1109 039a 50       		.byte	0x50
+ 1110 039b 01       		.uleb128 0x1
+ 1111 039c 30       		.byte	0x30
+ 1112 039d 00       		.byte	0
+ 1113 039e 08       		.uleb128 0x8
+ 1114 039f 30000000 		.4byte	.LVL46
+ 1115 03a3 27070000 		.4byte	0x727
+ 1116 03a7 B1030000 		.4byte	0x3b1
+ 1117 03ab 09       		.uleb128 0x9
+ 1118 03ac 01       		.uleb128 0x1
+ 1119 03ad 50       		.byte	0x50
+ 1120 03ae 01       		.uleb128 0x1
+ 1121 03af 31       		.byte	0x31
+ 1122 03b0 00       		.byte	0
+ 1123 03b1 08       		.uleb128 0x8
+ 1124 03b2 36000000 		.4byte	.LVL47
+ 1125 03b6 32070000 		.4byte	0x732
+ 1126 03ba C4030000 		.4byte	0x3c4
+ 1127 03be 09       		.uleb128 0x9
+ 1128 03bf 01       		.uleb128 0x1
+ 1129 03c0 50       		.byte	0x50
+ 1130 03c1 01       		.uleb128 0x1
+ 1131 03c2 31       		.byte	0x31
+ 1132 03c3 00       		.byte	0
+ 1133 03c4 08       		.uleb128 0x8
+ 1134 03c5 3C000000 		.4byte	.LVL48
+ 1135 03c9 3D070000 		.4byte	0x73d
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 25
+
+
+ 1136 03cd D7030000 		.4byte	0x3d7
+ 1137 03d1 09       		.uleb128 0x9
+ 1138 03d2 01       		.uleb128 0x1
+ 1139 03d3 50       		.byte	0x50
+ 1140 03d4 01       		.uleb128 0x1
+ 1141 03d5 30       		.byte	0x30
+ 1142 03d6 00       		.byte	0
+ 1143 03d7 08       		.uleb128 0x8
+ 1144 03d8 44000000 		.4byte	.LVL49
+ 1145 03dc 27070000 		.4byte	0x727
+ 1146 03e0 EA030000 		.4byte	0x3ea
+ 1147 03e4 09       		.uleb128 0x9
+ 1148 03e5 01       		.uleb128 0x1
+ 1149 03e6 50       		.byte	0x50
+ 1150 03e7 01       		.uleb128 0x1
+ 1151 03e8 30       		.byte	0x30
+ 1152 03e9 00       		.byte	0
+ 1153 03ea 08       		.uleb128 0x8
+ 1154 03eb 4A000000 		.4byte	.LVL50
+ 1155 03ef 1C070000 		.4byte	0x71c
+ 1156 03f3 FD030000 		.4byte	0x3fd
+ 1157 03f7 09       		.uleb128 0x9
+ 1158 03f8 01       		.uleb128 0x1
+ 1159 03f9 50       		.byte	0x50
+ 1160 03fa 01       		.uleb128 0x1
+ 1161 03fb 31       		.byte	0x31
+ 1162 03fc 00       		.byte	0
+ 1163 03fd 08       		.uleb128 0x8
+ 1164 03fe 50000000 		.4byte	.LVL51
+ 1165 0402 3D070000 		.4byte	0x73d
+ 1166 0406 10040000 		.4byte	0x410
+ 1167 040a 09       		.uleb128 0x9
+ 1168 040b 01       		.uleb128 0x1
+ 1169 040c 50       		.byte	0x50
+ 1170 040d 01       		.uleb128 0x1
+ 1171 040e 31       		.byte	0x31
+ 1172 040f 00       		.byte	0
+ 1173 0410 08       		.uleb128 0x8
+ 1174 0411 56000000 		.4byte	.LVL52
+ 1175 0415 32070000 		.4byte	0x732
+ 1176 0419 23040000 		.4byte	0x423
+ 1177 041d 09       		.uleb128 0x9
+ 1178 041e 01       		.uleb128 0x1
+ 1179 041f 50       		.byte	0x50
+ 1180 0420 01       		.uleb128 0x1
+ 1181 0421 30       		.byte	0x30
+ 1182 0422 00       		.byte	0
+ 1183 0423 08       		.uleb128 0x8
+ 1184 0424 5C000000 		.4byte	.LVL53
+ 1185 0428 48070000 		.4byte	0x748
+ 1186 042c 37040000 		.4byte	0x437
+ 1187 0430 09       		.uleb128 0x9
+ 1188 0431 01       		.uleb128 0x1
+ 1189 0432 50       		.byte	0x50
+ 1190 0433 02       		.uleb128 0x2
+ 1191 0434 08       		.byte	0x8
+ 1192 0435 64       		.byte	0x64
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 26
+
+
+ 1193 0436 00       		.byte	0
+ 1194 0437 08       		.uleb128 0x8
+ 1195 0438 62000000 		.4byte	.LVL54
+ 1196 043c 53070000 		.4byte	0x753
+ 1197 0440 4B040000 		.4byte	0x44b
+ 1198 0444 09       		.uleb128 0x9
+ 1199 0445 01       		.uleb128 0x1
+ 1200 0446 50       		.byte	0x50
+ 1201 0447 02       		.uleb128 0x2
+ 1202 0448 08       		.byte	0x8
+ 1203 0449 64       		.byte	0x64
+ 1204 044a 00       		.byte	0
+ 1205 044b 07       		.uleb128 0x7
+ 1206 044c 66000000 		.4byte	.LVL55
+ 1207 0450 5E070000 		.4byte	0x75e
+ 1208 0454 07       		.uleb128 0x7
+ 1209 0455 6A000000 		.4byte	.LVL56
+ 1210 0459 69070000 		.4byte	0x769
+ 1211 045d 08       		.uleb128 0x8
+ 1212 045e 72000000 		.4byte	.LVL57
+ 1213 0462 AB070000 		.4byte	0x7ab
+ 1214 0466 72040000 		.4byte	0x472
+ 1215 046a 09       		.uleb128 0x9
+ 1216 046b 01       		.uleb128 0x1
+ 1217 046c 50       		.byte	0x50
+ 1218 046d 03       		.uleb128 0x3
+ 1219 046e 0A       		.byte	0xa
+ 1220 046f F401     		.2byte	0x1f4
+ 1221 0471 00       		.byte	0
+ 1222 0472 07       		.uleb128 0x7
+ 1223 0473 76000000 		.4byte	.LVL58
+ 1224 0477 06070000 		.4byte	0x706
+ 1225 047b 07       		.uleb128 0x7
+ 1226 047c 7A000000 		.4byte	.LVL59
+ 1227 0480 11070000 		.4byte	0x711
+ 1228 0484 08       		.uleb128 0x8
+ 1229 0485 80000000 		.4byte	.LVL60
+ 1230 0489 AB070000 		.4byte	0x7ab
+ 1231 048d 98040000 		.4byte	0x498
+ 1232 0491 09       		.uleb128 0x9
+ 1233 0492 01       		.uleb128 0x1
+ 1234 0493 50       		.byte	0x50
+ 1235 0494 02       		.uleb128 0x2
+ 1236 0495 08       		.byte	0x8
+ 1237 0496 FA       		.byte	0xfa
+ 1238 0497 00       		.byte	0
+ 1239 0498 07       		.uleb128 0x7
+ 1240 0499 84000000 		.4byte	.LVL61
+ 1241 049d B4000000 		.4byte	0xb4
+ 1242 04a1 00       		.byte	0
+ 1243 04a2 06       		.uleb128 0x6
+ 1244 04a3 AD000000 		.4byte	.LASF25
+ 1245 04a7 01       		.byte	0x1
+ 1246 04a8 AF       		.byte	0xaf
+ 1247 04a9 00000000 		.4byte	.LFB71
+ 1248 04ad 80000000 		.4byte	.LFE71-.LFB71
+ 1249 04b1 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 27
+
+
+ 1250 04b2 9C       		.byte	0x9c
+ 1251 04b3 EC050000 		.4byte	0x5ec
+ 1252 04b7 07       		.uleb128 0x7
+ 1253 04b8 0E000000 		.4byte	.LVL63
+ 1254 04bc 06070000 		.4byte	0x706
+ 1255 04c0 07       		.uleb128 0x7
+ 1256 04c1 12000000 		.4byte	.LVL64
+ 1257 04c5 11070000 		.4byte	0x711
+ 1258 04c9 08       		.uleb128 0x8
+ 1259 04ca 18000000 		.4byte	.LVL65
+ 1260 04ce AB070000 		.4byte	0x7ab
+ 1261 04d2 DD040000 		.4byte	0x4dd
+ 1262 04d6 09       		.uleb128 0x9
+ 1263 04d7 01       		.uleb128 0x1
+ 1264 04d8 50       		.byte	0x50
+ 1265 04d9 02       		.uleb128 0x2
+ 1266 04da 08       		.byte	0x8
+ 1267 04db FA       		.byte	0xfa
+ 1268 04dc 00       		.byte	0
+ 1269 04dd 07       		.uleb128 0x7
+ 1270 04de 1C000000 		.4byte	.LVL66
+ 1271 04e2 62010000 		.4byte	0x162
+ 1272 04e6 08       		.uleb128 0x8
+ 1273 04e7 24000000 		.4byte	.LVL67
+ 1274 04eb AB070000 		.4byte	0x7ab
+ 1275 04ef FB040000 		.4byte	0x4fb
+ 1276 04f3 09       		.uleb128 0x9
+ 1277 04f4 01       		.uleb128 0x1
+ 1278 04f5 50       		.byte	0x50
+ 1279 04f6 03       		.uleb128 0x3
+ 1280 04f7 0A       		.byte	0xa
+ 1281 04f8 E803     		.2byte	0x3e8
+ 1282 04fa 00       		.byte	0
+ 1283 04fb 07       		.uleb128 0x7
+ 1284 04fc 28000000 		.4byte	.LVL68
+ 1285 0500 06070000 		.4byte	0x706
+ 1286 0504 07       		.uleb128 0x7
+ 1287 0505 2C000000 		.4byte	.LVL69
+ 1288 0509 11070000 		.4byte	0x711
+ 1289 050d 08       		.uleb128 0x8
+ 1290 050e 32000000 		.4byte	.LVL70
+ 1291 0512 AB070000 		.4byte	0x7ab
+ 1292 0516 21050000 		.4byte	0x521
+ 1293 051a 09       		.uleb128 0x9
+ 1294 051b 01       		.uleb128 0x1
+ 1295 051c 50       		.byte	0x50
+ 1296 051d 02       		.uleb128 0x2
+ 1297 051e 08       		.byte	0x8
+ 1298 051f FA       		.byte	0xfa
+ 1299 0520 00       		.byte	0
+ 1300 0521 08       		.uleb128 0x8
+ 1301 0522 38000000 		.4byte	.LVL71
+ 1302 0526 1C070000 		.4byte	0x71c
+ 1303 052a 34050000 		.4byte	0x534
+ 1304 052e 09       		.uleb128 0x9
+ 1305 052f 01       		.uleb128 0x1
+ 1306 0530 50       		.byte	0x50
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 28
+
+
+ 1307 0531 01       		.uleb128 0x1
+ 1308 0532 30       		.byte	0x30
+ 1309 0533 00       		.byte	0
+ 1310 0534 08       		.uleb128 0x8
+ 1311 0535 3E000000 		.4byte	.LVL72
+ 1312 0539 27070000 		.4byte	0x727
+ 1313 053d 47050000 		.4byte	0x547
+ 1314 0541 09       		.uleb128 0x9
+ 1315 0542 01       		.uleb128 0x1
+ 1316 0543 50       		.byte	0x50
+ 1317 0544 01       		.uleb128 0x1
+ 1318 0545 31       		.byte	0x31
+ 1319 0546 00       		.byte	0
+ 1320 0547 08       		.uleb128 0x8
+ 1321 0548 44000000 		.4byte	.LVL73
+ 1322 054c 32070000 		.4byte	0x732
+ 1323 0550 5A050000 		.4byte	0x55a
+ 1324 0554 09       		.uleb128 0x9
+ 1325 0555 01       		.uleb128 0x1
+ 1326 0556 50       		.byte	0x50
+ 1327 0557 01       		.uleb128 0x1
+ 1328 0558 31       		.byte	0x31
+ 1329 0559 00       		.byte	0
+ 1330 055a 08       		.uleb128 0x8
+ 1331 055b 4A000000 		.4byte	.LVL74
+ 1332 055f 3D070000 		.4byte	0x73d
+ 1333 0563 6D050000 		.4byte	0x56d
+ 1334 0567 09       		.uleb128 0x9
+ 1335 0568 01       		.uleb128 0x1
+ 1336 0569 50       		.byte	0x50
+ 1337 056a 01       		.uleb128 0x1
+ 1338 056b 30       		.byte	0x30
+ 1339 056c 00       		.byte	0
+ 1340 056d 07       		.uleb128 0x7
+ 1341 056e 4E000000 		.4byte	.LVL75
+ 1342 0572 5E070000 		.4byte	0x75e
+ 1343 0576 07       		.uleb128 0x7
+ 1344 0577 52000000 		.4byte	.LVL76
+ 1345 057b 69070000 		.4byte	0x769
+ 1346 057f 08       		.uleb128 0x8
+ 1347 0580 58000000 		.4byte	.LVL77
+ 1348 0584 48070000 		.4byte	0x748
+ 1349 0588 93050000 		.4byte	0x593
+ 1350 058c 09       		.uleb128 0x9
+ 1351 058d 01       		.uleb128 0x1
+ 1352 058e 50       		.byte	0x50
+ 1353 058f 02       		.uleb128 0x2
+ 1354 0590 08       		.byte	0x8
+ 1355 0591 64       		.byte	0x64
+ 1356 0592 00       		.byte	0
+ 1357 0593 08       		.uleb128 0x8
+ 1358 0594 5E000000 		.4byte	.LVL78
+ 1359 0598 53070000 		.4byte	0x753
+ 1360 059c A7050000 		.4byte	0x5a7
+ 1361 05a0 09       		.uleb128 0x9
+ 1362 05a1 01       		.uleb128 0x1
+ 1363 05a2 50       		.byte	0x50
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 29
+
+
+ 1364 05a3 02       		.uleb128 0x2
+ 1365 05a4 08       		.byte	0x8
+ 1366 05a5 64       		.byte	0x64
+ 1367 05a6 00       		.byte	0
+ 1368 05a7 08       		.uleb128 0x8
+ 1369 05a8 66000000 		.4byte	.LVL79
+ 1370 05ac AB070000 		.4byte	0x7ab
+ 1371 05b0 BC050000 		.4byte	0x5bc
+ 1372 05b4 09       		.uleb128 0x9
+ 1373 05b5 01       		.uleb128 0x1
+ 1374 05b6 50       		.byte	0x50
+ 1375 05b7 03       		.uleb128 0x3
+ 1376 05b8 0A       		.byte	0xa
+ 1377 05b9 E803     		.2byte	0x3e8
+ 1378 05bb 00       		.byte	0
+ 1379 05bc 07       		.uleb128 0x7
+ 1380 05bd 6A000000 		.4byte	.LVL80
+ 1381 05c1 06070000 		.4byte	0x706
+ 1382 05c5 07       		.uleb128 0x7
+ 1383 05c6 6E000000 		.4byte	.LVL81
+ 1384 05ca 11070000 		.4byte	0x711
+ 1385 05ce 08       		.uleb128 0x8
+ 1386 05cf 74000000 		.4byte	.LVL82
+ 1387 05d3 AB070000 		.4byte	0x7ab
+ 1388 05d7 E2050000 		.4byte	0x5e2
+ 1389 05db 09       		.uleb128 0x9
+ 1390 05dc 01       		.uleb128 0x1
+ 1391 05dd 50       		.byte	0x50
+ 1392 05de 02       		.uleb128 0x2
+ 1393 05df 08       		.byte	0x8
+ 1394 05e0 FA       		.byte	0xfa
+ 1395 05e1 00       		.byte	0
+ 1396 05e2 07       		.uleb128 0x7
+ 1397 05e3 78000000 		.4byte	.LVL83
+ 1398 05e7 B4000000 		.4byte	0xb4
+ 1399 05eb 00       		.byte	0
+ 1400 05ec 0E       		.uleb128 0xe
+ 1401 05ed 76000000 		.4byte	.LASF26
+ 1402 05f1 05       		.byte	0x5
+ 1403 05f2 17       		.byte	0x17
+ 1404 05f3 6F000000 		.4byte	0x6f
+ 1405 05f7 05       		.uleb128 0x5
+ 1406 05f8 03       		.byte	0x3
+ 1407 05f9 00000000 		.4byte	NP_g_nNumberOfPixels
+ 1408 05fd 0E       		.uleb128 0xe
+ 1409 05fe 22030000 		.4byte	.LASF27
+ 1410 0602 05       		.byte	0x5
+ 1411 0603 18       		.byte	0x18
+ 1412 0604 96000000 		.4byte	0x96
+ 1413 0608 05       		.uleb128 0x5
+ 1414 0609 03       		.byte	0x3
+ 1415 060a 00000000 		.4byte	NP_g_nDMA_Chan
+ 1416 060e 0E       		.uleb128 0xe
+ 1417 060f C7010000 		.4byte	.LASF28
+ 1418 0613 05       		.byte	0x5
+ 1419 0614 19       		.byte	0x19
+ 1420 0615 96000000 		.4byte	0x96
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 30
+
+
+ 1421 0619 05       		.uleb128 0x5
+ 1422 061a 03       		.byte	0x3
+ 1423 061b 00000000 		.4byte	NP_g_nDMA_TD
+ 1424 061f 0E       		.uleb128 0xe
+ 1425 0620 2C000000 		.4byte	.LASF29
+ 1426 0624 05       		.byte	0x5
+ 1427 0625 1A       		.byte	0x1a
+ 1428 0626 96000000 		.4byte	0x96
+ 1429 062a 05       		.uleb128 0x5
+ 1430 062b 03       		.byte	0x3
+ 1431 062c 00000000 		.4byte	NP_g_bOwnsBuffer
+ 1432 0630 0E       		.uleb128 0xe
+ 1433 0631 4D010000 		.4byte	.LASF30
+ 1434 0635 05       		.byte	0x5
+ 1435 0636 1C       		.byte	0x1c
+ 1436 0637 41060000 		.4byte	0x641
+ 1437 063b 05       		.uleb128 0x5
+ 1438 063c 03       		.byte	0x3
+ 1439 063d 00000000 		.4byte	NP_g_pFrameBuffer
+ 1440 0641 0F       		.uleb128 0xf
+ 1441 0642 04       		.byte	0x4
+ 1442 0643 AF000000 		.4byte	0xaf
+ 1443 0647 0E       		.uleb128 0xe
+ 1444 0648 0C030000 		.4byte	.LASF31
+ 1445 064c 05       		.byte	0x5
+ 1446 064d 1D       		.byte	0x1d
+ 1447 064e 6F000000 		.4byte	0x6f
+ 1448 0652 05       		.uleb128 0x5
+ 1449 0653 03       		.byte	0x3
+ 1450 0654 00000000 		.4byte	NP_g_nFrameBufferSize
+ 1451 0658 10       		.uleb128 0x10
+ 1452 0659 F1010000 		.4byte	.LASF32
+ 1453 065d 06       		.byte	0x6
+ 1454 065e 2A06     		.2byte	0x62a
+ 1455 0660 64060000 		.4byte	0x664
+ 1456 0664 05       		.uleb128 0x5
+ 1457 0665 8B000000 		.4byte	0x8b
+ 1458 0669 11       		.uleb128 0x11
+ 1459 066a 84000000 		.4byte	0x84
+ 1460 066e 79060000 		.4byte	0x679
+ 1461 0672 12       		.uleb128 0x12
+ 1462 0673 7D000000 		.4byte	0x7d
+ 1463 0677 F9       		.byte	0xf9
+ 1464 0678 00       		.byte	0
+ 1465 0679 0E       		.uleb128 0xe
+ 1466 067a 3B030000 		.4byte	.LASF33
+ 1467 067e 07       		.byte	0x7
+ 1468 067f 05       		.byte	0x5
+ 1469 0680 69060000 		.4byte	0x669
+ 1470 0684 05       		.uleb128 0x5
+ 1471 0685 03       		.byte	0x3
+ 1472 0686 00000000 		.4byte	buffer
+ 1473 068a 0E       		.uleb128 0xe
+ 1474 068b F1020000 		.4byte	.LASF34
+ 1475 068f 07       		.byte	0x7
+ 1476 0690 08       		.byte	0x8
+ 1477 0691 68000000 		.4byte	0x68
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 31
+
+
+ 1478 0695 05       		.uleb128 0x5
+ 1479 0696 03       		.byte	0x3
+ 1480 0697 00000000 		.4byte	difficulty
+ 1481 069b 0E       		.uleb128 0xe
+ 1482 069c 10000000 		.4byte	.LASF35
+ 1483 06a0 07       		.byte	0x7
+ 1484 06a1 0A       		.byte	0xa
+ 1485 06a2 68000000 		.4byte	0x68
+ 1486 06a6 05       		.uleb128 0x5
+ 1487 06a7 03       		.byte	0x3
+ 1488 06a8 00000000 		.4byte	state
+ 1489 06ac 0E       		.uleb128 0xe
+ 1490 06ad 9D010000 		.4byte	.LASF36
+ 1491 06b1 07       		.byte	0x7
+ 1492 06b2 0B       		.byte	0xb
+ 1493 06b3 68000000 		.4byte	0x68
+ 1494 06b7 05       		.uleb128 0x5
+ 1495 06b8 03       		.byte	0x3
+ 1496 06b9 00000000 		.4byte	randState
+ 1497 06bd 0E       		.uleb128 0xe
+ 1498 06be 59030000 		.4byte	.LASF37
+ 1499 06c2 07       		.byte	0x7
+ 1500 06c3 0C       		.byte	0xc
+ 1501 06c4 68000000 		.4byte	0x68
+ 1502 06c8 05       		.uleb128 0x5
+ 1503 06c9 03       		.byte	0x3
+ 1504 06ca 00000000 		.4byte	randturn
+ 1505 06ce 0E       		.uleb128 0xe
+ 1506 06cf 94010000 		.4byte	.LASF38
+ 1507 06d3 08       		.byte	0x8
+ 1508 06d4 01       		.byte	0x1
+ 1509 06d5 68000000 		.4byte	0x68
+ 1510 06d9 05       		.uleb128 0x5
+ 1511 06da 03       		.byte	0x3
+ 1512 06db 00000000 		.4byte	running_
+ 1513 06df 11       		.uleb128 0x11
+ 1514 06e0 68000000 		.4byte	0x68
+ 1515 06e4 F5060000 		.4byte	0x6f5
+ 1516 06e8 12       		.uleb128 0x12
+ 1517 06e9 7D000000 		.4byte	0x7d
+ 1518 06ed 06       		.byte	0x6
+ 1519 06ee 12       		.uleb128 0x12
+ 1520 06ef 7D000000 		.4byte	0x7d
+ 1521 06f3 01       		.byte	0x1
+ 1522 06f4 00       		.byte	0
+ 1523 06f5 0E       		.uleb128 0xe
+ 1524 06f6 BF020000 		.4byte	.LASF39
+ 1525 06fa 01       		.byte	0x1
+ 1526 06fb 0A       		.byte	0xa
+ 1527 06fc DF060000 		.4byte	0x6df
+ 1528 0700 05       		.uleb128 0x5
+ 1529 0701 03       		.byte	0x3
+ 1530 0702 00000000 		.4byte	driveState
+ 1531 0706 13       		.uleb128 0x13
+ 1532 0707 00000000 		.4byte	.LASF40
+ 1533 070b 00000000 		.4byte	.LASF40
+ 1534 070f 09       		.byte	0x9
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 32
+
+
+ 1535 0710 93       		.byte	0x93
+ 1536 0711 13       		.uleb128 0x13
+ 1537 0712 EB030000 		.4byte	.LASF41
+ 1538 0716 EB030000 		.4byte	.LASF41
+ 1539 071a 0A       		.byte	0xa
+ 1540 071b 93       		.byte	0x93
+ 1541 071c 13       		.uleb128 0x13
+ 1542 071d FC020000 		.4byte	.LASF42
+ 1543 0721 FC020000 		.4byte	.LASF42
+ 1544 0725 0B       		.byte	0xb
+ 1545 0726 26       		.byte	0x26
+ 1546 0727 13       		.uleb128 0x13
+ 1547 0728 E1020000 		.4byte	.LASF43
+ 1548 072c E1020000 		.4byte	.LASF43
+ 1549 0730 0C       		.byte	0xc
+ 1550 0731 26       		.byte	0x26
+ 1551 0732 13       		.uleb128 0x13
+ 1552 0733 3D000000 		.4byte	.LASF44
+ 1553 0737 3D000000 		.4byte	.LASF44
+ 1554 073b 0D       		.byte	0xd
+ 1555 073c 26       		.byte	0x26
+ 1556 073d 13       		.uleb128 0x13
+ 1557 073e 9D000000 		.4byte	.LASF45
+ 1558 0742 9D000000 		.4byte	.LASF45
+ 1559 0746 0E       		.byte	0xe
+ 1560 0747 26       		.byte	0x26
+ 1561 0748 13       		.uleb128 0x13
+ 1562 0749 69010000 		.4byte	.LASF46
+ 1563 074d 69010000 		.4byte	.LASF46
+ 1564 0751 09       		.byte	0x9
+ 1565 0752 C3       		.byte	0xc3
+ 1566 0753 13       		.uleb128 0x13
+ 1567 0754 62030000 		.4byte	.LASF47
+ 1568 0758 62030000 		.4byte	.LASF47
+ 1569 075c 0A       		.byte	0xa
+ 1570 075d C3       		.byte	0xc3
+ 1571 075e 13       		.uleb128 0x13
+ 1572 075f 65000000 		.4byte	.LASF48
+ 1573 0763 65000000 		.4byte	.LASF48
+ 1574 0767 09       		.byte	0x9
+ 1575 0768 92       		.byte	0x92
+ 1576 0769 13       		.uleb128 0x13
+ 1577 076a 54000000 		.4byte	.LASF49
+ 1578 076e 54000000 		.4byte	.LASF49
+ 1579 0772 0A       		.byte	0xa
+ 1580 0773 92       		.byte	0x92
+ 1581 0774 13       		.uleb128 0x13
+ 1582 0775 DA010000 		.4byte	.LASF50
+ 1583 0779 DA010000 		.4byte	.LASF50
+ 1584 077d 09       		.byte	0x9
+ 1585 077e BE       		.byte	0xbe
+ 1586 077f 13       		.uleb128 0x13
+ 1587 0780 FE010000 		.4byte	.LASF51
+ 1588 0784 FE010000 		.4byte	.LASF51
+ 1589 0788 0A       		.byte	0xa
+ 1590 0789 BE       		.byte	0xbe
+ 1591 078a 13       		.uleb128 0x13
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 33
+
+
+ 1592 078b 53020000 		.4byte	.LASF52
+ 1593 078f 53020000 		.4byte	.LASF52
+ 1594 0793 0F       		.byte	0xf
+ 1595 0794 37       		.byte	0x37
+ 1596 0795 13       		.uleb128 0x13
+ 1597 0796 D4010000 		.4byte	.LASF53
+ 1598 079a D4010000 		.4byte	.LASF53
+ 1599 079e 10       		.byte	0x10
+ 1600 079f 96       		.byte	0x96
+ 1601 07a0 13       		.uleb128 0x13
+ 1602 07a1 0A040000 		.4byte	.LASF54
+ 1603 07a5 0A040000 		.4byte	.LASF54
+ 1604 07a9 10       		.byte	0x10
+ 1605 07aa 88       		.byte	0x88
+ 1606 07ab 13       		.uleb128 0x13
+ 1607 07ac 02040000 		.4byte	.LASF55
+ 1608 07b0 02040000 		.4byte	.LASF55
+ 1609 07b4 11       		.byte	0x11
+ 1610 07b5 77       		.byte	0x77
+ 1611 07b6 00       		.byte	0
+ 1612              		.section	.debug_abbrev,"",%progbits
+ 1613              	.Ldebug_abbrev0:
+ 1614 0000 01       		.uleb128 0x1
+ 1615 0001 11       		.uleb128 0x11
+ 1616 0002 01       		.byte	0x1
+ 1617 0003 25       		.uleb128 0x25
+ 1618 0004 0E       		.uleb128 0xe
+ 1619 0005 13       		.uleb128 0x13
+ 1620 0006 0B       		.uleb128 0xb
+ 1621 0007 03       		.uleb128 0x3
+ 1622 0008 0E       		.uleb128 0xe
+ 1623 0009 1B       		.uleb128 0x1b
+ 1624 000a 0E       		.uleb128 0xe
+ 1625 000b 55       		.uleb128 0x55
+ 1626 000c 17       		.uleb128 0x17
+ 1627 000d 11       		.uleb128 0x11
+ 1628 000e 01       		.uleb128 0x1
+ 1629 000f 10       		.uleb128 0x10
+ 1630 0010 17       		.uleb128 0x17
+ 1631 0011 00       		.byte	0
+ 1632 0012 00       		.byte	0
+ 1633 0013 02       		.uleb128 0x2
+ 1634 0014 24       		.uleb128 0x24
+ 1635 0015 00       		.byte	0
+ 1636 0016 0B       		.uleb128 0xb
+ 1637 0017 0B       		.uleb128 0xb
+ 1638 0018 3E       		.uleb128 0x3e
+ 1639 0019 0B       		.uleb128 0xb
+ 1640 001a 03       		.uleb128 0x3
+ 1641 001b 0E       		.uleb128 0xe
+ 1642 001c 00       		.byte	0
+ 1643 001d 00       		.byte	0
+ 1644 001e 03       		.uleb128 0x3
+ 1645 001f 16       		.uleb128 0x16
+ 1646 0020 00       		.byte	0
+ 1647 0021 03       		.uleb128 0x3
+ 1648 0022 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 34
+
+
+ 1649 0023 3A       		.uleb128 0x3a
+ 1650 0024 0B       		.uleb128 0xb
+ 1651 0025 3B       		.uleb128 0x3b
+ 1652 0026 0B       		.uleb128 0xb
+ 1653 0027 49       		.uleb128 0x49
+ 1654 0028 13       		.uleb128 0x13
+ 1655 0029 00       		.byte	0
+ 1656 002a 00       		.byte	0
+ 1657 002b 04       		.uleb128 0x4
+ 1658 002c 24       		.uleb128 0x24
+ 1659 002d 00       		.byte	0
+ 1660 002e 0B       		.uleb128 0xb
+ 1661 002f 0B       		.uleb128 0xb
+ 1662 0030 3E       		.uleb128 0x3e
+ 1663 0031 0B       		.uleb128 0xb
+ 1664 0032 03       		.uleb128 0x3
+ 1665 0033 08       		.uleb128 0x8
+ 1666 0034 00       		.byte	0
+ 1667 0035 00       		.byte	0
+ 1668 0036 05       		.uleb128 0x5
+ 1669 0037 35       		.uleb128 0x35
+ 1670 0038 00       		.byte	0
+ 1671 0039 49       		.uleb128 0x49
+ 1672 003a 13       		.uleb128 0x13
+ 1673 003b 00       		.byte	0
+ 1674 003c 00       		.byte	0
+ 1675 003d 06       		.uleb128 0x6
+ 1676 003e 2E       		.uleb128 0x2e
+ 1677 003f 01       		.byte	0x1
+ 1678 0040 3F       		.uleb128 0x3f
+ 1679 0041 19       		.uleb128 0x19
+ 1680 0042 03       		.uleb128 0x3
+ 1681 0043 0E       		.uleb128 0xe
+ 1682 0044 3A       		.uleb128 0x3a
+ 1683 0045 0B       		.uleb128 0xb
+ 1684 0046 3B       		.uleb128 0x3b
+ 1685 0047 0B       		.uleb128 0xb
+ 1686 0048 11       		.uleb128 0x11
+ 1687 0049 01       		.uleb128 0x1
+ 1688 004a 12       		.uleb128 0x12
+ 1689 004b 06       		.uleb128 0x6
+ 1690 004c 40       		.uleb128 0x40
+ 1691 004d 18       		.uleb128 0x18
+ 1692 004e 9742     		.uleb128 0x2117
+ 1693 0050 19       		.uleb128 0x19
+ 1694 0051 01       		.uleb128 0x1
+ 1695 0052 13       		.uleb128 0x13
+ 1696 0053 00       		.byte	0
+ 1697 0054 00       		.byte	0
+ 1698 0055 07       		.uleb128 0x7
+ 1699 0056 898201   		.uleb128 0x4109
+ 1700 0059 00       		.byte	0
+ 1701 005a 11       		.uleb128 0x11
+ 1702 005b 01       		.uleb128 0x1
+ 1703 005c 31       		.uleb128 0x31
+ 1704 005d 13       		.uleb128 0x13
+ 1705 005e 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 35
+
+
+ 1706 005f 00       		.byte	0
+ 1707 0060 08       		.uleb128 0x8
+ 1708 0061 898201   		.uleb128 0x4109
+ 1709 0064 01       		.byte	0x1
+ 1710 0065 11       		.uleb128 0x11
+ 1711 0066 01       		.uleb128 0x1
+ 1712 0067 31       		.uleb128 0x31
+ 1713 0068 13       		.uleb128 0x13
+ 1714 0069 01       		.uleb128 0x1
+ 1715 006a 13       		.uleb128 0x13
+ 1716 006b 00       		.byte	0
+ 1717 006c 00       		.byte	0
+ 1718 006d 09       		.uleb128 0x9
+ 1719 006e 8A8201   		.uleb128 0x410a
+ 1720 0071 00       		.byte	0
+ 1721 0072 02       		.uleb128 0x2
+ 1722 0073 18       		.uleb128 0x18
+ 1723 0074 9142     		.uleb128 0x2111
+ 1724 0076 18       		.uleb128 0x18
+ 1725 0077 00       		.byte	0
+ 1726 0078 00       		.byte	0
+ 1727 0079 0A       		.uleb128 0xa
+ 1728 007a 2E       		.uleb128 0x2e
+ 1729 007b 01       		.byte	0x1
+ 1730 007c 3F       		.uleb128 0x3f
+ 1731 007d 19       		.uleb128 0x19
+ 1732 007e 03       		.uleb128 0x3
+ 1733 007f 0E       		.uleb128 0xe
+ 1734 0080 3A       		.uleb128 0x3a
+ 1735 0081 0B       		.uleb128 0xb
+ 1736 0082 3B       		.uleb128 0x3b
+ 1737 0083 0B       		.uleb128 0xb
+ 1738 0084 27       		.uleb128 0x27
+ 1739 0085 19       		.uleb128 0x19
+ 1740 0086 11       		.uleb128 0x11
+ 1741 0087 01       		.uleb128 0x1
+ 1742 0088 12       		.uleb128 0x12
+ 1743 0089 06       		.uleb128 0x6
+ 1744 008a 40       		.uleb128 0x40
+ 1745 008b 18       		.uleb128 0x18
+ 1746 008c 9742     		.uleb128 0x2117
+ 1747 008e 19       		.uleb128 0x19
+ 1748 008f 01       		.uleb128 0x1
+ 1749 0090 13       		.uleb128 0x13
+ 1750 0091 00       		.byte	0
+ 1751 0092 00       		.byte	0
+ 1752 0093 0B       		.uleb128 0xb
+ 1753 0094 05       		.uleb128 0x5
+ 1754 0095 00       		.byte	0
+ 1755 0096 03       		.uleb128 0x3
+ 1756 0097 0E       		.uleb128 0xe
+ 1757 0098 3A       		.uleb128 0x3a
+ 1758 0099 0B       		.uleb128 0xb
+ 1759 009a 3B       		.uleb128 0x3b
+ 1760 009b 0B       		.uleb128 0xb
+ 1761 009c 49       		.uleb128 0x49
+ 1762 009d 13       		.uleb128 0x13
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 36
+
+
+ 1763 009e 02       		.uleb128 0x2
+ 1764 009f 17       		.uleb128 0x17
+ 1765 00a0 00       		.byte	0
+ 1766 00a1 00       		.byte	0
+ 1767 00a2 0C       		.uleb128 0xc
+ 1768 00a3 898201   		.uleb128 0x4109
+ 1769 00a6 01       		.byte	0x1
+ 1770 00a7 11       		.uleb128 0x11
+ 1771 00a8 01       		.uleb128 0x1
+ 1772 00a9 31       		.uleb128 0x31
+ 1773 00aa 13       		.uleb128 0x13
+ 1774 00ab 00       		.byte	0
+ 1775 00ac 00       		.byte	0
+ 1776 00ad 0D       		.uleb128 0xd
+ 1777 00ae 05       		.uleb128 0x5
+ 1778 00af 00       		.byte	0
+ 1779 00b0 03       		.uleb128 0x3
+ 1780 00b1 08       		.uleb128 0x8
+ 1781 00b2 3A       		.uleb128 0x3a
+ 1782 00b3 0B       		.uleb128 0xb
+ 1783 00b4 3B       		.uleb128 0x3b
+ 1784 00b5 0B       		.uleb128 0xb
+ 1785 00b6 49       		.uleb128 0x49
+ 1786 00b7 13       		.uleb128 0x13
+ 1787 00b8 02       		.uleb128 0x2
+ 1788 00b9 17       		.uleb128 0x17
+ 1789 00ba 00       		.byte	0
+ 1790 00bb 00       		.byte	0
+ 1791 00bc 0E       		.uleb128 0xe
+ 1792 00bd 34       		.uleb128 0x34
+ 1793 00be 00       		.byte	0
+ 1794 00bf 03       		.uleb128 0x3
+ 1795 00c0 0E       		.uleb128 0xe
+ 1796 00c1 3A       		.uleb128 0x3a
+ 1797 00c2 0B       		.uleb128 0xb
+ 1798 00c3 3B       		.uleb128 0x3b
+ 1799 00c4 0B       		.uleb128 0xb
+ 1800 00c5 49       		.uleb128 0x49
+ 1801 00c6 13       		.uleb128 0x13
+ 1802 00c7 3F       		.uleb128 0x3f
+ 1803 00c8 19       		.uleb128 0x19
+ 1804 00c9 02       		.uleb128 0x2
+ 1805 00ca 18       		.uleb128 0x18
+ 1806 00cb 00       		.byte	0
+ 1807 00cc 00       		.byte	0
+ 1808 00cd 0F       		.uleb128 0xf
+ 1809 00ce 0F       		.uleb128 0xf
+ 1810 00cf 00       		.byte	0
+ 1811 00d0 0B       		.uleb128 0xb
+ 1812 00d1 0B       		.uleb128 0xb
+ 1813 00d2 49       		.uleb128 0x49
+ 1814 00d3 13       		.uleb128 0x13
+ 1815 00d4 00       		.byte	0
+ 1816 00d5 00       		.byte	0
+ 1817 00d6 10       		.uleb128 0x10
+ 1818 00d7 34       		.uleb128 0x34
+ 1819 00d8 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 37
+
+
+ 1820 00d9 03       		.uleb128 0x3
+ 1821 00da 0E       		.uleb128 0xe
+ 1822 00db 3A       		.uleb128 0x3a
+ 1823 00dc 0B       		.uleb128 0xb
+ 1824 00dd 3B       		.uleb128 0x3b
+ 1825 00de 05       		.uleb128 0x5
+ 1826 00df 49       		.uleb128 0x49
+ 1827 00e0 13       		.uleb128 0x13
+ 1828 00e1 3F       		.uleb128 0x3f
+ 1829 00e2 19       		.uleb128 0x19
+ 1830 00e3 3C       		.uleb128 0x3c
+ 1831 00e4 19       		.uleb128 0x19
+ 1832 00e5 00       		.byte	0
+ 1833 00e6 00       		.byte	0
+ 1834 00e7 11       		.uleb128 0x11
+ 1835 00e8 01       		.uleb128 0x1
+ 1836 00e9 01       		.byte	0x1
+ 1837 00ea 49       		.uleb128 0x49
+ 1838 00eb 13       		.uleb128 0x13
+ 1839 00ec 01       		.uleb128 0x1
+ 1840 00ed 13       		.uleb128 0x13
+ 1841 00ee 00       		.byte	0
+ 1842 00ef 00       		.byte	0
+ 1843 00f0 12       		.uleb128 0x12
+ 1844 00f1 21       		.uleb128 0x21
+ 1845 00f2 00       		.byte	0
+ 1846 00f3 49       		.uleb128 0x49
+ 1847 00f4 13       		.uleb128 0x13
+ 1848 00f5 2F       		.uleb128 0x2f
+ 1849 00f6 0B       		.uleb128 0xb
+ 1850 00f7 00       		.byte	0
+ 1851 00f8 00       		.byte	0
+ 1852 00f9 13       		.uleb128 0x13
+ 1853 00fa 2E       		.uleb128 0x2e
+ 1854 00fb 00       		.byte	0
+ 1855 00fc 3F       		.uleb128 0x3f
+ 1856 00fd 19       		.uleb128 0x19
+ 1857 00fe 3C       		.uleb128 0x3c
+ 1858 00ff 19       		.uleb128 0x19
+ 1859 0100 6E       		.uleb128 0x6e
+ 1860 0101 0E       		.uleb128 0xe
+ 1861 0102 03       		.uleb128 0x3
+ 1862 0103 0E       		.uleb128 0xe
+ 1863 0104 3A       		.uleb128 0x3a
+ 1864 0105 0B       		.uleb128 0xb
+ 1865 0106 3B       		.uleb128 0x3b
+ 1866 0107 0B       		.uleb128 0xb
+ 1867 0108 00       		.byte	0
+ 1868 0109 00       		.byte	0
+ 1869 010a 00       		.byte	0
+ 1870              		.section	.debug_loc,"",%progbits
+ 1871              	.Ldebug_loc0:
+ 1872              	.LLST0:
+ 1873 0000 00000000 		.4byte	.LVL30
+ 1874 0004 1C000000 		.4byte	.LVL31
+ 1875 0008 0100     		.2byte	0x1
+ 1876 000a 50       		.byte	0x50
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 38
+
+
+ 1877 000b 1C000000 		.4byte	.LVL31
+ 1878 000f 26000000 		.4byte	.LVL33
+ 1879 0013 0400     		.2byte	0x4
+ 1880 0015 F3       		.byte	0xf3
+ 1881 0016 01       		.uleb128 0x1
+ 1882 0017 50       		.byte	0x50
+ 1883 0018 9F       		.byte	0x9f
+ 1884 0019 26000000 		.4byte	.LVL33
+ 1885 001d 30000000 		.4byte	.LVL34
+ 1886 0021 0100     		.2byte	0x1
+ 1887 0023 50       		.byte	0x50
+ 1888 0024 30000000 		.4byte	.LVL34
+ 1889 0028 40000000 		.4byte	.LFE65
+ 1890 002c 0400     		.2byte	0x4
+ 1891 002e F3       		.byte	0xf3
+ 1892 002f 01       		.uleb128 0x1
+ 1893 0030 50       		.byte	0x50
+ 1894 0031 9F       		.byte	0x9f
+ 1895 0032 00000000 		.4byte	0
+ 1896 0036 00000000 		.4byte	0
+ 1897              	.LLST1:
+ 1898 003a 00000000 		.4byte	.LVL41
+ 1899 003e 0F000000 		.4byte	.LVL42-1
+ 1900 0042 0100     		.2byte	0x1
+ 1901 0044 50       		.byte	0x50
+ 1902 0045 0F000000 		.4byte	.LVL42-1
+ 1903 0049 86000000 		.4byte	.LVL62
+ 1904 004d 0100     		.2byte	0x1
+ 1905 004f 54       		.byte	0x54
+ 1906 0050 86000000 		.4byte	.LVL62
+ 1907 0054 8C000000 		.4byte	.LFE70
+ 1908 0058 0100     		.2byte	0x1
+ 1909 005a 50       		.byte	0x50
+ 1910 005b 00000000 		.4byte	0
+ 1911 005f 00000000 		.4byte	0
+ 1912              		.section	.debug_aranges,"",%progbits
+ 1913 0000 54000000 		.4byte	0x54
+ 1914 0004 0200     		.2byte	0x2
+ 1915 0006 00000000 		.4byte	.Ldebug_info0
+ 1916 000a 04       		.byte	0x4
+ 1917 000b 00       		.byte	0
+ 1918 000c 0000     		.2byte	0
+ 1919 000e 0000     		.2byte	0
+ 1920 0010 00000000 		.4byte	.LFB66
+ 1921 0014 44000000 		.4byte	.LFE66-.LFB66
+ 1922 0018 00000000 		.4byte	.LFB67
+ 1923 001c 44000000 		.4byte	.LFE67-.LFB67
+ 1924 0020 00000000 		.4byte	.LFB68
+ 1925 0024 0C000000 		.4byte	.LFE68-.LFB68
+ 1926 0028 00000000 		.4byte	.LFB69
+ 1927 002c 68000000 		.4byte	.LFE69-.LFB69
+ 1928 0030 00000000 		.4byte	.LFB65
+ 1929 0034 40000000 		.4byte	.LFE65-.LFB65
+ 1930 0038 00000000 		.4byte	.LFB64
+ 1931 003c 68000000 		.4byte	.LFE64-.LFB64
+ 1932 0040 00000000 		.4byte	.LFB70
+ 1933 0044 8C000000 		.4byte	.LFE70-.LFB70
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 39
+
+
+ 1934 0048 00000000 		.4byte	.LFB71
+ 1935 004c 80000000 		.4byte	.LFE71-.LFB71
+ 1936 0050 00000000 		.4byte	0
+ 1937 0054 00000000 		.4byte	0
+ 1938              		.section	.debug_ranges,"",%progbits
+ 1939              	.Ldebug_ranges0:
+ 1940 0000 00000000 		.4byte	.LFB66
+ 1941 0004 44000000 		.4byte	.LFE66
+ 1942 0008 00000000 		.4byte	.LFB67
+ 1943 000c 44000000 		.4byte	.LFE67
+ 1944 0010 00000000 		.4byte	.LFB68
+ 1945 0014 0C000000 		.4byte	.LFE68
+ 1946 0018 00000000 		.4byte	.LFB69
+ 1947 001c 68000000 		.4byte	.LFE69
+ 1948 0020 00000000 		.4byte	.LFB65
+ 1949 0024 40000000 		.4byte	.LFE65
+ 1950 0028 00000000 		.4byte	.LFB64
+ 1951 002c 68000000 		.4byte	.LFE64
+ 1952 0030 00000000 		.4byte	.LFB70
+ 1953 0034 8C000000 		.4byte	.LFE70
+ 1954 0038 00000000 		.4byte	.LFB71
+ 1955 003c 80000000 		.4byte	.LFE71
+ 1956 0040 00000000 		.4byte	0
+ 1957 0044 00000000 		.4byte	0
+ 1958              		.section	.debug_line,"",%progbits
+ 1959              	.Ldebug_line0:
+ 1960 0000 A0030000 		.section	.debug_str,"MS",%progbits,1
+ 1960      0200A802 
+ 1960      00000201 
+ 1960      FB0E0D00 
+ 1960      01010101 
+ 1961              	.LASF40:
+ 1962 0000 6D6F746F 		.ascii	"motorPWM_1_Stop\000"
+ 1962      7250574D 
+ 1962      5F315F53 
+ 1962      746F7000 
+ 1963              	.LASF35:
+ 1964 0010 73746174 		.ascii	"state\000"
+ 1964      6500
+ 1965              	.LASF21:
+ 1966 0016 73706565 		.ascii	"speedSelect\000"
+ 1966      6453656C 
+ 1966      65637400 
+ 1967              	.LASF12:
+ 1968 0022 5F5F696E 		.ascii	"__int32_t\000"
+ 1968      7433325F 
+ 1968      7400
+ 1969              	.LASF29:
+ 1970 002c 4E505F67 		.ascii	"NP_g_bOwnsBuffer\000"
+ 1970      5F624F77 
+ 1970      6E734275 
+ 1970      66666572 
+ 1970      00
+ 1971              	.LASF44:
+ 1972 003d 50696E32 		.ascii	"Pin2_dir1_Write\000"
+ 1972      5F646972 
+ 1972      315F5772 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 40
+
+
+ 1972      69746500 
+ 1973              	.LASF16:
+ 1974 004d 646F7562 		.ascii	"double\000"
+ 1974      6C6500
+ 1975              	.LASF49:
+ 1976 0054 6D6F746F 		.ascii	"motorPWM_2_Start\000"
+ 1976      7250574D 
+ 1976      5F325F53 
+ 1976      74617274 
+ 1976      00
+ 1977              	.LASF48:
+ 1978 0065 6D6F746F 		.ascii	"motorPWM_1_Start\000"
+ 1978      7250574D 
+ 1978      5F315F53 
+ 1978      74617274 
+ 1978      00
+ 1979              	.LASF26:
+ 1980 0076 4E505F67 		.ascii	"NP_g_nNumberOfPixels\000"
+ 1980      5F6E4E75 
+ 1980      6D626572 
+ 1980      4F665069 
+ 1980      78656C73 
+ 1981              	.LASF20:
+ 1982 008b 6368616E 		.ascii	"changeSpeed\000"
+ 1982      67655370 
+ 1982      65656400 
+ 1983              	.LASF15:
+ 1984 0097 666C6F61 		.ascii	"float\000"
+ 1984      7400
+ 1985              	.LASF45:
+ 1986 009d 50696E32 		.ascii	"Pin2_dir2_Write\000"
+ 1986      5F646972 
+ 1986      325F5772 
+ 1986      69746500 
+ 1987              	.LASF25:
+ 1988 00ad 44656C61 		.ascii	"DelayBased180Turn\000"
+ 1988      79426173 
+ 1988      65643138 
+ 1988      30547572 
+ 1988      6E00
+ 1989              	.LASF56:
+ 1990 00bf 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1990      43313120 
+ 1990      352E342E 
+ 1990      31203230 
+ 1990      31363036 
+ 1991 00f2 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1991      20726576 
+ 1991      6973696F 
+ 1991      6E203233 
+ 1991      37373135 
+ 1992 0125 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1992      66756E63 
+ 1992      74696F6E 
+ 1992      2D736563 
+ 1992      74696F6E 
+ 1993              	.LASF30:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 41
+
+
+ 1994 014d 4E505F67 		.ascii	"NP_g_pFrameBuffer\000"
+ 1994      5F704672 
+ 1994      616D6542 
+ 1994      75666665 
+ 1994      7200
+ 1995              	.LASF19:
+ 1996 015f 6D6F746F 		.ascii	"motorStop\000"
+ 1996      7253746F 
+ 1996      7000
+ 1997              	.LASF46:
+ 1998 0169 6D6F746F 		.ascii	"motorPWM_1_WriteCompare\000"
+ 1998      7250574D 
+ 1998      5F315F57 
+ 1998      72697465 
+ 1998      436F6D70 
+ 1999              	.LASF3:
+ 2000 0181 73686F72 		.ascii	"short unsigned int\000"
+ 2000      7420756E 
+ 2000      7369676E 
+ 2000      65642069 
+ 2000      6E7400
+ 2001              	.LASF38:
+ 2002 0194 72756E6E 		.ascii	"running_\000"
+ 2002      696E675F 
+ 2002      00
+ 2003              	.LASF36:
+ 2004 019d 72616E64 		.ascii	"randState\000"
+ 2004      53746174 
+ 2004      6500
+ 2005              	.LASF1:
+ 2006 01a7 756E7369 		.ascii	"unsigned char\000"
+ 2006      676E6564 
+ 2006      20636861 
+ 2006      7200
+ 2007              	.LASF5:
+ 2008 01b5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2008      20756E73 
+ 2008      69676E65 
+ 2008      6420696E 
+ 2008      7400
+ 2009              	.LASF28:
+ 2010 01c7 4E505F67 		.ascii	"NP_g_nDMA_TD\000"
+ 2010      5F6E444D 
+ 2010      415F5444 
+ 2010      00
+ 2011              	.LASF53:
+ 2012 01d4 7372616E 		.ascii	"srand\000"
+ 2012      6400
+ 2013              	.LASF50:
+ 2014 01da 6D6F746F 		.ascii	"motorPWM_1_WritePeriod\000"
+ 2014      7250574D 
+ 2014      5F315F57 
+ 2014      72697465 
+ 2014      50657269 
+ 2015              	.LASF32:
+ 2016 01f1 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2016      52784275 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 42
+
+
+ 2016      66666572 
+ 2016      00
+ 2017              	.LASF51:
+ 2018 01fe 6D6F746F 		.ascii	"motorPWM_2_WritePeriod\000"
+ 2018      7250574D 
+ 2018      5F325F57 
+ 2018      72697465 
+ 2018      50657269 
+ 2019              	.LASF8:
+ 2020 0215 756E7369 		.ascii	"unsigned int\000"
+ 2020      676E6564 
+ 2020      20696E74 
+ 2020      00
+ 2021              	.LASF17:
+ 2022 0222 64726976 		.ascii	"driveForwards\000"
+ 2022      65466F72 
+ 2022      77617264 
+ 2022      7300
+ 2023              	.LASF7:
+ 2024 0230 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2024      206C6F6E 
+ 2024      6720756E 
+ 2024      7369676E 
+ 2024      65642069 
+ 2025              	.LASF22:
+ 2026 0247 6368616E 		.ascii	"changeState\000"
+ 2026      67655374 
+ 2026      61746500 
+ 2027              	.LASF52:
+ 2028 0253 74696D65 		.ascii	"time\000"
+ 2028      00
+ 2029              	.LASF57:
+ 2030 0258 2E2E5C2E 		.ascii	"..\\..\\..\\3semesterProjekt_repository\\Ultrasound"
+ 2030      2E5C2E2E 
+ 2030      5C337365 
+ 2030      6D657374 
+ 2030      65725072 
+ 2031 0287 76325C55 		.ascii	"v2\\Ultrasoundv2.cydsn\\MotorApp.c\000"
+ 2031      6C747261 
+ 2031      736F756E 
+ 2031      6476322E 
+ 2031      63796473 
+ 2032              	.LASF13:
+ 2033 02a8 696E7433 		.ascii	"int32_t\000"
+ 2033      325F7400 
+ 2034              	.LASF18:
+ 2035 02b0 64726976 		.ascii	"driveBackwards\000"
+ 2035      65426163 
+ 2035      6B776172 
+ 2035      647300
+ 2036              	.LASF39:
+ 2037 02bf 64726976 		.ascii	"driveState\000"
+ 2037      65537461 
+ 2037      746500
+ 2038              	.LASF10:
+ 2039 02ca 73697A65 		.ascii	"sizetype\000"
+ 2039      74797065 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 43
+
+
+ 2039      00
+ 2040              	.LASF6:
+ 2041 02d3 6C6F6E67 		.ascii	"long long int\000"
+ 2041      206C6F6E 
+ 2041      6720696E 
+ 2041      7400
+ 2042              	.LASF43:
+ 2043 02e1 50696E31 		.ascii	"Pin1_dir2_Write\000"
+ 2043      5F646972 
+ 2043      325F5772 
+ 2043      69746500 
+ 2044              	.LASF34:
+ 2045 02f1 64696666 		.ascii	"difficulty\000"
+ 2045      6963756C 
+ 2045      747900
+ 2046              	.LASF42:
+ 2047 02fc 50696E31 		.ascii	"Pin1_dir1_Write\000"
+ 2047      5F646972 
+ 2047      315F5772 
+ 2047      69746500 
+ 2048              	.LASF31:
+ 2049 030c 4E505F67 		.ascii	"NP_g_nFrameBufferSize\000"
+ 2049      5F6E4672 
+ 2049      616D6542 
+ 2049      75666665 
+ 2049      7253697A 
+ 2050              	.LASF27:
+ 2051 0322 4E505F67 		.ascii	"NP_g_nDMA_Chan\000"
+ 2051      5F6E444D 
+ 2051      415F4368 
+ 2051      616E00
+ 2052              	.LASF2:
+ 2053 0331 73686F72 		.ascii	"short int\000"
+ 2053      7420696E 
+ 2053      7400
+ 2054              	.LASF33:
+ 2055 033b 62756666 		.ascii	"buffer\000"
+ 2055      657200
+ 2056              	.LASF14:
+ 2057 0342 75696E74 		.ascii	"uint8\000"
+ 2057      3800
+ 2058              	.LASF23:
+ 2059 0348 44656C61 		.ascii	"DelayBased90Turn\000"
+ 2059      79426173 
+ 2059      65643930 
+ 2059      5475726E 
+ 2059      00
+ 2060              	.LASF37:
+ 2061 0359 72616E64 		.ascii	"randturn\000"
+ 2061      7475726E 
+ 2061      00
+ 2062              	.LASF47:
+ 2063 0362 6D6F746F 		.ascii	"motorPWM_2_WriteCompare\000"
+ 2063      7250574D 
+ 2063      5F325F57 
+ 2063      72697465 
+ 2063      436F6D70 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccFFyRmk.s 			page 44
+
+
+ 2064              	.LASF4:
+ 2065 037a 6C6F6E67 		.ascii	"long int\000"
+ 2065      20696E74 
+ 2065      00
+ 2066              	.LASF11:
+ 2067 0383 63686172 		.ascii	"char\000"
+ 2067      00
+ 2068              	.LASF9:
+ 2069 0388 6C6F6E67 		.ascii	"long double\000"
+ 2069      20646F75 
+ 2069      626C6500 
+ 2070              	.LASF58:
+ 2071 0394 433A5C55 		.ascii	"C:\\Users\\lucasiversen\\Desktop\\PSOC_1_Program\\P"
+ 2071      73657273 
+ 2071      5C6C7563 
+ 2071      61736976 
+ 2071      65727365 
+ 2072 03c2 534F435F 		.ascii	"SOC_1_Program\\NeoPixel.cydsn\000"
+ 2072      315F5072 
+ 2072      6F677261 
+ 2072      6D5C4E65 
+ 2072      6F506978 
+ 2073              	.LASF0:
+ 2074 03df 7369676E 		.ascii	"signed char\000"
+ 2074      65642063 
+ 2074      68617200 
+ 2075              	.LASF41:
+ 2076 03eb 6D6F746F 		.ascii	"motorPWM_2_Stop\000"
+ 2076      7250574D 
+ 2076      5F325F53 
+ 2076      746F7000 
+ 2077              	.LASF24:
+ 2078 03fb 6368616E 		.ascii	"change\000"
+ 2078      676500
+ 2079              	.LASF55:
+ 2080 0402 43794465 		.ascii	"CyDelay\000"
+ 2080      6C617900 
+ 2081              	.LASF54:
+ 2082 040a 72616E64 		.ascii	"rand\000"
+ 2082      00
+ 2083              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

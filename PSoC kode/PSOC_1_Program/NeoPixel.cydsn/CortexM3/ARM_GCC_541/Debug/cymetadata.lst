@@ -1,0 +1,2572 @@
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 1964
+  28              	cy_meta_configecc:
+  29 0000 05       		.byte	5
+  30 0001 52       		.byte	82
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 04       		.byte	4
+  34 0005 64       		.byte	100
+  35 0006 00       		.byte	0
+  36 0007 40       		.byte	64
+  37 0008 03       		.byte	3
+  38 0009 65       		.byte	101
+  39 000a 00       		.byte	0
+  40 000b 40       		.byte	64
+  41 000c 58       		.byte	88
+  42 000d 02       		.byte	2
+  43 000e 01       		.byte	1
+  44 000f 40       		.byte	64
+  45 0010 38       		.byte	56
+  46 0011 03       		.byte	3
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 05       		.byte	5
+  50 0015 05       		.byte	5
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 03       		.byte	3
+  54 0019 07       		.byte	7
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 44       		.byte	68
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 2
+
+
+  58 001d 08       		.byte	8
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 2D       		.byte	45
+  62 0021 09       		.byte	9
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 07       		.byte	7
+  66 0025 0B       		.byte	11
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 40       		.byte	64
+  70 0029 0C       		.byte	12
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 22       		.byte	34
+  74 002d 0D       		.byte	13
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 02       		.byte	2
+  78 0031 15       		.byte	21
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 5D       		.byte	93
+  82 0035 16       		.byte	22
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 33       		.byte	51
+  86 0039 17       		.byte	23
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 3C       		.byte	60
+  90 003d 18       		.byte	24
+  91 003e 01       		.byte	1
+  92 003f 40       		.byte	64
+  93 0040 36       		.byte	54
+  94 0041 19       		.byte	25
+  95 0042 01       		.byte	1
+  96 0043 40       		.byte	64
+  97 0044 55       		.byte	85
+  98 0045 1A       		.byte	26
+  99 0046 01       		.byte	1
+ 100 0047 40       		.byte	64
+ 101 0048 40       		.byte	64
+ 102 0049 1B       		.byte	27
+ 103 004a 01       		.byte	1
+ 104 004b 40       		.byte	64
+ 105 004c 07       		.byte	7
+ 106 004d 40       		.byte	64
+ 107 004e 01       		.byte	1
+ 108 004f 40       		.byte	64
+ 109 0050 10       		.byte	16
+ 110 0051 41       		.byte	65
+ 111 0052 01       		.byte	1
+ 112 0053 40       		.byte	64
+ 113 0054 0C       		.byte	12
+ 114 0055 42       		.byte	66
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 3
+
+
+ 115 0056 01       		.byte	1
+ 116 0057 40       		.byte	64
+ 117 0058 0A       		.byte	10
+ 118 0059 43       		.byte	67
+ 119 005a 01       		.byte	1
+ 120 005b 40       		.byte	64
+ 121 005c 05       		.byte	5
+ 122 005d 45       		.byte	69
+ 123 005e 01       		.byte	1
+ 124 005f 40       		.byte	64
+ 125 0060 07       		.byte	7
+ 126 0061 46       		.byte	70
+ 127 0062 01       		.byte	1
+ 128 0063 40       		.byte	64
+ 129 0064 04       		.byte	4
+ 130 0065 47       		.byte	71
+ 131 0066 01       		.byte	1
+ 132 0067 40       		.byte	64
+ 133 0068 0D       		.byte	13
+ 134 0069 48       		.byte	72
+ 135 006a 01       		.byte	1
+ 136 006b 40       		.byte	64
+ 137 006c 05       		.byte	5
+ 138 006d 49       		.byte	73
+ 139 006e 01       		.byte	1
+ 140 006f 40       		.byte	64
+ 141 0070 04       		.byte	4
+ 142 0071 4C       		.byte	76
+ 143 0072 01       		.byte	1
+ 144 0073 40       		.byte	64
+ 145 0074 05       		.byte	5
+ 146 0075 4D       		.byte	77
+ 147 0076 01       		.byte	1
+ 148 0077 40       		.byte	64
+ 149 0078 07       		.byte	7
+ 150 0079 50       		.byte	80
+ 151 007a 01       		.byte	1
+ 152 007b 40       		.byte	64
+ 153 007c 04       		.byte	4
+ 154 007d 51       		.byte	81
+ 155 007e 01       		.byte	1
+ 156 007f 40       		.byte	64
+ 157 0080 00       		.byte	0
+ 158 0081 40       		.byte	64
+ 159 0082 01       		.byte	1
+ 160 0083 40       		.byte	64
+ 161 0084 10       		.byte	16
+ 162 0085 82       		.byte	-126
+ 163 0086 60       		.byte	96
+ 164 0087 80       		.byte	-128
+ 165 0088 61       		.byte	97
+ 166 0089 80       		.byte	-128
+ 167 008a 82       		.byte	-126
+ 168 008b 0D       		.byte	13
+ 169 008c 83       		.byte	-125
+ 170 008d 0D       		.byte	13
+ 171 008e 88       		.byte	-120
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 4
+
+
+ 172 008f 7F       		.byte	127
+ 173 0090 89       		.byte	-119
+ 174 0091 7F       		.byte	127
+ 175 0092 87       		.byte	-121
+ 176 0093 77       		.byte	119
+ 177 0094 89       		.byte	-119
+ 178 0095 7F       		.byte	127
+ 179 0096 8A       		.byte	-118
+ 180 0097 0F       		.byte	15
+ 181 0098 01       		.byte	1
+ 182 0099 02       		.byte	2
+ 183 009a 0B       		.byte	11
+ 184 009b 04       		.byte	4
+ 185 009c 16       		.byte	22
+ 186 009d 02       		.byte	2
+ 187 009e 1E       		.byte	30
+ 188 009f 02       		.byte	2
+ 189 00a0 22       		.byte	34
+ 190 00a1 01       		.byte	1
+ 191 00a2 27       		.byte	39
+ 192 00a3 05       		.byte	5
+ 193 00a4 2A       		.byte	42
+ 194 00a5 04       		.byte	4
+ 195 00a6 2D       		.byte	45
+ 196 00a7 01       		.byte	1
+ 197 00a8 30       		.byte	48
+ 198 00a9 04       		.byte	4
+ 199 00aa 32       		.byte	50
+ 200 00ab 01       		.byte	1
+ 201 00ac 33       		.byte	51
+ 202 00ad 04       		.byte	4
+ 203 00ae 34       		.byte	52
+ 204 00af 02       		.byte	2
+ 205 00b0 35       		.byte	53
+ 206 00b1 02       		.byte	2
+ 207 00b2 37       		.byte	55
+ 208 00b3 01       		.byte	1
+ 209 00b4 3E       		.byte	62
+ 210 00b5 10       		.byte	16
+ 211 00b6 3F       		.byte	63
+ 212 00b7 10       		.byte	16
+ 213 00b8 40       		.byte	64
+ 214 00b9 30       		.byte	48
+ 215 00ba 41       		.byte	65
+ 216 00bb 04       		.byte	4
+ 217 00bc 45       		.byte	69
+ 218 00bd D0       		.byte	-48
+ 219 00be 47       		.byte	71
+ 220 00bf 21       		.byte	33
+ 221 00c0 48       		.byte	72
+ 222 00c1 32       		.byte	50
+ 223 00c2 49       		.byte	73
+ 224 00c3 FF       		.byte	-1
+ 225 00c4 4A       		.byte	74
+ 226 00c5 FF       		.byte	-1
+ 227 00c6 4B       		.byte	75
+ 228 00c7 FF       		.byte	-1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 5
+
+
+ 229 00c8 4D       		.byte	77
+ 230 00c9 A0       		.byte	-96
+ 231 00ca 4F       		.byte	79
+ 232 00cb 04       		.byte	4
+ 233 00cc 50       		.byte	80
+ 234 00cd 18       		.byte	24
+ 235 00ce 52       		.byte	82
+ 236 00cf 80       		.byte	-128
+ 237 00d0 54       		.byte	84
+ 238 00d1 05       		.byte	5
+ 239 00d2 58       		.byte	88
+ 240 00d3 04       		.byte	4
+ 241 00d4 59       		.byte	89
+ 242 00d5 04       		.byte	4
+ 243 00d6 5A       		.byte	90
+ 244 00d7 04       		.byte	4
+ 245 00d8 5B       		.byte	91
+ 246 00d9 04       		.byte	4
+ 247 00da 5C       		.byte	92
+ 248 00db 44       		.byte	68
+ 249 00dc 5D       		.byte	93
+ 250 00dd 44       		.byte	68
+ 251 00de 5F       		.byte	95
+ 252 00df 01       		.byte	1
+ 253 00e0 60       		.byte	96
+ 254 00e1 40       		.byte	64
+ 255 00e2 62       		.byte	98
+ 256 00e3 C0       		.byte	-64
+ 257 00e4 64       		.byte	100
+ 258 00e5 40       		.byte	64
+ 259 00e6 65       		.byte	101
+ 260 00e7 40       		.byte	64
+ 261 00e8 66       		.byte	102
+ 262 00e9 C0       		.byte	-64
+ 263 00ea 68       		.byte	104
+ 264 00eb C0       		.byte	-64
+ 265 00ec 6A       		.byte	106
+ 266 00ed C0       		.byte	-64
+ 267 00ee 6C       		.byte	108
+ 268 00ef C0       		.byte	-64
+ 269 00f0 6E       		.byte	110
+ 270 00f1 C0       		.byte	-64
+ 271 00f2 8E       		.byte	-114
+ 272 00f3 01       		.byte	1
+ 273 00f4 92       		.byte	-110
+ 274 00f5 02       		.byte	2
+ 275 00f6 97       		.byte	-105
+ 276 00f7 03       		.byte	3
+ 277 00f8 A2       		.byte	-94
+ 278 00f9 01       		.byte	1
+ 279 00fa A9       		.byte	-87
+ 280 00fb 01       		.byte	1
+ 281 00fc AA       		.byte	-86
+ 282 00fd 04       		.byte	4
+ 283 00fe AF       		.byte	-81
+ 284 00ff 02       		.byte	2
+ 285 0100 B1       		.byte	-79
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 6
+
+
+ 286 0101 01       		.byte	1
+ 287 0102 B2       		.byte	-78
+ 288 0103 04       		.byte	4
+ 289 0104 B3       		.byte	-77
+ 290 0105 02       		.byte	2
+ 291 0106 B4       		.byte	-76
+ 292 0107 01       		.byte	1
+ 293 0108 B6       		.byte	-74
+ 294 0109 02       		.byte	2
+ 295 010a BE       		.byte	-66
+ 296 010b 10       		.byte	16
+ 297 010c C0       		.byte	-64
+ 298 010d 10       		.byte	16
+ 299 010e C1       		.byte	-63
+ 300 010f 05       		.byte	5
+ 301 0110 C5       		.byte	-59
+ 302 0111 D0       		.byte	-48
+ 303 0112 C6       		.byte	-58
+ 304 0113 02       		.byte	2
+ 305 0114 C7       		.byte	-57
+ 306 0115 01       		.byte	1
+ 307 0116 C8       		.byte	-56
+ 308 0117 16       		.byte	22
+ 309 0118 C9       		.byte	-55
+ 310 0119 FF       		.byte	-1
+ 311 011a CA       		.byte	-54
+ 312 011b FF       		.byte	-1
+ 313 011c CB       		.byte	-53
+ 314 011d FF       		.byte	-1
+ 315 011e CD       		.byte	-51
+ 316 011f A0       		.byte	-96
+ 317 0120 CF       		.byte	-49
+ 318 0121 04       		.byte	4
+ 319 0122 D0       		.byte	-48
+ 320 0123 18       		.byte	24
+ 321 0124 D2       		.byte	-46
+ 322 0125 80       		.byte	-128
+ 323 0126 D4       		.byte	-44
+ 324 0127 05       		.byte	5
+ 325 0128 D8       		.byte	-40
+ 326 0129 04       		.byte	4
+ 327 012a D9       		.byte	-39
+ 328 012b 04       		.byte	4
+ 329 012c DA       		.byte	-38
+ 330 012d 04       		.byte	4
+ 331 012e DB       		.byte	-37
+ 332 012f 04       		.byte	4
+ 333 0130 DC       		.byte	-36
+ 334 0131 44       		.byte	68
+ 335 0132 DD       		.byte	-35
+ 336 0133 44       		.byte	68
+ 337 0134 DF       		.byte	-33
+ 338 0135 01       		.byte	1
+ 339 0136 E0       		.byte	-32
+ 340 0137 40       		.byte	64
+ 341 0138 E2       		.byte	-30
+ 342 0139 C0       		.byte	-64
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 7
+
+
+ 343 013a E4       		.byte	-28
+ 344 013b 40       		.byte	64
+ 345 013c E5       		.byte	-27
+ 346 013d 40       		.byte	64
+ 347 013e E6       		.byte	-26
+ 348 013f C0       		.byte	-64
+ 349 0140 E8       		.byte	-24
+ 350 0141 C0       		.byte	-64
+ 351 0142 EA       		.byte	-22
+ 352 0143 C0       		.byte	-64
+ 353 0144 EC       		.byte	-20
+ 354 0145 C0       		.byte	-64
+ 355 0146 EE       		.byte	-18
+ 356 0147 C0       		.byte	-64
+ 357 0148 01       		.byte	1
+ 358 0149 80       		.byte	-128
+ 359 014a 0B       		.byte	11
+ 360 014b 40       		.byte	64
+ 361 014c 0D       		.byte	13
+ 362 014d 08       		.byte	8
+ 363 014e 0F       		.byte	15
+ 364 014f 02       		.byte	2
+ 365 0150 10       		.byte	16
+ 366 0151 88       		.byte	-120
+ 367 0152 16       		.byte	22
+ 368 0153 84       		.byte	-124
+ 369 0154 18       		.byte	24
+ 370 0155 01       		.byte	1
+ 371 0156 19       		.byte	25
+ 372 0157 80       		.byte	-128
+ 373 0158 1A       		.byte	26
+ 374 0159 04       		.byte	4
+ 375 015a 1B       		.byte	27
+ 376 015b 08       		.byte	8
+ 377 015c 1C       		.byte	28
+ 378 015d 20       		.byte	32
+ 379 015e 1D       		.byte	29
+ 380 015f 08       		.byte	8
+ 381 0160 1E       		.byte	30
+ 382 0161 48       		.byte	72
+ 383 0162 20       		.byte	32
+ 384 0163 10       		.byte	16
+ 385 0164 21       		.byte	33
+ 386 0165 01       		.byte	1
+ 387 0166 25       		.byte	37
+ 388 0167 20       		.byte	32
+ 389 0168 26       		.byte	38
+ 390 0169 40       		.byte	64
+ 391 016a 27       		.byte	39
+ 392 016b 20       		.byte	32
+ 393 016c 29       		.byte	41
+ 394 016d 80       		.byte	-128
+ 395 016e 2B       		.byte	43
+ 396 016f 08       		.byte	8
+ 397 0170 2E       		.byte	46
+ 398 0171 48       		.byte	72
+ 399 0172 30       		.byte	48
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 8
+
+
+ 400 0173 08       		.byte	8
+ 401 0174 3C       		.byte	60
+ 402 0175 20       		.byte	32
+ 403 0176 3E       		.byte	62
+ 404 0177 01       		.byte	1
+ 405 0178 40       		.byte	64
+ 406 0179 81       		.byte	-127
+ 407 017a 41       		.byte	65
+ 408 017b 01       		.byte	1
+ 409 017c 45       		.byte	69
+ 410 017d 0A       		.byte	10
+ 411 017e 49       		.byte	73
+ 412 017f 02       		.byte	2
+ 413 0180 4B       		.byte	75
+ 414 0181 80       		.byte	-128
+ 415 0182 4F       		.byte	79
+ 416 0183 01       		.byte	1
+ 417 0184 50       		.byte	80
+ 418 0185 88       		.byte	-120
+ 419 0186 53       		.byte	83
+ 420 0187 40       		.byte	64
+ 421 0188 55       		.byte	85
+ 422 0189 02       		.byte	2
+ 423 018a 56       		.byte	86
+ 424 018b 0C       		.byte	12
+ 425 018c 57       		.byte	87
+ 426 018d 01       		.byte	1
+ 427 018e 58       		.byte	88
+ 428 018f 80       		.byte	-128
+ 429 0190 59       		.byte	89
+ 430 0191 02       		.byte	2
+ 431 0192 5A       		.byte	90
+ 432 0193 04       		.byte	4
+ 433 0194 5E       		.byte	94
+ 434 0195 88       		.byte	-120
+ 435 0196 5F       		.byte	95
+ 436 0197 01       		.byte	1
+ 437 0198 73       		.byte	115
+ 438 0199 40       		.byte	64
+ 439 019a 76       		.byte	118
+ 440 019b 80       		.byte	-128
+ 441 019c 89       		.byte	-119
+ 442 019d 20       		.byte	32
+ 443 019e 8C       		.byte	-116
+ 444 019f 10       		.byte	16
+ 445 01a0 C0       		.byte	-64
+ 446 01a1 01       		.byte	1
+ 447 01a2 C2       		.byte	-62
+ 448 01a3 A8       		.byte	-88
+ 449 01a4 C4       		.byte	-60
+ 450 01a5 5A       		.byte	90
+ 451 01a6 CA       		.byte	-54
+ 452 01a7 5C       		.byte	92
+ 453 01a8 CC       		.byte	-52
+ 454 01a9 02       		.byte	2
+ 455 01aa CE       		.byte	-50
+ 456 01ab A0       		.byte	-96
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 9
+
+
+ 457 01ac D0       		.byte	-48
+ 458 01ad C8       		.byte	-56
+ 459 01ae D2       		.byte	-46
+ 460 01af 08       		.byte	8
+ 461 01b0 D6       		.byte	-42
+ 462 01b1 DB       		.byte	-37
+ 463 01b2 E2       		.byte	-30
+ 464 01b3 10       		.byte	16
+ 465 01b4 E6       		.byte	-26
+ 466 01b5 80       		.byte	-128
+ 467 01b6 EE       		.byte	-18
+ 468 01b7 04       		.byte	4
+ 469 01b8 85       		.byte	-123
+ 470 01b9 40       		.byte	64
+ 471 01ba 96       		.byte	-106
+ 472 01bb 01       		.byte	1
+ 473 01bc B7       		.byte	-73
+ 474 01bd 20       		.byte	32
+ 475 01be E6       		.byte	-26
+ 476 01bf 08       		.byte	8
+ 477 01c0 EE       		.byte	-18
+ 478 01c1 10       		.byte	16
+ 479 01c2 A5       		.byte	-91
+ 480 01c3 40       		.byte	64
+ 481 01c4 AE       		.byte	-82
+ 482 01c5 01       		.byte	1
+ 483 01c6 E6       		.byte	-26
+ 484 01c7 49       		.byte	73
+ 485 01c8 56       		.byte	86
+ 486 01c9 02       		.byte	2
+ 487 01ca 57       		.byte	87
+ 488 01cb 3A       		.byte	58
+ 489 01cc 5B       		.byte	91
+ 490 01cd 04       		.byte	4
+ 491 01ce 5D       		.byte	93
+ 492 01cf 10       		.byte	16
+ 493 01d0 5F       		.byte	95
+ 494 01d1 01       		.byte	1
+ 495 01d2 82       		.byte	-126
+ 496 01d3 04       		.byte	4
+ 497 01d4 84       		.byte	-124
+ 498 01d5 2F       		.byte	47
+ 499 01d6 85       		.byte	-123
+ 500 01d7 37       		.byte	55
+ 501 01d8 87       		.byte	-121
+ 502 01d9 C8       		.byte	-56
+ 503 01da 88       		.byte	-120
+ 504 01db 04       		.byte	4
+ 505 01dc 89       		.byte	-119
+ 506 01dd A0       		.byte	-96
+ 507 01de 8A       		.byte	-118
+ 508 01df 02       		.byte	2
+ 509 01e0 8B       		.byte	-117
+ 510 01e1 50       		.byte	80
+ 511 01e2 92       		.byte	-110
+ 512 01e3 10       		.byte	16
+ 513 01e4 94       		.byte	-108
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 10
+
+
+ 514 01e5 17       		.byte	23
+ 515 01e6 95       		.byte	-107
+ 516 01e7 04       		.byte	4
+ 517 01e8 96       		.byte	-106
+ 518 01e9 08       		.byte	8
+ 519 01ea 9C       		.byte	-100
+ 520 01eb 31       		.byte	49
+ 521 01ec 9D       		.byte	-99
+ 522 01ed F9       		.byte	-7
+ 523 01ee 9E       		.byte	-98
+ 524 01ef 0E       		.byte	14
+ 525 01f0 9F       		.byte	-97
+ 526 01f1 02       		.byte	2
+ 527 01f2 A1       		.byte	-95
+ 528 01f3 08       		.byte	8
+ 529 01f4 A4       		.byte	-92
+ 530 01f5 11       		.byte	17
+ 531 01f6 A5       		.byte	-91
+ 532 01f7 CA       		.byte	-54
+ 533 01f8 A7       		.byte	-89
+ 534 01f9 35       		.byte	53
+ 535 01fa A8       		.byte	-88
+ 536 01fb 08       		.byte	8
+ 537 01fc A9       		.byte	-87
+ 538 01fd 50       		.byte	80
+ 539 01fe AB       		.byte	-85
+ 540 01ff A0       		.byte	-96
+ 541 0200 AE       		.byte	-82
+ 542 0201 02       		.byte	2
+ 543 0202 B0       		.byte	-80
+ 544 0203 20       		.byte	32
+ 545 0204 B2       		.byte	-78
+ 546 0205 1F       		.byte	31
+ 547 0206 B3       		.byte	-77
+ 548 0207 F0       		.byte	-16
+ 549 0208 B7       		.byte	-73
+ 550 0209 0F       		.byte	15
+ 551 020a B8       		.byte	-72
+ 552 020b 02       		.byte	2
+ 553 020c BB       		.byte	-69
+ 554 020d 08       		.byte	8
+ 555 020e BE       		.byte	-66
+ 556 020f 01       		.byte	1
+ 557 0210 C0       		.byte	-64
+ 558 0211 13       		.byte	19
+ 559 0212 C1       		.byte	-63
+ 560 0213 04       		.byte	4
+ 561 0214 C5       		.byte	-59
+ 562 0215 EC       		.byte	-20
+ 563 0216 C6       		.byte	-58
+ 564 0217 B0       		.byte	-80
+ 565 0218 C7       		.byte	-57
+ 566 0219 06       		.byte	6
+ 567 021a C8       		.byte	-56
+ 568 021b 1B       		.byte	27
+ 569 021c C9       		.byte	-55
+ 570 021d FF       		.byte	-1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 11
+
+
+ 571 021e CA       		.byte	-54
+ 572 021f FF       		.byte	-1
+ 573 0220 CB       		.byte	-53
+ 574 0221 FF       		.byte	-1
+ 575 0222 CD       		.byte	-51
+ 576 0223 20       		.byte	32
+ 577 0224 CE       		.byte	-50
+ 578 0225 F0       		.byte	-16
+ 579 0226 D1       		.byte	-47
+ 580 0227 10       		.byte	16
+ 581 0228 D6       		.byte	-42
+ 582 0229 02       		.byte	2
+ 583 022a D7       		.byte	-41
+ 584 022b 37       		.byte	55
+ 585 022c D8       		.byte	-40
+ 586 022d 04       		.byte	4
+ 587 022e D9       		.byte	-39
+ 588 022f 04       		.byte	4
+ 589 0230 DA       		.byte	-38
+ 590 0231 04       		.byte	4
+ 591 0232 DB       		.byte	-37
+ 592 0233 04       		.byte	4
+ 593 0234 DC       		.byte	-36
+ 594 0235 11       		.byte	17
+ 595 0236 DD       		.byte	-35
+ 596 0237 11       		.byte	17
+ 597 0238 DF       		.byte	-33
+ 598 0239 01       		.byte	1
+ 599 023a E2       		.byte	-30
+ 600 023b E0       		.byte	-32
+ 601 023c E3       		.byte	-29
+ 602 023d 01       		.byte	1
+ 603 023e E5       		.byte	-27
+ 604 023f 01       		.byte	1
+ 605 0240 E7       		.byte	-25
+ 606 0241 01       		.byte	1
+ 607 0242 E8       		.byte	-24
+ 608 0243 60       		.byte	96
+ 609 0244 E9       		.byte	-23
+ 610 0245 01       		.byte	1
+ 611 0246 EB       		.byte	-21
+ 612 0247 01       		.byte	1
+ 613 0248 EC       		.byte	-20
+ 614 0249 10       		.byte	16
+ 615 024a ED       		.byte	-19
+ 616 024b 50       		.byte	80
+ 617 024c EE       		.byte	-18
+ 618 024d 10       		.byte	16
+ 619 024e EF       		.byte	-17
+ 620 024f 50       		.byte	80
+ 621 0250 00       		.byte	0
+ 622 0251 14       		.byte	20
+ 623 0252 01       		.byte	1
+ 624 0253 22       		.byte	34
+ 625 0254 09       		.byte	9
+ 626 0255 80       		.byte	-128
+ 627 0256 0A       		.byte	10
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 12
+
+
+ 628 0257 50       		.byte	80
+ 629 0258 10       		.byte	16
+ 630 0259 28       		.byte	40
+ 631 025a 13       		.byte	19
+ 632 025b 80       		.byte	-128
+ 633 025c 18       		.byte	24
+ 634 025d 40       		.byte	64
+ 635 025e 19       		.byte	25
+ 636 025f 08       		.byte	8
+ 637 0260 1A       		.byte	26
+ 638 0261 10       		.byte	16
+ 639 0262 20       		.byte	32
+ 640 0263 10       		.byte	16
+ 641 0264 21       		.byte	33
+ 642 0265 80       		.byte	-128
+ 643 0266 29       		.byte	41
+ 644 0267 29       		.byte	41
+ 645 0268 30       		.byte	48
+ 646 0269 08       		.byte	8
+ 647 026a 31       		.byte	49
+ 648 026b 80       		.byte	-128
+ 649 026c 38       		.byte	56
+ 650 026d 24       		.byte	36
+ 651 026e 40       		.byte	64
+ 652 026f 40       		.byte	64
+ 653 0270 41       		.byte	65
+ 654 0271 80       		.byte	-128
+ 655 0272 42       		.byte	66
+ 656 0273 10       		.byte	16
+ 657 0274 48       		.byte	72
+ 658 0275 20       		.byte	32
+ 659 0276 4B       		.byte	75
+ 660 0277 02       		.byte	2
+ 661 0278 50       		.byte	80
+ 662 0279 18       		.byte	24
+ 663 027a 5A       		.byte	90
+ 664 027b 02       		.byte	2
+ 665 027c 5E       		.byte	94
+ 666 027d 04       		.byte	4
+ 667 027e 61       		.byte	97
+ 668 027f 10       		.byte	16
+ 669 0280 67       		.byte	103
+ 670 0281 10       		.byte	16
+ 671 0282 71       		.byte	113
+ 672 0283 01       		.byte	1
+ 673 0284 72       		.byte	114
+ 674 0285 40       		.byte	64
+ 675 0286 75       		.byte	117
+ 676 0287 02       		.byte	2
+ 677 0288 81       		.byte	-127
+ 678 0289 04       		.byte	4
+ 679 028a 8E       		.byte	-114
+ 680 028b 01       		.byte	1
+ 681 028c 92       		.byte	-110
+ 682 028d 02       		.byte	2
+ 683 028e 94       		.byte	-108
+ 684 028f 04       		.byte	4
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 13
+
+
+ 685 0290 97       		.byte	-105
+ 686 0291 02       		.byte	2
+ 687 0292 9D       		.byte	-99
+ 688 0293 08       		.byte	8
+ 689 0294 A5       		.byte	-91
+ 690 0295 80       		.byte	-128
+ 691 0296 C0       		.byte	-64
+ 692 0297 0E       		.byte	14
+ 693 0298 C2       		.byte	-62
+ 694 0299 0D       		.byte	13
+ 695 029a C4       		.byte	-60
+ 696 029b 07       		.byte	7
+ 697 029c CA       		.byte	-54
+ 698 029d 07       		.byte	7
+ 699 029e CC       		.byte	-52
+ 700 029f 0A       		.byte	10
+ 701 02a0 CE       		.byte	-50
+ 702 02a1 06       		.byte	6
+ 703 02a2 D0       		.byte	-48
+ 704 02a3 0B       		.byte	11
+ 705 02a4 D6       		.byte	-42
+ 706 02a5 41       		.byte	65
+ 707 02a6 D8       		.byte	-40
+ 708 02a7 44       		.byte	68
+ 709 02a8 E6       		.byte	-26
+ 710 02a9 48       		.byte	72
+ 711 02aa 92       		.byte	-110
+ 712 02ab 02       		.byte	2
+ 713 02ac 94       		.byte	-108
+ 714 02ad 04       		.byte	4
+ 715 02ae 97       		.byte	-105
+ 716 02af 02       		.byte	2
+ 717 02b0 9D       		.byte	-99
+ 718 02b1 08       		.byte	8
+ 719 02b2 A5       		.byte	-91
+ 720 02b3 80       		.byte	-128
+ 721 02b4 B4       		.byte	-76
+ 722 02b5 40       		.byte	64
+ 723 02b6 E6       		.byte	-26
+ 724 02b7 08       		.byte	8
+ 725 02b8 40       		.byte	64
+ 726 02b9 60       		.byte	96
+ 727 02ba 41       		.byte	65
+ 728 02bb 03       		.byte	3
+ 729 02bc 49       		.byte	73
+ 730 02bd FF       		.byte	-1
+ 731 02be 4A       		.byte	74
+ 732 02bf FF       		.byte	-1
+ 733 02c0 4B       		.byte	75
+ 734 02c1 FF       		.byte	-1
+ 735 02c2 4D       		.byte	77
+ 736 02c3 A0       		.byte	-96
+ 737 02c4 4F       		.byte	79
+ 738 02c5 04       		.byte	4
+ 739 02c6 50       		.byte	80
+ 740 02c7 18       		.byte	24
+ 741 02c8 5A       		.byte	90
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 14
+
+
+ 742 02c9 04       		.byte	4
+ 743 02ca 5D       		.byte	93
+ 744 02cb 02       		.byte	2
+ 745 02cc 5F       		.byte	95
+ 746 02cd 01       		.byte	1
+ 747 02ce 60       		.byte	96
+ 748 02cf 40       		.byte	64
+ 749 02d0 62       		.byte	98
+ 750 02d1 C0       		.byte	-64
+ 751 02d2 64       		.byte	100
+ 752 02d3 40       		.byte	64
+ 753 02d4 65       		.byte	101
+ 754 02d5 40       		.byte	64
+ 755 02d6 66       		.byte	102
+ 756 02d7 C0       		.byte	-64
+ 757 02d8 68       		.byte	104
+ 758 02d9 C0       		.byte	-64
+ 759 02da 6A       		.byte	106
+ 760 02db C0       		.byte	-64
+ 761 02dc 6C       		.byte	108
+ 762 02dd C0       		.byte	-64
+ 763 02de 6E       		.byte	110
+ 764 02df C0       		.byte	-64
+ 765 02e0 84       		.byte	-124
+ 766 02e1 04       		.byte	4
+ 767 02e2 85       		.byte	-123
+ 768 02e3 01       		.byte	1
+ 769 02e4 8A       		.byte	-118
+ 770 02e5 02       		.byte	2
+ 771 02e6 92       		.byte	-110
+ 772 02e7 01       		.byte	1
+ 773 02e8 98       		.byte	-104
+ 774 02e9 04       		.byte	4
+ 775 02ea 9D       		.byte	-99
+ 776 02eb 01       		.byte	1
+ 777 02ec 9E       		.byte	-98
+ 778 02ed 04       		.byte	4
+ 779 02ee A6       		.byte	-90
+ 780 02ef 02       		.byte	2
+ 781 02f0 A7       		.byte	-89
+ 782 02f1 01       		.byte	1
+ 783 02f2 B0       		.byte	-80
+ 784 02f3 04       		.byte	4
+ 785 02f4 B1       		.byte	-79
+ 786 02f5 01       		.byte	1
+ 787 02f6 B2       		.byte	-78
+ 788 02f7 02       		.byte	2
+ 789 02f8 B4       		.byte	-76
+ 790 02f9 01       		.byte	1
+ 791 02fa BE       		.byte	-66
+ 792 02fb 01       		.byte	1
+ 793 02fc BF       		.byte	-65
+ 794 02fd 01       		.byte	1
+ 795 02fe C0       		.byte	-64
+ 796 02ff 60       		.byte	96
+ 797 0300 C1       		.byte	-63
+ 798 0301 02       		.byte	2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 15
+
+
+ 799 0302 C5       		.byte	-59
+ 800 0303 01       		.byte	1
+ 801 0304 C6       		.byte	-58
+ 802 0305 20       		.byte	32
+ 803 0306 C8       		.byte	-56
+ 804 0307 09       		.byte	9
+ 805 0308 C9       		.byte	-55
+ 806 0309 FF       		.byte	-1
+ 807 030a CA       		.byte	-54
+ 808 030b FF       		.byte	-1
+ 809 030c CB       		.byte	-53
+ 810 030d FF       		.byte	-1
+ 811 030e CD       		.byte	-51
+ 812 030f AF       		.byte	-81
+ 813 0310 CE       		.byte	-50
+ 814 0311 0F       		.byte	15
+ 815 0312 CF       		.byte	-49
+ 816 0313 04       		.byte	4
+ 817 0314 D0       		.byte	-48
+ 818 0315 18       		.byte	24
+ 819 0316 D2       		.byte	-46
+ 820 0317 80       		.byte	-128
+ 821 0318 D8       		.byte	-40
+ 822 0319 04       		.byte	4
+ 823 031a D9       		.byte	-39
+ 824 031b 04       		.byte	4
+ 825 031c DA       		.byte	-38
+ 826 031d 04       		.byte	4
+ 827 031e DB       		.byte	-37
+ 828 031f 04       		.byte	4
+ 829 0320 DC       		.byte	-36
+ 830 0321 02       		.byte	2
+ 831 0322 DD       		.byte	-35
+ 832 0323 22       		.byte	34
+ 833 0324 DF       		.byte	-33
+ 834 0325 01       		.byte	1
+ 835 0326 E0       		.byte	-32
+ 836 0327 40       		.byte	64
+ 837 0328 E2       		.byte	-30
+ 838 0329 C0       		.byte	-64
+ 839 032a E4       		.byte	-28
+ 840 032b 40       		.byte	64
+ 841 032c E5       		.byte	-27
+ 842 032d 40       		.byte	64
+ 843 032e E6       		.byte	-26
+ 844 032f C0       		.byte	-64
+ 845 0330 E8       		.byte	-24
+ 846 0331 C0       		.byte	-64
+ 847 0332 EA       		.byte	-22
+ 848 0333 C0       		.byte	-64
+ 849 0334 EC       		.byte	-20
+ 850 0335 C0       		.byte	-64
+ 851 0336 EE       		.byte	-18
+ 852 0337 C0       		.byte	-64
+ 853 0338 00       		.byte	0
+ 854 0339 04       		.byte	4
+ 855 033a 01       		.byte	1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 16
+
+
+ 856 033b 20       		.byte	32
+ 857 033c 08       		.byte	8
+ 858 033d 10       		.byte	16
+ 859 033e 09       		.byte	9
+ 860 033f 80       		.byte	-128
+ 861 0340 0A       		.byte	10
+ 862 0341 40       		.byte	64
+ 863 0342 10       		.byte	16
+ 864 0343 20       		.byte	32
+ 865 0344 18       		.byte	24
+ 866 0345 40       		.byte	64
+ 867 0346 19       		.byte	25
+ 868 0347 30       		.byte	48
+ 869 0348 1B       		.byte	27
+ 870 0349 18       		.byte	24
+ 871 034a 22       		.byte	34
+ 872 034b 01       		.byte	1
+ 873 034c 28       		.byte	40
+ 874 034d 10       		.byte	16
+ 875 034e 29       		.byte	41
+ 876 034f 08       		.byte	8
+ 877 0350 31       		.byte	49
+ 878 0351 80       		.byte	-128
+ 879 0352 38       		.byte	56
+ 880 0353 04       		.byte	4
+ 881 0354 41       		.byte	65
+ 882 0355 20       		.byte	32
+ 883 0356 46       		.byte	70
+ 884 0357 10       		.byte	16
+ 885 0358 48       		.byte	72
+ 886 0359 20       		.byte	32
+ 887 035a 49       		.byte	73
+ 888 035b 10       		.byte	16
+ 889 035c 4F       		.byte	79
+ 890 035d 20       		.byte	32
+ 891 035e 51       		.byte	81
+ 892 035f 20       		.byte	32
+ 893 0360 52       		.byte	82
+ 894 0361 10       		.byte	16
+ 895 0362 72       		.byte	114
+ 896 0363 40       		.byte	64
+ 897 0364 87       		.byte	-121
+ 898 0365 08       		.byte	8
+ 899 0366 97       		.byte	-105
+ 900 0367 02       		.byte	2
+ 901 0368 AB       		.byte	-85
+ 902 0369 01       		.byte	1
+ 903 036a C0       		.byte	-64
+ 904 036b 06       		.byte	6
+ 905 036c C2       		.byte	-62
+ 906 036d 0B       		.byte	11
+ 907 036e C4       		.byte	-60
+ 908 036f 04       		.byte	4
+ 909 0370 CA       		.byte	-54
+ 910 0371 02       		.byte	2
+ 911 0372 CC       		.byte	-52
+ 912 0373 08       		.byte	8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 17
+
+
+ 913 0374 CE       		.byte	-50
+ 914 0375 02       		.byte	2
+ 915 0376 D0       		.byte	-48
+ 916 0377 44       		.byte	68
+ 917 0378 D2       		.byte	-46
+ 918 0379 24       		.byte	36
+ 919 037a E4       		.byte	-28
+ 920 037b 02       		.byte	2
+ 921 037c B7       		.byte	-73
+ 922 037d 04       		.byte	4
+ 923 037e EE       		.byte	-18
+ 924 037f 04       		.byte	4
+ 925 0380 01       		.byte	1
+ 926 0381 01       		.byte	1
+ 927 0382 04       		.byte	4
+ 928 0383 05       		.byte	5
+ 929 0384 08       		.byte	8
+ 930 0385 05       		.byte	5
+ 931 0386 09       		.byte	9
+ 932 0387 05       		.byte	5
+ 933 0388 0C       		.byte	12
+ 934 0389 05       		.byte	5
+ 935 038a 10       		.byte	16
+ 936 038b 10       		.byte	16
+ 937 038c 11       		.byte	17
+ 938 038d 03       		.byte	3
+ 939 038e 14       		.byte	20
+ 940 038f 05       		.byte	5
+ 941 0390 15       		.byte	21
+ 942 0391 01       		.byte	1
+ 943 0392 18       		.byte	24
+ 944 0393 03       		.byte	3
+ 945 0394 22       		.byte	34
+ 946 0395 03       		.byte	3
+ 947 0396 26       		.byte	38
+ 948 0397 30       		.byte	48
+ 949 0398 28       		.byte	40
+ 950 0399 0A       		.byte	10
+ 951 039a 30       		.byte	48
+ 952 039b 20       		.byte	32
+ 953 039c 31       		.byte	49
+ 954 039d 04       		.byte	4
+ 955 039e 32       		.byte	50
+ 956 039f 03       		.byte	3
+ 957 03a0 34       		.byte	52
+ 958 03a1 0C       		.byte	12
+ 959 03a2 35       		.byte	53
+ 960 03a3 01       		.byte	1
+ 961 03a4 36       		.byte	54
+ 962 03a5 10       		.byte	16
+ 963 03a6 37       		.byte	55
+ 964 03a7 02       		.byte	2
+ 965 03a8 3E       		.byte	62
+ 966 03a9 44       		.byte	68
+ 967 03aa 3F       		.byte	63
+ 968 03ab 41       		.byte	65
+ 969 03ac 40       		.byte	64
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 18
+
+
+ 970 03ad 31       		.byte	49
+ 971 03ae 41       		.byte	65
+ 972 03af 04       		.byte	4
+ 973 03b0 42       		.byte	66
+ 974 03b1 01       		.byte	1
+ 975 03b2 49       		.byte	73
+ 976 03b3 FF       		.byte	-1
+ 977 03b4 4A       		.byte	74
+ 978 03b5 FF       		.byte	-1
+ 979 03b6 4B       		.byte	75
+ 980 03b7 FF       		.byte	-1
+ 981 03b8 4D       		.byte	77
+ 982 03b9 A0       		.byte	-96
+ 983 03ba 4F       		.byte	79
+ 984 03bb 01       		.byte	1
+ 985 03bc 50       		.byte	80
+ 986 03bd 18       		.byte	24
+ 987 03be 52       		.byte	82
+ 988 03bf 80       		.byte	-128
+ 989 03c0 58       		.byte	88
+ 990 03c1 04       		.byte	4
+ 991 03c2 59       		.byte	89
+ 992 03c3 04       		.byte	4
+ 993 03c4 5A       		.byte	90
+ 994 03c5 04       		.byte	4
+ 995 03c6 5B       		.byte	91
+ 996 03c7 04       		.byte	4
+ 997 03c8 5F       		.byte	95
+ 998 03c9 01       		.byte	1
+ 999 03ca 60       		.byte	96
+ 1000 03cb 40       		.byte	64
+ 1001 03cc 62       		.byte	98
+ 1002 03cd 80       		.byte	-128
+ 1003 03ce 64       		.byte	100
+ 1004 03cf 40       		.byte	64
+ 1005 03d0 65       		.byte	101
+ 1006 03d1 40       		.byte	64
+ 1007 03d2 66       		.byte	102
+ 1008 03d3 80       		.byte	-128
+ 1009 03d4 68       		.byte	104
+ 1010 03d5 40       		.byte	64
+ 1011 03d6 6A       		.byte	106
+ 1012 03d7 50       		.byte	80
+ 1013 03d8 6B       		.byte	107
+ 1014 03d9 A8       		.byte	-88
+ 1015 03da 6C       		.byte	108
+ 1016 03db 40       		.byte	64
+ 1017 03dc 6D       		.byte	109
+ 1018 03dd 20       		.byte	32
+ 1019 03de 6E       		.byte	110
+ 1020 03df 50       		.byte	80
+ 1021 03e0 6F       		.byte	111
+ 1022 03e1 A8       		.byte	-88
+ 1023 03e2 80       		.byte	-128
+ 1024 03e3 01       		.byte	1
+ 1025 03e4 94       		.byte	-108
+ 1026 03e5 02       		.byte	2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 19
+
+
+ 1027 03e6 A2       		.byte	-94
+ 1028 03e7 0A       		.byte	10
+ 1029 03e8 A6       		.byte	-90
+ 1030 03e9 05       		.byte	5
+ 1031 03ea B0       		.byte	-80
+ 1032 03eb 04       		.byte	4
+ 1033 03ec B2       		.byte	-78
+ 1034 03ed 08       		.byte	8
+ 1035 03ee B4       		.byte	-76
+ 1036 03ef 02       		.byte	2
+ 1037 03f0 B6       		.byte	-74
+ 1038 03f1 01       		.byte	1
+ 1039 03f2 B9       		.byte	-71
+ 1040 03f3 02       		.byte	2
+ 1041 03f4 BE       		.byte	-66
+ 1042 03f5 50       		.byte	80
+ 1043 03f6 BF       		.byte	-65
+ 1044 03f7 01       		.byte	1
+ 1045 03f8 C0       		.byte	-64
+ 1046 03f9 35       		.byte	53
+ 1047 03fa C1       		.byte	-63
+ 1048 03fb 04       		.byte	4
+ 1049 03fc C2       		.byte	-62
+ 1050 03fd 05       		.byte	5
+ 1051 03fe C5       		.byte	-59
+ 1052 03ff 05       		.byte	5
+ 1053 0400 C6       		.byte	-58
+ 1054 0401 C2       		.byte	-62
+ 1055 0402 C7       		.byte	-57
+ 1056 0403 0E       		.byte	14
+ 1057 0404 C8       		.byte	-56
+ 1058 0405 1F       		.byte	31
+ 1059 0406 C9       		.byte	-55
+ 1060 0407 FF       		.byte	-1
+ 1061 0408 CA       		.byte	-54
+ 1062 0409 FF       		.byte	-1
+ 1063 040a CB       		.byte	-53
+ 1064 040b FF       		.byte	-1
+ 1065 040c CD       		.byte	-51
+ 1066 040d AF       		.byte	-81
+ 1067 040e CE       		.byte	-50
+ 1068 040f 07       		.byte	7
+ 1069 0410 CF       		.byte	-49
+ 1070 0411 01       		.byte	1
+ 1071 0412 D0       		.byte	-48
+ 1072 0413 18       		.byte	24
+ 1073 0414 D4       		.byte	-44
+ 1074 0415 17       		.byte	23
+ 1075 0416 D6       		.byte	-42
+ 1076 0417 04       		.byte	4
+ 1077 0418 D8       		.byte	-40
+ 1078 0419 04       		.byte	4
+ 1079 041a D9       		.byte	-39
+ 1080 041b 04       		.byte	4
+ 1081 041c DA       		.byte	-38
+ 1082 041d 04       		.byte	4
+ 1083 041e DB       		.byte	-37
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 20
+
+
+ 1084 041f 04       		.byte	4
+ 1085 0420 DF       		.byte	-33
+ 1086 0421 01       		.byte	1
+ 1087 0422 E0       		.byte	-32
+ 1088 0423 40       		.byte	64
+ 1089 0424 E2       		.byte	-30
+ 1090 0425 80       		.byte	-128
+ 1091 0426 E4       		.byte	-28
+ 1092 0427 40       		.byte	64
+ 1093 0428 E5       		.byte	-27
+ 1094 0429 40       		.byte	64
+ 1095 042a E6       		.byte	-26
+ 1096 042b 80       		.byte	-128
+ 1097 042c E8       		.byte	-24
+ 1098 042d 40       		.byte	64
+ 1099 042e EA       		.byte	-22
+ 1100 042f 50       		.byte	80
+ 1101 0430 EB       		.byte	-21
+ 1102 0431 A8       		.byte	-88
+ 1103 0432 EC       		.byte	-20
+ 1104 0433 40       		.byte	64
+ 1105 0434 ED       		.byte	-19
+ 1106 0435 20       		.byte	32
+ 1107 0436 EE       		.byte	-18
+ 1108 0437 50       		.byte	80
+ 1109 0438 EF       		.byte	-17
+ 1110 0439 A8       		.byte	-88
+ 1111 043a 01       		.byte	1
+ 1112 043b 02       		.byte	2
+ 1113 043c 06       		.byte	6
+ 1114 043d 20       		.byte	32
+ 1115 043e 07       		.byte	7
+ 1116 043f 06       		.byte	6
+ 1117 0440 0A       		.byte	10
+ 1118 0441 10       		.byte	16
+ 1119 0442 0D       		.byte	13
+ 1120 0443 04       		.byte	4
+ 1121 0444 0E       		.byte	14
+ 1122 0445 88       		.byte	-120
+ 1123 0446 10       		.byte	16
+ 1124 0447 A0       		.byte	-96
+ 1125 0448 15       		.byte	21
+ 1126 0449 20       		.byte	32
+ 1127 044a 16       		.byte	22
+ 1128 044b 80       		.byte	-128
+ 1129 044c 17       		.byte	23
+ 1130 044d 08       		.byte	8
+ 1131 044e 19       		.byte	25
+ 1132 044f 42       		.byte	66
+ 1133 0450 1A       		.byte	26
+ 1134 0451 14       		.byte	20
+ 1135 0452 1C       		.byte	28
+ 1136 0453 02       		.byte	2
+ 1137 0454 1D       		.byte	29
+ 1138 0455 88       		.byte	-120
+ 1139 0456 1E       		.byte	30
+ 1140 0457 88       		.byte	-120
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 21
+
+
+ 1141 0458 21       		.byte	33
+ 1142 0459 02       		.byte	2
+ 1143 045a 25       		.byte	37
+ 1144 045b 41       		.byte	65
+ 1145 045c 27       		.byte	39
+ 1146 045d 08       		.byte	8
+ 1147 045e 37       		.byte	55
+ 1148 045f 06       		.byte	6
+ 1149 0460 3E       		.byte	62
+ 1150 0461 21       		.byte	33
+ 1151 0462 41       		.byte	65
+ 1152 0463 0A       		.byte	10
+ 1153 0464 45       		.byte	69
+ 1154 0465 8A       		.byte	-118
+ 1155 0466 48       		.byte	72
+ 1156 0467 A1       		.byte	-95
+ 1157 0468 52       		.byte	82
+ 1158 0469 94       		.byte	-108
+ 1159 046a 59       		.byte	89
+ 1160 046b 50       		.byte	80
+ 1161 046c 5A       		.byte	90
+ 1162 046d 04       		.byte	4
+ 1163 046e 61       		.byte	97
+ 1164 046f 80       		.byte	-128
+ 1165 0470 62       		.byte	98
+ 1166 0471 14       		.byte	20
+ 1167 0472 63       		.byte	99
+ 1168 0473 40       		.byte	64
+ 1169 0474 76       		.byte	118
+ 1170 0475 80       		.byte	-128
+ 1171 0476 81       		.byte	-127
+ 1172 0477 10       		.byte	16
+ 1173 0478 82       		.byte	-126
+ 1174 0479 80       		.byte	-128
+ 1175 047a 87       		.byte	-121
+ 1176 047b 40       		.byte	64
+ 1177 047c 89       		.byte	-119
+ 1178 047d 14       		.byte	20
+ 1179 047e 8A       		.byte	-118
+ 1180 047f 01       		.byte	1
+ 1181 0480 8B       		.byte	-117
+ 1182 0481 02       		.byte	2
+ 1183 0482 8D       		.byte	-115
+ 1184 0483 01       		.byte	1
+ 1185 0484 8E       		.byte	-114
+ 1186 0485 20       		.byte	32
+ 1187 0486 A5       		.byte	-91
+ 1188 0487 40       		.byte	64
+ 1189 0488 C0       		.byte	-64
+ 1190 0489 E8       		.byte	-24
+ 1191 048a C2       		.byte	-62
+ 1192 048b 74       		.byte	116
+ 1193 048c C4       		.byte	-60
+ 1194 048d 7C       		.byte	124
+ 1195 048e CC       		.byte	-52
+ 1196 048f C0       		.byte	-64
+ 1197 0490 CE       		.byte	-50
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 22
+
+
+ 1198 0491 A0       		.byte	-96
+ 1199 0492 D0       		.byte	-48
+ 1200 0493 D3       		.byte	-45
+ 1201 0494 D2       		.byte	-46
+ 1202 0495 08       		.byte	8
+ 1203 0496 D6       		.byte	-42
+ 1204 0497 0E       		.byte	14
+ 1205 0498 D8       		.byte	-40
+ 1206 0499 0F       		.byte	15
+ 1207 049a E0       		.byte	-32
+ 1208 049b 20       		.byte	32
+ 1209 049c E2       		.byte	-30
+ 1210 049d 10       		.byte	16
+ 1211 049e E4       		.byte	-28
+ 1212 049f E0       		.byte	-32
+ 1213 04a0 01       		.byte	1
+ 1214 04a1 0C       		.byte	12
+ 1215 04a2 03       		.byte	3
+ 1216 04a3 02       		.byte	2
+ 1217 04a4 07       		.byte	7
+ 1218 04a5 02       		.byte	2
+ 1219 04a6 0B       		.byte	11
+ 1220 04a7 04       		.byte	4
+ 1221 04a8 0C       		.byte	12
+ 1222 04a9 01       		.byte	1
+ 1223 04aa 13       		.byte	19
+ 1224 04ab 0A       		.byte	10
+ 1225 04ac 18       		.byte	24
+ 1226 04ad 02       		.byte	2
+ 1227 04ae 19       		.byte	25
+ 1228 04af 01       		.byte	1
+ 1229 04b0 1E       		.byte	30
+ 1230 04b1 01       		.byte	1
+ 1231 04b2 1F       		.byte	31
+ 1232 04b3 06       		.byte	6
+ 1233 04b4 20       		.byte	32
+ 1234 04b5 01       		.byte	1
+ 1235 04b6 2B       		.byte	43
+ 1236 04b7 0C       		.byte	12
+ 1237 04b8 32       		.byte	50
+ 1238 04b9 03       		.byte	3
+ 1239 04ba 33       		.byte	51
+ 1240 04bb 01       		.byte	1
+ 1241 04bc 37       		.byte	55
+ 1242 04bd 0E       		.byte	14
+ 1243 04be 38       		.byte	56
+ 1244 04bf 08       		.byte	8
+ 1245 04c0 3B       		.byte	59
+ 1246 04c1 80       		.byte	-128
+ 1247 04c2 3F       		.byte	63
+ 1248 04c3 04       		.byte	4
+ 1249 04c4 58       		.byte	88
+ 1250 04c5 04       		.byte	4
+ 1251 04c6 59       		.byte	89
+ 1252 04c7 04       		.byte	4
+ 1253 04c8 5C       		.byte	92
+ 1254 04c9 33       		.byte	51
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 23
+
+
+ 1255 04ca 5F       		.byte	95
+ 1256 04cb 01       		.byte	1
+ 1257 04cc 84       		.byte	-124
+ 1258 04cd 20       		.byte	32
+ 1259 04ce 85       		.byte	-123
+ 1260 04cf 0B       		.byte	11
+ 1261 04d0 86       		.byte	-122
+ 1262 04d1 40       		.byte	64
+ 1263 04d2 87       		.byte	-121
+ 1264 04d3 04       		.byte	4
+ 1265 04d4 8A       		.byte	-118
+ 1266 04d5 0C       		.byte	12
+ 1267 04d6 8C       		.byte	-116
+ 1268 04d7 0C       		.byte	12
+ 1269 04d8 8E       		.byte	-114
+ 1270 04d9 03       		.byte	3
+ 1271 04da 90       		.byte	-112
+ 1272 04db 01       		.byte	1
+ 1273 04dc 92       		.byte	-110
+ 1274 04dd 06       		.byte	6
+ 1275 04de 94       		.byte	-108
+ 1276 04df 40       		.byte	64
+ 1277 04e0 96       		.byte	-106
+ 1278 04e1 20       		.byte	32
+ 1279 04e2 97       		.byte	-105
+ 1280 04e3 08       		.byte	8
+ 1281 04e4 9C       		.byte	-100
+ 1282 04e5 60       		.byte	96
+ 1283 04e6 9D       		.byte	-99
+ 1284 04e7 05       		.byte	5
+ 1285 04e8 9F       		.byte	-97
+ 1286 04e9 0A       		.byte	10
+ 1287 04ea A0       		.byte	-96
+ 1288 04eb 01       		.byte	1
+ 1289 04ec A2       		.byte	-94
+ 1290 04ed 0E       		.byte	14
+ 1291 04ee A5       		.byte	-91
+ 1292 04ef 06       		.byte	6
+ 1293 04f0 A6       		.byte	-90
+ 1294 04f1 03       		.byte	3
+ 1295 04f2 A7       		.byte	-89
+ 1296 04f3 09       		.byte	9
+ 1297 04f4 AA       		.byte	-86
+ 1298 04f5 08       		.byte	8
+ 1299 04f6 AC       		.byte	-84
+ 1300 04f7 10       		.byte	16
+ 1301 04f8 B0       		.byte	-80
+ 1302 04f9 0F       		.byte	15
+ 1303 04fa B2       		.byte	-78
+ 1304 04fb 10       		.byte	16
+ 1305 04fc B3       		.byte	-77
+ 1306 04fd 07       		.byte	7
+ 1307 04fe B4       		.byte	-76
+ 1308 04ff 60       		.byte	96
+ 1309 0500 B5       		.byte	-75
+ 1310 0501 08       		.byte	8
+ 1311 0502 BA       		.byte	-70
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 24
+
+
+ 1312 0503 02       		.byte	2
+ 1313 0504 BE       		.byte	-66
+ 1314 0505 14       		.byte	20
+ 1315 0506 BF       		.byte	-65
+ 1316 0507 04       		.byte	4
+ 1317 0508 D6       		.byte	-42
+ 1318 0509 02       		.byte	2
+ 1319 050a D7       		.byte	-41
+ 1320 050b 3A       		.byte	58
+ 1321 050c D8       		.byte	-40
+ 1322 050d 04       		.byte	4
+ 1323 050e D9       		.byte	-39
+ 1324 050f 04       		.byte	4
+ 1325 0510 DB       		.byte	-37
+ 1326 0511 04       		.byte	4
+ 1327 0512 DC       		.byte	-36
+ 1328 0513 13       		.byte	19
+ 1329 0514 DD       		.byte	-35
+ 1330 0515 10       		.byte	16
+ 1331 0516 DF       		.byte	-33
+ 1332 0517 01       		.byte	1
+ 1333 0518 00       		.byte	0
+ 1334 0519 04       		.byte	4
+ 1335 051a 03       		.byte	3
+ 1336 051b 0A       		.byte	10
+ 1337 051c 05       		.byte	5
+ 1338 051d 40       		.byte	64
+ 1339 051e 07       		.byte	7
+ 1340 051f 01       		.byte	1
+ 1341 0520 08       		.byte	8
+ 1342 0521 01       		.byte	1
+ 1343 0522 09       		.byte	9
+ 1344 0523 80       		.byte	-128
+ 1345 0524 0A       		.byte	10
+ 1346 0525 10       		.byte	16
+ 1347 0526 0C       		.byte	12
+ 1348 0527 10       		.byte	16
+ 1349 0528 0F       		.byte	15
+ 1350 0529 0A       		.byte	10
+ 1351 052a 10       		.byte	16
+ 1352 052b 10       		.byte	16
+ 1353 052c 11       		.byte	17
+ 1354 052d 10       		.byte	16
+ 1355 052e 12       		.byte	18
+ 1356 052f 01       		.byte	1
+ 1357 0530 13       		.byte	19
+ 1358 0531 02       		.byte	2
+ 1359 0532 17       		.byte	23
+ 1360 0533 02       		.byte	2
+ 1361 0534 19       		.byte	25
+ 1362 0535 14       		.byte	20
+ 1363 0536 1A       		.byte	26
+ 1364 0537 04       		.byte	4
+ 1365 0538 1B       		.byte	27
+ 1366 0539 03       		.byte	3
+ 1367 053a 1D       		.byte	29
+ 1368 053b 08       		.byte	8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 25
+
+
+ 1369 053c 1F       		.byte	31
+ 1370 053d 08       		.byte	8
+ 1371 053e 20       		.byte	32
+ 1372 053f 04       		.byte	4
+ 1373 0540 23       		.byte	35
+ 1374 0541 10       		.byte	16
+ 1375 0542 26       		.byte	38
+ 1376 0543 44       		.byte	68
+ 1377 0544 27       		.byte	39
+ 1378 0545 02       		.byte	2
+ 1379 0546 29       		.byte	41
+ 1380 0547 08       		.byte	8
+ 1381 0548 2F       		.byte	47
+ 1382 0549 08       		.byte	8
+ 1383 054a 30       		.byte	48
+ 1384 054b 08       		.byte	8
+ 1385 054c 31       		.byte	49
+ 1386 054d 80       		.byte	-128
+ 1387 054e 34       		.byte	52
+ 1388 054f 01       		.byte	1
+ 1389 0550 36       		.byte	54
+ 1390 0551 40       		.byte	64
+ 1391 0552 37       		.byte	55
+ 1392 0553 21       		.byte	33
+ 1393 0554 38       		.byte	56
+ 1394 0555 04       		.byte	4
+ 1395 0556 3D       		.byte	61
+ 1396 0557 10       		.byte	16
+ 1397 0558 3F       		.byte	63
+ 1398 0559 2A       		.byte	42
+ 1399 055a 5A       		.byte	90
+ 1400 055b 04       		.byte	4
+ 1401 055c 63       		.byte	99
+ 1402 055d 10       		.byte	16
+ 1403 055e 73       		.byte	115
+ 1404 055f 80       		.byte	-128
+ 1405 0560 92       		.byte	-110
+ 1406 0561 10       		.byte	16
+ 1407 0562 94       		.byte	-108
+ 1408 0563 04       		.byte	4
+ 1409 0564 96       		.byte	-106
+ 1410 0565 04       		.byte	4
+ 1411 0566 97       		.byte	-105
+ 1412 0567 10       		.byte	16
+ 1413 0568 99       		.byte	-103
+ 1414 0569 08       		.byte	8
+ 1415 056a 9A       		.byte	-102
+ 1416 056b 01       		.byte	1
+ 1417 056c 9D       		.byte	-99
+ 1418 056d 14       		.byte	20
+ 1419 056e 9F       		.byte	-97
+ 1420 056f 80       		.byte	-128
+ 1421 0570 A0       		.byte	-96
+ 1422 0571 08       		.byte	8
+ 1423 0572 A1       		.byte	-95
+ 1424 0573 80       		.byte	-128
+ 1425 0574 C0       		.byte	-64
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 26
+
+
+ 1426 0575 87       		.byte	-121
+ 1427 0576 C2       		.byte	-62
+ 1428 0577 CD       		.byte	-51
+ 1429 0578 C4       		.byte	-60
+ 1430 0579 1F       		.byte	31
+ 1431 057a CA       		.byte	-54
+ 1432 057b 22       		.byte	34
+ 1433 057c CC       		.byte	-52
+ 1434 057d BA       		.byte	-70
+ 1435 057e CE       		.byte	-50
+ 1436 057f E2       		.byte	-30
+ 1437 0580 D6       		.byte	-42
+ 1438 0581 02       		.byte	2
+ 1439 0582 D8       		.byte	-40
+ 1440 0583 02       		.byte	2
+ 1441 0584 00       		.byte	0
+ 1442 0585 10       		.byte	16
+ 1443 0586 02       		.byte	2
+ 1444 0587 0C       		.byte	12
+ 1445 0588 06       		.byte	6
+ 1446 0589 03       		.byte	3
+ 1447 058a 07       		.byte	7
+ 1448 058b 01       		.byte	1
+ 1449 058c 09       		.byte	9
+ 1450 058d 02       		.byte	2
+ 1451 058e 10       		.byte	16
+ 1452 058f 1C       		.byte	28
+ 1453 0590 11       		.byte	17
+ 1454 0591 01       		.byte	1
+ 1455 0592 12       		.byte	18
+ 1456 0593 02       		.byte	2
+ 1457 0594 14       		.byte	20
+ 1458 0595 09       		.byte	9
+ 1459 0596 16       		.byte	22
+ 1460 0597 10       		.byte	16
+ 1461 0598 19       		.byte	25
+ 1462 0599 04       		.byte	4
+ 1463 059a 1D       		.byte	29
+ 1464 059b 01       		.byte	1
+ 1465 059c 20       		.byte	32
+ 1466 059d 0C       		.byte	12
+ 1467 059e 22       		.byte	34
+ 1468 059f 11       		.byte	17
+ 1469 05a0 23       		.byte	35
+ 1470 05a1 01       		.byte	1
+ 1471 05a2 24       		.byte	36
+ 1472 05a3 14       		.byte	20
+ 1473 05a4 28       		.byte	40
+ 1474 05a5 10       		.byte	16
+ 1475 05a6 2B       		.byte	43
+ 1476 05a7 01       		.byte	1
+ 1477 05a8 31       		.byte	49
+ 1478 05a9 01       		.byte	1
+ 1479 05aa 33       		.byte	51
+ 1480 05ab 02       		.byte	2
+ 1481 05ac 34       		.byte	52
+ 1482 05ad 1F       		.byte	31
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 27
+
+
+ 1483 05ae 35       		.byte	53
+ 1484 05af 04       		.byte	4
+ 1485 05b0 3F       		.byte	63
+ 1486 05b1 15       		.byte	21
+ 1487 05b2 40       		.byte	64
+ 1488 05b3 12       		.byte	18
+ 1489 05b4 41       		.byte	65
+ 1490 05b5 05       		.byte	5
+ 1491 05b6 45       		.byte	69
+ 1492 05b7 EB       		.byte	-21
+ 1493 05b8 46       		.byte	70
+ 1494 05b9 E0       		.byte	-32
+ 1495 05ba 47       		.byte	71
+ 1496 05bb 0C       		.byte	12
+ 1497 05bc 48       		.byte	72
+ 1498 05bd 1B       		.byte	27
+ 1499 05be 49       		.byte	73
+ 1500 05bf FF       		.byte	-1
+ 1501 05c0 4A       		.byte	74
+ 1502 05c1 FF       		.byte	-1
+ 1503 05c2 4B       		.byte	75
+ 1504 05c3 FF       		.byte	-1
+ 1505 05c4 4E       		.byte	78
+ 1506 05c5 F0       		.byte	-16
+ 1507 05c6 4F       		.byte	79
+ 1508 05c7 44       		.byte	68
+ 1509 05c8 50       		.byte	80
+ 1510 05c9 0C       		.byte	12
+ 1511 05ca 54       		.byte	84
+ 1512 05cb 01       		.byte	1
+ 1513 05cc 58       		.byte	88
+ 1514 05cd 04       		.byte	4
+ 1515 05ce 59       		.byte	89
+ 1516 05cf 04       		.byte	4
+ 1517 05d0 5A       		.byte	90
+ 1518 05d1 04       		.byte	4
+ 1519 05d2 5B       		.byte	91
+ 1520 05d3 04       		.byte	4
+ 1521 05d4 5C       		.byte	92
+ 1522 05d5 03       		.byte	3
+ 1523 05d6 5D       		.byte	93
+ 1524 05d7 33       		.byte	51
+ 1525 05d8 5F       		.byte	95
+ 1526 05d9 01       		.byte	1
+ 1527 05da 66       		.byte	102
+ 1528 05db C0       		.byte	-64
+ 1529 05dc 6A       		.byte	106
+ 1530 05dd 40       		.byte	64
+ 1531 05de 6B       		.byte	107
+ 1532 05df 02       		.byte	2
+ 1533 05e0 81       		.byte	-127
+ 1534 05e1 02       		.byte	2
+ 1535 05e2 84       		.byte	-124
+ 1536 05e3 03       		.byte	3
+ 1537 05e4 86       		.byte	-122
+ 1538 05e5 04       		.byte	4
+ 1539 05e6 87       		.byte	-121
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 28
+
+
+ 1540 05e7 01       		.byte	1
+ 1541 05e8 8C       		.byte	-116
+ 1542 05e9 03       		.byte	3
+ 1543 05ea 8E       		.byte	-114
+ 1544 05eb 0C       		.byte	12
+ 1545 05ec 91       		.byte	-111
+ 1546 05ed 03       		.byte	3
+ 1547 05ee 96       		.byte	-106
+ 1548 05ef 08       		.byte	8
+ 1549 05f0 9A       		.byte	-102
+ 1550 05f1 05       		.byte	5
+ 1551 05f2 9C       		.byte	-100
+ 1552 05f3 0A       		.byte	10
+ 1553 05f4 9E       		.byte	-98
+ 1554 05f5 04       		.byte	4
+ 1555 05f6 A0       		.byte	-96
+ 1556 05f7 03       		.byte	3
+ 1557 05f8 A1       		.byte	-95
+ 1558 05f9 03       		.byte	3
+ 1559 05fa A2       		.byte	-94
+ 1560 05fb 04       		.byte	4
+ 1561 05fc B1       		.byte	-79
+ 1562 05fd 03       		.byte	3
+ 1563 05fe B6       		.byte	-74
+ 1564 05ff 0F       		.byte	15
+ 1565 0600 B9       		.byte	-71
+ 1566 0601 02       		.byte	2
+ 1567 0602 BA       		.byte	-70
+ 1568 0603 80       		.byte	-128
+ 1569 0604 BF       		.byte	-65
+ 1570 0605 01       		.byte	1
+ 1571 0606 C0       		.byte	-64
+ 1572 0607 01       		.byte	1
+ 1573 0608 C6       		.byte	-58
+ 1574 0609 40       		.byte	64
+ 1575 060a C9       		.byte	-55
+ 1576 060b FF       		.byte	-1
+ 1577 060c CA       		.byte	-54
+ 1578 060d 07       		.byte	7
+ 1579 060e CB       		.byte	-53
+ 1580 060f FF       		.byte	-1
+ 1581 0610 CC       		.byte	-52
+ 1582 0611 40       		.byte	64
+ 1583 0612 CD       		.byte	-51
+ 1584 0613 20       		.byte	32
+ 1585 0614 CE       		.byte	-50
+ 1586 0615 F0       		.byte	-16
+ 1587 0616 CF       		.byte	-49
+ 1588 0617 05       		.byte	5
+ 1589 0618 D0       		.byte	-48
+ 1590 0619 08       		.byte	8
+ 1591 061a D8       		.byte	-40
+ 1592 061b 04       		.byte	4
+ 1593 061c D9       		.byte	-39
+ 1594 061d 04       		.byte	4
+ 1595 061e DA       		.byte	-38
+ 1596 061f 04       		.byte	4
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 29
+
+
+ 1597 0620 DC       		.byte	-36
+ 1598 0621 03       		.byte	3
+ 1599 0622 DD       		.byte	-35
+ 1600 0623 03       		.byte	3
+ 1601 0624 DF       		.byte	-33
+ 1602 0625 01       		.byte	1
+ 1603 0626 E0       		.byte	-32
+ 1604 0627 40       		.byte	64
+ 1605 0628 E1       		.byte	-31
+ 1606 0629 A8       		.byte	-88
+ 1607 062a E2       		.byte	-30
+ 1608 062b 40       		.byte	64
+ 1609 062c E3       		.byte	-29
+ 1610 062d 20       		.byte	32
+ 1611 062e 00       		.byte	0
+ 1612 062f 04       		.byte	4
+ 1613 0630 03       		.byte	3
+ 1614 0631 80       		.byte	-128
+ 1615 0632 04       		.byte	4
+ 1616 0633 08       		.byte	8
+ 1617 0634 05       		.byte	5
+ 1618 0635 40       		.byte	64
+ 1619 0636 07       		.byte	7
+ 1620 0637 20       		.byte	32
+ 1621 0638 09       		.byte	9
+ 1622 0639 09       		.byte	9
+ 1623 063a 0D       		.byte	13
+ 1624 063b 08       		.byte	8
+ 1625 063c 0F       		.byte	15
+ 1626 063d 0A       		.byte	10
+ 1627 063e 10       		.byte	16
+ 1628 063f 20       		.byte	32
+ 1629 0640 11       		.byte	17
+ 1630 0641 20       		.byte	32
+ 1631 0642 13       		.byte	19
+ 1632 0643 02       		.byte	2
+ 1633 0644 17       		.byte	23
+ 1634 0645 02       		.byte	2
+ 1635 0646 18       		.byte	24
+ 1636 0647 04       		.byte	4
+ 1637 0648 19       		.byte	25
+ 1638 0649 10       		.byte	16
+ 1639 064a 1D       		.byte	29
+ 1640 064b 40       		.byte	64
+ 1641 064c 1F       		.byte	31
+ 1642 064d 80       		.byte	-128
+ 1643 064e 22       		.byte	34
+ 1644 064f 24       		.byte	36
+ 1645 0650 23       		.byte	35
+ 1646 0651 80       		.byte	-128
+ 1647 0652 27       		.byte	39
+ 1648 0653 40       		.byte	64
+ 1649 0654 2A       		.byte	42
+ 1650 0655 02       		.byte	2
+ 1651 0656 2B       		.byte	43
+ 1652 0657 04       		.byte	4
+ 1653 0658 2F       		.byte	47
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 30
+
+
+ 1654 0659 80       		.byte	-128
+ 1655 065a 30       		.byte	48
+ 1656 065b 01       		.byte	1
+ 1657 065c 31       		.byte	49
+ 1658 065d 10       		.byte	16
+ 1659 065e 33       		.byte	51
+ 1660 065f 80       		.byte	-128
+ 1661 0660 34       		.byte	52
+ 1662 0661 01       		.byte	1
+ 1663 0662 36       		.byte	54
+ 1664 0663 01       		.byte	1
+ 1665 0664 37       		.byte	55
+ 1666 0665 02       		.byte	2
+ 1667 0666 38       		.byte	56
+ 1668 0667 28       		.byte	40
+ 1669 0668 3D       		.byte	61
+ 1670 0669 02       		.byte	2
+ 1671 066a 3E       		.byte	62
+ 1672 066b 06       		.byte	6
+ 1673 066c 3F       		.byte	63
+ 1674 066d 0A       		.byte	10
+ 1675 066e 42       		.byte	66
+ 1676 066f 04       		.byte	4
+ 1677 0670 43       		.byte	67
+ 1678 0671 80       		.byte	-128
+ 1679 0672 47       		.byte	71
+ 1680 0673 40       		.byte	64
+ 1681 0674 48       		.byte	72
+ 1682 0675 20       		.byte	32
+ 1683 0676 49       		.byte	73
+ 1684 0677 01       		.byte	1
+ 1685 0678 4A       		.byte	74
+ 1686 0679 01       		.byte	1
+ 1687 067a 4F       		.byte	79
+ 1688 067b 08       		.byte	8
+ 1689 067c 50       		.byte	80
+ 1690 067d 14       		.byte	20
+ 1691 067e 55       		.byte	85
+ 1692 067f 10       		.byte	16
+ 1693 0680 57       		.byte	87
+ 1694 0681 10       		.byte	16
+ 1695 0682 59       		.byte	89
+ 1696 0683 01       		.byte	1
+ 1697 0684 5A       		.byte	90
+ 1698 0685 08       		.byte	8
+ 1699 0686 5B       		.byte	91
+ 1700 0687 A0       		.byte	-96
+ 1701 0688 86       		.byte	-122
+ 1702 0689 20       		.byte	32
+ 1703 068a 9B       		.byte	-101
+ 1704 068b 02       		.byte	2
+ 1705 068c 9D       		.byte	-99
+ 1706 068d 40       		.byte	64
+ 1707 068e A1       		.byte	-95
+ 1708 068f 08       		.byte	8
+ 1709 0690 A3       		.byte	-93
+ 1710 0691 01       		.byte	1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 31
+
+
+ 1711 0692 A7       		.byte	-89
+ 1712 0693 14       		.byte	20
+ 1713 0694 AA       		.byte	-86
+ 1714 0695 04       		.byte	4
+ 1715 0696 B7       		.byte	-73
+ 1716 0697 20       		.byte	32
+ 1717 0698 C0       		.byte	-64
+ 1718 0699 AC       		.byte	-84
+ 1719 069a C2       		.byte	-62
+ 1720 069b EC       		.byte	-20
+ 1721 069c C4       		.byte	-60
+ 1722 069d 1E       		.byte	30
+ 1723 069e CA       		.byte	-54
+ 1724 069f 85       		.byte	-123
+ 1725 06a0 CC       		.byte	-52
+ 1726 06a1 8D       		.byte	-115
+ 1727 06a2 CE       		.byte	-50
+ 1728 06a3 C6       		.byte	-58
+ 1729 06a4 D0       		.byte	-48
+ 1730 06a5 1C       		.byte	28
+ 1731 06a6 D2       		.byte	-46
+ 1732 06a7 08       		.byte	8
+ 1733 06a8 D6       		.byte	-42
+ 1734 06a9 0F       		.byte	15
+ 1735 06aa E4       		.byte	-28
+ 1736 06ab 02       		.byte	2
+ 1737 06ac EE       		.byte	-18
+ 1738 06ad 10       		.byte	16
+ 1739 06ae 30       		.byte	48
+ 1740 06af 08       		.byte	8
+ 1741 06b0 33       		.byte	51
+ 1742 06b1 80       		.byte	-128
+ 1743 06b2 34       		.byte	52
+ 1744 06b3 42       		.byte	66
+ 1745 06b4 3B       		.byte	59
+ 1746 06b5 80       		.byte	-128
+ 1747 06b6 3C       		.byte	60
+ 1748 06b7 40       		.byte	64
+ 1749 06b8 CC       		.byte	-52
+ 1750 06b9 F0       		.byte	-16
+ 1751 06ba CE       		.byte	-50
+ 1752 06bb 30       		.byte	48
+ 1753 06bc 31       		.byte	49
+ 1754 06bd 14       		.byte	20
+ 1755 06be 35       		.byte	53
+ 1756 06bf 80       		.byte	-128
+ 1757 06c0 37       		.byte	55
+ 1758 06c1 02       		.byte	2
+ 1759 06c2 60       		.byte	96
+ 1760 06c3 01       		.byte	1
+ 1761 06c4 66       		.byte	102
+ 1762 06c5 08       		.byte	8
+ 1763 06c6 8B       		.byte	-117
+ 1764 06c7 40       		.byte	64
+ 1765 06c8 8E       		.byte	-114
+ 1766 06c9 08       		.byte	8
+ 1767 06ca 97       		.byte	-105
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 32
+
+
+ 1768 06cb 80       		.byte	-128
+ 1769 06cc 9C       		.byte	-100
+ 1770 06cd 42       		.byte	66
+ 1771 06ce A4       		.byte	-92
+ 1772 06cf 08       		.byte	8
+ 1773 06d0 A7       		.byte	-89
+ 1774 06d1 80       		.byte	-128
+ 1775 06d2 A8       		.byte	-88
+ 1776 06d3 40       		.byte	64
+ 1777 06d4 CC       		.byte	-52
+ 1778 06d5 F0       		.byte	-16
+ 1779 06d6 D6       		.byte	-42
+ 1780 06d7 40       		.byte	64
+ 1781 06d8 D8       		.byte	-40
+ 1782 06d9 80       		.byte	-128
+ 1783 06da EE       		.byte	-18
+ 1784 06db 20       		.byte	32
+ 1785 06dc 01       		.byte	1
+ 1786 06dd 01       		.byte	1
+ 1787 06de 84       		.byte	-124
+ 1788 06df 08       		.byte	8
+ 1789 06e0 87       		.byte	-121
+ 1790 06e1 80       		.byte	-128
+ 1791 06e2 9C       		.byte	-100
+ 1792 06e3 42       		.byte	66
+ 1793 06e4 9D       		.byte	-99
+ 1794 06e5 94       		.byte	-108
+ 1795 06e6 9F       		.byte	-97
+ 1796 06e7 02       		.byte	2
+ 1797 06e8 A4       		.byte	-92
+ 1798 06e9 08       		.byte	8
+ 1799 06ea A7       		.byte	-89
+ 1800 06eb 80       		.byte	-128
+ 1801 06ec B4       		.byte	-76
+ 1802 06ed 01       		.byte	1
+ 1803 06ee C0       		.byte	-64
+ 1804 06ef 10       		.byte	16
+ 1805 06f0 E2       		.byte	-30
+ 1806 06f1 40       		.byte	64
+ 1807 06f2 E6       		.byte	-26
+ 1808 06f3 10       		.byte	16
+ 1809 06f4 81       		.byte	-127
+ 1810 06f5 04       		.byte	4
+ 1811 06f6 84       		.byte	-124
+ 1812 06f7 40       		.byte	64
+ 1813 06f8 8D       		.byte	-115
+ 1814 06f9 80       		.byte	-128
+ 1815 06fa 91       		.byte	-111
+ 1816 06fb 01       		.byte	1
+ 1817 06fc 9C       		.byte	-100
+ 1818 06fd 42       		.byte	66
+ 1819 06fe 9D       		.byte	-99
+ 1820 06ff 94       		.byte	-108
+ 1821 0700 9F       		.byte	-97
+ 1822 0701 02       		.byte	2
+ 1823 0702 AD       		.byte	-83
+ 1824 0703 01       		.byte	1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 33
+
+
+ 1825 0704 E6       		.byte	-26
+ 1826 0705 90       		.byte	-112
+ 1827 0706 E8       		.byte	-24
+ 1828 0707 10       		.byte	16
+ 1829 0708 57       		.byte	87
+ 1830 0709 04       		.byte	4
+ 1831 070a 5F       		.byte	95
+ 1832 070b 02       		.byte	2
+ 1833 070c 87       		.byte	-121
+ 1834 070d 02       		.byte	2
+ 1835 070e D4       		.byte	-44
+ 1836 070f 02       		.byte	2
+ 1837 0710 D6       		.byte	-42
+ 1838 0711 01       		.byte	1
+ 1839 0712 03       		.byte	3
+ 1840 0713 10       		.byte	16
+ 1841 0714 1B       		.byte	27
+ 1842 0715 01       		.byte	1
+ 1843 0716 87       		.byte	-121
+ 1844 0717 01       		.byte	1
+ 1845 0718 B7       		.byte	-73
+ 1846 0719 04       		.byte	4
+ 1847 071a C0       		.byte	-64
+ 1848 071b 08       		.byte	8
+ 1849 071c C6       		.byte	-58
+ 1850 071d 08       		.byte	8
+ 1851 071e E8       		.byte	-24
+ 1852 071f 02       		.byte	2
+ 1853 0720 86       		.byte	-122
+ 1854 0721 10       		.byte	16
+ 1855 0722 8F       		.byte	-113
+ 1856 0723 10       		.byte	16
+ 1857 0724 9B       		.byte	-101
+ 1858 0725 10       		.byte	16
+ 1859 0726 E6       		.byte	-26
+ 1860 0727 02       		.byte	2
+ 1861 0728 00       		.byte	0
+ 1862 0729 04       		.byte	4
+ 1863 072a 27       		.byte	39
+ 1864 072b 80       		.byte	-128
+ 1865 072c 87       		.byte	-121
+ 1866 072d 02       		.byte	2
+ 1867 072e 89       		.byte	-119
+ 1868 072f 05       		.byte	5
+ 1869 0730 8B       		.byte	-117
+ 1870 0731 80       		.byte	-128
+ 1871 0732 8C       		.byte	-116
+ 1872 0733 06       		.byte	6
+ 1873 0734 91       		.byte	-111
+ 1874 0735 01       		.byte	1
+ 1875 0736 9C       		.byte	-100
+ 1876 0737 02       		.byte	2
+ 1877 0738 9D       		.byte	-99
+ 1878 0739 10       		.byte	16
+ 1879 073a 9F       		.byte	-97
+ 1880 073b 02       		.byte	2
+ 1881 073c C0       		.byte	-64
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 34
+
+
+ 1882 073d 10       		.byte	16
+ 1883 073e C8       		.byte	-56
+ 1884 073f 80       		.byte	-128
+ 1885 0740 E6       		.byte	-26
+ 1886 0741 40       		.byte	64
+ 1887 0742 01       		.byte	1
+ 1888 0743 04       		.byte	4
+ 1889 0744 95       		.byte	-107
+ 1890 0745 04       		.byte	4
+ 1891 0746 A9       		.byte	-87
+ 1892 0747 10       		.byte	16
+ 1893 0748 C0       		.byte	-64
+ 1894 0749 10       		.byte	16
+ 1895 074a EE       		.byte	-18
+ 1896 074b 20       		.byte	32
+ 1897 074c 0C       		.byte	12
+ 1898 074d 20       		.byte	32
+ 1899 074e 0E       		.byte	14
+ 1900 074f 20       		.byte	32
+ 1901 0750 A6       		.byte	-90
+ 1902 0751 10       		.byte	16
+ 1903 0752 C2       		.byte	-62
+ 1904 0753 05       		.byte	5
+ 1905 0754 74       		.byte	116
+ 1906 0755 04       		.byte	4
+ 1907 0756 84       		.byte	-124
+ 1908 0757 04       		.byte	4
+ 1909 0758 B4       		.byte	-76
+ 1910 0759 20       		.byte	32
+ 1911 075a DE       		.byte	-34
+ 1912 075b 04       		.byte	4
+ 1913 075c EE       		.byte	-18
+ 1914 075d 08       		.byte	8
+ 1915 075e 00       		.byte	0
+ 1916 075f 16       		.byte	22
+ 1917 0760 08       		.byte	8
+ 1918 0761 10       		.byte	16
+ 1919 0762 0C       		.byte	12
+ 1920 0763 02       		.byte	2
+ 1921 0764 0E       		.byte	14
+ 1922 0765 04       		.byte	4
+ 1923 0766 10       		.byte	16
+ 1924 0767 0B       		.byte	11
+ 1925 0768 1A       		.byte	26
+ 1926 0769 01       		.byte	1
+ 1927 076a 1C       		.byte	28
+ 1928 076b 0A       		.byte	10
+ 1929 076c 00       		.byte	0
+ 1930 076d FF       		.byte	-1
+ 1931 076e 01       		.byte	1
+ 1932 076f FF       		.byte	-1
+ 1933 0770 02       		.byte	2
+ 1934 0771 03       		.byte	3
+ 1935 0772 10       		.byte	16
+ 1936 0773 01       		.byte	1
+ 1937 0774 00       		.byte	0
+ 1938 0775 E3       		.byte	-29
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 35
+
+
+ 1939 0776 E3       		.byte	-29
+ 1940 0777 00       		.byte	0
+ 1941 0778 C0       		.byte	-64
+ 1942 0779 00       		.byte	0
+ 1943 077a 00       		.byte	0
+ 1944 077b 00       		.byte	0
+ 1945 077c 80       		.byte	-128
+ 1946 077d 00       		.byte	0
+ 1947 077e 04       		.byte	4
+ 1948 077f 80       		.byte	-128
+ 1949 0780 80       		.byte	-128
+ 1950 0781 00       		.byte	0
+ 1951 0782 80       		.byte	-128
+ 1952 0783 00       		.byte	0
+ 1953 0784 00       		.byte	0
+ 1954 0785 00       		.byte	0
+ 1955 0786 00       		.byte	0
+ 1956 0787 00       		.byte	0
+ 1957 0788 11       		.byte	17
+ 1958 0789 20       		.byte	32
+ 1959 078a 20       		.byte	32
+ 1960 078b 00       		.byte	0
+ 1961 078c 00       		.byte	0
+ 1962 078d 00       		.byte	0
+ 1963 078e 00       		.byte	0
+ 1964 078f 00       		.byte	0
+ 1965 0790 A0       		.byte	-96
+ 1966 0791 4B       		.byte	75
+ 1967 0792 4B       		.byte	75
+ 1968 0793 00       		.byte	0
+ 1969 0794 00       		.byte	0
+ 1970 0795 00       		.byte	0
+ 1971 0796 00       		.byte	0
+ 1972 0797 00       		.byte	0
+ 1973 0798 00       		.byte	0
+ 1974 0799 86       		.byte	-122
+ 1975 079a 86       		.byte	-122
+ 1976 079b 00       		.byte	0
+ 1977 079c 82       		.byte	-126
+ 1978 079d 00       		.byte	0
+ 1979 079e 01       		.byte	1
+ 1980 079f 00       		.byte	0
+ 1981 07a0 01       		.byte	1
+ 1982 07a1 00       		.byte	0
+ 1983 07a2 00       		.byte	0
+ 1984 07a3 00       		.byte	0
+ 1985 07a4 00       		.byte	0
+ 1986 07a5 00       		.byte	0
+ 1987 07a6 00       		.byte	0
+ 1988 07a7 00       		.byte	0
+ 1989 07a8 1F       		.byte	31
+ 1990 07a9 00       		.byte	0
+ 1991 07aa 18       		.byte	24
+ 1992 07ab 01       		.byte	1
+ 1993              		.section	.cywolatch,"a",%progbits
+ 1994              		.align	2
+ 1995              		.type	cy_meta_wonvl, %object
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 36
+
+
+ 1996              		.size	cy_meta_wonvl, 4
+ 1997              	cy_meta_wonvl:
+ 1998 0000 BC       		.byte	-68
+ 1999 0001 90       		.byte	-112
+ 2000 0002 AC       		.byte	-84
+ 2001 0003 AF       		.byte	-81
+ 2002              		.section	.cycustnvl,"a",%progbits
+ 2003              		.align	2
+ 2004              		.type	cy_meta_custnvl, %object
+ 2005              		.size	cy_meta_custnvl, 4
+ 2006              	cy_meta_custnvl:
+ 2007 0000 00       		.byte	0
+ 2008 0001 00       		.byte	0
+ 2009 0002 40       		.byte	64
+ 2010 0003 05       		.byte	5
+ 2011              		.section	.cymeta,"a",%progbits
+ 2012              		.align	2
+ 2013              		.type	cy_metadata, %object
+ 2014              		.size	cy_metadata, 12
+ 2015              	cy_metadata:
+ 2016 0000 00       		.byte	0
+ 2017 0001 01       		.byte	1
+ 2018 0002 2E       		.byte	46
+ 2019 0003 16       		.byte	22
+ 2020 0004 10       		.byte	16
+ 2021 0005 69       		.byte	105
+ 2022 0006 00       		.byte	0
+ 2023 0007 01       		.byte	1
+ 2024 0008 00       		.byte	0
+ 2025 0009 00       		.byte	0
+ 2026 000a 00       		.byte	0
+ 2027 000b 00       		.byte	0
+ 2028              		.section	.cyflashprotect,"a",%progbits
+ 2029              		.align	2
+ 2030              		.type	cy_meta_flashprotect, %object
+ 2031              		.size	cy_meta_flashprotect, 256
+ 2032              	cy_meta_flashprotect:
+ 2033 0000 00000000 		.space	256
+ 2033      00000000 
+ 2033      00000000 
+ 2033      00000000 
+ 2033      00000000 
+ 2034              		.text
+ 2035              	.Letext0:
+ 2036              		.file 1 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 2037              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 2038              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 2039              		.section	.debug_info,"",%progbits
+ 2040              	.Ldebug_info0:
+ 2041 0000 35010000 		.4byte	0x135
+ 2042 0004 0400     		.2byte	0x4
+ 2043 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 2044 000a 04       		.byte	0x4
+ 2045 000b 01       		.uleb128 0x1
+ 2046 000c 24000000 		.4byte	.LASF17
+ 2047 0010 0C       		.byte	0xc
+ 2048 0011 BD010000 		.4byte	.LASF18
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 37
+
+
+ 2049 0015 51010000 		.4byte	.LASF19
+ 2050 0019 00000000 		.4byte	.Ldebug_line0
+ 2051 001d 02       		.uleb128 0x2
+ 2052 001e 01       		.byte	0x1
+ 2053 001f 06       		.byte	0x6
+ 2054 0020 B1010000 		.4byte	.LASF0
+ 2055 0024 03       		.uleb128 0x3
+ 2056 0025 00000000 		.4byte	.LASF9
+ 2057 0029 01       		.byte	0x1
+ 2058 002a 1D       		.byte	0x1d
+ 2059 002b 2F000000 		.4byte	0x2f
+ 2060 002f 02       		.uleb128 0x2
+ 2061 0030 01       		.byte	0x1
+ 2062 0031 08       		.byte	0x8
+ 2063 0032 16000000 		.4byte	.LASF1
+ 2064 0036 02       		.uleb128 0x2
+ 2065 0037 02       		.byte	0x2
+ 2066 0038 05       		.byte	0x5
+ 2067 0039 9E010000 		.4byte	.LASF2
+ 2068 003d 02       		.uleb128 0x2
+ 2069 003e 02       		.byte	0x2
+ 2070 003f 07       		.byte	0x7
+ 2071 0040 C4000000 		.4byte	.LASF3
+ 2072 0044 02       		.uleb128 0x2
+ 2073 0045 04       		.byte	0x4
+ 2074 0046 05       		.byte	0x5
+ 2075 0047 A8010000 		.4byte	.LASF4
+ 2076 004b 02       		.uleb128 0x2
+ 2077 004c 04       		.byte	0x4
+ 2078 004d 07       		.byte	0x7
+ 2079 004e B2000000 		.4byte	.LASF5
+ 2080 0052 02       		.uleb128 0x2
+ 2081 0053 08       		.byte	0x8
+ 2082 0054 05       		.byte	0x5
+ 2083 0055 90010000 		.4byte	.LASF6
+ 2084 0059 02       		.uleb128 0x2
+ 2085 005a 08       		.byte	0x8
+ 2086 005b 07       		.byte	0x7
+ 2087 005c 06010000 		.4byte	.LASF7
+ 2088 0060 04       		.uleb128 0x4
+ 2089 0061 04       		.byte	0x4
+ 2090 0062 05       		.byte	0x5
+ 2091 0063 696E7400 		.ascii	"int\000"
+ 2092 0067 02       		.uleb128 0x2
+ 2093 0068 04       		.byte	0x4
+ 2094 0069 07       		.byte	0x7
+ 2095 006a F9000000 		.4byte	.LASF8
+ 2096 006e 03       		.uleb128 0x3
+ 2097 006f 1D010000 		.4byte	.LASF10
+ 2098 0073 02       		.byte	0x2
+ 2099 0074 18       		.byte	0x18
+ 2100 0075 24000000 		.4byte	0x24
+ 2101 0079 05       		.uleb128 0x5
+ 2102 007a 91000000 		.4byte	0x91
+ 2103 007e 8A000000 		.4byte	0x8a
+ 2104 0082 06       		.uleb128 0x6
+ 2105 0083 8A000000 		.4byte	0x8a
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 38
+
+
+ 2106 0087 AB07     		.2byte	0x7ab
+ 2107 0089 00       		.byte	0
+ 2108 008a 02       		.uleb128 0x2
+ 2109 008b 04       		.byte	0x4
+ 2110 008c 07       		.byte	0x7
+ 2111 008d 48010000 		.4byte	.LASF11
+ 2112 0091 07       		.uleb128 0x7
+ 2113 0092 6E000000 		.4byte	0x6e
+ 2114 0096 08       		.uleb128 0x8
+ 2115 0097 E7000000 		.4byte	.LASF12
+ 2116 009b 03       		.byte	0x3
+ 2117 009c 1F       		.byte	0x1f
+ 2118 009d A7000000 		.4byte	0xa7
+ 2119 00a1 05       		.uleb128 0x5
+ 2120 00a2 03       		.byte	0x3
+ 2121 00a3 00000000 		.4byte	cy_meta_configecc
+ 2122 00a7 07       		.uleb128 0x7
+ 2123 00a8 79000000 		.4byte	0x79
+ 2124 00ac 05       		.uleb128 0x5
+ 2125 00ad 91000000 		.4byte	0x91
+ 2126 00b1 BC000000 		.4byte	0xbc
+ 2127 00b5 09       		.uleb128 0x9
+ 2128 00b6 8A000000 		.4byte	0x8a
+ 2129 00ba 03       		.byte	0x3
+ 2130 00bb 00       		.byte	0
+ 2131 00bc 0A       		.uleb128 0xa
+ 2132 00bd D7000000 		.4byte	.LASF13
+ 2133 00c1 03       		.byte	0x3
+ 2134 00c2 2201     		.2byte	0x122
+ 2135 00c4 CE000000 		.4byte	0xce
+ 2136 00c8 05       		.uleb128 0x5
+ 2137 00c9 03       		.byte	0x3
+ 2138 00ca 00000000 		.4byte	cy_meta_custnvl
+ 2139 00ce 07       		.uleb128 0x7
+ 2140 00cf AC000000 		.4byte	0xac
+ 2141 00d3 0A       		.uleb128 0xa
+ 2142 00d4 3A010000 		.4byte	.LASF14
+ 2143 00d8 03       		.byte	0x3
+ 2144 00d9 3001     		.2byte	0x130
+ 2145 00db E5000000 		.4byte	0xe5
+ 2146 00df 05       		.uleb128 0x5
+ 2147 00e0 03       		.byte	0x3
+ 2148 00e1 00000000 		.4byte	cy_meta_wonvl
+ 2149 00e5 07       		.uleb128 0x7
+ 2150 00e6 AC000000 		.4byte	0xac
+ 2151 00ea 05       		.uleb128 0x5
+ 2152 00eb 91000000 		.4byte	0x91
+ 2153 00ef FA000000 		.4byte	0xfa
+ 2154 00f3 09       		.uleb128 0x9
+ 2155 00f4 8A000000 		.4byte	0x8a
+ 2156 00f8 FF       		.byte	0xff
+ 2157 00f9 00       		.byte	0
+ 2158 00fa 0A       		.uleb128 0xa
+ 2159 00fb 25010000 		.4byte	.LASF15
+ 2160 00ff 03       		.byte	0x3
+ 2161 0100 3E01     		.2byte	0x13e
+ 2162 0102 0C010000 		.4byte	0x10c
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 39
+
+
+ 2163 0106 05       		.uleb128 0x5
+ 2164 0107 03       		.byte	0x3
+ 2165 0108 00000000 		.4byte	cy_meta_flashprotect
+ 2166 010c 07       		.uleb128 0x7
+ 2167 010d EA000000 		.4byte	0xea
+ 2168 0111 05       		.uleb128 0x5
+ 2169 0112 91000000 		.4byte	0x91
+ 2170 0116 21010000 		.4byte	0x121
+ 2171 011a 09       		.uleb128 0x9
+ 2172 011b 8A000000 		.4byte	0x8a
+ 2173 011f 0B       		.byte	0xb
+ 2174 0120 00       		.byte	0
+ 2175 0121 0A       		.uleb128 0xa
+ 2176 0122 0A000000 		.4byte	.LASF16
+ 2177 0126 03       		.byte	0x3
+ 2178 0127 6B01     		.2byte	0x16b
+ 2179 0129 33010000 		.4byte	0x133
+ 2180 012d 05       		.uleb128 0x5
+ 2181 012e 03       		.byte	0x3
+ 2182 012f 00000000 		.4byte	cy_metadata
+ 2183 0133 07       		.uleb128 0x7
+ 2184 0134 11010000 		.4byte	0x111
+ 2185 0138 00       		.byte	0
+ 2186              		.section	.debug_abbrev,"",%progbits
+ 2187              	.Ldebug_abbrev0:
+ 2188 0000 01       		.uleb128 0x1
+ 2189 0001 11       		.uleb128 0x11
+ 2190 0002 01       		.byte	0x1
+ 2191 0003 25       		.uleb128 0x25
+ 2192 0004 0E       		.uleb128 0xe
+ 2193 0005 13       		.uleb128 0x13
+ 2194 0006 0B       		.uleb128 0xb
+ 2195 0007 03       		.uleb128 0x3
+ 2196 0008 0E       		.uleb128 0xe
+ 2197 0009 1B       		.uleb128 0x1b
+ 2198 000a 0E       		.uleb128 0xe
+ 2199 000b 10       		.uleb128 0x10
+ 2200 000c 17       		.uleb128 0x17
+ 2201 000d 00       		.byte	0
+ 2202 000e 00       		.byte	0
+ 2203 000f 02       		.uleb128 0x2
+ 2204 0010 24       		.uleb128 0x24
+ 2205 0011 00       		.byte	0
+ 2206 0012 0B       		.uleb128 0xb
+ 2207 0013 0B       		.uleb128 0xb
+ 2208 0014 3E       		.uleb128 0x3e
+ 2209 0015 0B       		.uleb128 0xb
+ 2210 0016 03       		.uleb128 0x3
+ 2211 0017 0E       		.uleb128 0xe
+ 2212 0018 00       		.byte	0
+ 2213 0019 00       		.byte	0
+ 2214 001a 03       		.uleb128 0x3
+ 2215 001b 16       		.uleb128 0x16
+ 2216 001c 00       		.byte	0
+ 2217 001d 03       		.uleb128 0x3
+ 2218 001e 0E       		.uleb128 0xe
+ 2219 001f 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 40
+
+
+ 2220 0020 0B       		.uleb128 0xb
+ 2221 0021 3B       		.uleb128 0x3b
+ 2222 0022 0B       		.uleb128 0xb
+ 2223 0023 49       		.uleb128 0x49
+ 2224 0024 13       		.uleb128 0x13
+ 2225 0025 00       		.byte	0
+ 2226 0026 00       		.byte	0
+ 2227 0027 04       		.uleb128 0x4
+ 2228 0028 24       		.uleb128 0x24
+ 2229 0029 00       		.byte	0
+ 2230 002a 0B       		.uleb128 0xb
+ 2231 002b 0B       		.uleb128 0xb
+ 2232 002c 3E       		.uleb128 0x3e
+ 2233 002d 0B       		.uleb128 0xb
+ 2234 002e 03       		.uleb128 0x3
+ 2235 002f 08       		.uleb128 0x8
+ 2236 0030 00       		.byte	0
+ 2237 0031 00       		.byte	0
+ 2238 0032 05       		.uleb128 0x5
+ 2239 0033 01       		.uleb128 0x1
+ 2240 0034 01       		.byte	0x1
+ 2241 0035 49       		.uleb128 0x49
+ 2242 0036 13       		.uleb128 0x13
+ 2243 0037 01       		.uleb128 0x1
+ 2244 0038 13       		.uleb128 0x13
+ 2245 0039 00       		.byte	0
+ 2246 003a 00       		.byte	0
+ 2247 003b 06       		.uleb128 0x6
+ 2248 003c 21       		.uleb128 0x21
+ 2249 003d 00       		.byte	0
+ 2250 003e 49       		.uleb128 0x49
+ 2251 003f 13       		.uleb128 0x13
+ 2252 0040 2F       		.uleb128 0x2f
+ 2253 0041 05       		.uleb128 0x5
+ 2254 0042 00       		.byte	0
+ 2255 0043 00       		.byte	0
+ 2256 0044 07       		.uleb128 0x7
+ 2257 0045 26       		.uleb128 0x26
+ 2258 0046 00       		.byte	0
+ 2259 0047 49       		.uleb128 0x49
+ 2260 0048 13       		.uleb128 0x13
+ 2261 0049 00       		.byte	0
+ 2262 004a 00       		.byte	0
+ 2263 004b 08       		.uleb128 0x8
+ 2264 004c 34       		.uleb128 0x34
+ 2265 004d 00       		.byte	0
+ 2266 004e 03       		.uleb128 0x3
+ 2267 004f 0E       		.uleb128 0xe
+ 2268 0050 3A       		.uleb128 0x3a
+ 2269 0051 0B       		.uleb128 0xb
+ 2270 0052 3B       		.uleb128 0x3b
+ 2271 0053 0B       		.uleb128 0xb
+ 2272 0054 49       		.uleb128 0x49
+ 2273 0055 13       		.uleb128 0x13
+ 2274 0056 3F       		.uleb128 0x3f
+ 2275 0057 19       		.uleb128 0x19
+ 2276 0058 02       		.uleb128 0x2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 41
+
+
+ 2277 0059 18       		.uleb128 0x18
+ 2278 005a 00       		.byte	0
+ 2279 005b 00       		.byte	0
+ 2280 005c 09       		.uleb128 0x9
+ 2281 005d 21       		.uleb128 0x21
+ 2282 005e 00       		.byte	0
+ 2283 005f 49       		.uleb128 0x49
+ 2284 0060 13       		.uleb128 0x13
+ 2285 0061 2F       		.uleb128 0x2f
+ 2286 0062 0B       		.uleb128 0xb
+ 2287 0063 00       		.byte	0
+ 2288 0064 00       		.byte	0
+ 2289 0065 0A       		.uleb128 0xa
+ 2290 0066 34       		.uleb128 0x34
+ 2291 0067 00       		.byte	0
+ 2292 0068 03       		.uleb128 0x3
+ 2293 0069 0E       		.uleb128 0xe
+ 2294 006a 3A       		.uleb128 0x3a
+ 2295 006b 0B       		.uleb128 0xb
+ 2296 006c 3B       		.uleb128 0x3b
+ 2297 006d 05       		.uleb128 0x5
+ 2298 006e 49       		.uleb128 0x49
+ 2299 006f 13       		.uleb128 0x13
+ 2300 0070 3F       		.uleb128 0x3f
+ 2301 0071 19       		.uleb128 0x19
+ 2302 0072 02       		.uleb128 0x2
+ 2303 0073 18       		.uleb128 0x18
+ 2304 0074 00       		.byte	0
+ 2305 0075 00       		.byte	0
+ 2306 0076 00       		.byte	0
+ 2307              		.section	.debug_aranges,"",%progbits
+ 2308 0000 14000000 		.4byte	0x14
+ 2309 0004 0200     		.2byte	0x2
+ 2310 0006 00000000 		.4byte	.Ldebug_info0
+ 2311 000a 04       		.byte	0x4
+ 2312 000b 00       		.byte	0
+ 2313 000c 0000     		.2byte	0
+ 2314 000e 0000     		.2byte	0
+ 2315 0010 00000000 		.4byte	0
+ 2316 0014 00000000 		.4byte	0
+ 2317              		.section	.debug_line,"",%progbits
+ 2318              	.Ldebug_line0:
+ 2319 0000 3D010000 		.section	.debug_str,"MS",%progbits,1
+ 2319      02003701 
+ 2319      00000201 
+ 2319      FB0E0D00 
+ 2319      01010101 
+ 2320              	.LASF9:
+ 2321 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 2321      6E74385F 
+ 2321      7400
+ 2322              	.LASF16:
+ 2323 000a 63795F6D 		.ascii	"cy_metadata\000"
+ 2323      65746164 
+ 2323      61746100 
+ 2324              	.LASF1:
+ 2325 0016 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 42
+
+
+ 2325      676E6564 
+ 2325      20636861 
+ 2325      7200
+ 2326              	.LASF17:
+ 2327 0024 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2327      43313120 
+ 2327      352E342E 
+ 2327      31203230 
+ 2327      31363036 
+ 2328 0057 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2328      20726576 
+ 2328      6973696F 
+ 2328      6E203233 
+ 2328      37373135 
+ 2329 008a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2329      66756E63 
+ 2329      74696F6E 
+ 2329      2D736563 
+ 2329      74696F6E 
+ 2330              	.LASF5:
+ 2331 00b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2331      20756E73 
+ 2331      69676E65 
+ 2331      6420696E 
+ 2331      7400
+ 2332              	.LASF3:
+ 2333 00c4 73686F72 		.ascii	"short unsigned int\000"
+ 2333      7420756E 
+ 2333      7369676E 
+ 2333      65642069 
+ 2333      6E7400
+ 2334              	.LASF13:
+ 2335 00d7 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 2335      6574615F 
+ 2335      63757374 
+ 2335      6E766C00 
+ 2336              	.LASF12:
+ 2337 00e7 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 2337      6574615F 
+ 2337      636F6E66 
+ 2337      69676563 
+ 2337      6300
+ 2338              	.LASF8:
+ 2339 00f9 756E7369 		.ascii	"unsigned int\000"
+ 2339      676E6564 
+ 2339      20696E74 
+ 2339      00
+ 2340              	.LASF7:
+ 2341 0106 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2341      206C6F6E 
+ 2341      6720756E 
+ 2341      7369676E 
+ 2341      65642069 
+ 2342              	.LASF10:
+ 2343 011d 75696E74 		.ascii	"uint8_t\000"
+ 2343      385F7400 
+ 2344              	.LASF15:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccCLT4Ek.s 			page 43
+
+
+ 2345 0125 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 2345      6574615F 
+ 2345      666C6173 
+ 2345      6870726F 
+ 2345      74656374 
+ 2346              	.LASF14:
+ 2347 013a 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 2347      6574615F 
+ 2347      776F6E76 
+ 2347      6C00
+ 2348              	.LASF11:
+ 2349 0148 73697A65 		.ascii	"sizetype\000"
+ 2349      74797065 
+ 2349      00
+ 2350              	.LASF19:
+ 2351 0151 433A5C55 		.ascii	"C:\\Users\\lucasiversen\\Desktop\\NeoPixel\\NeoPixe"
+ 2351      73657273 
+ 2351      5C6C7563 
+ 2351      61736976 
+ 2351      65727365 
+ 2352 017f 6C5C4E65 		.ascii	"l\\NeoPixel.cydsn\000"
+ 2352      6F506978 
+ 2352      656C2E63 
+ 2352      7964736E 
+ 2352      00
+ 2353              	.LASF6:
+ 2354 0190 6C6F6E67 		.ascii	"long long int\000"
+ 2354      206C6F6E 
+ 2354      6720696E 
+ 2354      7400
+ 2355              	.LASF2:
+ 2356 019e 73686F72 		.ascii	"short int\000"
+ 2356      7420696E 
+ 2356      7400
+ 2357              	.LASF4:
+ 2358 01a8 6C6F6E67 		.ascii	"long int\000"
+ 2358      20696E74 
+ 2358      00
+ 2359              	.LASF0:
+ 2360 01b1 7369676E 		.ascii	"signed char\000"
+ 2360      65642063 
+ 2360      68617200 
+ 2361              	.LASF18:
+ 2362 01bd 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 2362      72617465 
+ 2362      645F536F 
+ 2362      75726365 
+ 2362      5C50536F 
+ 2363              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

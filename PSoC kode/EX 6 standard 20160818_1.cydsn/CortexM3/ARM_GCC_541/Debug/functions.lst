@@ -1,0 +1,1705 @@
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"functions.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	V_Sample,2,4
+  20              		.comm	V_Sample_SUM_1,4,4
+  21              		.comm	V_Sample_SUM_2,4,4
+  22              		.comm	V_Sample_MIN,2,2
+  23              		.comm	V_Sample_MAX,2,2
+  24              		.comm	V_Sample_AVG,2,2
+  25              		.comm	V_Sample_VAR,4,4
+  26              		.comm	V_Sample_AVG_float,4,4
+  27              		.comm	i,2,2
+  28              		.comm	value,255,4
+  29              		.comm	numberOfMeasurements,255,4
+  30              		.comm	measurements,4,4
+  31              		.comm	max_value,4,4
+  32              		.global	__aeabi_f2d
+  33              		.global	__aeabi_dadd
+  34              		.global	__aeabi_dcmplt
+  35              		.section	.rodata
+  36              		.align	2
+  37              	.LC0:
+  38 0000 424F4C44 		.ascii	"BOLDEN ER I KRUSET\000"
+  38      454E2045 
+  38      52204920 
+  38      4B525553 
+  38      455400
+  39              		.section	.text.CompareValues,"ax",%progbits
+  40              		.align	2
+  41              		.global	CompareValues
+  42              		.thumb
+  43              		.thumb_func
+  44              		.type	CompareValues, %function
+  45              	CompareValues:
+  46              	.LFB64:
+  47              		.file 1 "functions.c"
+   1:functions.c   **** /* ========================================
+   2:functions.c   ****  *
+   3:functions.c   ****  * Copyright YOUR COMPANY, THE YEAR
+   4:functions.c   ****  * All Rights Reserved
+   5:functions.c   ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:functions.c   ****  *
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 2
+
+
+   7:functions.c   ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:functions.c   ****  * WHICH IS THE PROPERTY OF your company.
+   9:functions.c   ****  *
+  10:functions.c   ****  * ========================================
+  11:functions.c   **** */
+  12:functions.c   **** 
+  13:functions.c   **** /* [] END OF FILE */
+  14:functions.c   **** #include "functions.h"
+  15:functions.c   **** 
+  16:functions.c   ****     
+  17:functions.c   **** void CompareValues(){
+  48              		.loc 1 17 0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 1, uses_anonymous_args = 0
+  52 0000 B0B5     		push	{r4, r5, r7, lr}
+  53              		.cfi_def_cfa_offset 16
+  54              		.cfi_offset 4, -16
+  55              		.cfi_offset 5, -12
+  56              		.cfi_offset 7, -8
+  57              		.cfi_offset 14, -4
+  58 0002 00AF     		add	r7, sp, #0
+  59              		.cfi_def_cfa_register 7
+  18:functions.c   ****     if (measurements %5 == 0 || measurements == 1){
+  60              		.loc 1 18 0
+  61 0004 264B     		ldr	r3, .L8+8
+  62 0006 1968     		ldr	r1, [r3]
+  63 0008 264B     		ldr	r3, .L8+12
+  64 000a 83FB0123 		smull	r2, r3, r3, r1
+  65 000e 5A10     		asrs	r2, r3, #1
+  66 0010 CB17     		asrs	r3, r1, #31
+  67 0012 D21A     		subs	r2, r2, r3
+  68 0014 1346     		mov	r3, r2
+  69 0016 9B00     		lsls	r3, r3, #2
+  70 0018 1344     		add	r3, r3, r2
+  71 001a CA1A     		subs	r2, r1, r3
+  72 001c 002A     		cmp	r2, #0
+  73 001e 03D0     		beq	.L2
+  74              		.loc 1 18 0 is_stmt 0 discriminator 1
+  75 0020 1F4B     		ldr	r3, .L8+8
+  76 0022 1B68     		ldr	r3, [r3]
+  77 0024 012B     		cmp	r3, #1
+  78 0026 34D1     		bne	.L7
+  79              	.L2:
+  19:functions.c   ****             if (V_Sample_AVG_float + ballEffect < max_value){
+  80              		.loc 1 19 0 is_stmt 1
+  81 0028 1F4B     		ldr	r3, .L8+16
+  82 002a 1B68     		ldr	r3, [r3]	@ float
+  83 002c 1846     		mov	r0, r3
+  84 002e FFF7FEFF 		bl	__aeabi_f2d
+  85 0032 19A3     		adr	r3, .L8
+  86 0034 D3E90023 		ldrd	r2, [r3]
+  87 0038 FFF7FEFF 		bl	__aeabi_dadd
+  88 003c 0346     		mov	r3, r0
+  89 003e 0C46     		mov	r4, r1
+  90 0040 2546     		mov	r5, r4
+  91 0042 1C46     		mov	r4, r3
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 3
+
+
+  92 0044 194B     		ldr	r3, .L8+20
+  93 0046 1B68     		ldr	r3, [r3]	@ float
+  94 0048 1846     		mov	r0, r3
+  95 004a FFF7FEFF 		bl	__aeabi_f2d
+  96 004e 0246     		mov	r2, r0
+  97 0050 0B46     		mov	r3, r1
+  98 0052 2046     		mov	r0, r4
+  99 0054 2946     		mov	r1, r5
+ 100 0056 FFF7FEFF 		bl	__aeabi_dcmplt
+ 101 005a 0346     		mov	r3, r0
+ 102 005c 002B     		cmp	r3, #0
+ 103 005e 0CD0     		beq	.L4
+  20:functions.c   ****             Point_Write(1);
+ 104              		.loc 1 20 0
+ 105 0060 0120     		movs	r0, #1
+ 106 0062 FFF7FEFF 		bl	Point_Write
+  21:functions.c   ****             UART_1_PutString("BOLDEN ER I KRUSET");
+ 107              		.loc 1 21 0
+ 108 0066 1248     		ldr	r0, .L8+24
+ 109 0068 FFF7FEFF 		bl	UART_1_PutString
+  22:functions.c   ****             CyDelay(2000);
+ 110              		.loc 1 22 0
+ 111 006c 4FF4FA60 		mov	r0, #2000
+ 112 0070 FFF7FEFF 		bl	CyDelay
+  23:functions.c   ****             measurements = 0;
+ 113              		.loc 1 23 0
+ 114 0074 0A4B     		ldr	r3, .L8+8
+ 115 0076 0022     		movs	r2, #0
+ 116 0078 1A60     		str	r2, [r3]
+ 117              	.L4:
+  24:functions.c   ****             }
+  25:functions.c   ****             max_value=ADC_DelSig_1_CountsTo_Volts(V_Sample_AVG);
+ 118              		.loc 1 25 0
+ 119 007a 0E4B     		ldr	r3, .L8+28
+ 120 007c B3F90030 		ldrsh	r3, [r3]
+ 121 0080 1846     		mov	r0, r3
+ 122 0082 FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_Volts
+ 123 0086 0246     		mov	r2, r0
+ 124 0088 084B     		ldr	r3, .L8+20
+ 125 008a 1A60     		str	r2, [r3]	@ float
+  26:functions.c   ****             Point_Write(0);
+ 126              		.loc 1 26 0
+ 127 008c 0020     		movs	r0, #0
+ 128 008e FFF7FEFF 		bl	Point_Write
+ 129              	.L7:
+  27:functions.c   ****         }
+  28:functions.c   **** }
+ 130              		.loc 1 28 0
+ 131 0092 00BF     		nop
+ 132 0094 B0BD     		pop	{r4, r5, r7, pc}
+ 133              	.L9:
+ 134 0096 00BF     		.align	3
+ 135              	.L8:
+ 136 0098 EC51B81E 		.word	515396076
+ 137 009c 85EBB13F 		.word	1068624773
+ 138 00a0 00000000 		.word	measurements
+ 139 00a4 67666666 		.word	1717986919
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 4
+
+
+ 140 00a8 00000000 		.word	V_Sample_AVG_float
+ 141 00ac 00000000 		.word	max_value
+ 142 00b0 00000000 		.word	.LC0
+ 143 00b4 00000000 		.word	V_Sample_AVG
+ 144              		.cfi_endproc
+ 145              	.LFE64:
+ 146              		.size	CompareValues, .-CompareValues
+ 147              		.global	__aeabi_i2f
+ 148              		.global	__aeabi_fmul
+ 149              		.global	__aeabi_fcmplt
+ 150              		.global	__aeabi_fdiv
+ 151              		.global	__aeabi_fsub
+ 152              		.section	.text.Measure,"ax",%progbits
+ 153              		.align	2
+ 154              		.global	Measure
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.type	Measure, %function
+ 158              	Measure:
+ 159              	.LFB65:
+  29:functions.c   ****  
+  30:functions.c   **** float Measure(){
+ 160              		.loc 1 30 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 1, uses_anonymous_args = 0
+ 164 0000 B0B5     		push	{r4, r5, r7, lr}
+ 165              		.cfi_def_cfa_offset 16
+ 166              		.cfi_offset 4, -16
+ 167              		.cfi_offset 5, -12
+ 168              		.cfi_offset 7, -8
+ 169              		.cfi_offset 14, -4
+ 170 0002 00AF     		add	r7, sp, #0
+ 171              		.cfi_def_cfa_register 7
+  31:functions.c   ****     
+  32:functions.c   **** 	    V_Sample_SUM_1=0;
+ 172              		.loc 1 32 0
+ 173 0004 424B     		ldr	r3, .L20
+ 174 0006 0022     		movs	r2, #0
+ 175 0008 1A60     		str	r2, [r3]
+  33:functions.c   **** 		V_Sample_SUM_2=0;
+ 176              		.loc 1 33 0
+ 177 000a 424B     		ldr	r3, .L20+4
+ 178 000c 4FF00002 		mov	r2, #0
+ 179 0010 1A60     		str	r2, [r3]	@ float
+  34:functions.c   **** 		V_Sample_MIN= ((1<<15)-1) ; // int: ((1<<15)-1) uint: 0-1 (32767)
+ 180              		.loc 1 34 0
+ 181 0012 414B     		ldr	r3, .L20+8
+ 182 0014 47F6FF72 		movw	r2, #32767
+ 183 0018 1A80     		strh	r2, [r3]	@ movhi
+  35:functions.c   **** 		V_Sample_MAX=1 << 15;       // int: 1<<15       uint: 0   (-32768)
+ 184              		.loc 1 35 0
+ 185 001a 404B     		ldr	r3, .L20+12
+ 186 001c 4FF40042 		mov	r2, #32768
+ 187 0020 1A80     		strh	r2, [r3]	@ movhi
+  36:functions.c   **** 
+  37:functions.c   **** 		for(i=0;i<(1 << (N_Sample));i++)    //Så længe i er mindre end 1<<N_sample  (1*2^10) = 1024
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 5
+
+
+ 188              		.loc 1 37 0
+ 189 0022 3F4B     		ldr	r3, .L20+16
+ 190 0024 0022     		movs	r2, #0
+ 191 0026 1A80     		strh	r2, [r3]	@ movhi
+ 192 0028 0EE0     		b	.L11
+ 193              	.L13:
+  38:functions.c   **** 		{
+  39:functions.c   **** 			Control_Reg_1_Control=1;
+ 194              		.loc 1 39 0
+ 195 002a 3E4B     		ldr	r3, .L20+20
+ 196 002c 0122     		movs	r2, #1
+ 197 002e 1A70     		strb	r2, [r3]
+  40:functions.c   **** 			while(Control_Reg_1_Control);   // Hvad fanden sker der her?? WHILE så længe control register 
+ 198              		.loc 1 40 0
+ 199 0030 00BF     		nop
+ 200              	.L12:
+ 201              		.loc 1 40 0 is_stmt 0 discriminator 1
+ 202 0032 3C4B     		ldr	r3, .L20+20
+ 203 0034 1B78     		ldrb	r3, [r3]
+ 204 0036 DBB2     		uxtb	r3, r3
+ 205 0038 002B     		cmp	r3, #0
+ 206 003a FAD1     		bne	.L12
+  37:functions.c   **** 		{
+ 207              		.loc 1 37 0 is_stmt 1 discriminator 2
+ 208 003c 384B     		ldr	r3, .L20+16
+ 209 003e 1B88     		ldrh	r3, [r3]
+ 210 0040 0133     		adds	r3, r3, #1
+ 211 0042 9AB2     		uxth	r2, r3
+ 212 0044 364B     		ldr	r3, .L20+16
+ 213 0046 1A80     		strh	r2, [r3]	@ movhi
+ 214              	.L11:
+  37:functions.c   **** 		{
+ 215              		.loc 1 37 0 is_stmt 0 discriminator 1
+ 216 0048 354B     		ldr	r3, .L20+16
+ 217 004a 1B88     		ldrh	r3, [r3]
+ 218 004c B3F5806F 		cmp	r3, #1024
+ 219 0050 EBD3     		bcc	.L13
+  41:functions.c   **** 		}
+  42:functions.c   ****         
+  43:functions.c   **** 		V_Sample_AVG = V_Sample_SUM_1 >> (N_Sample);     // V_Sample_AVG er lig med 0 >> 10 (10*2^0) = 10
+ 220              		.loc 1 43 0 is_stmt 1
+ 221 0052 2F4B     		ldr	r3, .L20
+ 222 0054 1B68     		ldr	r3, [r3]
+ 223 0056 9B12     		asrs	r3, r3, #10
+ 224 0058 1AB2     		sxth	r2, r3
+ 225 005a 334B     		ldr	r3, .L20+24
+ 226 005c 1A80     		strh	r2, [r3]	@ movhi
+  44:functions.c   ****         
+  45:functions.c   **** 		if(V_Sample_SUM_2>((float)V_Sample_AVG)*((float)V_Sample_AVG))
+ 227              		.loc 1 45 0
+ 228 005e 324B     		ldr	r3, .L20+24
+ 229 0060 B3F90030 		ldrsh	r3, [r3]
+ 230 0064 1846     		mov	r0, r3
+ 231 0066 FFF7FEFF 		bl	__aeabi_i2f
+ 232 006a 0446     		mov	r4, r0
+ 233 006c 2E4B     		ldr	r3, .L20+24
+ 234 006e B3F90030 		ldrsh	r3, [r3]
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 6
+
+
+ 235 0072 1846     		mov	r0, r3
+ 236 0074 FFF7FEFF 		bl	__aeabi_i2f
+ 237 0078 0346     		mov	r3, r0
+ 238 007a 1946     		mov	r1, r3
+ 239 007c 2046     		mov	r0, r4
+ 240 007e FFF7FEFF 		bl	__aeabi_fmul
+ 241 0082 0346     		mov	r3, r0
+ 242 0084 1A46     		mov	r2, r3
+ 243 0086 234B     		ldr	r3, .L20+4
+ 244 0088 1B68     		ldr	r3, [r3]	@ float
+ 245 008a 1946     		mov	r1, r3
+ 246 008c 1046     		mov	r0, r2
+ 247 008e FFF7FEFF 		bl	__aeabi_fcmplt
+ 248 0092 0346     		mov	r3, r0
+ 249 0094 002B     		cmp	r3, #0
+ 250 0096 24D0     		beq	.L19
+  46:functions.c   **** 		{
+  47:functions.c   **** 			V_Sample_VAR=(V_Sample_SUM_2/( 1 << N_Sample))-((float)V_Sample_AVG)*((float)V_Sample_AVG);
+ 251              		.loc 1 47 0
+ 252 0098 1E4B     		ldr	r3, .L20+4
+ 253 009a 1B68     		ldr	r3, [r3]	@ float
+ 254 009c 4FF08941 		mov	r1, #1149239296
+ 255 00a0 1846     		mov	r0, r3
+ 256 00a2 FFF7FEFF 		bl	__aeabi_fdiv
+ 257 00a6 0346     		mov	r3, r0
+ 258 00a8 1C46     		mov	r4, r3
+ 259 00aa 1F4B     		ldr	r3, .L20+24
+ 260 00ac B3F90030 		ldrsh	r3, [r3]
+ 261 00b0 1846     		mov	r0, r3
+ 262 00b2 FFF7FEFF 		bl	__aeabi_i2f
+ 263 00b6 0546     		mov	r5, r0
+ 264 00b8 1B4B     		ldr	r3, .L20+24
+ 265 00ba B3F90030 		ldrsh	r3, [r3]
+ 266 00be 1846     		mov	r0, r3
+ 267 00c0 FFF7FEFF 		bl	__aeabi_i2f
+ 268 00c4 0346     		mov	r3, r0
+ 269 00c6 1946     		mov	r1, r3
+ 270 00c8 2846     		mov	r0, r5
+ 271 00ca FFF7FEFF 		bl	__aeabi_fmul
+ 272 00ce 0346     		mov	r3, r0
+ 273 00d0 1946     		mov	r1, r3
+ 274 00d2 2046     		mov	r0, r4
+ 275 00d4 FFF7FEFF 		bl	__aeabi_fsub
+ 276 00d8 0346     		mov	r3, r0
+ 277 00da 1A46     		mov	r2, r3
+ 278 00dc 134B     		ldr	r3, .L20+28
+ 279 00de 1A60     		str	r2, [r3]	@ float
+ 280 00e0 03E0     		b	.L16
+ 281              	.L19:
+  48:functions.c   **** 		}
+  49:functions.c   **** 		else
+  50:functions.c   **** 		{
+  51:functions.c   **** 			V_Sample_VAR=0;
+ 282              		.loc 1 51 0
+ 283 00e2 124B     		ldr	r3, .L20+28
+ 284 00e4 4FF00002 		mov	r2, #0
+ 285 00e8 1A60     		str	r2, [r3]	@ float
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 7
+
+
+ 286              	.L16:
+  52:functions.c   **** 		}
+  53:functions.c   ****         
+  54:functions.c   ****         measurements++;
+ 287              		.loc 1 54 0
+ 288 00ea 114B     		ldr	r3, .L20+32
+ 289 00ec 1B68     		ldr	r3, [r3]
+ 290 00ee 0133     		adds	r3, r3, #1
+ 291 00f0 0F4A     		ldr	r2, .L20+32
+ 292 00f2 1360     		str	r3, [r2]
+  55:functions.c   ****         
+  56:functions.c   **** 		return V_Sample_AVG_float=ADC_DelSig_1_CountsTo_Volts(V_Sample_AVG);
+ 293              		.loc 1 56 0
+ 294 00f4 0C4B     		ldr	r3, .L20+24
+ 295 00f6 B3F90030 		ldrsh	r3, [r3]
+ 296 00fa 1846     		mov	r0, r3
+ 297 00fc FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_Volts
+ 298 0100 0246     		mov	r2, r0
+ 299 0102 0C4B     		ldr	r3, .L20+36
+ 300 0104 1A60     		str	r2, [r3]	@ float
+ 301 0106 0B4B     		ldr	r3, .L20+36
+ 302 0108 1B68     		ldr	r3, [r3]	@ float
+  57:functions.c   ****         
+  58:functions.c   ****         
+  59:functions.c   **** }
+ 303              		.loc 1 59 0
+ 304 010a 1846     		mov	r0, r3
+ 305 010c B0BD     		pop	{r4, r5, r7, pc}
+ 306              	.L21:
+ 307 010e 00BF     		.align	2
+ 308              	.L20:
+ 309 0110 00000000 		.word	V_Sample_SUM_1
+ 310 0114 00000000 		.word	V_Sample_SUM_2
+ 311 0118 00000000 		.word	V_Sample_MIN
+ 312 011c 00000000 		.word	V_Sample_MAX
+ 313 0120 00000000 		.word	i
+ 314 0124 78640040 		.word	1073767544
+ 315 0128 00000000 		.word	V_Sample_AVG
+ 316 012c 00000000 		.word	V_Sample_VAR
+ 317 0130 00000000 		.word	measurements
+ 318 0134 00000000 		.word	V_Sample_AVG_float
+ 319              		.cfi_endproc
+ 320              	.LFE65:
+ 321              		.size	Measure, .-Measure
+ 322              		.section	.text.DMA_1_Config,"ax",%progbits
+ 323              		.align	2
+ 324              		.global	DMA_1_Config
+ 325              		.thumb
+ 326              		.thumb_func
+ 327              		.type	DMA_1_Config, %function
+ 328              	DMA_1_Config:
+ 329              	.LFB66:
+  60:functions.c   ****     
+  61:functions.c   **** void DMA_1_Config()
+  62:functions.c   **** {
+ 330              		.loc 1 62 0
+ 331              		.cfi_startproc
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 8
+
+
+ 332              		@ args = 0, pretend = 0, frame = 8
+ 333              		@ frame_needed = 1, uses_anonymous_args = 0
+ 334 0000 80B5     		push	{r7, lr}
+ 335              		.cfi_def_cfa_offset 8
+ 336              		.cfi_offset 7, -8
+ 337              		.cfi_offset 14, -4
+ 338 0002 82B0     		sub	sp, sp, #8
+ 339              		.cfi_def_cfa_offset 16
+ 340 0004 00AF     		add	r7, sp, #0
+ 341              		.cfi_def_cfa_register 7
+  63:functions.c   **** 	/* Variable declarations for DMA_1 */
+  64:functions.c   **** 	/* Move these variable declarations to the top of the function */
+  65:functions.c   **** 	uint8 DMA_1_Chan;
+  66:functions.c   **** 	uint8 DMA_1_TD[1];
+  67:functions.c   **** 
+  68:functions.c   **** 	/* DMA Configuration for DMA_1 */
+  69:functions.c   **** 	#define DMA_1_BYTES_PER_BURST 2
+  70:functions.c   **** 	#define DMA_1_REQUEST_PER_BURST 1
+  71:functions.c   **** 	#define DMA_1_SRC_BASE (CYDEV_PERIPH_BASE)
+  72:functions.c   **** 	#define DMA_1_DST_BASE (CYDEV_PERIPH_BASE)
+  73:functions.c   **** 	DMA_1_Chan = DMA_1_DmaInitialize(DMA_1_BYTES_PER_BURST, DMA_1_REQUEST_PER_BURST, 
+ 342              		.loc 1 73 0
+ 343 0006 4FF48043 		mov	r3, #16384
+ 344 000a 4FF48042 		mov	r2, #16384
+ 345 000e 0121     		movs	r1, #1
+ 346 0010 0220     		movs	r0, #2
+ 347 0012 FFF7FEFF 		bl	DMA_1_DmaInitialize
+ 348 0016 0346     		mov	r3, r0
+ 349 0018 FB71     		strb	r3, [r7, #7]
+  74:functions.c   **** 	HI16(DMA_1_SRC_BASE), HI16(DMA_1_DST_BASE));
+  75:functions.c   **** 	DMA_1_TD[0] = CyDmaTdAllocate();
+ 350              		.loc 1 75 0
+ 351 001a FFF7FEFF 		bl	CyDmaTdAllocate
+ 352 001e 0346     		mov	r3, r0
+ 353 0020 3B71     		strb	r3, [r7, #4]
+  76:functions.c   **** 	CyDmaTdSetConfiguration(DMA_1_TD[0], 2, DMA_INVALID_TD, TD_INC_DST_ADR);
+ 354              		.loc 1 76 0
+ 355 0022 3879     		ldrb	r0, [r7, #4]	@ zero_extendqisi2
+ 356 0024 0223     		movs	r3, #2
+ 357 0026 FF22     		movs	r2, #255
+ 358 0028 0221     		movs	r1, #2
+ 359 002a FFF7FEFF 		bl	CyDmaTdSetConfiguration
+  77:functions.c   **** 	CyDmaTdSetAddress(DMA_1_TD[0], LO16((uint32)ADC_DelSig_1_DEC_SAMP_PTR), LO16((uint32)Filter_1_STAG
+ 360              		.loc 1 77 0
+ 361 002e 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 362 0030 4CF2A172 		movw	r2, #51105
+ 363 0034 44F61061 		movw	r1, #19984
+ 364 0038 1846     		mov	r0, r3
+ 365 003a FFF7FEFF 		bl	CyDmaTdSetAddress
+  78:functions.c   **** 	CyDmaChSetInitialTd(DMA_1_Chan, DMA_1_TD[0]);
+ 366              		.loc 1 78 0
+ 367 003e 3A79     		ldrb	r2, [r7, #4]	@ zero_extendqisi2
+ 368 0040 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 369 0042 1146     		mov	r1, r2
+ 370 0044 1846     		mov	r0, r3
+ 371 0046 FFF7FEFF 		bl	CyDmaChSetInitialTd
+  79:functions.c   **** 	CyDmaChEnable(DMA_1_Chan, 1);
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 9
+
+
+ 372              		.loc 1 79 0
+ 373 004a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 374 004c 0121     		movs	r1, #1
+ 375 004e 1846     		mov	r0, r3
+ 376 0050 FFF7FEFF 		bl	CyDmaChEnable
+  80:functions.c   **** 
+  81:functions.c   **** }
+ 377              		.loc 1 81 0
+ 378 0054 00BF     		nop
+ 379 0056 0837     		adds	r7, r7, #8
+ 380              		.cfi_def_cfa_offset 8
+ 381 0058 BD46     		mov	sp, r7
+ 382              		.cfi_def_cfa_register 13
+ 383              		@ sp needed
+ 384 005a 80BD     		pop	{r7, pc}
+ 385              		.cfi_endproc
+ 386              	.LFE66:
+ 387              		.size	DMA_1_Config, .-DMA_1_Config
+ 388              		.section	.text.DMA_2_Config,"ax",%progbits
+ 389              		.align	2
+ 390              		.global	DMA_2_Config
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.type	DMA_2_Config, %function
+ 394              	DMA_2_Config:
+ 395              	.LFB67:
+  82:functions.c   **** 
+  83:functions.c   **** void DMA_2_Config()
+  84:functions.c   **** {
+ 396              		.loc 1 84 0
+ 397              		.cfi_startproc
+ 398              		@ args = 0, pretend = 0, frame = 8
+ 399              		@ frame_needed = 1, uses_anonymous_args = 0
+ 400 0000 80B5     		push	{r7, lr}
+ 401              		.cfi_def_cfa_offset 8
+ 402              		.cfi_offset 7, -8
+ 403              		.cfi_offset 14, -4
+ 404 0002 82B0     		sub	sp, sp, #8
+ 405              		.cfi_def_cfa_offset 16
+ 406 0004 00AF     		add	r7, sp, #0
+ 407              		.cfi_def_cfa_register 7
+  85:functions.c   ****     /* Variable declarations for DMA_2 */
+  86:functions.c   ****     /* Move these variable declarations to the top of the function */
+  87:functions.c   ****     uint8 DMA_2_Chan;
+  88:functions.c   ****     uint8 DMA_2_TD[1];
+  89:functions.c   **** 
+  90:functions.c   ****     /* DMA Configuration for DMA_2 */
+  91:functions.c   ****     #define DMA_2_BYTES_PER_BURST 2
+  92:functions.c   ****     #define DMA_2_REQUEST_PER_BURST 1
+  93:functions.c   ****     #define DMA_2_SRC_BASE (CYDEV_PERIPH_BASE)
+  94:functions.c   ****     #define DMA_2_DST_BASE (CYDEV_SRAM_BASE)
+  95:functions.c   ****     DMA_2_Chan = DMA_2_DmaInitialize(DMA_2_BYTES_PER_BURST, DMA_2_REQUEST_PER_BURST, 
+ 408              		.loc 1 95 0
+ 409 0006 41F6FF73 		movw	r3, #8191
+ 410 000a 4FF48042 		mov	r2, #16384
+ 411 000e 0121     		movs	r1, #1
+ 412 0010 0220     		movs	r0, #2
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 10
+
+
+ 413 0012 FFF7FEFF 		bl	DMA_2_DmaInitialize
+ 414 0016 0346     		mov	r3, r0
+ 415 0018 FB71     		strb	r3, [r7, #7]
+  96:functions.c   ****     HI16(DMA_2_SRC_BASE), HI16(DMA_2_DST_BASE));
+  97:functions.c   ****     DMA_2_TD[0] = CyDmaTdAllocate();
+ 416              		.loc 1 97 0
+ 417 001a FFF7FEFF 		bl	CyDmaTdAllocate
+ 418 001e 0346     		mov	r3, r0
+ 419 0020 3B71     		strb	r3, [r7, #4]
+  98:functions.c   ****     CyDmaTdSetConfiguration(DMA_2_TD[0], 2, DMA_INVALID_TD,  DMA_2__TD_TERMOUT_EN | TD_INC_SRC_ADR 
+ 420              		.loc 1 98 0
+ 421 0022 3879     		ldrb	r0, [r7, #4]	@ zero_extendqisi2
+ 422 0024 0523     		movs	r3, #5
+ 423 0026 FF22     		movs	r2, #255
+ 424 0028 0221     		movs	r1, #2
+ 425 002a FFF7FEFF 		bl	CyDmaTdSetConfiguration
+  99:functions.c   ****     CyDmaTdSetAddress(DMA_2_TD[0], LO16((uint32)Filter_1_HOLDAM_PTR), LO16((uint32)V_Sample));
+ 426              		.loc 1 99 0
+ 427 002e 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 428 0030 0A4A     		ldr	r2, .L24
+ 429 0032 92B2     		uxth	r2, r2
+ 430 0034 4CF2A971 		movw	r1, #51113
+ 431 0038 1846     		mov	r0, r3
+ 432 003a FFF7FEFF 		bl	CyDmaTdSetAddress
+ 100:functions.c   ****     CyDmaChSetInitialTd(DMA_2_Chan, DMA_2_TD[0]);
+ 433              		.loc 1 100 0
+ 434 003e 3A79     		ldrb	r2, [r7, #4]	@ zero_extendqisi2
+ 435 0040 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 436 0042 1146     		mov	r1, r2
+ 437 0044 1846     		mov	r0, r3
+ 438 0046 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 101:functions.c   ****     CyDmaChEnable(DMA_2_Chan, 1);
+ 439              		.loc 1 101 0
+ 440 004a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 441 004c 0121     		movs	r1, #1
+ 442 004e 1846     		mov	r0, r3
+ 443 0050 FFF7FEFF 		bl	CyDmaChEnable
+ 102:functions.c   **** }
+ 444              		.loc 1 102 0
+ 445 0054 00BF     		nop
+ 446 0056 0837     		adds	r7, r7, #8
+ 447              		.cfi_def_cfa_offset 8
+ 448 0058 BD46     		mov	sp, r7
+ 449              		.cfi_def_cfa_register 13
+ 450              		@ sp needed
+ 451 005a 80BD     		pop	{r7, pc}
+ 452              	.L25:
+ 453              		.align	2
+ 454              	.L24:
+ 455 005c 00000000 		.word	V_Sample
+ 456              		.cfi_endproc
+ 457              	.LFE67:
+ 458              		.size	DMA_2_Config, .-DMA_2_Config
+ 459              		.section	.text.Init,"ax",%progbits
+ 460              		.align	2
+ 461              		.global	Init
+ 462              		.thumb
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 11
+
+
+ 463              		.thumb_func
+ 464              		.type	Init, %function
+ 465              	Init:
+ 466              	.LFB68:
+ 103:functions.c   **** 
+ 104:functions.c   **** void Init()
+ 105:functions.c   **** {
+ 467              		.loc 1 105 0
+ 468              		.cfi_startproc
+ 469              		@ args = 0, pretend = 0, frame = 0
+ 470              		@ frame_needed = 1, uses_anonymous_args = 0
+ 471 0000 80B5     		push	{r7, lr}
+ 472              		.cfi_def_cfa_offset 8
+ 473              		.cfi_offset 7, -8
+ 474              		.cfi_offset 14, -4
+ 475 0002 00AF     		add	r7, sp, #0
+ 476              		.cfi_def_cfa_register 7
+ 106:functions.c   **** 	Clock_1_Start();
+ 477              		.loc 1 106 0
+ 478 0004 FFF7FEFF 		bl	Clock_1_Start
+ 107:functions.c   ****     Opamp_1_Start();
+ 479              		.loc 1 107 0
+ 480 0008 FFF7FEFF 		bl	Opamp_1_Start
+ 108:functions.c   **** 	TIA_1_Start();
+ 481              		.loc 1 108 0
+ 482 000c FFF7FEFF 		bl	TIA_1_Start
+ 109:functions.c   ****     UART_1_Start();
+ 483              		.loc 1 109 0
+ 484 0010 FFF7FEFF 		bl	UART_1_Start
+ 110:functions.c   **** 	Mixer_1_Start();
+ 485              		.loc 1 110 0
+ 486 0014 FFF7FEFF 		bl	Mixer_1_Start
+ 111:functions.c   **** 	ADC_DelSig_1_Start();
+ 487              		.loc 1 111 0
+ 488 0018 FFF7FEFF 		bl	ADC_DelSig_1_Start
+ 112:functions.c   **** 	ADC_DelSig_1_SetCoherency(ADC_DelSig_1_COHER_MID);
+ 489              		.loc 1 112 0
+ 490 001c 0220     		movs	r0, #2
+ 491 001e FFF7FEFF 		bl	ADC_DelSig_1_SetCoherency
+ 113:functions.c   **** 	ADC_DelSig_1_StartConvert();
+ 492              		.loc 1 113 0
+ 493 0022 FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+ 114:functions.c   **** 	DMA_1_Config();
+ 494              		.loc 1 114 0
+ 495 0026 FFF7FEFF 		bl	DMA_1_Config
+ 115:functions.c   **** 	Filter_1_Start();
+ 496              		.loc 1 115 0
+ 497 002a FFF7FEFF 		bl	Filter_1_Start
+ 116:functions.c   **** 	Filter_1_SetCoherency(Filter_1_CHANNEL_A, Filter_1_KEY_HIGH);
+ 498              		.loc 1 116 0
+ 499 002e 0221     		movs	r1, #2
+ 500 0030 0020     		movs	r0, #0
+ 501 0032 FFF7FEFF 		bl	Filter_1_SetCoherency
+ 117:functions.c   **** 	DMA_2_Config();
+ 502              		.loc 1 117 0
+ 503 0036 FFF7FEFF 		bl	DMA_2_Config
+ 118:functions.c   **** 	
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 12
+
+
+ 119:functions.c   **** 	isr_2_StartEx(Sample_int);
+ 504              		.loc 1 119 0
+ 505 003a 0448     		ldr	r0, .L27
+ 506 003c FFF7FEFF 		bl	isr_2_StartEx
+ 120:functions.c   ****     //calibrate_StartEx(calibrate_isr);
+ 121:functions.c   **** 	Control_Reg_1_Control=0;
+ 507              		.loc 1 121 0
+ 508 0040 034B     		ldr	r3, .L27+4
+ 509 0042 0022     		movs	r2, #0
+ 510 0044 1A70     		strb	r2, [r3]
+ 122:functions.c   **** }
+ 511              		.loc 1 122 0
+ 512 0046 00BF     		nop
+ 513 0048 80BD     		pop	{r7, pc}
+ 514              	.L28:
+ 515 004a 00BF     		.align	2
+ 516              	.L27:
+ 517 004c 00000000 		.word	Sample_int
+ 518 0050 78640040 		.word	1073767544
+ 519              		.cfi_endproc
+ 520              	.LFE68:
+ 521              		.size	Init, .-Init
+ 522              		.global	__aeabi_fadd
+ 523              		.section	.text.Sample_int,"ax",%progbits
+ 524              		.align	2
+ 525              		.global	Sample_int
+ 526              		.thumb
+ 527              		.thumb_func
+ 528              		.type	Sample_int, %function
+ 529              	Sample_int:
+ 530              	.LFB69:
+ 123:functions.c   **** 
+ 124:functions.c   **** CY_ISR(Sample_int)
+ 125:functions.c   **** {
+ 531              		.loc 1 125 0
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 0
+ 534              		@ frame_needed = 1, uses_anonymous_args = 0
+ 535 0000 98B5     		push	{r3, r4, r7, lr}
+ 536              		.cfi_def_cfa_offset 16
+ 537              		.cfi_offset 3, -16
+ 538              		.cfi_offset 4, -12
+ 539              		.cfi_offset 7, -8
+ 540              		.cfi_offset 14, -4
+ 541 0002 00AF     		add	r7, sp, #0
+ 542              		.cfi_def_cfa_register 7
+ 126:functions.c   **** 	Control_Reg_1_Control=0;
+ 543              		.loc 1 126 0
+ 544 0004 224B     		ldr	r3, .L33
+ 545 0006 0022     		movs	r2, #0
+ 546 0008 1A70     		strb	r2, [r3]
+ 127:functions.c   **** 	V_Sample_SUM_1=V_Sample_SUM_1+V_Sample[0];
+ 547              		.loc 1 127 0
+ 548 000a 224B     		ldr	r3, .L33+4
+ 549 000c B3F90030 		ldrsh	r3, [r3]
+ 550 0010 1A46     		mov	r2, r3
+ 551 0012 214B     		ldr	r3, .L33+8
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 13
+
+
+ 552 0014 1B68     		ldr	r3, [r3]
+ 553 0016 1344     		add	r3, r3, r2
+ 554 0018 1F4A     		ldr	r2, .L33+8
+ 555 001a 1360     		str	r3, [r2]
+ 128:functions.c   **** 	V_Sample_SUM_2=V_Sample_SUM_2+(((float)V_Sample[0])*((float)V_Sample[0]));
+ 556              		.loc 1 128 0
+ 557 001c 1D4B     		ldr	r3, .L33+4
+ 558 001e B3F90030 		ldrsh	r3, [r3]
+ 559 0022 1846     		mov	r0, r3
+ 560 0024 FFF7FEFF 		bl	__aeabi_i2f
+ 561 0028 0446     		mov	r4, r0
+ 562 002a 1A4B     		ldr	r3, .L33+4
+ 563 002c B3F90030 		ldrsh	r3, [r3]
+ 564 0030 1846     		mov	r0, r3
+ 565 0032 FFF7FEFF 		bl	__aeabi_i2f
+ 566 0036 0346     		mov	r3, r0
+ 567 0038 1946     		mov	r1, r3
+ 568 003a 2046     		mov	r0, r4
+ 569 003c FFF7FEFF 		bl	__aeabi_fmul
+ 570 0040 0346     		mov	r3, r0
+ 571 0042 1A46     		mov	r2, r3
+ 572 0044 154B     		ldr	r3, .L33+12
+ 573 0046 1B68     		ldr	r3, [r3]	@ float
+ 574 0048 1946     		mov	r1, r3
+ 575 004a 1046     		mov	r0, r2
+ 576 004c FFF7FEFF 		bl	__aeabi_fadd
+ 577 0050 0346     		mov	r3, r0
+ 578 0052 1A46     		mov	r2, r3
+ 579 0054 114B     		ldr	r3, .L33+12
+ 580 0056 1A60     		str	r2, [r3]	@ float
+ 129:functions.c   **** 	if(V_Sample[0]<V_Sample_MIN)V_Sample_MIN=V_Sample[0];
+ 581              		.loc 1 129 0
+ 582 0058 0E4B     		ldr	r3, .L33+4
+ 583 005a B3F90020 		ldrsh	r2, [r3]
+ 584 005e 104B     		ldr	r3, .L33+16
+ 585 0060 B3F90030 		ldrsh	r3, [r3]
+ 586 0064 9A42     		cmp	r2, r3
+ 587 0066 04DA     		bge	.L30
+ 588              		.loc 1 129 0 is_stmt 0 discriminator 1
+ 589 0068 0A4B     		ldr	r3, .L33+4
+ 590 006a B3F90020 		ldrsh	r2, [r3]
+ 591 006e 0C4B     		ldr	r3, .L33+16
+ 592 0070 1A80     		strh	r2, [r3]	@ movhi
+ 593              	.L30:
+ 130:functions.c   **** 	if(V_Sample[0]>V_Sample_MAX)V_Sample_MAX=V_Sample[0];
+ 594              		.loc 1 130 0 is_stmt 1
+ 595 0072 084B     		ldr	r3, .L33+4
+ 596 0074 B3F90020 		ldrsh	r2, [r3]
+ 597 0078 0A4B     		ldr	r3, .L33+20
+ 598 007a B3F90030 		ldrsh	r3, [r3]
+ 599 007e 9A42     		cmp	r2, r3
+ 600 0080 04DD     		ble	.L32
+ 601              		.loc 1 130 0 is_stmt 0 discriminator 1
+ 602 0082 044B     		ldr	r3, .L33+4
+ 603 0084 B3F90020 		ldrsh	r2, [r3]
+ 604 0088 064B     		ldr	r3, .L33+20
+ 605 008a 1A80     		strh	r2, [r3]	@ movhi
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 14
+
+
+ 606              	.L32:
+ 131:functions.c   **** }...
+ 607              		.loc 1 131 0 is_stmt 1
+ 608 008c 00BF     		nop
+ 609 008e 98BD     		pop	{r3, r4, r7, pc}
+ 610              	.L34:
+ 611              		.align	2
+ 612              	.L33:
+ 613 0090 78640040 		.word	1073767544
+ 614 0094 00000000 		.word	V_Sample
+ 615 0098 00000000 		.word	V_Sample_SUM_1
+ 616 009c 00000000 		.word	V_Sample_SUM_2
+ 617 00a0 00000000 		.word	V_Sample_MIN
+ 618 00a4 00000000 		.word	V_Sample_MAX
+ 619              		.cfi_endproc
+ 620              	.LFE69:
+ 621              		.size	Sample_int, .-Sample_int
+ 622              		.text
+ 623              	.Letext0:
+ 624              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 625              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 626              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 627              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 628              		.file 6 "functions.h"
+ 629              		.section	.debug_info,"",%progbits
+ 630              	.Ldebug_info0:
+ 631 0000 B6020000 		.4byte	0x2b6
+ 632 0004 0400     		.2byte	0x4
+ 633 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 634 000a 04       		.byte	0x4
+ 635 000b 01       		.uleb128 0x1
+ 636 000c 45020000 		.4byte	.LASF45
+ 637 0010 0C       		.byte	0xc
+ 638 0011 8C000000 		.4byte	.LASF46
+ 639 0015 36010000 		.4byte	.LASF47
+ 640 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 641 001d 00000000 		.4byte	0
+ 642 0021 00000000 		.4byte	.Ldebug_line0
+ 643 0025 02       		.uleb128 0x2
+ 644 0026 01       		.byte	0x1
+ 645 0027 06       		.byte	0x6
+ 646 0028 2C020000 		.4byte	.LASF0
+ 647 002c 02       		.uleb128 0x2
+ 648 002d 01       		.byte	0x1
+ 649 002e 08       		.byte	0x8
+ 650 002f AF000000 		.4byte	.LASF1
+ 651 0033 02       		.uleb128 0x2
+ 652 0034 02       		.byte	0x2
+ 653 0035 05       		.byte	0x5
+ 654 0036 F4010000 		.4byte	.LASF2
+ 655 003a 02       		.uleb128 0x2
+ 656 003b 02       		.byte	0x2
+ 657 003c 07       		.byte	0x7
+ 658 003d 57000000 		.4byte	.LASF3
+ 659 0041 03       		.uleb128 0x3
+ 660 0042 4D000000 		.4byte	.LASF9
+ 661 0046 02       		.byte	0x2
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 15
+
+
+ 662 0047 3F       		.byte	0x3f
+ 663 0048 4C000000 		.4byte	0x4c
+ 664 004c 02       		.uleb128 0x2
+ 665 004d 04       		.byte	0x4
+ 666 004e 05       		.byte	0x5
+ 667 004f 04020000 		.4byte	.LASF4
+ 668 0053 02       		.uleb128 0x2
+ 669 0054 04       		.byte	0x4
+ 670 0055 07       		.byte	0x7
+ 671 0056 C8000000 		.4byte	.LASF5
+ 672 005a 02       		.uleb128 0x2
+ 673 005b 08       		.byte	0x8
+ 674 005c 05       		.byte	0x5
+ 675 005d 00000000 		.4byte	.LASF6
+ 676 0061 02       		.uleb128 0x2
+ 677 0062 08       		.byte	0x8
+ 678 0063 07       		.byte	0x7
+ 679 0064 85010000 		.4byte	.LASF7
+ 680 0068 04       		.uleb128 0x4
+ 681 0069 04       		.byte	0x4
+ 682 006a 05       		.byte	0x5
+ 683 006b 696E7400 		.ascii	"int\000"
+ 684 006f 02       		.uleb128 0x2
+ 685 0070 04       		.byte	0x4
+ 686 0071 07       		.byte	0x7
+ 687 0072 78010000 		.4byte	.LASF8
+ 688 0076 03       		.uleb128 0x3
+ 689 0077 C4010000 		.4byte	.LASF10
+ 690 007b 03       		.byte	0x3
+ 691 007c 2C       		.byte	0x2c
+ 692 007d 41000000 		.4byte	0x41
+ 693 0081 05       		.uleb128 0x5
+ 694 0082 FE010000 		.4byte	.LASF11
+ 695 0086 04       		.byte	0x4
+ 696 0087 E401     		.2byte	0x1e4
+ 697 0089 2C000000 		.4byte	0x2c
+ 698 008d 05       		.uleb128 0x5
+ 699 008e 0D010000 		.4byte	.LASF12
+ 700 0092 04       		.byte	0x4
+ 701 0093 E501     		.2byte	0x1e5
+ 702 0095 3A000000 		.4byte	0x3a
+ 703 0099 05       		.uleb128 0x5
+ 704 009a 22010000 		.4byte	.LASF13
+ 705 009e 04       		.byte	0x4
+ 706 009f E601     		.2byte	0x1e6
+ 707 00a1 53000000 		.4byte	0x53
+ 708 00a5 05       		.uleb128 0x5
+ 709 00a6 C2000000 		.4byte	.LASF14
+ 710 00aa 04       		.byte	0x4
+ 711 00ab E801     		.2byte	0x1e8
+ 712 00ad 33000000 		.4byte	0x33
+ 713 00b1 05       		.uleb128 0x5
+ 714 00b2 DA000000 		.4byte	.LASF15
+ 715 00b6 04       		.byte	0x4
+ 716 00b7 E901     		.2byte	0x1e9
+ 717 00b9 4C000000 		.4byte	0x4c
+ 718 00bd 02       		.uleb128 0x2
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 16
+
+
+ 719 00be 04       		.byte	0x4
+ 720 00bf 04       		.byte	0x4
+ 721 00c0 A0000000 		.4byte	.LASF16
+ 722 00c4 02       		.uleb128 0x2
+ 723 00c5 08       		.byte	0x8
+ 724 00c6 04       		.byte	0x4
+ 725 00c7 FB000000 		.4byte	.LASF17
+ 726 00cb 02       		.uleb128 0x2
+ 727 00cc 01       		.byte	0x1
+ 728 00cd 08       		.byte	0x8
+ 729 00ce EF010000 		.4byte	.LASF18
+ 730 00d2 05       		.uleb128 0x5
+ 731 00d3 BD000000 		.4byte	.LASF19
+ 732 00d7 04       		.byte	0x4
+ 733 00d8 8E02     		.2byte	0x28e
+ 734 00da DE000000 		.4byte	0xde
+ 735 00de 06       		.uleb128 0x6
+ 736 00df 81000000 		.4byte	0x81
+ 737 00e3 02       		.uleb128 0x2
+ 738 00e4 08       		.byte	0x8
+ 739 00e5 04       		.byte	0x4
+ 740 00e6 20020000 		.4byte	.LASF20
+ 741 00ea 02       		.uleb128 0x2
+ 742 00eb 04       		.byte	0x4
+ 743 00ec 07       		.byte	0x7
+ 744 00ed CC010000 		.4byte	.LASF21
+ 745 00f1 07       		.uleb128 0x7
+ 746 00f2 14010000 		.4byte	.LASF28
+ 747 00f6 01       		.byte	0x1
+ 748 00f7 11       		.byte	0x11
+ 749 00f8 00000000 		.4byte	.LFB64
+ 750 00fc B8000000 		.4byte	.LFE64-.LFB64
+ 751 0100 01       		.uleb128 0x1
+ 752 0101 9C       		.byte	0x9c
+ 753 0102 08       		.uleb128 0x8
+ 754 0103 98000000 		.4byte	.LASF30
+ 755 0107 01       		.byte	0x1
+ 756 0108 1E       		.byte	0x1e
+ 757 0109 BD000000 		.4byte	0xbd
+ 758 010d 00000000 		.4byte	.LFB65
+ 759 0111 38010000 		.4byte	.LFE65-.LFB65
+ 760 0115 01       		.uleb128 0x1
+ 761 0116 9C       		.byte	0x9c
+ 762 0117 09       		.uleb128 0x9
+ 763 0118 D5010000 		.4byte	.LASF24
+ 764 011c 01       		.byte	0x1
+ 765 011d 3D       		.byte	0x3d
+ 766 011e 00000000 		.4byte	.LFB66
+ 767 0122 5C000000 		.4byte	.LFE66-.LFB66
+ 768 0126 01       		.uleb128 0x1
+ 769 0127 9C       		.byte	0x9c
+ 770 0128 49010000 		.4byte	0x149
+ 771 012c 0A       		.uleb128 0xa
+ 772 012d 1B000000 		.4byte	.LASF22
+ 773 0131 01       		.byte	0x1
+ 774 0132 41       		.byte	0x41
+ 775 0133 81000000 		.4byte	0x81
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 17
+
+
+ 776 0137 02       		.uleb128 0x2
+ 777 0138 91       		.byte	0x91
+ 778 0139 77       		.sleb128 -9
+ 779 013a 0A       		.uleb128 0xa
+ 780 013b E5000000 		.4byte	.LASF23
+ 781 013f 01       		.byte	0x1
+ 782 0140 42       		.byte	0x42
+ 783 0141 49010000 		.4byte	0x149
+ 784 0145 02       		.uleb128 0x2
+ 785 0146 91       		.byte	0x91
+ 786 0147 74       		.sleb128 -12
+ 787 0148 00       		.byte	0
+ 788 0149 0B       		.uleb128 0xb
+ 789 014a 81000000 		.4byte	0x81
+ 790 014e 59010000 		.4byte	0x159
+ 791 0152 0C       		.uleb128 0xc
+ 792 0153 EA000000 		.4byte	0xea
+ 793 0157 00       		.byte	0
+ 794 0158 00       		.byte	0
+ 795 0159 09       		.uleb128 0x9
+ 796 015a 29010000 		.4byte	.LASF25
+ 797 015e 01       		.byte	0x1
+ 798 015f 53       		.byte	0x53
+ 799 0160 00000000 		.4byte	.LFB67
+ 800 0164 60000000 		.4byte	.LFE67-.LFB67
+ 801 0168 01       		.uleb128 0x1
+ 802 0169 9C       		.byte	0x9c
+ 803 016a 8B010000 		.4byte	0x18b
+ 804 016e 0A       		.uleb128 0xa
+ 805 016f 02010000 		.4byte	.LASF26
+ 806 0173 01       		.byte	0x1
+ 807 0174 57       		.byte	0x57
+ 808 0175 81000000 		.4byte	0x81
+ 809 0179 02       		.uleb128 0x2
+ 810 017a 91       		.byte	0x91
+ 811 017b 77       		.sleb128 -9
+ 812 017c 0A       		.uleb128 0xa
+ 813 017d 3E000000 		.4byte	.LASF27
+ 814 0181 01       		.byte	0x1
+ 815 0182 58       		.byte	0x58
+ 816 0183 49010000 		.4byte	0x149
+ 817 0187 02       		.uleb128 0x2
+ 818 0188 91       		.byte	0x91
+ 819 0189 74       		.sleb128 -12
+ 820 018a 00       		.byte	0
+ 821 018b 07       		.uleb128 0x7
+ 822 018c E0000000 		.4byte	.LASF29
+ 823 0190 01       		.byte	0x1
+ 824 0191 68       		.byte	0x68
+ 825 0192 00000000 		.4byte	.LFB68
+ 826 0196 54000000 		.4byte	.LFE68-.LFB68
+ 827 019a 01       		.uleb128 0x1
+ 828 019b 9C       		.byte	0x9c
+ 829 019c 0D       		.uleb128 0xd
+ 830 019d 26000000 		.4byte	.LASF31
+ 831 01a1 01       		.byte	0x1
+ 832 01a2 7C       		.byte	0x7c
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 18
+
+
+ 833 01a3 00000000 		.4byte	.LFB69
+ 834 01a7 A8000000 		.4byte	.LFE69-.LFB69
+ 835 01ab 01       		.uleb128 0x1
+ 836 01ac 9C       		.byte	0x9c
+ 837 01ad 0E       		.uleb128 0xe
+ 838 01ae EE000000 		.4byte	.LASF32
+ 839 01b2 05       		.byte	0x5
+ 840 01b3 1207     		.2byte	0x712
+ 841 01b5 B9010000 		.4byte	0x1b9
+ 842 01b9 06       		.uleb128 0x6
+ 843 01ba 76000000 		.4byte	0x76
+ 844 01be 0B       		.uleb128 0xb
+ 845 01bf A5000000 		.4byte	0xa5
+ 846 01c3 CE010000 		.4byte	0x1ce
+ 847 01c7 0C       		.uleb128 0xc
+ 848 01c8 EA000000 		.4byte	0xea
+ 849 01cc 00       		.byte	0
+ 850 01cd 00       		.byte	0
+ 851 01ce 0F       		.uleb128 0xf
+ 852 01cf A6000000 		.4byte	.LASF33
+ 853 01d3 06       		.byte	0x6
+ 854 01d4 19       		.byte	0x19
+ 855 01d5 BE010000 		.4byte	0x1be
+ 856 01d9 05       		.uleb128 0x5
+ 857 01da 03       		.byte	0x3
+ 858 01db 00000000 		.4byte	V_Sample
+ 859 01df 0F       		.uleb128 0xf
+ 860 01e0 9C010000 		.4byte	.LASF34
+ 861 01e4 06       		.byte	0x6
+ 862 01e5 1A       		.byte	0x1a
+ 863 01e6 B1000000 		.4byte	0xb1
+ 864 01ea 05       		.uleb128 0x5
+ 865 01eb 03       		.byte	0x3
+ 866 01ec 00000000 		.4byte	V_Sample_SUM_1
+ 867 01f0 0F       		.uleb128 0xf
+ 868 01f1 AB010000 		.4byte	.LASF35
+ 869 01f5 06       		.byte	0x6
+ 870 01f6 1B       		.byte	0x1b
+ 871 01f7 BD000000 		.4byte	0xbd
+ 872 01fb 05       		.uleb128 0x5
+ 873 01fc 03       		.byte	0x3
+ 874 01fd 00000000 		.4byte	V_Sample_SUM_2
+ 875 0201 0F       		.uleb128 0xf
+ 876 0202 31000000 		.4byte	.LASF36
+ 877 0206 06       		.byte	0x6
+ 878 0207 1C       		.byte	0x1c
+ 879 0208 A5000000 		.4byte	0xa5
+ 880 020c 05       		.uleb128 0x5
+ 881 020d 03       		.byte	0x3
+ 882 020e 00000000 		.4byte	V_Sample_MIN
+ 883 0212 0F       		.uleb128 0xf
+ 884 0213 38020000 		.4byte	.LASF37
+ 885 0217 06       		.byte	0x6
+ 886 0218 1D       		.byte	0x1d
+ 887 0219 A5000000 		.4byte	0xa5
+ 888 021d 05       		.uleb128 0x5
+ 889 021e 03       		.byte	0x3
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 19
+
+
+ 890 021f 00000000 		.4byte	V_Sample_MAX
+ 891 0223 0F       		.uleb128 0xf
+ 892 0224 E2010000 		.4byte	.LASF38
+ 893 0228 06       		.byte	0x6
+ 894 0229 1E       		.byte	0x1e
+ 895 022a A5000000 		.4byte	0xa5
+ 896 022e 05       		.uleb128 0x5
+ 897 022f 03       		.byte	0x3
+ 898 0230 00000000 		.4byte	V_Sample_AVG
+ 899 0234 0F       		.uleb128 0xf
+ 900 0235 0E000000 		.4byte	.LASF39
+ 901 0239 06       		.byte	0x6
+ 902 023a 1F       		.byte	0x1f
+ 903 023b BD000000 		.4byte	0xbd
+ 904 023f 05       		.uleb128 0x5
+ 905 0240 03       		.byte	0x3
+ 906 0241 00000000 		.4byte	V_Sample_VAR
+ 907 0245 0F       		.uleb128 0xf
+ 908 0246 0D020000 		.4byte	.LASF40
+ 909 024a 06       		.byte	0x6
+ 910 024b 20       		.byte	0x20
+ 911 024c BD000000 		.4byte	0xbd
+ 912 0250 05       		.uleb128 0x5
+ 913 0251 03       		.byte	0x3
+ 914 0252 00000000 		.4byte	V_Sample_AVG_float
+ 915 0256 10       		.uleb128 0x10
+ 916 0257 6900     		.ascii	"i\000"
+ 917 0259 06       		.byte	0x6
+ 918 025a 21       		.byte	0x21
+ 919 025b 8D000000 		.4byte	0x8d
+ 920 025f 05       		.uleb128 0x5
+ 921 0260 03       		.byte	0x3
+ 922 0261 00000000 		.4byte	i
+ 923 0265 0B       		.uleb128 0xb
+ 924 0266 CB000000 		.4byte	0xcb
+ 925 026a 75020000 		.4byte	0x275
+ 926 026e 0C       		.uleb128 0xc
+ 927 026f EA000000 		.4byte	0xea
+ 928 0273 FE       		.byte	0xfe
+ 929 0274 00       		.byte	0
+ 930 0275 0F       		.uleb128 0xf
+ 931 0276 47000000 		.4byte	.LASF41
+ 932 027a 06       		.byte	0x6
+ 933 027b 22       		.byte	0x22
+ 934 027c 65020000 		.4byte	0x265
+ 935 0280 05       		.uleb128 0x5
+ 936 0281 03       		.byte	0x3
+ 937 0282 00000000 		.4byte	value
+ 938 0286 0F       		.uleb128 0xf
+ 939 0287 6A000000 		.4byte	.LASF42
+ 940 028b 06       		.byte	0x6
+ 941 028c 23       		.byte	0x23
+ 942 028d 65020000 		.4byte	0x265
+ 943 0291 05       		.uleb128 0x5
+ 944 0292 03       		.byte	0x3
+ 945 0293 00000000 		.4byte	numberOfMeasurements
+ 946 0297 0F       		.uleb128 0xf
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 20
+
+
+ 947 0298 7F000000 		.4byte	.LASF43
+ 948 029c 06       		.byte	0x6
+ 949 029d 24       		.byte	0x24
+ 950 029e 68000000 		.4byte	0x68
+ 951 02a2 05       		.uleb128 0x5
+ 952 02a3 03       		.byte	0x3
+ 953 02a4 00000000 		.4byte	measurements
+ 954 02a8 0F       		.uleb128 0xf
+ 955 02a9 BA010000 		.4byte	.LASF44
+ 956 02ad 06       		.byte	0x6
+ 957 02ae 25       		.byte	0x25
+ 958 02af BD000000 		.4byte	0xbd
+ 959 02b3 05       		.uleb128 0x5
+ 960 02b4 03       		.byte	0x3
+ 961 02b5 00000000 		.4byte	max_value
+ 962 02b9 00       		.byte	0
+ 963              		.section	.debug_abbrev,"",%progbits
+ 964              	.Ldebug_abbrev0:
+ 965 0000 01       		.uleb128 0x1
+ 966 0001 11       		.uleb128 0x11
+ 967 0002 01       		.byte	0x1
+ 968 0003 25       		.uleb128 0x25
+ 969 0004 0E       		.uleb128 0xe
+ 970 0005 13       		.uleb128 0x13
+ 971 0006 0B       		.uleb128 0xb
+ 972 0007 03       		.uleb128 0x3
+ 973 0008 0E       		.uleb128 0xe
+ 974 0009 1B       		.uleb128 0x1b
+ 975 000a 0E       		.uleb128 0xe
+ 976 000b 55       		.uleb128 0x55
+ 977 000c 17       		.uleb128 0x17
+ 978 000d 11       		.uleb128 0x11
+ 979 000e 01       		.uleb128 0x1
+ 980 000f 10       		.uleb128 0x10
+ 981 0010 17       		.uleb128 0x17
+ 982 0011 00       		.byte	0
+ 983 0012 00       		.byte	0
+ 984 0013 02       		.uleb128 0x2
+ 985 0014 24       		.uleb128 0x24
+ 986 0015 00       		.byte	0
+ 987 0016 0B       		.uleb128 0xb
+ 988 0017 0B       		.uleb128 0xb
+ 989 0018 3E       		.uleb128 0x3e
+ 990 0019 0B       		.uleb128 0xb
+ 991 001a 03       		.uleb128 0x3
+ 992 001b 0E       		.uleb128 0xe
+ 993 001c 00       		.byte	0
+ 994 001d 00       		.byte	0
+ 995 001e 03       		.uleb128 0x3
+ 996 001f 16       		.uleb128 0x16
+ 997 0020 00       		.byte	0
+ 998 0021 03       		.uleb128 0x3
+ 999 0022 0E       		.uleb128 0xe
+ 1000 0023 3A       		.uleb128 0x3a
+ 1001 0024 0B       		.uleb128 0xb
+ 1002 0025 3B       		.uleb128 0x3b
+ 1003 0026 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 21
+
+
+ 1004 0027 49       		.uleb128 0x49
+ 1005 0028 13       		.uleb128 0x13
+ 1006 0029 00       		.byte	0
+ 1007 002a 00       		.byte	0
+ 1008 002b 04       		.uleb128 0x4
+ 1009 002c 24       		.uleb128 0x24
+ 1010 002d 00       		.byte	0
+ 1011 002e 0B       		.uleb128 0xb
+ 1012 002f 0B       		.uleb128 0xb
+ 1013 0030 3E       		.uleb128 0x3e
+ 1014 0031 0B       		.uleb128 0xb
+ 1015 0032 03       		.uleb128 0x3
+ 1016 0033 08       		.uleb128 0x8
+ 1017 0034 00       		.byte	0
+ 1018 0035 00       		.byte	0
+ 1019 0036 05       		.uleb128 0x5
+ 1020 0037 16       		.uleb128 0x16
+ 1021 0038 00       		.byte	0
+ 1022 0039 03       		.uleb128 0x3
+ 1023 003a 0E       		.uleb128 0xe
+ 1024 003b 3A       		.uleb128 0x3a
+ 1025 003c 0B       		.uleb128 0xb
+ 1026 003d 3B       		.uleb128 0x3b
+ 1027 003e 05       		.uleb128 0x5
+ 1028 003f 49       		.uleb128 0x49
+ 1029 0040 13       		.uleb128 0x13
+ 1030 0041 00       		.byte	0
+ 1031 0042 00       		.byte	0
+ 1032 0043 06       		.uleb128 0x6
+ 1033 0044 35       		.uleb128 0x35
+ 1034 0045 00       		.byte	0
+ 1035 0046 49       		.uleb128 0x49
+ 1036 0047 13       		.uleb128 0x13
+ 1037 0048 00       		.byte	0
+ 1038 0049 00       		.byte	0
+ 1039 004a 07       		.uleb128 0x7
+ 1040 004b 2E       		.uleb128 0x2e
+ 1041 004c 00       		.byte	0
+ 1042 004d 3F       		.uleb128 0x3f
+ 1043 004e 19       		.uleb128 0x19
+ 1044 004f 03       		.uleb128 0x3
+ 1045 0050 0E       		.uleb128 0xe
+ 1046 0051 3A       		.uleb128 0x3a
+ 1047 0052 0B       		.uleb128 0xb
+ 1048 0053 3B       		.uleb128 0x3b
+ 1049 0054 0B       		.uleb128 0xb
+ 1050 0055 11       		.uleb128 0x11
+ 1051 0056 01       		.uleb128 0x1
+ 1052 0057 12       		.uleb128 0x12
+ 1053 0058 06       		.uleb128 0x6
+ 1054 0059 40       		.uleb128 0x40
+ 1055 005a 18       		.uleb128 0x18
+ 1056 005b 9642     		.uleb128 0x2116
+ 1057 005d 19       		.uleb128 0x19
+ 1058 005e 00       		.byte	0
+ 1059 005f 00       		.byte	0
+ 1060 0060 08       		.uleb128 0x8
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 22
+
+
+ 1061 0061 2E       		.uleb128 0x2e
+ 1062 0062 00       		.byte	0
+ 1063 0063 3F       		.uleb128 0x3f
+ 1064 0064 19       		.uleb128 0x19
+ 1065 0065 03       		.uleb128 0x3
+ 1066 0066 0E       		.uleb128 0xe
+ 1067 0067 3A       		.uleb128 0x3a
+ 1068 0068 0B       		.uleb128 0xb
+ 1069 0069 3B       		.uleb128 0x3b
+ 1070 006a 0B       		.uleb128 0xb
+ 1071 006b 49       		.uleb128 0x49
+ 1072 006c 13       		.uleb128 0x13
+ 1073 006d 11       		.uleb128 0x11
+ 1074 006e 01       		.uleb128 0x1
+ 1075 006f 12       		.uleb128 0x12
+ 1076 0070 06       		.uleb128 0x6
+ 1077 0071 40       		.uleb128 0x40
+ 1078 0072 18       		.uleb128 0x18
+ 1079 0073 9642     		.uleb128 0x2116
+ 1080 0075 19       		.uleb128 0x19
+ 1081 0076 00       		.byte	0
+ 1082 0077 00       		.byte	0
+ 1083 0078 09       		.uleb128 0x9
+ 1084 0079 2E       		.uleb128 0x2e
+ 1085 007a 01       		.byte	0x1
+ 1086 007b 3F       		.uleb128 0x3f
+ 1087 007c 19       		.uleb128 0x19
+ 1088 007d 03       		.uleb128 0x3
+ 1089 007e 0E       		.uleb128 0xe
+ 1090 007f 3A       		.uleb128 0x3a
+ 1091 0080 0B       		.uleb128 0xb
+ 1092 0081 3B       		.uleb128 0x3b
+ 1093 0082 0B       		.uleb128 0xb
+ 1094 0083 11       		.uleb128 0x11
+ 1095 0084 01       		.uleb128 0x1
+ 1096 0085 12       		.uleb128 0x12
+ 1097 0086 06       		.uleb128 0x6
+ 1098 0087 40       		.uleb128 0x40
+ 1099 0088 18       		.uleb128 0x18
+ 1100 0089 9642     		.uleb128 0x2116
+ 1101 008b 19       		.uleb128 0x19
+ 1102 008c 01       		.uleb128 0x1
+ 1103 008d 13       		.uleb128 0x13
+ 1104 008e 00       		.byte	0
+ 1105 008f 00       		.byte	0
+ 1106 0090 0A       		.uleb128 0xa
+ 1107 0091 34       		.uleb128 0x34
+ 1108 0092 00       		.byte	0
+ 1109 0093 03       		.uleb128 0x3
+ 1110 0094 0E       		.uleb128 0xe
+ 1111 0095 3A       		.uleb128 0x3a
+ 1112 0096 0B       		.uleb128 0xb
+ 1113 0097 3B       		.uleb128 0x3b
+ 1114 0098 0B       		.uleb128 0xb
+ 1115 0099 49       		.uleb128 0x49
+ 1116 009a 13       		.uleb128 0x13
+ 1117 009b 02       		.uleb128 0x2
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 23
+
+
+ 1118 009c 18       		.uleb128 0x18
+ 1119 009d 00       		.byte	0
+ 1120 009e 00       		.byte	0
+ 1121 009f 0B       		.uleb128 0xb
+ 1122 00a0 01       		.uleb128 0x1
+ 1123 00a1 01       		.byte	0x1
+ 1124 00a2 49       		.uleb128 0x49
+ 1125 00a3 13       		.uleb128 0x13
+ 1126 00a4 01       		.uleb128 0x1
+ 1127 00a5 13       		.uleb128 0x13
+ 1128 00a6 00       		.byte	0
+ 1129 00a7 00       		.byte	0
+ 1130 00a8 0C       		.uleb128 0xc
+ 1131 00a9 21       		.uleb128 0x21
+ 1132 00aa 00       		.byte	0
+ 1133 00ab 49       		.uleb128 0x49
+ 1134 00ac 13       		.uleb128 0x13
+ 1135 00ad 2F       		.uleb128 0x2f
+ 1136 00ae 0B       		.uleb128 0xb
+ 1137 00af 00       		.byte	0
+ 1138 00b0 00       		.byte	0
+ 1139 00b1 0D       		.uleb128 0xd
+ 1140 00b2 2E       		.uleb128 0x2e
+ 1141 00b3 00       		.byte	0
+ 1142 00b4 3F       		.uleb128 0x3f
+ 1143 00b5 19       		.uleb128 0x19
+ 1144 00b6 03       		.uleb128 0x3
+ 1145 00b7 0E       		.uleb128 0xe
+ 1146 00b8 3A       		.uleb128 0x3a
+ 1147 00b9 0B       		.uleb128 0xb
+ 1148 00ba 3B       		.uleb128 0x3b
+ 1149 00bb 0B       		.uleb128 0xb
+ 1150 00bc 27       		.uleb128 0x27
+ 1151 00bd 19       		.uleb128 0x19
+ 1152 00be 11       		.uleb128 0x11
+ 1153 00bf 01       		.uleb128 0x1
+ 1154 00c0 12       		.uleb128 0x12
+ 1155 00c1 06       		.uleb128 0x6
+ 1156 00c2 40       		.uleb128 0x40
+ 1157 00c3 18       		.uleb128 0x18
+ 1158 00c4 9642     		.uleb128 0x2116
+ 1159 00c6 19       		.uleb128 0x19
+ 1160 00c7 00       		.byte	0
+ 1161 00c8 00       		.byte	0
+ 1162 00c9 0E       		.uleb128 0xe
+ 1163 00ca 34       		.uleb128 0x34
+ 1164 00cb 00       		.byte	0
+ 1165 00cc 03       		.uleb128 0x3
+ 1166 00cd 0E       		.uleb128 0xe
+ 1167 00ce 3A       		.uleb128 0x3a
+ 1168 00cf 0B       		.uleb128 0xb
+ 1169 00d0 3B       		.uleb128 0x3b
+ 1170 00d1 05       		.uleb128 0x5
+ 1171 00d2 49       		.uleb128 0x49
+ 1172 00d3 13       		.uleb128 0x13
+ 1173 00d4 3F       		.uleb128 0x3f
+ 1174 00d5 19       		.uleb128 0x19
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 24
+
+
+ 1175 00d6 3C       		.uleb128 0x3c
+ 1176 00d7 19       		.uleb128 0x19
+ 1177 00d8 00       		.byte	0
+ 1178 00d9 00       		.byte	0
+ 1179 00da 0F       		.uleb128 0xf
+ 1180 00db 34       		.uleb128 0x34
+ 1181 00dc 00       		.byte	0
+ 1182 00dd 03       		.uleb128 0x3
+ 1183 00de 0E       		.uleb128 0xe
+ 1184 00df 3A       		.uleb128 0x3a
+ 1185 00e0 0B       		.uleb128 0xb
+ 1186 00e1 3B       		.uleb128 0x3b
+ 1187 00e2 0B       		.uleb128 0xb
+ 1188 00e3 49       		.uleb128 0x49
+ 1189 00e4 13       		.uleb128 0x13
+ 1190 00e5 3F       		.uleb128 0x3f
+ 1191 00e6 19       		.uleb128 0x19
+ 1192 00e7 02       		.uleb128 0x2
+ 1193 00e8 18       		.uleb128 0x18
+ 1194 00e9 00       		.byte	0
+ 1195 00ea 00       		.byte	0
+ 1196 00eb 10       		.uleb128 0x10
+ 1197 00ec 34       		.uleb128 0x34
+ 1198 00ed 00       		.byte	0
+ 1199 00ee 03       		.uleb128 0x3
+ 1200 00ef 08       		.uleb128 0x8
+ 1201 00f0 3A       		.uleb128 0x3a
+ 1202 00f1 0B       		.uleb128 0xb
+ 1203 00f2 3B       		.uleb128 0x3b
+ 1204 00f3 0B       		.uleb128 0xb
+ 1205 00f4 49       		.uleb128 0x49
+ 1206 00f5 13       		.uleb128 0x13
+ 1207 00f6 3F       		.uleb128 0x3f
+ 1208 00f7 19       		.uleb128 0x19
+ 1209 00f8 02       		.uleb128 0x2
+ 1210 00f9 18       		.uleb128 0x18
+ 1211 00fa 00       		.byte	0
+ 1212 00fb 00       		.byte	0
+ 1213 00fc 00       		.byte	0
+ 1214              		.section	.debug_aranges,"",%progbits
+ 1215 0000 44000000 		.4byte	0x44
+ 1216 0004 0200     		.2byte	0x2
+ 1217 0006 00000000 		.4byte	.Ldebug_info0
+ 1218 000a 04       		.byte	0x4
+ 1219 000b 00       		.byte	0
+ 1220 000c 0000     		.2byte	0
+ 1221 000e 0000     		.2byte	0
+ 1222 0010 00000000 		.4byte	.LFB64
+ 1223 0014 B8000000 		.4byte	.LFE64-.LFB64
+ 1224 0018 00000000 		.4byte	.LFB65
+ 1225 001c 38010000 		.4byte	.LFE65-.LFB65
+ 1226 0020 00000000 		.4byte	.LFB66
+ 1227 0024 5C000000 		.4byte	.LFE66-.LFB66
+ 1228 0028 00000000 		.4byte	.LFB67
+ 1229 002c 60000000 		.4byte	.LFE67-.LFB67
+ 1230 0030 00000000 		.4byte	.LFB68
+ 1231 0034 54000000 		.4byte	.LFE68-.LFB68
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 25
+
+
+ 1232 0038 00000000 		.4byte	.LFB69
+ 1233 003c A8000000 		.4byte	.LFE69-.LFB69
+ 1234 0040 00000000 		.4byte	0
+ 1235 0044 00000000 		.4byte	0
+ 1236              		.section	.debug_ranges,"",%progbits
+ 1237              	.Ldebug_ranges0:
+ 1238 0000 00000000 		.4byte	.LFB64
+ 1239 0004 B8000000 		.4byte	.LFE64
+ 1240 0008 00000000 		.4byte	.LFB65
+ 1241 000c 38010000 		.4byte	.LFE65
+ 1242 0010 00000000 		.4byte	.LFB66
+ 1243 0014 5C000000 		.4byte	.LFE66
+ 1244 0018 00000000 		.4byte	.LFB67
+ 1245 001c 60000000 		.4byte	.LFE67
+ 1246 0020 00000000 		.4byte	.LFB68
+ 1247 0024 54000000 		.4byte	.LFE68
+ 1248 0028 00000000 		.4byte	.LFB69
+ 1249 002c A8000000 		.4byte	.LFE69
+ 1250 0030 00000000 		.4byte	0
+ 1251 0034 00000000 		.4byte	0
+ 1252              		.section	.debug_line,"",%progbits
+ 1253              	.Ldebug_line0:
+ 1254 0000 2E020000 		.section	.debug_str,"MS",%progbits,1
+ 1254      02006001 
+ 1254      00000201 
+ 1254      FB0E0D00 
+ 1254      01010101 
+ 1255              	.LASF6:
+ 1256 0000 6C6F6E67 		.ascii	"long long int\000"
+ 1256      206C6F6E 
+ 1256      6720696E 
+ 1256      7400
+ 1257              	.LASF39:
+ 1258 000e 565F5361 		.ascii	"V_Sample_VAR\000"
+ 1258      6D706C65 
+ 1258      5F564152 
+ 1258      00
+ 1259              	.LASF22:
+ 1260 001b 444D415F 		.ascii	"DMA_1_Chan\000"
+ 1260      315F4368 
+ 1260      616E00
+ 1261              	.LASF31:
+ 1262 0026 53616D70 		.ascii	"Sample_int\000"
+ 1262      6C655F69 
+ 1262      6E7400
+ 1263              	.LASF36:
+ 1264 0031 565F5361 		.ascii	"V_Sample_MIN\000"
+ 1264      6D706C65 
+ 1264      5F4D494E 
+ 1264      00
+ 1265              	.LASF27:
+ 1266 003e 444D415F 		.ascii	"DMA_2_TD\000"
+ 1266      325F5444 
+ 1266      00
+ 1267              	.LASF41:
+ 1268 0047 76616C75 		.ascii	"value\000"
+ 1268      6500
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 26
+
+
+ 1269              	.LASF9:
+ 1270 004d 5F5F696E 		.ascii	"__int32_t\000"
+ 1270      7433325F 
+ 1270      7400
+ 1271              	.LASF3:
+ 1272 0057 73686F72 		.ascii	"short unsigned int\000"
+ 1272      7420756E 
+ 1272      7369676E 
+ 1272      65642069 
+ 1272      6E7400
+ 1273              	.LASF42:
+ 1274 006a 6E756D62 		.ascii	"numberOfMeasurements\000"
+ 1274      65724F66 
+ 1274      4D656173 
+ 1274      7572656D 
+ 1274      656E7473 
+ 1275              	.LASF43:
+ 1276 007f 6D656173 		.ascii	"measurements\000"
+ 1276      7572656D 
+ 1276      656E7473 
+ 1276      00
+ 1277              	.LASF46:
+ 1278 008c 66756E63 		.ascii	"functions.c\000"
+ 1278      74696F6E 
+ 1278      732E6300 
+ 1279              	.LASF30:
+ 1280 0098 4D656173 		.ascii	"Measure\000"
+ 1280      75726500 
+ 1281              	.LASF16:
+ 1282 00a0 666C6F61 		.ascii	"float\000"
+ 1282      7400
+ 1283              	.LASF33:
+ 1284 00a6 565F5361 		.ascii	"V_Sample\000"
+ 1284      6D706C65 
+ 1284      00
+ 1285              	.LASF1:
+ 1286 00af 756E7369 		.ascii	"unsigned char\000"
+ 1286      676E6564 
+ 1286      20636861 
+ 1286      7200
+ 1287              	.LASF19:
+ 1288 00bd 72656738 		.ascii	"reg8\000"
+ 1288      00
+ 1289              	.LASF14:
+ 1290 00c2 696E7431 		.ascii	"int16\000"
+ 1290      3600
+ 1291              	.LASF5:
+ 1292 00c8 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1292      20756E73 
+ 1292      69676E65 
+ 1292      6420696E 
+ 1292      7400
+ 1293              	.LASF15:
+ 1294 00da 696E7433 		.ascii	"int32\000"
+ 1294      3200
+ 1295              	.LASF29:
+ 1296 00e0 496E6974 		.ascii	"Init\000"
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 27
+
+
+ 1296      00
+ 1297              	.LASF23:
+ 1298 00e5 444D415F 		.ascii	"DMA_1_TD\000"
+ 1298      315F5444 
+ 1298      00
+ 1299              	.LASF32:
+ 1300 00ee 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1300      52784275 
+ 1300      66666572 
+ 1300      00
+ 1301              	.LASF17:
+ 1302 00fb 646F7562 		.ascii	"double\000"
+ 1302      6C6500
+ 1303              	.LASF26:
+ 1304 0102 444D415F 		.ascii	"DMA_2_Chan\000"
+ 1304      325F4368 
+ 1304      616E00
+ 1305              	.LASF12:
+ 1306 010d 75696E74 		.ascii	"uint16\000"
+ 1306      313600
+ 1307              	.LASF28:
+ 1308 0114 436F6D70 		.ascii	"CompareValues\000"
+ 1308      61726556 
+ 1308      616C7565 
+ 1308      7300
+ 1309              	.LASF13:
+ 1310 0122 75696E74 		.ascii	"uint32\000"
+ 1310      333200
+ 1311              	.LASF25:
+ 1312 0129 444D415F 		.ascii	"DMA_2_Config\000"
+ 1312      325F436F 
+ 1312      6E666967 
+ 1312      00
+ 1313              	.LASF47:
+ 1314 0136 433A5C55 		.ascii	"C:\\Users\\Thoma\\OneDrive\\Skrivebord\\EX 6 standa"
+ 1314      73657273 
+ 1314      5C54686F 
+ 1314      6D615C4F 
+ 1314      6E654472 
+ 1315 0164 72642032 		.ascii	"rd 20160818_1.cydsn\000"
+ 1315      30313630 
+ 1315      3831385F 
+ 1315      312E6379 
+ 1315      64736E00 
+ 1316              	.LASF8:
+ 1317 0178 756E7369 		.ascii	"unsigned int\000"
+ 1317      676E6564 
+ 1317      20696E74 
+ 1317      00
+ 1318              	.LASF7:
+ 1319 0185 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1319      206C6F6E 
+ 1319      6720756E 
+ 1319      7369676E 
+ 1319      65642069 
+ 1320              	.LASF34:
+ 1321 019c 565F5361 		.ascii	"V_Sample_SUM_1\000"
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 28
+
+
+ 1321      6D706C65 
+ 1321      5F53554D 
+ 1321      5F3100
+ 1322              	.LASF35:
+ 1323 01ab 565F5361 		.ascii	"V_Sample_SUM_2\000"
+ 1323      6D706C65 
+ 1323      5F53554D 
+ 1323      5F3200
+ 1324              	.LASF44:
+ 1325 01ba 6D61785F 		.ascii	"max_value\000"
+ 1325      76616C75 
+ 1325      6500
+ 1326              	.LASF10:
+ 1327 01c4 696E7433 		.ascii	"int32_t\000"
+ 1327      325F7400 
+ 1328              	.LASF21:
+ 1329 01cc 73697A65 		.ascii	"sizetype\000"
+ 1329      74797065 
+ 1329      00
+ 1330              	.LASF24:
+ 1331 01d5 444D415F 		.ascii	"DMA_1_Config\000"
+ 1331      315F436F 
+ 1331      6E666967 
+ 1331      00
+ 1332              	.LASF38:
+ 1333 01e2 565F5361 		.ascii	"V_Sample_AVG\000"
+ 1333      6D706C65 
+ 1333      5F415647 
+ 1333      00
+ 1334              	.LASF18:
+ 1335 01ef 63686172 		.ascii	"char\000"
+ 1335      00
+ 1336              	.LASF2:
+ 1337 01f4 73686F72 		.ascii	"short int\000"
+ 1337      7420696E 
+ 1337      7400
+ 1338              	.LASF11:
+ 1339 01fe 75696E74 		.ascii	"uint8\000"
+ 1339      3800
+ 1340              	.LASF4:
+ 1341 0204 6C6F6E67 		.ascii	"long int\000"
+ 1341      20696E74 
+ 1341      00
+ 1342              	.LASF40:
+ 1343 020d 565F5361 		.ascii	"V_Sample_AVG_float\000"
+ 1343      6D706C65 
+ 1343      5F415647 
+ 1343      5F666C6F 
+ 1343      617400
+ 1344              	.LASF20:
+ 1345 0220 6C6F6E67 		.ascii	"long double\000"
+ 1345      20646F75 
+ 1345      626C6500 
+ 1346              	.LASF0:
+ 1347 022c 7369676E 		.ascii	"signed char\000"
+ 1347      65642063 
+ 1347      68617200 
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccXYCq0Z.s 			page 29
+
+
+ 1348              	.LASF37:
+ 1349 0238 565F5361 		.ascii	"V_Sample_MAX\000"
+ 1349      6D706C65 
+ 1349      5F4D4158 
+ 1349      00
+ 1350              	.LASF45:
+ 1351 0245 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1351      43313120 
+ 1351      352E342E 
+ 1351      31203230 
+ 1351      31363036 
+ 1352 0278 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1352      20726576 
+ 1352      6973696F 
+ 1352      6E203233 
+ 1352      37373135 
+ 1353 02ab 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1353      66756E63 
+ 1353      74696F6E 
+ 1353      2D736563 
+ 1353      74696F6E 
+ 1354              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

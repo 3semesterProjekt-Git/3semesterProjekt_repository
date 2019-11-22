@@ -1,0 +1,810 @@
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	V_Sample,2,4
+  20              		.comm	V_Sample_SUM_1,4,4
+  21              		.comm	V_Sample_SUM_2,4,4
+  22              		.comm	V_Sample_MIN,2,2
+  23              		.comm	V_Sample_MAX,2,2
+  24              		.comm	V_Sample_AVG,2,2
+  25              		.comm	V_Sample_VAR,4,4
+  26              		.comm	V_Sample_AVG_float,4,4
+  27              		.comm	i,2,2
+  28              		.comm	value,255,4
+  29              		.comm	numberOfMeasurements,255,4
+  30              		.comm	measurements,4,4
+  31              		.comm	max_value,4,4
+  32              		.global	__aeabi_f2d
+  33              		.section	.rodata
+  34              		.align	2
+  35              	.LC0:
+  36 0000 20565F53 		.ascii	" V_Sample_avg_float = %f \015 \000"
+  36      616D706C 
+  36      655F6176 
+  36      675F666C 
+  36      6F617420 
+  37              		.align	2
+  38              	.LC1:
+  39 001c 20416E74 		.ascii	" Antal maalinger = %d \015 \000"
+  39      616C206D 
+  39      61616C69 
+  39      6E676572 
+  39      203D2025 
+  40              		.section	.text.main,"ax",%progbits
+  41              		.align	2
+  42              		.global	main
+  43              		.thumb
+  44              		.thumb_func
+  45              		.type	main, %function
+  46              	main:
+  47              	.LFB64:
+  48              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 2
+
+
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** 
+  13:main.c        **** #include "functions.h"
+  14:main.c        **** 
+  15:main.c        **** 
+  16:main.c        **** int main()
+  17:main.c        **** {
+  49              		.loc 1 17 0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 1, uses_anonymous_args = 0
+  53 0000 90B5     		push	{r4, r7, lr}
+  54              		.cfi_def_cfa_offset 12
+  55              		.cfi_offset 4, -12
+  56              		.cfi_offset 7, -8
+  57              		.cfi_offset 14, -4
+  58 0002 83B0     		sub	sp, sp, #12
+  59              		.cfi_def_cfa_offset 24
+  60 0004 02AF     		add	r7, sp, #8
+  61              		.cfi_def_cfa 7, 16
+  18:main.c        **** 	Init();
+  62              		.loc 1 18 0
+  63 0006 FFF7FEFF 		bl	Init
+  19:main.c        **** 
+  20:main.c        **** 	CyGlobalIntEnable; /* Uncomment this line to enable global interrupts. */
+  64              		.loc 1 20 0
+  65              		.syntax unified
+  66              	@ 20 "main.c" 1
+  67 000a 62B6     		CPSIE   i
+  68              	@ 0 "" 2
+  69              		.thumb
+  70              		.syntax unified
+  71              	.L2:
+  21:main.c        ****  
+  22:main.c        ****     for(;;)
+  23:main.c        ****     {
+  24:main.c        **** 	    Measure();
+  72              		.loc 1 24 0 discriminator 1
+  73 000c FFF7FEFF 		bl	Measure
+  25:main.c        ****         CompareValues();
+  74              		.loc 1 25 0 discriminator 1
+  75 0010 FFF7FEFF 		bl	CompareValues
+  26:main.c        ****     
+  27:main.c        ****     
+  28:main.c        ****         // Følgende linjer er udskrift til UART, for finpudsning til sidst
+  29:main.c        ****         snprintf(value, sizeof(value), " V_Sample_avg_float = %f \r ", V_Sample_AVG_float);
+  76              		.loc 1 29 0 discriminator 1
+  77 0014 0D4B     		ldr	r3, .L3
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 3
+
+
+  78 0016 1B68     		ldr	r3, [r3]	@ float
+  79 0018 1846     		mov	r0, r3
+  80 001a FFF7FEFF 		bl	__aeabi_f2d
+  81 001e 0346     		mov	r3, r0
+  82 0020 0C46     		mov	r4, r1
+  83 0022 CDE90034 		strd	r3, [sp]
+  84 0026 0A4A     		ldr	r2, .L3+4
+  85 0028 FF21     		movs	r1, #255
+  86 002a 0A48     		ldr	r0, .L3+8
+  87 002c FFF7FEFF 		bl	snprintf
+  30:main.c        ****         UART_1_PutString(value);
+  88              		.loc 1 30 0 discriminator 1
+  89 0030 0848     		ldr	r0, .L3+8
+  90 0032 FFF7FEFF 		bl	UART_1_PutString
+  31:main.c        ****         
+  32:main.c        ****         snprintf(numberOfMeasurements, sizeof(numberOfMeasurements), " Antal maalinger = %d \r ", m
+  91              		.loc 1 32 0 discriminator 1
+  92 0036 084B     		ldr	r3, .L3+12
+  93 0038 1B68     		ldr	r3, [r3]
+  94 003a 084A     		ldr	r2, .L3+16
+  95 003c FF21     		movs	r1, #255
+  96 003e 0848     		ldr	r0, .L3+20
+  97 0040 FFF7FEFF 		bl	snprintf
+  33:main.c        ****         UART_1_PutString(numberOfMeasurements);
+  98              		.loc 1 33 0 discriminator 1
+  99 0044 0648     		ldr	r0, .L3+20
+ 100 0046 FFF7FEFF 		bl	UART_1_PutString
+  34:main.c        ****         // --------------------------------------------------------------
+  35:main.c        ****         
+  36:main.c        ****     }
+ 101              		.loc 1 36 0 discriminator 1
+ 102 004a DFE7     		b	.L2
+ 103              	.L4:
+ 104              		.align	2
+ 105              	.L3:
+ 106 004c 00000000 		.word	V_Sample_AVG_float
+ 107 0050 00000000 		.word	.LC0
+ 108 0054 00000000 		.word	value
+ 109 0058 00000000 		.word	measurements
+ 110 005c 1C000000 		.word	.LC1
+ 111 0060 00000000 		.word	numberOfMeasurements
+ 112              		.cfi_endproc
+ 113              	.LFE64:
+ 114              		.size	main, .-main
+ 115              		.text
+ 116              	.Letext0:
+ 117              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 118              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 119              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 120              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 121              		.file 6 "functions.h"
+ 122              		.section	.debug_info,"",%progbits
+ 123              	.Ldebug_info0:
+ 124 0000 E6010000 		.4byte	0x1e6
+ 125 0004 0400     		.2byte	0x4
+ 126 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 127 000a 04       		.byte	0x4
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 4
+
+
+ 128 000b 01       		.uleb128 0x1
+ 129 000c 0D000000 		.4byte	.LASF32
+ 130 0010 0C       		.byte	0xc
+ 131 0011 02020000 		.4byte	.LASF33
+ 132 0015 55010000 		.4byte	.LASF34
+ 133 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 134 001d 00000000 		.4byte	0
+ 135 0021 00000000 		.4byte	.Ldebug_line0
+ 136 0025 02       		.uleb128 0x2
+ 137 0026 01       		.byte	0x1
+ 138 0027 06       		.byte	0x6
+ 139 0028 40020000 		.4byte	.LASF0
+ 140 002c 02       		.uleb128 0x2
+ 141 002d 01       		.byte	0x1
+ 142 002e 08       		.byte	0x8
+ 143 002f EF000000 		.4byte	.LASF1
+ 144 0033 02       		.uleb128 0x2
+ 145 0034 02       		.byte	0x2
+ 146 0035 05       		.byte	0x5
+ 147 0036 0E020000 		.4byte	.LASF2
+ 148 003a 02       		.uleb128 0x2
+ 149 003b 02       		.byte	0x2
+ 150 003c 07       		.byte	0x7
+ 151 003d B8000000 		.4byte	.LASF3
+ 152 0041 03       		.uleb128 0x3
+ 153 0042 AE000000 		.4byte	.LASF9
+ 154 0046 02       		.byte	0x2
+ 155 0047 3F       		.byte	0x3f
+ 156 0048 4C000000 		.4byte	0x4c
+ 157 004c 02       		.uleb128 0x2
+ 158 004d 04       		.byte	0x4
+ 159 004e 05       		.byte	0x5
+ 160 004f 18020000 		.4byte	.LASF4
+ 161 0053 02       		.uleb128 0x2
+ 162 0054 04       		.byte	0x4
+ 163 0055 07       		.byte	0x7
+ 164 0056 03010000 		.4byte	.LASF5
+ 165 005a 02       		.uleb128 0x2
+ 166 005b 08       		.byte	0x8
+ 167 005c 05       		.byte	0x5
+ 168 005d F4010000 		.4byte	.LASF6
+ 169 0061 02       		.uleb128 0x2
+ 170 0062 08       		.byte	0x8
+ 171 0063 07       		.byte	0x7
+ 172 0064 A4010000 		.4byte	.LASF7
+ 173 0068 04       		.uleb128 0x4
+ 174 0069 04       		.byte	0x4
+ 175 006a 05       		.byte	0x5
+ 176 006b 696E7400 		.ascii	"int\000"
+ 177 006f 02       		.uleb128 0x2
+ 178 0070 04       		.byte	0x4
+ 179 0071 07       		.byte	0x7
+ 180 0072 97010000 		.4byte	.LASF8
+ 181 0076 03       		.uleb128 0x3
+ 182 0077 E3010000 		.4byte	.LASF10
+ 183 007b 03       		.byte	0x3
+ 184 007c 2C       		.byte	0x2c
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 5
+
+
+ 185 007d 41000000 		.4byte	0x41
+ 186 0081 05       		.uleb128 0x5
+ 187 0082 41010000 		.4byte	.LASF11
+ 188 0086 04       		.byte	0x4
+ 189 0087 E501     		.2byte	0x1e5
+ 190 0089 3A000000 		.4byte	0x3a
+ 191 008d 05       		.uleb128 0x5
+ 192 008e FD000000 		.4byte	.LASF12
+ 193 0092 04       		.byte	0x4
+ 194 0093 E801     		.2byte	0x1e8
+ 195 0095 33000000 		.4byte	0x33
+ 196 0099 05       		.uleb128 0x5
+ 197 009a 15010000 		.4byte	.LASF13
+ 198 009e 04       		.byte	0x4
+ 199 009f E901     		.2byte	0x1e9
+ 200 00a1 4C000000 		.4byte	0x4c
+ 201 00a5 02       		.uleb128 0x2
+ 202 00a6 04       		.byte	0x4
+ 203 00a7 04       		.byte	0x4
+ 204 00a8 E0000000 		.4byte	.LASF14
+ 205 00ac 02       		.uleb128 0x2
+ 206 00ad 08       		.byte	0x8
+ 207 00ae 04       		.byte	0x4
+ 208 00af 35010000 		.4byte	.LASF15
+ 209 00b3 02       		.uleb128 0x2
+ 210 00b4 01       		.byte	0x1
+ 211 00b5 08       		.byte	0x8
+ 212 00b6 09020000 		.4byte	.LASF16
+ 213 00ba 02       		.uleb128 0x2
+ 214 00bb 08       		.byte	0x8
+ 215 00bc 04       		.byte	0x4
+ 216 00bd 34020000 		.4byte	.LASF17
+ 217 00c1 02       		.uleb128 0x2
+ 218 00c2 04       		.byte	0x4
+ 219 00c3 07       		.byte	0x7
+ 220 00c4 EB010000 		.4byte	.LASF18
+ 221 00c8 06       		.uleb128 0x6
+ 222 00c9 3C010000 		.4byte	.LASF35
+ 223 00cd 01       		.byte	0x1
+ 224 00ce 10       		.byte	0x10
+ 225 00cf 68000000 		.4byte	0x68
+ 226 00d3 00000000 		.4byte	.LFB64
+ 227 00d7 64000000 		.4byte	.LFE64-.LFB64
+ 228 00db 01       		.uleb128 0x1
+ 229 00dc 9C       		.byte	0x9c
+ 230 00dd 07       		.uleb128 0x7
+ 231 00de 28010000 		.4byte	.LASF19
+ 232 00e2 05       		.byte	0x5
+ 233 00e3 1207     		.2byte	0x712
+ 234 00e5 E9000000 		.4byte	0xe9
+ 235 00e9 08       		.uleb128 0x8
+ 236 00ea 76000000 		.4byte	0x76
+ 237 00ee 09       		.uleb128 0x9
+ 238 00ef 8D000000 		.4byte	0x8d
+ 239 00f3 FE000000 		.4byte	0xfe
+ 240 00f7 0A       		.uleb128 0xa
+ 241 00f8 C1000000 		.4byte	0xc1
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 6
+
+
+ 242 00fc 00       		.byte	0
+ 243 00fd 00       		.byte	0
+ 244 00fe 0B       		.uleb128 0xb
+ 245 00ff E6000000 		.4byte	.LASF20
+ 246 0103 06       		.byte	0x6
+ 247 0104 19       		.byte	0x19
+ 248 0105 EE000000 		.4byte	0xee
+ 249 0109 05       		.uleb128 0x5
+ 250 010a 03       		.byte	0x3
+ 251 010b 00000000 		.4byte	V_Sample
+ 252 010f 0B       		.uleb128 0xb
+ 253 0110 BB010000 		.4byte	.LASF21
+ 254 0114 06       		.byte	0x6
+ 255 0115 1A       		.byte	0x1a
+ 256 0116 99000000 		.4byte	0x99
+ 257 011a 05       		.uleb128 0x5
+ 258 011b 03       		.byte	0x3
+ 259 011c 00000000 		.4byte	V_Sample_SUM_1
+ 260 0120 0B       		.uleb128 0xb
+ 261 0121 CA010000 		.4byte	.LASF22
+ 262 0125 06       		.byte	0x6
+ 263 0126 1B       		.byte	0x1b
+ 264 0127 A5000000 		.4byte	0xa5
+ 265 012b 05       		.uleb128 0x5
+ 266 012c 03       		.byte	0x3
+ 267 012d 00000000 		.4byte	V_Sample_SUM_2
+ 268 0131 0B       		.uleb128 0xb
+ 269 0132 9B000000 		.4byte	.LASF23
+ 270 0136 06       		.byte	0x6
+ 271 0137 1C       		.byte	0x1c
+ 272 0138 8D000000 		.4byte	0x8d
+ 273 013c 05       		.uleb128 0x5
+ 274 013d 03       		.byte	0x3
+ 275 013e 00000000 		.4byte	V_Sample_MIN
+ 276 0142 0B       		.uleb128 0xb
+ 277 0143 4C020000 		.4byte	.LASF24
+ 278 0147 06       		.byte	0x6
+ 279 0148 1D       		.byte	0x1d
+ 280 0149 8D000000 		.4byte	0x8d
+ 281 014d 05       		.uleb128 0x5
+ 282 014e 03       		.byte	0x3
+ 283 014f 00000000 		.4byte	V_Sample_MAX
+ 284 0153 0B       		.uleb128 0xb
+ 285 0154 1B010000 		.4byte	.LASF25
+ 286 0158 06       		.byte	0x6
+ 287 0159 1E       		.byte	0x1e
+ 288 015a 8D000000 		.4byte	0x8d
+ 289 015e 05       		.uleb128 0x5
+ 290 015f 03       		.byte	0x3
+ 291 0160 00000000 		.4byte	V_Sample_AVG
+ 292 0164 0B       		.uleb128 0xb
+ 293 0165 00000000 		.4byte	.LASF26
+ 294 0169 06       		.byte	0x6
+ 295 016a 1F       		.byte	0x1f
+ 296 016b A5000000 		.4byte	0xa5
+ 297 016f 05       		.uleb128 0x5
+ 298 0170 03       		.byte	0x3
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 7
+
+
+ 299 0171 00000000 		.4byte	V_Sample_VAR
+ 300 0175 0B       		.uleb128 0xb
+ 301 0176 21020000 		.4byte	.LASF27
+ 302 017a 06       		.byte	0x6
+ 303 017b 20       		.byte	0x20
+ 304 017c A5000000 		.4byte	0xa5
+ 305 0180 05       		.uleb128 0x5
+ 306 0181 03       		.byte	0x3
+ 307 0182 00000000 		.4byte	V_Sample_AVG_float
+ 308 0186 0C       		.uleb128 0xc
+ 309 0187 6900     		.ascii	"i\000"
+ 310 0189 06       		.byte	0x6
+ 311 018a 21       		.byte	0x21
+ 312 018b 81000000 		.4byte	0x81
+ 313 018f 05       		.uleb128 0x5
+ 314 0190 03       		.byte	0x3
+ 315 0191 00000000 		.4byte	i
+ 316 0195 09       		.uleb128 0x9
+ 317 0196 B3000000 		.4byte	0xb3
+ 318 019a A5010000 		.4byte	0x1a5
+ 319 019e 0A       		.uleb128 0xa
+ 320 019f C1000000 		.4byte	0xc1
+ 321 01a3 FE       		.byte	0xfe
+ 322 01a4 00       		.byte	0
+ 323 01a5 0B       		.uleb128 0xb
+ 324 01a6 A8000000 		.4byte	.LASF28
+ 325 01aa 06       		.byte	0x6
+ 326 01ab 22       		.byte	0x22
+ 327 01ac 95010000 		.4byte	0x195
+ 328 01b0 05       		.uleb128 0x5
+ 329 01b1 03       		.byte	0x3
+ 330 01b2 00000000 		.4byte	value
+ 331 01b6 0B       		.uleb128 0xb
+ 332 01b7 CB000000 		.4byte	.LASF29
+ 333 01bb 06       		.byte	0x6
+ 334 01bc 23       		.byte	0x23
+ 335 01bd 95010000 		.4byte	0x195
+ 336 01c1 05       		.uleb128 0x5
+ 337 01c2 03       		.byte	0x3
+ 338 01c3 00000000 		.4byte	numberOfMeasurements
+ 339 01c7 0B       		.uleb128 0xb
+ 340 01c8 48010000 		.4byte	.LASF30
+ 341 01cc 06       		.byte	0x6
+ 342 01cd 24       		.byte	0x24
+ 343 01ce 68000000 		.4byte	0x68
+ 344 01d2 05       		.uleb128 0x5
+ 345 01d3 03       		.byte	0x3
+ 346 01d4 00000000 		.4byte	measurements
+ 347 01d8 0B       		.uleb128 0xb
+ 348 01d9 D9010000 		.4byte	.LASF31
+ 349 01dd 06       		.byte	0x6
+ 350 01de 25       		.byte	0x25
+ 351 01df A5000000 		.4byte	0xa5
+ 352 01e3 05       		.uleb128 0x5
+ 353 01e4 03       		.byte	0x3
+ 354 01e5 00000000 		.4byte	max_value
+ 355 01e9 00       		.byte	0
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 8
+
+
+ 356              		.section	.debug_abbrev,"",%progbits
+ 357              	.Ldebug_abbrev0:
+ 358 0000 01       		.uleb128 0x1
+ 359 0001 11       		.uleb128 0x11
+ 360 0002 01       		.byte	0x1
+ 361 0003 25       		.uleb128 0x25
+ 362 0004 0E       		.uleb128 0xe
+ 363 0005 13       		.uleb128 0x13
+ 364 0006 0B       		.uleb128 0xb
+ 365 0007 03       		.uleb128 0x3
+ 366 0008 0E       		.uleb128 0xe
+ 367 0009 1B       		.uleb128 0x1b
+ 368 000a 0E       		.uleb128 0xe
+ 369 000b 55       		.uleb128 0x55
+ 370 000c 17       		.uleb128 0x17
+ 371 000d 11       		.uleb128 0x11
+ 372 000e 01       		.uleb128 0x1
+ 373 000f 10       		.uleb128 0x10
+ 374 0010 17       		.uleb128 0x17
+ 375 0011 00       		.byte	0
+ 376 0012 00       		.byte	0
+ 377 0013 02       		.uleb128 0x2
+ 378 0014 24       		.uleb128 0x24
+ 379 0015 00       		.byte	0
+ 380 0016 0B       		.uleb128 0xb
+ 381 0017 0B       		.uleb128 0xb
+ 382 0018 3E       		.uleb128 0x3e
+ 383 0019 0B       		.uleb128 0xb
+ 384 001a 03       		.uleb128 0x3
+ 385 001b 0E       		.uleb128 0xe
+ 386 001c 00       		.byte	0
+ 387 001d 00       		.byte	0
+ 388 001e 03       		.uleb128 0x3
+ 389 001f 16       		.uleb128 0x16
+ 390 0020 00       		.byte	0
+ 391 0021 03       		.uleb128 0x3
+ 392 0022 0E       		.uleb128 0xe
+ 393 0023 3A       		.uleb128 0x3a
+ 394 0024 0B       		.uleb128 0xb
+ 395 0025 3B       		.uleb128 0x3b
+ 396 0026 0B       		.uleb128 0xb
+ 397 0027 49       		.uleb128 0x49
+ 398 0028 13       		.uleb128 0x13
+ 399 0029 00       		.byte	0
+ 400 002a 00       		.byte	0
+ 401 002b 04       		.uleb128 0x4
+ 402 002c 24       		.uleb128 0x24
+ 403 002d 00       		.byte	0
+ 404 002e 0B       		.uleb128 0xb
+ 405 002f 0B       		.uleb128 0xb
+ 406 0030 3E       		.uleb128 0x3e
+ 407 0031 0B       		.uleb128 0xb
+ 408 0032 03       		.uleb128 0x3
+ 409 0033 08       		.uleb128 0x8
+ 410 0034 00       		.byte	0
+ 411 0035 00       		.byte	0
+ 412 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 9
+
+
+ 413 0037 16       		.uleb128 0x16
+ 414 0038 00       		.byte	0
+ 415 0039 03       		.uleb128 0x3
+ 416 003a 0E       		.uleb128 0xe
+ 417 003b 3A       		.uleb128 0x3a
+ 418 003c 0B       		.uleb128 0xb
+ 419 003d 3B       		.uleb128 0x3b
+ 420 003e 05       		.uleb128 0x5
+ 421 003f 49       		.uleb128 0x49
+ 422 0040 13       		.uleb128 0x13
+ 423 0041 00       		.byte	0
+ 424 0042 00       		.byte	0
+ 425 0043 06       		.uleb128 0x6
+ 426 0044 2E       		.uleb128 0x2e
+ 427 0045 00       		.byte	0
+ 428 0046 3F       		.uleb128 0x3f
+ 429 0047 19       		.uleb128 0x19
+ 430 0048 03       		.uleb128 0x3
+ 431 0049 0E       		.uleb128 0xe
+ 432 004a 3A       		.uleb128 0x3a
+ 433 004b 0B       		.uleb128 0xb
+ 434 004c 3B       		.uleb128 0x3b
+ 435 004d 0B       		.uleb128 0xb
+ 436 004e 49       		.uleb128 0x49
+ 437 004f 13       		.uleb128 0x13
+ 438 0050 11       		.uleb128 0x11
+ 439 0051 01       		.uleb128 0x1
+ 440 0052 12       		.uleb128 0x12
+ 441 0053 06       		.uleb128 0x6
+ 442 0054 40       		.uleb128 0x40
+ 443 0055 18       		.uleb128 0x18
+ 444 0056 9642     		.uleb128 0x2116
+ 445 0058 19       		.uleb128 0x19
+ 446 0059 00       		.byte	0
+ 447 005a 00       		.byte	0
+ 448 005b 07       		.uleb128 0x7
+ 449 005c 34       		.uleb128 0x34
+ 450 005d 00       		.byte	0
+ 451 005e 03       		.uleb128 0x3
+ 452 005f 0E       		.uleb128 0xe
+ 453 0060 3A       		.uleb128 0x3a
+ 454 0061 0B       		.uleb128 0xb
+ 455 0062 3B       		.uleb128 0x3b
+ 456 0063 05       		.uleb128 0x5
+ 457 0064 49       		.uleb128 0x49
+ 458 0065 13       		.uleb128 0x13
+ 459 0066 3F       		.uleb128 0x3f
+ 460 0067 19       		.uleb128 0x19
+ 461 0068 3C       		.uleb128 0x3c
+ 462 0069 19       		.uleb128 0x19
+ 463 006a 00       		.byte	0
+ 464 006b 00       		.byte	0
+ 465 006c 08       		.uleb128 0x8
+ 466 006d 35       		.uleb128 0x35
+ 467 006e 00       		.byte	0
+ 468 006f 49       		.uleb128 0x49
+ 469 0070 13       		.uleb128 0x13
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 10
+
+
+ 470 0071 00       		.byte	0
+ 471 0072 00       		.byte	0
+ 472 0073 09       		.uleb128 0x9
+ 473 0074 01       		.uleb128 0x1
+ 474 0075 01       		.byte	0x1
+ 475 0076 49       		.uleb128 0x49
+ 476 0077 13       		.uleb128 0x13
+ 477 0078 01       		.uleb128 0x1
+ 478 0079 13       		.uleb128 0x13
+ 479 007a 00       		.byte	0
+ 480 007b 00       		.byte	0
+ 481 007c 0A       		.uleb128 0xa
+ 482 007d 21       		.uleb128 0x21
+ 483 007e 00       		.byte	0
+ 484 007f 49       		.uleb128 0x49
+ 485 0080 13       		.uleb128 0x13
+ 486 0081 2F       		.uleb128 0x2f
+ 487 0082 0B       		.uleb128 0xb
+ 488 0083 00       		.byte	0
+ 489 0084 00       		.byte	0
+ 490 0085 0B       		.uleb128 0xb
+ 491 0086 34       		.uleb128 0x34
+ 492 0087 00       		.byte	0
+ 493 0088 03       		.uleb128 0x3
+ 494 0089 0E       		.uleb128 0xe
+ 495 008a 3A       		.uleb128 0x3a
+ 496 008b 0B       		.uleb128 0xb
+ 497 008c 3B       		.uleb128 0x3b
+ 498 008d 0B       		.uleb128 0xb
+ 499 008e 49       		.uleb128 0x49
+ 500 008f 13       		.uleb128 0x13
+ 501 0090 3F       		.uleb128 0x3f
+ 502 0091 19       		.uleb128 0x19
+ 503 0092 02       		.uleb128 0x2
+ 504 0093 18       		.uleb128 0x18
+ 505 0094 00       		.byte	0
+ 506 0095 00       		.byte	0
+ 507 0096 0C       		.uleb128 0xc
+ 508 0097 34       		.uleb128 0x34
+ 509 0098 00       		.byte	0
+ 510 0099 03       		.uleb128 0x3
+ 511 009a 08       		.uleb128 0x8
+ 512 009b 3A       		.uleb128 0x3a
+ 513 009c 0B       		.uleb128 0xb
+ 514 009d 3B       		.uleb128 0x3b
+ 515 009e 0B       		.uleb128 0xb
+ 516 009f 49       		.uleb128 0x49
+ 517 00a0 13       		.uleb128 0x13
+ 518 00a1 3F       		.uleb128 0x3f
+ 519 00a2 19       		.uleb128 0x19
+ 520 00a3 02       		.uleb128 0x2
+ 521 00a4 18       		.uleb128 0x18
+ 522 00a5 00       		.byte	0
+ 523 00a6 00       		.byte	0
+ 524 00a7 00       		.byte	0
+ 525              		.section	.debug_aranges,"",%progbits
+ 526 0000 1C000000 		.4byte	0x1c
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 11
+
+
+ 527 0004 0200     		.2byte	0x2
+ 528 0006 00000000 		.4byte	.Ldebug_info0
+ 529 000a 04       		.byte	0x4
+ 530 000b 00       		.byte	0
+ 531 000c 0000     		.2byte	0
+ 532 000e 0000     		.2byte	0
+ 533 0010 00000000 		.4byte	.LFB64
+ 534 0014 64000000 		.4byte	.LFE64-.LFB64
+ 535 0018 00000000 		.4byte	0
+ 536 001c 00000000 		.4byte	0
+ 537              		.section	.debug_ranges,"",%progbits
+ 538              	.Ldebug_ranges0:
+ 539 0000 00000000 		.4byte	.LFB64
+ 540 0004 64000000 		.4byte	.LFE64
+ 541 0008 00000000 		.4byte	0
+ 542 000c 00000000 		.4byte	0
+ 543              		.section	.debug_line,"",%progbits
+ 544              	.Ldebug_line0:
+ 545 0000 95010000 		.section	.debug_str,"MS",%progbits,1
+ 545      02005B01 
+ 545      00000201 
+ 545      FB0E0D00 
+ 545      01010101 
+ 546              	.LASF26:
+ 547 0000 565F5361 		.ascii	"V_Sample_VAR\000"
+ 547      6D706C65 
+ 547      5F564152 
+ 547      00
+ 548              	.LASF32:
+ 549 000d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 549      43313120 
+ 549      352E342E 
+ 549      31203230 
+ 549      31363036 
+ 550 0040 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 550      20726576 
+ 550      6973696F 
+ 550      6E203233 
+ 550      37373135 
+ 551 0073 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 551      66756E63 
+ 551      74696F6E 
+ 551      2D736563 
+ 551      74696F6E 
+ 552              	.LASF23:
+ 553 009b 565F5361 		.ascii	"V_Sample_MIN\000"
+ 553      6D706C65 
+ 553      5F4D494E 
+ 553      00
+ 554              	.LASF28:
+ 555 00a8 76616C75 		.ascii	"value\000"
+ 555      6500
+ 556              	.LASF9:
+ 557 00ae 5F5F696E 		.ascii	"__int32_t\000"
+ 557      7433325F 
+ 557      7400
+ 558              	.LASF3:
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 12
+
+
+ 559 00b8 73686F72 		.ascii	"short unsigned int\000"
+ 559      7420756E 
+ 559      7369676E 
+ 559      65642069 
+ 559      6E7400
+ 560              	.LASF29:
+ 561 00cb 6E756D62 		.ascii	"numberOfMeasurements\000"
+ 561      65724F66 
+ 561      4D656173 
+ 561      7572656D 
+ 561      656E7473 
+ 562              	.LASF14:
+ 563 00e0 666C6F61 		.ascii	"float\000"
+ 563      7400
+ 564              	.LASF20:
+ 565 00e6 565F5361 		.ascii	"V_Sample\000"
+ 565      6D706C65 
+ 565      00
+ 566              	.LASF1:
+ 567 00ef 756E7369 		.ascii	"unsigned char\000"
+ 567      676E6564 
+ 567      20636861 
+ 567      7200
+ 568              	.LASF12:
+ 569 00fd 696E7431 		.ascii	"int16\000"
+ 569      3600
+ 570              	.LASF5:
+ 571 0103 6C6F6E67 		.ascii	"long unsigned int\000"
+ 571      20756E73 
+ 571      69676E65 
+ 571      6420696E 
+ 571      7400
+ 572              	.LASF13:
+ 573 0115 696E7433 		.ascii	"int32\000"
+ 573      3200
+ 574              	.LASF25:
+ 575 011b 565F5361 		.ascii	"V_Sample_AVG\000"
+ 575      6D706C65 
+ 575      5F415647 
+ 575      00
+ 576              	.LASF19:
+ 577 0128 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 577      52784275 
+ 577      66666572 
+ 577      00
+ 578              	.LASF15:
+ 579 0135 646F7562 		.ascii	"double\000"
+ 579      6C6500
+ 580              	.LASF35:
+ 581 013c 6D61696E 		.ascii	"main\000"
+ 581      00
+ 582              	.LASF11:
+ 583 0141 75696E74 		.ascii	"uint16\000"
+ 583      313600
+ 584              	.LASF30:
+ 585 0148 6D656173 		.ascii	"measurements\000"
+ 585      7572656D 
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 13
+
+
+ 585      656E7473 
+ 585      00
+ 586              	.LASF34:
+ 587 0155 433A5C55 		.ascii	"C:\\Users\\Thoma\\OneDrive\\Skrivebord\\EX 6 standa"
+ 587      73657273 
+ 587      5C54686F 
+ 587      6D615C4F 
+ 587      6E654472 
+ 588 0183 72642032 		.ascii	"rd 20160818_1.cydsn\000"
+ 588      30313630 
+ 588      3831385F 
+ 588      312E6379 
+ 588      64736E00 
+ 589              	.LASF8:
+ 590 0197 756E7369 		.ascii	"unsigned int\000"
+ 590      676E6564 
+ 590      20696E74 
+ 590      00
+ 591              	.LASF7:
+ 592 01a4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 592      206C6F6E 
+ 592      6720756E 
+ 592      7369676E 
+ 592      65642069 
+ 593              	.LASF21:
+ 594 01bb 565F5361 		.ascii	"V_Sample_SUM_1\000"
+ 594      6D706C65 
+ 594      5F53554D 
+ 594      5F3100
+ 595              	.LASF22:
+ 596 01ca 565F5361 		.ascii	"V_Sample_SUM_2\000"
+ 596      6D706C65 
+ 596      5F53554D 
+ 596      5F3200
+ 597              	.LASF31:
+ 598 01d9 6D61785F 		.ascii	"max_value\000"
+ 598      76616C75 
+ 598      6500
+ 599              	.LASF10:
+ 600 01e3 696E7433 		.ascii	"int32_t\000"
+ 600      325F7400 
+ 601              	.LASF18:
+ 602 01eb 73697A65 		.ascii	"sizetype\000"
+ 602      74797065 
+ 602      00
+ 603              	.LASF6:
+ 604 01f4 6C6F6E67 		.ascii	"long long int\000"
+ 604      206C6F6E 
+ 604      6720696E 
+ 604      7400
+ 605              	.LASF33:
+ 606 0202 6D61696E 		.ascii	"main.c\000"
+ 606      2E6300
+ 607              	.LASF16:
+ 608 0209 63686172 		.ascii	"char\000"
+ 608      00
+ 609              	.LASF2:
+ARM GAS  C:\Users\Thoma\AppData\Local\Temp\ccOGPhtk.s 			page 14
+
+
+ 610 020e 73686F72 		.ascii	"short int\000"
+ 610      7420696E 
+ 610      7400
+ 611              	.LASF4:
+ 612 0218 6C6F6E67 		.ascii	"long int\000"
+ 612      20696E74 
+ 612      00
+ 613              	.LASF27:
+ 614 0221 565F5361 		.ascii	"V_Sample_AVG_float\000"
+ 614      6D706C65 
+ 614      5F415647 
+ 614      5F666C6F 
+ 614      617400
+ 615              	.LASF17:
+ 616 0234 6C6F6E67 		.ascii	"long double\000"
+ 616      20646F75 
+ 616      626C6500 
+ 617              	.LASF0:
+ 618 0240 7369676E 		.ascii	"signed char\000"
+ 618      65642063 
+ 618      68617200 
+ 619              	.LASF24:
+ 620 024c 565F5361 		.ascii	"V_Sample_MAX\000"
+ 620      6D706C65 
+ 620      5F4D4158 
+ 620      00
+ 621              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

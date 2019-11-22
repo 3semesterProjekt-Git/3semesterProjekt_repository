@@ -1,0 +1,7 @@
+C:\Users\Thoma\OneDrive\Skrivebord\EX 6 standard 20160818_1.cydsn\EX 6 standard 20160818_1.cyprj|6449dee2-5ad8-43df-add6-cf90a6f8b53e
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|ac840286-dd7f-4dc9-81e7-6f3649853928
+C:\Users\Thoma\OneDrive\Dokumenter\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|9f0ee2f7-697b-4d5b-8cd6-fc0bfb470675
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|ec87e870-e5a4-471b-b178-99fe2fadbe8f
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|0af3513b-bf96-403b-b12e-ab928da608e2
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|10eef718-8ea6-429b-bea6-76bf60fab70e
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|995aef76-8a48-46c8-b540-c06aedfe7ca9

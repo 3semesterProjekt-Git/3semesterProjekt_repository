@@ -1,0 +1,1157 @@
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"soundApp.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.soundInit,"ax",%progbits
+  20              		.align	2
+  21              		.global	soundInit
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	soundInit, %function
+  25              	soundInit:
+  26              	.LFB63:
+  27              		.file 1 "..\\..\\..\\3semesterProjekt_repository\\Ultrasoundv2\\Ultrasoundv2.cydsn\\soundApp.c"
+   1:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** 
+   2:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** #include "soundApp.h"
+   3:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** 
+   4:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** //Commmands
+   5:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** const uint8 volume[ARRAY_SIZE] = {0x7E,0x06,0x00,0x00,0x1D,0xFF,0xDC,0xEF}; //Volume set to 29 (30=
+   6:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** const uint8 setSource[ARRAY_SIZE] = {0x7E,0x09,0x00,0x00,0x02,0xFF,0xF5,0xEF};  //Setting source to
+   7:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** 
+   8:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** const uint8 playStart[ARRAY_SIZE] = {0x7E,0x0F,0x00,0x01,0x01,0xFF,0xEF,0xEF}; //First song on SD c
+   9:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** const uint8 playStop[ARRAY_SIZE] = {0x7E,0x0F,0x00,0x01,0x02,0xFF,0xEE,0xEF};  //Second song on SD 
+  10:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** const uint8 playPoint[ARRAY_SIZE] = {0x7E,0x0F,0x00,0x01,0x03,0xFF,0xED,0xEF}; //Third song on SD c
+  11:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** 
+  12:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** //Init driver and turn volume to max
+  13:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** void soundInit()
+  14:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** {
+  28              		.loc 1 14 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  15:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****     soundUART_Start();
+  36              		.loc 1 15 0
+  37 0002 FFF7FEFF 		bl	soundUART_Start
+  38              	.LVL0:
+  16:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****     soundUART_PutArray(setSource, ARRAY_SIZE);
+  39              		.loc 1 16 0
+  40 0006 084C     		ldr	r4, .L3
+  41 0008 0821     		movs	r1, #8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 2
+
+
+  42 000a 2046     		mov	r0, r4
+  43 000c FFF7FEFF 		bl	soundUART_PutArray
+  44              	.LVL1:
+  17:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****     CyDelay(20);
+  45              		.loc 1 17 0
+  46 0010 1420     		movs	r0, #20
+  47 0012 FFF7FEFF 		bl	CyDelay
+  48              	.LVL2:
+  18:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****     soundUART_PutArray(volume, ARRAY_SIZE);
+  49              		.loc 1 18 0
+  50 0016 0821     		movs	r1, #8
+  51 0018 6018     		adds	r0, r4, r1
+  52 001a FFF7FEFF 		bl	soundUART_PutArray
+  53              	.LVL3:
+  19:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****     CyDelay(20);
+  54              		.loc 1 19 0
+  55 001e 1420     		movs	r0, #20
+  56 0020 FFF7FEFF 		bl	CyDelay
+  57              	.LVL4:
+  58 0024 10BD     		pop	{r4, pc}
+  59              	.L4:
+  60 0026 00BF     		.align	2
+  61              	.L3:
+  62 0028 00000000 		.word	.LANCHOR0
+  63              		.cfi_endproc
+  64              	.LFE63:
+  65              		.size	soundInit, .-soundInit
+  66              		.section	.text.sendToSOMO,"ax",%progbits
+  67              		.align	2
+  68              		.global	sendToSOMO
+  69              		.thumb
+  70              		.thumb_func
+  71              		.type	sendToSOMO, %function
+  72              	sendToSOMO:
+  73              	.LFB64:
+  20:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** }
+  21:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** 
+  22:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** //Send commands to SOMO
+  23:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** void sendToSOMO(int sound)
+  24:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c **** {
+  74              		.loc 1 24 0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              	.LVL5:
+  79 0000 08B5     		push	{r3, lr}
+  80              		.cfi_def_cfa_offset 8
+  81              		.cfi_offset 3, -8
+  82              		.cfi_offset 14, -4
+  25:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****     switch(sound)
+  83              		.loc 1 25 0
+  84 0002 0228     		cmp	r0, #2
+  85 0004 08D0     		beq	.L7
+  86 0006 0328     		cmp	r0, #3
+  87 0008 0BD0     		beq	.L8
+  88 000a 0128     		cmp	r0, #1
+  89 000c 0DD1     		bne	.L5
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 3
+
+
+  26:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****     {
+  27:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****         case 1: soundUART_PutArray(playStart, ARRAY_SIZE);
+  90              		.loc 1 27 0
+  91 000e 0821     		movs	r1, #8
+  92 0010 0648     		ldr	r0, .L11
+  93              	.LVL6:
+  94 0012 FFF7FEFF 		bl	soundUART_PutArray
+  95              	.LVL7:
+  28:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****             break;
+  96              		.loc 1 28 0
+  97 0016 08BD     		pop	{r3, pc}
+  98              	.LVL8:
+  99              	.L7:
+  29:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****         case 2: soundUART_PutArray(playStop, ARRAY_SIZE);
+ 100              		.loc 1 29 0
+ 101 0018 0821     		movs	r1, #8
+ 102 001a 0548     		ldr	r0, .L11+4
+ 103              	.LVL9:
+ 104 001c FFF7FEFF 		bl	soundUART_PutArray
+ 105              	.LVL10:
+  30:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****             break;
+ 106              		.loc 1 30 0
+ 107 0020 08BD     		pop	{r3, pc}
+ 108              	.LVL11:
+ 109              	.L8:
+  31:..\..\..\3semesterProjekt_repository\Ultrasoundv2\Ultrasoundv2.cydsn/soundApp.c ****         case 3: soundUART_PutArray(playPoint, ARRAY_SIZE);
+ 110              		.loc 1 31 0
+ 111 0022 0821     		movs	r1, #8
+ 112 0024 0348     		ldr	r0, .L11+8
+ 113              	.LVL12:
+ 114 0026 FFF7FEFF 		bl	soundUART_PutArray
+ 115              	.LVL13:
+ 116              	.L5:
+ 117 002a 08BD     		pop	{r3, pc}
+ 118              	.L12:
+ 119              		.align	2
+ 120              	.L11:
+ 121 002c 10000000 		.word	.LANCHOR0+16
+ 122 0030 18000000 		.word	.LANCHOR0+24
+ 123 0034 20000000 		.word	.LANCHOR0+32
+ 124              		.cfi_endproc
+ 125              	.LFE64:
+ 126              		.size	sendToSOMO, .-sendToSOMO
+ 127              		.global	playPoint
+ 128              		.global	playStop
+ 129              		.global	playStart
+ 130              		.global	setSource
+ 131              		.global	volume
+ 132              		.comm	NP_g_nFrameBufferSize,4,4
+ 133              		.comm	NP_g_pFrameBuffer,4,4
+ 134              		.comm	NP_g_bOwnsBuffer,1,1
+ 135              		.comm	NP_g_nDMA_TD,1,1
+ 136              		.comm	NP_g_nDMA_Chan,1,1
+ 137              		.comm	NP_g_nNumberOfPixels,4,4
+ 138              		.section	.rodata
+ 139              		.align	2
+ 140              		.set	.LANCHOR0,. + 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 4
+
+
+ 141              		.type	setSource, %object
+ 142              		.size	setSource, 8
+ 143              	setSource:
+ 144 0000 7E       		.byte	126
+ 145 0001 09       		.byte	9
+ 146 0002 00       		.byte	0
+ 147 0003 00       		.byte	0
+ 148 0004 02       		.byte	2
+ 149 0005 FF       		.byte	-1
+ 150 0006 F5       		.byte	-11
+ 151 0007 EF       		.byte	-17
+ 152              		.type	volume, %object
+ 153              		.size	volume, 8
+ 154              	volume:
+ 155 0008 7E       		.byte	126
+ 156 0009 06       		.byte	6
+ 157 000a 00       		.byte	0
+ 158 000b 00       		.byte	0
+ 159 000c 1D       		.byte	29
+ 160 000d FF       		.byte	-1
+ 161 000e DC       		.byte	-36
+ 162 000f EF       		.byte	-17
+ 163              		.type	playStart, %object
+ 164              		.size	playStart, 8
+ 165              	playStart:
+ 166 0010 7E       		.byte	126
+ 167 0011 0F       		.byte	15
+ 168 0012 00       		.byte	0
+ 169 0013 01       		.byte	1
+ 170 0014 01       		.byte	1
+ 171 0015 FF       		.byte	-1
+ 172 0016 EF       		.byte	-17
+ 173 0017 EF       		.byte	-17
+ 174              		.type	playStop, %object
+ 175              		.size	playStop, 8
+ 176              	playStop:
+ 177 0018 7E       		.byte	126
+ 178 0019 0F       		.byte	15
+ 179 001a 00       		.byte	0
+ 180 001b 01       		.byte	1
+ 181 001c 02       		.byte	2
+ 182 001d FF       		.byte	-1
+ 183 001e EE       		.byte	-18
+ 184 001f EF       		.byte	-17
+ 185              		.type	playPoint, %object
+ 186              		.size	playPoint, 8
+ 187              	playPoint:
+ 188 0020 7E       		.byte	126
+ 189 0021 0F       		.byte	15
+ 190 0022 00       		.byte	0
+ 191 0023 01       		.byte	1
+ 192 0024 03       		.byte	3
+ 193 0025 FF       		.byte	-1
+ 194 0026 ED       		.byte	-19
+ 195 0027 EF       		.byte	-17
+ 196              		.text
+ 197              	.Letext0:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 5
+
+
+ 198              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 199              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 200              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 201              		.file 5 "Generated_Source\\PSoC5/NP_funcs.h"
+ 202              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 203              		.file 7 "Generated_Source\\PSoC5/soundUART.h"
+ 204              		.file 8 "Generated_Source\\PSoC5/CyLib.h"
+ 205              		.section	.debug_info,"",%progbits
+ 206              	.Ldebug_info0:
+ 207 0000 BA020000 		.4byte	0x2ba
+ 208 0004 0400     		.2byte	0x4
+ 209 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 210 000a 04       		.byte	0x4
+ 211 000b 01       		.uleb128 0x1
+ 212 000c 84000000 		.4byte	.LASF32
+ 213 0010 0C       		.byte	0xc
+ 214 0011 C5010000 		.4byte	.LASF33
+ 215 0015 39000000 		.4byte	.LASF34
+ 216 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 217 001d 00000000 		.4byte	0
+ 218 0021 00000000 		.4byte	.Ldebug_line0
+ 219 0025 02       		.uleb128 0x2
+ 220 0026 01       		.byte	0x1
+ 221 0027 06       		.byte	0x6
+ 222 0028 A4020000 		.4byte	.LASF0
+ 223 002c 02       		.uleb128 0x2
+ 224 002d 01       		.byte	0x1
+ 225 002e 08       		.byte	0x8
+ 226 002f 72010000 		.4byte	.LASF1
+ 227 0033 02       		.uleb128 0x2
+ 228 0034 02       		.byte	0x2
+ 229 0035 05       		.byte	0x5
+ 230 0036 6D020000 		.4byte	.LASF2
+ 231 003a 02       		.uleb128 0x2
+ 232 003b 02       		.byte	0x2
+ 233 003c 07       		.byte	0x7
+ 234 003d 38010000 		.4byte	.LASF3
+ 235 0041 03       		.uleb128 0x3
+ 236 0042 0E000000 		.4byte	.LASF9
+ 237 0046 02       		.byte	0x2
+ 238 0047 3F       		.byte	0x3f
+ 239 0048 4C000000 		.4byte	0x4c
+ 240 004c 02       		.uleb128 0x2
+ 241 004d 04       		.byte	0x4
+ 242 004e 05       		.byte	0x5
+ 243 004f 8F020000 		.4byte	.LASF4
+ 244 0053 02       		.uleb128 0x2
+ 245 0054 04       		.byte	0x4
+ 246 0055 07       		.byte	0x7
+ 247 0056 26010000 		.4byte	.LASF5
+ 248 005a 02       		.uleb128 0x2
+ 249 005b 08       		.byte	0x8
+ 250 005c 05       		.byte	0x5
+ 251 005d 00000000 		.4byte	.LASF6
+ 252 0061 02       		.uleb128 0x2
+ 253 0062 08       		.byte	0x8
+ 254 0063 07       		.byte	0x7
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 6
+
+
+ 255 0064 AE010000 		.4byte	.LASF7
+ 256 0068 04       		.uleb128 0x4
+ 257 0069 04       		.byte	0x4
+ 258 006a 05       		.byte	0x5
+ 259 006b 696E7400 		.ascii	"int\000"
+ 260 006f 02       		.uleb128 0x2
+ 261 0070 04       		.byte	0x4
+ 262 0071 07       		.byte	0x7
+ 263 0072 A1010000 		.4byte	.LASF8
+ 264 0076 03       		.uleb128 0x3
+ 265 0077 15020000 		.4byte	.LASF10
+ 266 007b 03       		.byte	0x3
+ 267 007c 2C       		.byte	0x2c
+ 268 007d 41000000 		.4byte	0x41
+ 269 0081 03       		.uleb128 0x3
+ 270 0082 77020000 		.4byte	.LASF11
+ 271 0086 04       		.byte	0x4
+ 272 0087 C2       		.byte	0xc2
+ 273 0088 2C000000 		.4byte	0x2c
+ 274 008c 02       		.uleb128 0x2
+ 275 008d 04       		.byte	0x4
+ 276 008e 04       		.byte	0x4
+ 277 008f 2C000000 		.4byte	.LASF12
+ 278 0093 02       		.uleb128 0x2
+ 279 0094 08       		.byte	0x8
+ 280 0095 04       		.byte	0x4
+ 281 0096 80010000 		.4byte	.LASF13
+ 282 009a 02       		.uleb128 0x2
+ 283 009b 01       		.byte	0x1
+ 284 009c 08       		.byte	0x8
+ 285 009d 49020000 		.4byte	.LASF14
+ 286 00a1 05       		.uleb128 0x5
+ 287 00a2 81000000 		.4byte	0x81
+ 288 00a6 02       		.uleb128 0x2
+ 289 00a7 08       		.byte	0x8
+ 290 00a8 04       		.byte	0x4
+ 291 00a9 98020000 		.4byte	.LASF15
+ 292 00ad 02       		.uleb128 0x2
+ 293 00ae 04       		.byte	0x4
+ 294 00af 07       		.byte	0x7
+ 295 00b0 1D020000 		.4byte	.LASF16
+ 296 00b4 06       		.uleb128 0x6
+ 297 00b5 54020000 		.4byte	.LASF35
+ 298 00b9 01       		.byte	0x1
+ 299 00ba 0D       		.byte	0xd
+ 300 00bb 00000000 		.4byte	.LFB63
+ 301 00bf 2C000000 		.4byte	.LFE63-.LFB63
+ 302 00c3 01       		.uleb128 0x1
+ 303 00c4 9C       		.byte	0x9c
+ 304 00c5 27010000 		.4byte	0x127
+ 305 00c9 07       		.uleb128 0x7
+ 306 00ca 06000000 		.4byte	.LVL0
+ 307 00ce 9C020000 		.4byte	0x29c
+ 308 00d2 08       		.uleb128 0x8
+ 309 00d3 10000000 		.4byte	.LVL1
+ 310 00d7 A7020000 		.4byte	0x2a7
+ 311 00db EB000000 		.4byte	0xeb
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 7
+
+
+ 312 00df 09       		.uleb128 0x9
+ 313 00e0 01       		.uleb128 0x1
+ 314 00e1 50       		.byte	0x50
+ 315 00e2 02       		.uleb128 0x2
+ 316 00e3 74       		.byte	0x74
+ 317 00e4 00       		.sleb128 0
+ 318 00e5 09       		.uleb128 0x9
+ 319 00e6 01       		.uleb128 0x1
+ 320 00e7 51       		.byte	0x51
+ 321 00e8 01       		.uleb128 0x1
+ 322 00e9 38       		.byte	0x38
+ 323 00ea 00       		.byte	0
+ 324 00eb 08       		.uleb128 0x8
+ 325 00ec 16000000 		.4byte	.LVL2
+ 326 00f0 B2020000 		.4byte	0x2b2
+ 327 00f4 FE000000 		.4byte	0xfe
+ 328 00f8 09       		.uleb128 0x9
+ 329 00f9 01       		.uleb128 0x1
+ 330 00fa 50       		.byte	0x50
+ 331 00fb 01       		.uleb128 0x1
+ 332 00fc 44       		.byte	0x44
+ 333 00fd 00       		.byte	0
+ 334 00fe 08       		.uleb128 0x8
+ 335 00ff 1E000000 		.4byte	.LVL3
+ 336 0103 A7020000 		.4byte	0x2a7
+ 337 0107 17010000 		.4byte	0x117
+ 338 010b 09       		.uleb128 0x9
+ 339 010c 01       		.uleb128 0x1
+ 340 010d 50       		.byte	0x50
+ 341 010e 02       		.uleb128 0x2
+ 342 010f 74       		.byte	0x74
+ 343 0110 08       		.sleb128 8
+ 344 0111 09       		.uleb128 0x9
+ 345 0112 01       		.uleb128 0x1
+ 346 0113 51       		.byte	0x51
+ 347 0114 01       		.uleb128 0x1
+ 348 0115 38       		.byte	0x38
+ 349 0116 00       		.byte	0
+ 350 0117 0A       		.uleb128 0xa
+ 351 0118 24000000 		.4byte	.LVL4
+ 352 011c B2020000 		.4byte	0x2b2
+ 353 0120 09       		.uleb128 0x9
+ 354 0121 01       		.uleb128 0x1
+ 355 0122 50       		.byte	0x50
+ 356 0123 01       		.uleb128 0x1
+ 357 0124 44       		.byte	0x44
+ 358 0125 00       		.byte	0
+ 359 0126 00       		.byte	0
+ 360 0127 0B       		.uleb128 0xb
+ 361 0128 12010000 		.4byte	.LASF36
+ 362 012c 01       		.byte	0x1
+ 363 012d 17       		.byte	0x17
+ 364 012e 00000000 		.4byte	.LFB64
+ 365 0132 38000000 		.4byte	.LFE64-.LFB64
+ 366 0136 01       		.uleb128 0x1
+ 367 0137 9C       		.byte	0x9c
+ 368 0138 9C010000 		.4byte	0x19c
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 8
+
+
+ 369 013c 0C       		.uleb128 0xc
+ 370 013d 4E020000 		.4byte	.LASF37
+ 371 0141 01       		.byte	0x1
+ 372 0142 17       		.byte	0x17
+ 373 0143 68000000 		.4byte	0x68
+ 374 0147 00000000 		.4byte	.LLST0
+ 375 014b 08       		.uleb128 0x8
+ 376 014c 16000000 		.4byte	.LVL7
+ 377 0150 A7020000 		.4byte	0x2a7
+ 378 0154 67010000 		.4byte	0x167
+ 379 0158 09       		.uleb128 0x9
+ 380 0159 01       		.uleb128 0x1
+ 381 015a 50       		.byte	0x50
+ 382 015b 05       		.uleb128 0x5
+ 383 015c 03       		.byte	0x3
+ 384 015d 10000000 		.4byte	.LANCHOR0+16
+ 385 0161 09       		.uleb128 0x9
+ 386 0162 01       		.uleb128 0x1
+ 387 0163 51       		.byte	0x51
+ 388 0164 01       		.uleb128 0x1
+ 389 0165 38       		.byte	0x38
+ 390 0166 00       		.byte	0
+ 391 0167 08       		.uleb128 0x8
+ 392 0168 20000000 		.4byte	.LVL10
+ 393 016c A7020000 		.4byte	0x2a7
+ 394 0170 83010000 		.4byte	0x183
+ 395 0174 09       		.uleb128 0x9
+ 396 0175 01       		.uleb128 0x1
+ 397 0176 50       		.byte	0x50
+ 398 0177 05       		.uleb128 0x5
+ 399 0178 03       		.byte	0x3
+ 400 0179 18000000 		.4byte	.LANCHOR0+24
+ 401 017d 09       		.uleb128 0x9
+ 402 017e 01       		.uleb128 0x1
+ 403 017f 51       		.byte	0x51
+ 404 0180 01       		.uleb128 0x1
+ 405 0181 38       		.byte	0x38
+ 406 0182 00       		.byte	0
+ 407 0183 0A       		.uleb128 0xa
+ 408 0184 2A000000 		.4byte	.LVL13
+ 409 0188 A7020000 		.4byte	0x2a7
+ 410 018c 09       		.uleb128 0x9
+ 411 018d 01       		.uleb128 0x1
+ 412 018e 50       		.byte	0x50
+ 413 018f 05       		.uleb128 0x5
+ 414 0190 03       		.byte	0x3
+ 415 0191 20000000 		.4byte	.LANCHOR0+32
+ 416 0195 09       		.uleb128 0x9
+ 417 0196 01       		.uleb128 0x1
+ 418 0197 51       		.byte	0x51
+ 419 0198 01       		.uleb128 0x1
+ 420 0199 38       		.byte	0x38
+ 421 019a 00       		.byte	0
+ 422 019b 00       		.byte	0
+ 423 019c 0D       		.uleb128 0xd
+ 424 019d B0020000 		.4byte	.LASF17
+ 425 01a1 05       		.byte	0x5
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 9
+
+
+ 426 01a2 17       		.byte	0x17
+ 427 01a3 6F000000 		.4byte	0x6f
+ 428 01a7 05       		.uleb128 0x5
+ 429 01a8 03       		.byte	0x3
+ 430 01a9 00000000 		.4byte	NP_g_nNumberOfPixels
+ 431 01ad 0D       		.uleb128 0xd
+ 432 01ae 5E020000 		.4byte	.LASF18
+ 433 01b2 05       		.byte	0x5
+ 434 01b3 18       		.byte	0x18
+ 435 01b4 81000000 		.4byte	0x81
+ 436 01b8 05       		.uleb128 0x5
+ 437 01b9 03       		.byte	0x3
+ 438 01ba 00000000 		.4byte	NP_g_nDMA_Chan
+ 439 01be 0D       		.uleb128 0xd
+ 440 01bf 87010000 		.4byte	.LASF19
+ 441 01c3 05       		.byte	0x5
+ 442 01c4 19       		.byte	0x19
+ 443 01c5 81000000 		.4byte	0x81
+ 444 01c9 05       		.uleb128 0x5
+ 445 01ca 03       		.byte	0x3
+ 446 01cb 00000000 		.4byte	NP_g_nDMA_TD
+ 447 01cf 0D       		.uleb128 0xd
+ 448 01d0 61010000 		.4byte	.LASF20
+ 449 01d4 05       		.byte	0x5
+ 450 01d5 1A       		.byte	0x1a
+ 451 01d6 81000000 		.4byte	0x81
+ 452 01da 05       		.uleb128 0x5
+ 453 01db 03       		.byte	0x3
+ 454 01dc 00000000 		.4byte	NP_g_bOwnsBuffer
+ 455 01e0 0D       		.uleb128 0xd
+ 456 01e1 7D020000 		.4byte	.LASF21
+ 457 01e5 05       		.byte	0x5
+ 458 01e6 1C       		.byte	0x1c
+ 459 01e7 F1010000 		.4byte	0x1f1
+ 460 01eb 05       		.uleb128 0x5
+ 461 01ec 03       		.byte	0x3
+ 462 01ed 00000000 		.4byte	NP_g_pFrameBuffer
+ 463 01f1 0E       		.uleb128 0xe
+ 464 01f2 04       		.byte	0x4
+ 465 01f3 A1000000 		.4byte	0xa1
+ 466 01f7 0D       		.uleb128 0xd
+ 467 01f8 4B010000 		.4byte	.LASF22
+ 468 01fc 05       		.byte	0x5
+ 469 01fd 1D       		.byte	0x1d
+ 470 01fe 6F000000 		.4byte	0x6f
+ 471 0202 05       		.uleb128 0x5
+ 472 0203 03       		.byte	0x3
+ 473 0204 00000000 		.4byte	NP_g_nFrameBufferSize
+ 474 0208 0F       		.uleb128 0xf
+ 475 0209 94010000 		.4byte	.LASF23
+ 476 020d 06       		.byte	0x6
+ 477 020e 2A06     		.2byte	0x62a
+ 478 0210 14020000 		.4byte	0x214
+ 479 0214 05       		.uleb128 0x5
+ 480 0215 76000000 		.4byte	0x76
+ 481 0219 10       		.uleb128 0x10
+ 482 021a 29020000 		.4byte	0x229
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 10
+
+
+ 483 021e 29020000 		.4byte	0x229
+ 484 0222 11       		.uleb128 0x11
+ 485 0223 AD000000 		.4byte	0xad
+ 486 0227 07       		.byte	0x7
+ 487 0228 00       		.byte	0
+ 488 0229 12       		.uleb128 0x12
+ 489 022a 81000000 		.4byte	0x81
+ 490 022e 0D       		.uleb128 0xd
+ 491 022f 32000000 		.4byte	.LASF24
+ 492 0233 01       		.byte	0x1
+ 493 0234 05       		.byte	0x5
+ 494 0235 3F020000 		.4byte	0x23f
+ 495 0239 05       		.uleb128 0x5
+ 496 023a 03       		.byte	0x3
+ 497 023b 00000000 		.4byte	volume
+ 498 023f 12       		.uleb128 0x12
+ 499 0240 19020000 		.4byte	0x219
+ 500 0244 0D       		.uleb128 0xd
+ 501 0245 18000000 		.4byte	.LASF25
+ 502 0249 01       		.byte	0x1
+ 503 024a 06       		.byte	0x6
+ 504 024b 55020000 		.4byte	0x255
+ 505 024f 05       		.uleb128 0x5
+ 506 0250 03       		.byte	0x3
+ 507 0251 00000000 		.4byte	setSource
+ 508 0255 12       		.uleb128 0x12
+ 509 0256 19020000 		.4byte	0x219
+ 510 025a 0D       		.uleb128 0xd
+ 511 025b 22000000 		.4byte	.LASF26
+ 512 025f 01       		.byte	0x1
+ 513 0260 08       		.byte	0x8
+ 514 0261 6B020000 		.4byte	0x26b
+ 515 0265 05       		.uleb128 0x5
+ 516 0266 03       		.byte	0x3
+ 517 0267 00000000 		.4byte	playStart
+ 518 026b 12       		.uleb128 0x12
+ 519 026c 19020000 		.4byte	0x219
+ 520 0270 0D       		.uleb128 0xd
+ 521 0271 1D010000 		.4byte	.LASF27
+ 522 0275 01       		.byte	0x1
+ 523 0276 09       		.byte	0x9
+ 524 0277 81020000 		.4byte	0x281
+ 525 027b 05       		.uleb128 0x5
+ 526 027c 03       		.byte	0x3
+ 527 027d 00000000 		.4byte	playStop
+ 528 0281 12       		.uleb128 0x12
+ 529 0282 19020000 		.4byte	0x219
+ 530 0286 0D       		.uleb128 0xd
+ 531 0287 CD020000 		.4byte	.LASF28
+ 532 028b 01       		.byte	0x1
+ 533 028c 0A       		.byte	0xa
+ 534 028d 97020000 		.4byte	0x297
+ 535 0291 05       		.uleb128 0x5
+ 536 0292 03       		.byte	0x3
+ 537 0293 00000000 		.4byte	playPoint
+ 538 0297 12       		.uleb128 0x12
+ 539 0298 19020000 		.4byte	0x219
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 11
+
+
+ 540 029c 13       		.uleb128 0x13
+ 541 029d 26020000 		.4byte	.LASF29
+ 542 02a1 26020000 		.4byte	.LASF29
+ 543 02a5 07       		.byte	0x7
+ 544 02a6 54       		.byte	0x54
+ 545 02a7 13       		.uleb128 0x13
+ 546 02a8 36020000 		.4byte	.LASF30
+ 547 02ac 36020000 		.4byte	.LASF30
+ 548 02b0 07       		.byte	0x7
+ 549 02b1 8C       		.byte	0x8c
+ 550 02b2 13       		.uleb128 0x13
+ 551 02b3 C5020000 		.4byte	.LASF31
+ 552 02b7 C5020000 		.4byte	.LASF31
+ 553 02bb 08       		.byte	0x8
+ 554 02bc 77       		.byte	0x77
+ 555 02bd 00       		.byte	0
+ 556              		.section	.debug_abbrev,"",%progbits
+ 557              	.Ldebug_abbrev0:
+ 558 0000 01       		.uleb128 0x1
+ 559 0001 11       		.uleb128 0x11
+ 560 0002 01       		.byte	0x1
+ 561 0003 25       		.uleb128 0x25
+ 562 0004 0E       		.uleb128 0xe
+ 563 0005 13       		.uleb128 0x13
+ 564 0006 0B       		.uleb128 0xb
+ 565 0007 03       		.uleb128 0x3
+ 566 0008 0E       		.uleb128 0xe
+ 567 0009 1B       		.uleb128 0x1b
+ 568 000a 0E       		.uleb128 0xe
+ 569 000b 55       		.uleb128 0x55
+ 570 000c 17       		.uleb128 0x17
+ 571 000d 11       		.uleb128 0x11
+ 572 000e 01       		.uleb128 0x1
+ 573 000f 10       		.uleb128 0x10
+ 574 0010 17       		.uleb128 0x17
+ 575 0011 00       		.byte	0
+ 576 0012 00       		.byte	0
+ 577 0013 02       		.uleb128 0x2
+ 578 0014 24       		.uleb128 0x24
+ 579 0015 00       		.byte	0
+ 580 0016 0B       		.uleb128 0xb
+ 581 0017 0B       		.uleb128 0xb
+ 582 0018 3E       		.uleb128 0x3e
+ 583 0019 0B       		.uleb128 0xb
+ 584 001a 03       		.uleb128 0x3
+ 585 001b 0E       		.uleb128 0xe
+ 586 001c 00       		.byte	0
+ 587 001d 00       		.byte	0
+ 588 001e 03       		.uleb128 0x3
+ 589 001f 16       		.uleb128 0x16
+ 590 0020 00       		.byte	0
+ 591 0021 03       		.uleb128 0x3
+ 592 0022 0E       		.uleb128 0xe
+ 593 0023 3A       		.uleb128 0x3a
+ 594 0024 0B       		.uleb128 0xb
+ 595 0025 3B       		.uleb128 0x3b
+ 596 0026 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 12
+
+
+ 597 0027 49       		.uleb128 0x49
+ 598 0028 13       		.uleb128 0x13
+ 599 0029 00       		.byte	0
+ 600 002a 00       		.byte	0
+ 601 002b 04       		.uleb128 0x4
+ 602 002c 24       		.uleb128 0x24
+ 603 002d 00       		.byte	0
+ 604 002e 0B       		.uleb128 0xb
+ 605 002f 0B       		.uleb128 0xb
+ 606 0030 3E       		.uleb128 0x3e
+ 607 0031 0B       		.uleb128 0xb
+ 608 0032 03       		.uleb128 0x3
+ 609 0033 08       		.uleb128 0x8
+ 610 0034 00       		.byte	0
+ 611 0035 00       		.byte	0
+ 612 0036 05       		.uleb128 0x5
+ 613 0037 35       		.uleb128 0x35
+ 614 0038 00       		.byte	0
+ 615 0039 49       		.uleb128 0x49
+ 616 003a 13       		.uleb128 0x13
+ 617 003b 00       		.byte	0
+ 618 003c 00       		.byte	0
+ 619 003d 06       		.uleb128 0x6
+ 620 003e 2E       		.uleb128 0x2e
+ 621 003f 01       		.byte	0x1
+ 622 0040 3F       		.uleb128 0x3f
+ 623 0041 19       		.uleb128 0x19
+ 624 0042 03       		.uleb128 0x3
+ 625 0043 0E       		.uleb128 0xe
+ 626 0044 3A       		.uleb128 0x3a
+ 627 0045 0B       		.uleb128 0xb
+ 628 0046 3B       		.uleb128 0x3b
+ 629 0047 0B       		.uleb128 0xb
+ 630 0048 11       		.uleb128 0x11
+ 631 0049 01       		.uleb128 0x1
+ 632 004a 12       		.uleb128 0x12
+ 633 004b 06       		.uleb128 0x6
+ 634 004c 40       		.uleb128 0x40
+ 635 004d 18       		.uleb128 0x18
+ 636 004e 9742     		.uleb128 0x2117
+ 637 0050 19       		.uleb128 0x19
+ 638 0051 01       		.uleb128 0x1
+ 639 0052 13       		.uleb128 0x13
+ 640 0053 00       		.byte	0
+ 641 0054 00       		.byte	0
+ 642 0055 07       		.uleb128 0x7
+ 643 0056 898201   		.uleb128 0x4109
+ 644 0059 00       		.byte	0
+ 645 005a 11       		.uleb128 0x11
+ 646 005b 01       		.uleb128 0x1
+ 647 005c 31       		.uleb128 0x31
+ 648 005d 13       		.uleb128 0x13
+ 649 005e 00       		.byte	0
+ 650 005f 00       		.byte	0
+ 651 0060 08       		.uleb128 0x8
+ 652 0061 898201   		.uleb128 0x4109
+ 653 0064 01       		.byte	0x1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 13
+
+
+ 654 0065 11       		.uleb128 0x11
+ 655 0066 01       		.uleb128 0x1
+ 656 0067 31       		.uleb128 0x31
+ 657 0068 13       		.uleb128 0x13
+ 658 0069 01       		.uleb128 0x1
+ 659 006a 13       		.uleb128 0x13
+ 660 006b 00       		.byte	0
+ 661 006c 00       		.byte	0
+ 662 006d 09       		.uleb128 0x9
+ 663 006e 8A8201   		.uleb128 0x410a
+ 664 0071 00       		.byte	0
+ 665 0072 02       		.uleb128 0x2
+ 666 0073 18       		.uleb128 0x18
+ 667 0074 9142     		.uleb128 0x2111
+ 668 0076 18       		.uleb128 0x18
+ 669 0077 00       		.byte	0
+ 670 0078 00       		.byte	0
+ 671 0079 0A       		.uleb128 0xa
+ 672 007a 898201   		.uleb128 0x4109
+ 673 007d 01       		.byte	0x1
+ 674 007e 11       		.uleb128 0x11
+ 675 007f 01       		.uleb128 0x1
+ 676 0080 31       		.uleb128 0x31
+ 677 0081 13       		.uleb128 0x13
+ 678 0082 00       		.byte	0
+ 679 0083 00       		.byte	0
+ 680 0084 0B       		.uleb128 0xb
+ 681 0085 2E       		.uleb128 0x2e
+ 682 0086 01       		.byte	0x1
+ 683 0087 3F       		.uleb128 0x3f
+ 684 0088 19       		.uleb128 0x19
+ 685 0089 03       		.uleb128 0x3
+ 686 008a 0E       		.uleb128 0xe
+ 687 008b 3A       		.uleb128 0x3a
+ 688 008c 0B       		.uleb128 0xb
+ 689 008d 3B       		.uleb128 0x3b
+ 690 008e 0B       		.uleb128 0xb
+ 691 008f 27       		.uleb128 0x27
+ 692 0090 19       		.uleb128 0x19
+ 693 0091 11       		.uleb128 0x11
+ 694 0092 01       		.uleb128 0x1
+ 695 0093 12       		.uleb128 0x12
+ 696 0094 06       		.uleb128 0x6
+ 697 0095 40       		.uleb128 0x40
+ 698 0096 18       		.uleb128 0x18
+ 699 0097 9742     		.uleb128 0x2117
+ 700 0099 19       		.uleb128 0x19
+ 701 009a 01       		.uleb128 0x1
+ 702 009b 13       		.uleb128 0x13
+ 703 009c 00       		.byte	0
+ 704 009d 00       		.byte	0
+ 705 009e 0C       		.uleb128 0xc
+ 706 009f 05       		.uleb128 0x5
+ 707 00a0 00       		.byte	0
+ 708 00a1 03       		.uleb128 0x3
+ 709 00a2 0E       		.uleb128 0xe
+ 710 00a3 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 14
+
+
+ 711 00a4 0B       		.uleb128 0xb
+ 712 00a5 3B       		.uleb128 0x3b
+ 713 00a6 0B       		.uleb128 0xb
+ 714 00a7 49       		.uleb128 0x49
+ 715 00a8 13       		.uleb128 0x13
+ 716 00a9 02       		.uleb128 0x2
+ 717 00aa 17       		.uleb128 0x17
+ 718 00ab 00       		.byte	0
+ 719 00ac 00       		.byte	0
+ 720 00ad 0D       		.uleb128 0xd
+ 721 00ae 34       		.uleb128 0x34
+ 722 00af 00       		.byte	0
+ 723 00b0 03       		.uleb128 0x3
+ 724 00b1 0E       		.uleb128 0xe
+ 725 00b2 3A       		.uleb128 0x3a
+ 726 00b3 0B       		.uleb128 0xb
+ 727 00b4 3B       		.uleb128 0x3b
+ 728 00b5 0B       		.uleb128 0xb
+ 729 00b6 49       		.uleb128 0x49
+ 730 00b7 13       		.uleb128 0x13
+ 731 00b8 3F       		.uleb128 0x3f
+ 732 00b9 19       		.uleb128 0x19
+ 733 00ba 02       		.uleb128 0x2
+ 734 00bb 18       		.uleb128 0x18
+ 735 00bc 00       		.byte	0
+ 736 00bd 00       		.byte	0
+ 737 00be 0E       		.uleb128 0xe
+ 738 00bf 0F       		.uleb128 0xf
+ 739 00c0 00       		.byte	0
+ 740 00c1 0B       		.uleb128 0xb
+ 741 00c2 0B       		.uleb128 0xb
+ 742 00c3 49       		.uleb128 0x49
+ 743 00c4 13       		.uleb128 0x13
+ 744 00c5 00       		.byte	0
+ 745 00c6 00       		.byte	0
+ 746 00c7 0F       		.uleb128 0xf
+ 747 00c8 34       		.uleb128 0x34
+ 748 00c9 00       		.byte	0
+ 749 00ca 03       		.uleb128 0x3
+ 750 00cb 0E       		.uleb128 0xe
+ 751 00cc 3A       		.uleb128 0x3a
+ 752 00cd 0B       		.uleb128 0xb
+ 753 00ce 3B       		.uleb128 0x3b
+ 754 00cf 05       		.uleb128 0x5
+ 755 00d0 49       		.uleb128 0x49
+ 756 00d1 13       		.uleb128 0x13
+ 757 00d2 3F       		.uleb128 0x3f
+ 758 00d3 19       		.uleb128 0x19
+ 759 00d4 3C       		.uleb128 0x3c
+ 760 00d5 19       		.uleb128 0x19
+ 761 00d6 00       		.byte	0
+ 762 00d7 00       		.byte	0
+ 763 00d8 10       		.uleb128 0x10
+ 764 00d9 01       		.uleb128 0x1
+ 765 00da 01       		.byte	0x1
+ 766 00db 49       		.uleb128 0x49
+ 767 00dc 13       		.uleb128 0x13
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 15
+
+
+ 768 00dd 01       		.uleb128 0x1
+ 769 00de 13       		.uleb128 0x13
+ 770 00df 00       		.byte	0
+ 771 00e0 00       		.byte	0
+ 772 00e1 11       		.uleb128 0x11
+ 773 00e2 21       		.uleb128 0x21
+ 774 00e3 00       		.byte	0
+ 775 00e4 49       		.uleb128 0x49
+ 776 00e5 13       		.uleb128 0x13
+ 777 00e6 2F       		.uleb128 0x2f
+ 778 00e7 0B       		.uleb128 0xb
+ 779 00e8 00       		.byte	0
+ 780 00e9 00       		.byte	0
+ 781 00ea 12       		.uleb128 0x12
+ 782 00eb 26       		.uleb128 0x26
+ 783 00ec 00       		.byte	0
+ 784 00ed 49       		.uleb128 0x49
+ 785 00ee 13       		.uleb128 0x13
+ 786 00ef 00       		.byte	0
+ 787 00f0 00       		.byte	0
+ 788 00f1 13       		.uleb128 0x13
+ 789 00f2 2E       		.uleb128 0x2e
+ 790 00f3 00       		.byte	0
+ 791 00f4 3F       		.uleb128 0x3f
+ 792 00f5 19       		.uleb128 0x19
+ 793 00f6 3C       		.uleb128 0x3c
+ 794 00f7 19       		.uleb128 0x19
+ 795 00f8 6E       		.uleb128 0x6e
+ 796 00f9 0E       		.uleb128 0xe
+ 797 00fa 03       		.uleb128 0x3
+ 798 00fb 0E       		.uleb128 0xe
+ 799 00fc 3A       		.uleb128 0x3a
+ 800 00fd 0B       		.uleb128 0xb
+ 801 00fe 3B       		.uleb128 0x3b
+ 802 00ff 0B       		.uleb128 0xb
+ 803 0100 00       		.byte	0
+ 804 0101 00       		.byte	0
+ 805 0102 00       		.byte	0
+ 806              		.section	.debug_loc,"",%progbits
+ 807              	.Ldebug_loc0:
+ 808              	.LLST0:
+ 809 0000 00000000 		.4byte	.LVL5
+ 810 0004 12000000 		.4byte	.LVL6
+ 811 0008 0100     		.2byte	0x1
+ 812 000a 50       		.byte	0x50
+ 813 000b 12000000 		.4byte	.LVL6
+ 814 000f 18000000 		.4byte	.LVL8
+ 815 0013 0400     		.2byte	0x4
+ 816 0015 F3       		.byte	0xf3
+ 817 0016 01       		.uleb128 0x1
+ 818 0017 50       		.byte	0x50
+ 819 0018 9F       		.byte	0x9f
+ 820 0019 18000000 		.4byte	.LVL8
+ 821 001d 1C000000 		.4byte	.LVL9
+ 822 0021 0100     		.2byte	0x1
+ 823 0023 50       		.byte	0x50
+ 824 0024 1C000000 		.4byte	.LVL9
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 16
+
+
+ 825 0028 22000000 		.4byte	.LVL11
+ 826 002c 0400     		.2byte	0x4
+ 827 002e F3       		.byte	0xf3
+ 828 002f 01       		.uleb128 0x1
+ 829 0030 50       		.byte	0x50
+ 830 0031 9F       		.byte	0x9f
+ 831 0032 22000000 		.4byte	.LVL11
+ 832 0036 26000000 		.4byte	.LVL12
+ 833 003a 0100     		.2byte	0x1
+ 834 003c 50       		.byte	0x50
+ 835 003d 26000000 		.4byte	.LVL12
+ 836 0041 38000000 		.4byte	.LFE64
+ 837 0045 0400     		.2byte	0x4
+ 838 0047 F3       		.byte	0xf3
+ 839 0048 01       		.uleb128 0x1
+ 840 0049 50       		.byte	0x50
+ 841 004a 9F       		.byte	0x9f
+ 842 004b 00000000 		.4byte	0
+ 843 004f 00000000 		.4byte	0
+ 844              		.section	.debug_aranges,"",%progbits
+ 845 0000 24000000 		.4byte	0x24
+ 846 0004 0200     		.2byte	0x2
+ 847 0006 00000000 		.4byte	.Ldebug_info0
+ 848 000a 04       		.byte	0x4
+ 849 000b 00       		.byte	0
+ 850 000c 0000     		.2byte	0
+ 851 000e 0000     		.2byte	0
+ 852 0010 00000000 		.4byte	.LFB63
+ 853 0014 2C000000 		.4byte	.LFE63-.LFB63
+ 854 0018 00000000 		.4byte	.LFB64
+ 855 001c 38000000 		.4byte	.LFE64-.LFB64
+ 856 0020 00000000 		.4byte	0
+ 857 0024 00000000 		.4byte	0
+ 858              		.section	.debug_ranges,"",%progbits
+ 859              	.Ldebug_ranges0:
+ 860 0000 00000000 		.4byte	.LFB63
+ 861 0004 2C000000 		.4byte	.LFE63
+ 862 0008 00000000 		.4byte	.LFB64
+ 863 000c 38000000 		.4byte	.LFE64
+ 864 0010 00000000 		.4byte	0
+ 865 0014 00000000 		.4byte	0
+ 866              		.section	.debug_line,"",%progbits
+ 867              	.Ldebug_line0:
+ 868 0000 EC010000 		.section	.debug_str,"MS",%progbits,1
+ 868      0200BD01 
+ 868      00000201 
+ 868      FB0E0D00 
+ 868      01010101 
+ 869              	.LASF6:
+ 870 0000 6C6F6E67 		.ascii	"long long int\000"
+ 870      206C6F6E 
+ 870      6720696E 
+ 870      7400
+ 871              	.LASF9:
+ 872 000e 5F5F696E 		.ascii	"__int32_t\000"
+ 872      7433325F 
+ 872      7400
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 17
+
+
+ 873              	.LASF25:
+ 874 0018 73657453 		.ascii	"setSource\000"
+ 874      6F757263 
+ 874      6500
+ 875              	.LASF26:
+ 876 0022 706C6179 		.ascii	"playStart\000"
+ 876      53746172 
+ 876      7400
+ 877              	.LASF12:
+ 878 002c 666C6F61 		.ascii	"float\000"
+ 878      7400
+ 879              	.LASF24:
+ 880 0032 766F6C75 		.ascii	"volume\000"
+ 880      6D6500
+ 881              	.LASF34:
+ 882 0039 433A5C55 		.ascii	"C:\\Users\\lucasiversen\\Desktop\\PSOC_1_Program\\P"
+ 882      73657273 
+ 882      5C6C7563 
+ 882      61736976 
+ 882      65727365 
+ 883 0067 534F435F 		.ascii	"SOC_1_Program\\NeoPixel.cydsn\000"
+ 883      315F5072 
+ 883      6F677261 
+ 883      6D5C4E65 
+ 883      6F506978 
+ 884              	.LASF32:
+ 885 0084 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 885      43313120 
+ 885      352E342E 
+ 885      31203230 
+ 885      31363036 
+ 886 00b7 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 886      20726576 
+ 886      6973696F 
+ 886      6E203233 
+ 886      37373135 
+ 887 00ea 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 887      66756E63 
+ 887      74696F6E 
+ 887      2D736563 
+ 887      74696F6E 
+ 888              	.LASF36:
+ 889 0112 73656E64 		.ascii	"sendToSOMO\000"
+ 889      546F534F 
+ 889      4D4F00
+ 890              	.LASF27:
+ 891 011d 706C6179 		.ascii	"playStop\000"
+ 891      53746F70 
+ 891      00
+ 892              	.LASF5:
+ 893 0126 6C6F6E67 		.ascii	"long unsigned int\000"
+ 893      20756E73 
+ 893      69676E65 
+ 893      6420696E 
+ 893      7400
+ 894              	.LASF3:
+ 895 0138 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 18
+
+
+ 895      7420756E 
+ 895      7369676E 
+ 895      65642069 
+ 895      6E7400
+ 896              	.LASF22:
+ 897 014b 4E505F67 		.ascii	"NP_g_nFrameBufferSize\000"
+ 897      5F6E4672 
+ 897      616D6542 
+ 897      75666665 
+ 897      7253697A 
+ 898              	.LASF20:
+ 899 0161 4E505F67 		.ascii	"NP_g_bOwnsBuffer\000"
+ 899      5F624F77 
+ 899      6E734275 
+ 899      66666572 
+ 899      00
+ 900              	.LASF1:
+ 901 0172 756E7369 		.ascii	"unsigned char\000"
+ 901      676E6564 
+ 901      20636861 
+ 901      7200
+ 902              	.LASF13:
+ 903 0180 646F7562 		.ascii	"double\000"
+ 903      6C6500
+ 904              	.LASF19:
+ 905 0187 4E505F67 		.ascii	"NP_g_nDMA_TD\000"
+ 905      5F6E444D 
+ 905      415F5444 
+ 905      00
+ 906              	.LASF23:
+ 907 0194 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 907      52784275 
+ 907      66666572 
+ 907      00
+ 908              	.LASF8:
+ 909 01a1 756E7369 		.ascii	"unsigned int\000"
+ 909      676E6564 
+ 909      20696E74 
+ 909      00
+ 910              	.LASF7:
+ 911 01ae 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 911      206C6F6E 
+ 911      6720756E 
+ 911      7369676E 
+ 911      65642069 
+ 912              	.LASF33:
+ 913 01c5 2E2E5C2E 		.ascii	"..\\..\\..\\3semesterProjekt_repository\\Ultrasound"
+ 913      2E5C2E2E 
+ 913      5C337365 
+ 913      6D657374 
+ 913      65725072 
+ 914 01f4 76325C55 		.ascii	"v2\\Ultrasoundv2.cydsn\\soundApp.c\000"
+ 914      6C747261 
+ 914      736F756E 
+ 914      6476322E 
+ 914      63796473 
+ 915              	.LASF10:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 19
+
+
+ 916 0215 696E7433 		.ascii	"int32_t\000"
+ 916      325F7400 
+ 917              	.LASF16:
+ 918 021d 73697A65 		.ascii	"sizetype\000"
+ 918      74797065 
+ 918      00
+ 919              	.LASF29:
+ 920 0226 736F756E 		.ascii	"soundUART_Start\000"
+ 920      64554152 
+ 920      545F5374 
+ 920      61727400 
+ 921              	.LASF30:
+ 922 0236 736F756E 		.ascii	"soundUART_PutArray\000"
+ 922      64554152 
+ 922      545F5075 
+ 922      74417272 
+ 922      617900
+ 923              	.LASF14:
+ 924 0249 63686172 		.ascii	"char\000"
+ 924      00
+ 925              	.LASF37:
+ 926 024e 736F756E 		.ascii	"sound\000"
+ 926      6400
+ 927              	.LASF35:
+ 928 0254 736F756E 		.ascii	"soundInit\000"
+ 928      64496E69 
+ 928      7400
+ 929              	.LASF18:
+ 930 025e 4E505F67 		.ascii	"NP_g_nDMA_Chan\000"
+ 930      5F6E444D 
+ 930      415F4368 
+ 930      616E00
+ 931              	.LASF2:
+ 932 026d 73686F72 		.ascii	"short int\000"
+ 932      7420696E 
+ 932      7400
+ 933              	.LASF11:
+ 934 0277 75696E74 		.ascii	"uint8\000"
+ 934      3800
+ 935              	.LASF21:
+ 936 027d 4E505F67 		.ascii	"NP_g_pFrameBuffer\000"
+ 936      5F704672 
+ 936      616D6542 
+ 936      75666665 
+ 936      7200
+ 937              	.LASF4:
+ 938 028f 6C6F6E67 		.ascii	"long int\000"
+ 938      20696E74 
+ 938      00
+ 939              	.LASF15:
+ 940 0298 6C6F6E67 		.ascii	"long double\000"
+ 940      20646F75 
+ 940      626C6500 
+ 941              	.LASF0:
+ 942 02a4 7369676E 		.ascii	"signed char\000"
+ 942      65642063 
+ 942      68617200 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccw0nnnn.s 			page 20
+
+
+ 943              	.LASF17:
+ 944 02b0 4E505F67 		.ascii	"NP_g_nNumberOfPixels\000"
+ 944      5F6E4E75 
+ 944      6D626572 
+ 944      4F665069 
+ 944      78656C73 
+ 945              	.LASF31:
+ 946 02c5 43794465 		.ascii	"CyDelay\000"
+ 946      6C617900 
+ 947              	.LASF28:
+ 948 02cd 706C6179 		.ascii	"playPoint\000"
+ 948      506F696E 
+ 948      7400
+ 949              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

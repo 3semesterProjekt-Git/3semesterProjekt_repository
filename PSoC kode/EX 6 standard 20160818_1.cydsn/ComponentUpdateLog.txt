@@ -1,0 +1,18 @@
+Last Modified Date & Time: 10/30/2019 13:19:30
+
+EX 6 standard 20160818_1: EX 6 standard 20160818_1.cydwr
+	cy_boot [v5.40] to [v5.80]
+	LIN_Dynamic [v3.40] to [v5.0]
+
+EX 6 standard 20160818_1: TopDesign.cysch
+	ADC_DelSig_1 [v3.0] to [v3.30]
+	CH_1 [v2.0] to [v2.20]
+	DAC_out [v2.0] to [v2.20]
+	Signal_in [v2.0] to [v2.20]
+	vRef_1 [v1.60] to [v1.70]
+	vRef_2 [v1.60] to [v1.70]
+	vRef_3 [v1.60] to [v1.70]
+	Control_Reg_1 [v1.70] to [v1.80]
+	Filter_1 [v2.20] to [v2.30]
+
+
