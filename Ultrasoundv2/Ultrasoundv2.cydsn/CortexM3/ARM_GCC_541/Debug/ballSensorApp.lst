@@ -1,0 +1,2328 @@
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"ballSensorApp.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	__aeabi_i2f
+  20              		.global	__aeabi_fmul
+  21              		.global	__aeabi_fadd
+  22              		.section	.text.Sample_int,"ax",%progbits
+  23              		.align	2
+  24              		.global	Sample_int
+  25              		.thumb
+  26              		.thumb_func
+  27              		.type	Sample_int, %function
+  28              	Sample_int:
+  29              	.LFB69:
+  30              		.file 1 "ballSensorApp.c"
+   1:ballSensorApp.c **** #include "ballSensorApp.h"
+   2:ballSensorApp.c **** 
+   3:ballSensorApp.c ****     
+   4:ballSensorApp.c **** void CompareValues(){
+   5:ballSensorApp.c ****     if (measurements %5 == 0 || measurements == 1){
+   6:ballSensorApp.c ****             if (V_Sample_AVG_float > max_value + ballEffect){
+   7:ballSensorApp.c ****                 LED_Write(1);
+   8:ballSensorApp.c ****                 PWM_motor_Stop();
+   9:ballSensorApp.c ****                 CyDelay(5000);
+  10:ballSensorApp.c ****             }
+  11:ballSensorApp.c ****         max_value=ADC_DelSig_1_CountsTo_Volts(V_Sample_AVG);
+  12:ballSensorApp.c ****     }
+  13:ballSensorApp.c **** }
+  14:ballSensorApp.c ****  
+  15:ballSensorApp.c **** float Measure(){
+  16:ballSensorApp.c ****     
+  17:ballSensorApp.c **** 	    V_Sample_SUM_1=0;
+  18:ballSensorApp.c **** 		V_Sample_SUM_2=0;
+  19:ballSensorApp.c **** 		V_Sample_MIN= ((1<<15)-1) ; // int: ((1<<15)-1) uint: 0-1 (32767)
+  20:ballSensorApp.c **** 		V_Sample_MAX=1 << 15;       // int: 1<<15       uint: 0   (32768)
+  21:ballSensorApp.c **** 
+  22:ballSensorApp.c **** 		for(i=0;i<(1 << (N_Sample));i++)    //Så længe i er mindre end 1<<N_sample  (1*2^10) = 1024
+  23:ballSensorApp.c **** 		{
+  24:ballSensorApp.c **** 			Control_Reg_1_Control=1;
+  25:ballSensorApp.c **** 			while(Control_Reg_1_Control);   // Hvad fanden sker der her?? WHILE så længe control register 
+  26:ballSensorApp.c **** 		}
+  27:ballSensorApp.c ****         
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 2
+
+
+  28:ballSensorApp.c **** 		V_Sample_AVG = V_Sample_SUM_1 >> (N_Sample);     // V_Sample_AVG er lig med 0 >> 10 (10*2^0) = 10
+  29:ballSensorApp.c ****         
+  30:ballSensorApp.c **** 		if(V_Sample_SUM_2>((float)V_Sample_AVG)*((float)V_Sample_AVG))
+  31:ballSensorApp.c **** 		{
+  32:ballSensorApp.c **** 			V_Sample_VAR=(V_Sample_SUM_2/( 1 << N_Sample))-((float)V_Sample_AVG)*((float)V_Sample_AVG);
+  33:ballSensorApp.c **** 		}
+  34:ballSensorApp.c **** 		else
+  35:ballSensorApp.c **** 		{
+  36:ballSensorApp.c **** 			V_Sample_VAR=0;
+  37:ballSensorApp.c **** 		}
+  38:ballSensorApp.c ****         
+  39:ballSensorApp.c ****         measurements++;
+  40:ballSensorApp.c ****         
+  41:ballSensorApp.c **** 		return V_Sample_AVG_float=ADC_DelSig_1_CountsTo_Volts(V_Sample_AVG);
+  42:ballSensorApp.c ****         
+  43:ballSensorApp.c ****         
+  44:ballSensorApp.c **** }
+  45:ballSensorApp.c ****     
+  46:ballSensorApp.c **** void DMA_1_Config()
+  47:ballSensorApp.c **** {
+  48:ballSensorApp.c **** 	/* Variable declarations for DMA_1 */
+  49:ballSensorApp.c **** 	/* Move these variable declarations to the top of the function */
+  50:ballSensorApp.c **** 	uint8 DMA_1_Chan;
+  51:ballSensorApp.c **** 	uint8 DMA_1_TD[1];
+  52:ballSensorApp.c **** 
+  53:ballSensorApp.c **** 	/* DMA Configuration for DMA_1 */
+  54:ballSensorApp.c **** 	#define DMA_1_BYTES_PER_BURST 2
+  55:ballSensorApp.c **** 	#define DMA_1_REQUEST_PER_BURST 1
+  56:ballSensorApp.c **** 	#define DMA_1_SRC_BASE (CYDEV_PERIPH_BASE)
+  57:ballSensorApp.c **** 	#define DMA_1_DST_BASE (CYDEV_PERIPH_BASE)
+  58:ballSensorApp.c **** 	DMA_1_Chan = DMA_1_DmaInitialize(DMA_1_BYTES_PER_BURST, DMA_1_REQUEST_PER_BURST, 
+  59:ballSensorApp.c **** 	HI16(DMA_1_SRC_BASE), HI16(DMA_1_DST_BASE));
+  60:ballSensorApp.c **** 	DMA_1_TD[0] = CyDmaTdAllocate();
+  61:ballSensorApp.c **** 	CyDmaTdSetConfiguration(DMA_1_TD[0], 2, DMA_INVALID_TD, TD_INC_DST_ADR);
+  62:ballSensorApp.c **** 	CyDmaTdSetAddress(DMA_1_TD[0], LO16((uint32)ADC_DelSig_1_DEC_SAMP_PTR), LO16((uint32)Filter_1_STAG
+  63:ballSensorApp.c **** 	CyDmaChSetInitialTd(DMA_1_Chan, DMA_1_TD[0]);
+  64:ballSensorApp.c **** 	CyDmaChEnable(DMA_1_Chan, 1);
+  65:ballSensorApp.c **** 
+  66:ballSensorApp.c **** }
+  67:ballSensorApp.c **** 
+  68:ballSensorApp.c **** void DMA_2_Config()
+  69:ballSensorApp.c **** {
+  70:ballSensorApp.c ****     /* Variable declarations for DMA_2 */
+  71:ballSensorApp.c ****     /* Move these variable declarations to the top of the function */
+  72:ballSensorApp.c ****     uint8 DMA_2_Chan;
+  73:ballSensorApp.c ****     uint8 DMA_2_TD[1];
+  74:ballSensorApp.c **** 
+  75:ballSensorApp.c ****     /* DMA Configuration for DMA_2 */
+  76:ballSensorApp.c ****     #define DMA_2_BYTES_PER_BURST 2
+  77:ballSensorApp.c ****     #define DMA_2_REQUEST_PER_BURST 1
+  78:ballSensorApp.c ****     #define DMA_2_SRC_BASE (CYDEV_PERIPH_BASE)
+  79:ballSensorApp.c ****     #define DMA_2_DST_BASE (CYDEV_SRAM_BASE)
+  80:ballSensorApp.c ****     DMA_2_Chan = DMA_2_DmaInitialize(DMA_2_BYTES_PER_BURST, DMA_2_REQUEST_PER_BURST, 
+  81:ballSensorApp.c ****     HI16(DMA_2_SRC_BASE), HI16(DMA_2_DST_BASE));
+  82:ballSensorApp.c ****     DMA_2_TD[0] = CyDmaTdAllocate();
+  83:ballSensorApp.c ****     CyDmaTdSetConfiguration(DMA_2_TD[0], 2, DMA_INVALID_TD,  DMA_2__TD_TERMOUT_EN | TD_INC_SRC_ADR 
+  84:ballSensorApp.c ****     CyDmaTdSetAddress(DMA_2_TD[0], LO16((uint32)Filter_1_HOLDAM_PTR), LO16((uint32)V_Sample));
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 3
+
+
+  85:ballSensorApp.c ****     CyDmaChSetInitialTd(DMA_2_Chan, DMA_2_TD[0]);
+  86:ballSensorApp.c ****     CyDmaChEnable(DMA_2_Chan, 1);
+  87:ballSensorApp.c **** }
+  88:ballSensorApp.c **** 
+  89:ballSensorApp.c **** void ballSensorInit()
+  90:ballSensorApp.c **** {
+  91:ballSensorApp.c **** 	Clock_1_Start();
+  92:ballSensorApp.c ****     Opamp_1_Start();
+  93:ballSensorApp.c **** 	TIA_1_Start();
+  94:ballSensorApp.c ****     UART_1_Start();
+  95:ballSensorApp.c **** 	Mixer_1_Start();
+  96:ballSensorApp.c **** 	ADC_DelSig_1_Start();
+  97:ballSensorApp.c **** 	ADC_DelSig_1_SetCoherency(ADC_DelSig_1_COHER_MID);
+  98:ballSensorApp.c **** 	ADC_DelSig_1_StartConvert();
+  99:ballSensorApp.c **** 	DMA_1_Config();
+ 100:ballSensorApp.c **** 	Filter_1_Start();
+ 101:ballSensorApp.c **** 	Filter_1_SetCoherency(Filter_1_CHANNEL_A, Filter_1_KEY_HIGH);
+ 102:ballSensorApp.c **** 	DMA_2_Config();
+ 103:ballSensorApp.c **** 	
+ 104:ballSensorApp.c **** 	isr_2_StartEx(Sample_int);
+ 105:ballSensorApp.c ****     //calibrate_StartEx(calibrate_isr);
+ 106:ballSensorApp.c **** 	Control_Reg_1_Control=0;
+ 107:ballSensorApp.c **** }
+ 108:ballSensorApp.c **** 
+ 109:ballSensorApp.c **** CY_ISR(Sample_int)
+ 110:ballSensorApp.c **** {
+  31              		.loc 1 110 0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35 0000 38B5     		push	{r3, r4, r5, lr}
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 3, -16
+  38              		.cfi_offset 4, -12
+  39              		.cfi_offset 5, -8
+  40              		.cfi_offset 14, -4
+ 111:ballSensorApp.c **** 	Control_Reg_1_Control=0;
+  41              		.loc 1 111 0
+  42 0002 0022     		movs	r2, #0
+  43 0004 114B     		ldr	r3, .L5
+  44 0006 1A70     		strb	r2, [r3]
+ 112:ballSensorApp.c **** 	V_Sample_SUM_1=V_Sample_SUM_1+V_Sample[0];
+  45              		.loc 1 112 0
+  46 0008 114B     		ldr	r3, .L5+4
+  47 000a B3F90040 		ldrsh	r4, [r3]
+  48 000e 114A     		ldr	r2, .L5+8
+  49 0010 1368     		ldr	r3, [r2]
+  50 0012 2344     		add	r3, r3, r4
+  51 0014 1360     		str	r3, [r2]
+ 113:ballSensorApp.c **** 	V_Sample_SUM_2=V_Sample_SUM_2+(((float)V_Sample[0])*((float)V_Sample[0]));
+  52              		.loc 1 113 0
+  53 0016 2046     		mov	r0, r4
+  54 0018 FFF7FEFF 		bl	__aeabi_i2f
+  55              	.LVL0:
+  56 001c 0146     		mov	r1, r0
+  57 001e FFF7FEFF 		bl	__aeabi_fmul
+  58              	.LVL1:
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 4
+
+
+  59 0022 0D4D     		ldr	r5, .L5+12
+  60 0024 2968     		ldr	r1, [r5]	@ float
+  61 0026 FFF7FEFF 		bl	__aeabi_fadd
+  62              	.LVL2:
+  63 002a 2860     		str	r0, [r5]	@ float
+ 114:ballSensorApp.c **** 	if(V_Sample[0]<V_Sample_MIN)V_Sample_MIN=V_Sample[0];
+  64              		.loc 1 114 0
+  65 002c 0B4B     		ldr	r3, .L5+16
+  66 002e B3F90030 		ldrsh	r3, [r3]
+  67 0032 9C42     		cmp	r4, r3
+  68 0034 01DA     		bge	.L2
+  69              		.loc 1 114 0 is_stmt 0 discriminator 1
+  70 0036 094B     		ldr	r3, .L5+16
+  71 0038 1C80     		strh	r4, [r3]	@ movhi
+  72              	.L2:
+ 115:ballSensorApp.c **** 	if(V_Sample[0]>V_Sample_MAX)V_Sample_MAX=V_Sample[0];
+  73              		.loc 1 115 0 is_stmt 1
+  74 003a 094B     		ldr	r3, .L5+20
+  75 003c B3F90030 		ldrsh	r3, [r3]
+  76 0040 9C42     		cmp	r4, r3
+  77 0042 01DD     		ble	.L1
+  78              		.loc 1 115 0 is_stmt 0 discriminator 1
+  79 0044 064B     		ldr	r3, .L5+20
+  80 0046 1C80     		strh	r4, [r3]	@ movhi
+  81              	.L1:
+  82 0048 38BD     		pop	{r3, r4, r5, pc}
+  83              	.L6:
+  84 004a 00BF     		.align	2
+  85              	.L5:
+  86 004c 7A640040 		.word	1073767546
+  87 0050 00000000 		.word	V_Sample
+  88 0054 00000000 		.word	V_Sample_SUM_1
+  89 0058 00000000 		.word	V_Sample_SUM_2
+  90 005c 00000000 		.word	V_Sample_MIN
+  91 0060 00000000 		.word	V_Sample_MAX
+  92              		.cfi_endproc
+  93              	.LFE69:
+  94              		.size	Sample_int, .-Sample_int
+  95              		.global	__aeabi_f2d
+  96              		.global	__aeabi_dadd
+  97              		.global	__aeabi_dcmpgt
+  98              		.section	.text.CompareValues,"ax",%progbits
+  99              		.align	2
+ 100              		.global	CompareValues
+ 101              		.thumb
+ 102              		.thumb_func
+ 103              		.type	CompareValues, %function
+ 104              	CompareValues:
+ 105              	.LFB64:
+   4:ballSensorApp.c ****     if (measurements %5 == 0 || measurements == 1){
+ 106              		.loc 1 4 0 is_stmt 1
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110 0000 38B5     		push	{r3, r4, r5, lr}
+ 111              		.cfi_def_cfa_offset 16
+ 112              		.cfi_offset 3, -16
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 5
+
+
+ 113              		.cfi_offset 4, -12
+ 114              		.cfi_offset 5, -8
+ 115              		.cfi_offset 14, -4
+   5:ballSensorApp.c ****             if (V_Sample_AVG_float > max_value + ballEffect){
+ 116              		.loc 1 5 0
+ 117 0002 1D4B     		ldr	r3, .L14+8
+ 118 0004 1A68     		ldr	r2, [r3]
+ 119 0006 1D4B     		ldr	r3, .L14+12
+ 120 0008 83FB0231 		smull	r3, r1, r3, r2
+ 121 000c D317     		asrs	r3, r2, #31
+ 122 000e C3EB6103 		rsb	r3, r3, r1, asr #1
+ 123 0012 03EB8303 		add	r3, r3, r3, lsl #2
+ 124 0016 9A42     		cmp	r2, r3
+ 125 0018 01D0     		beq	.L8
+   5:ballSensorApp.c ****             if (V_Sample_AVG_float > max_value + ballEffect){
+ 126              		.loc 1 5 0 is_stmt 0 discriminator 1
+ 127 001a 012A     		cmp	r2, #1
+ 128 001c 25D1     		bne	.L7
+ 129              	.L8:
+   6:ballSensorApp.c ****                 LED_Write(1);
+ 130              		.loc 1 6 0 is_stmt 1
+ 131 001e 184B     		ldr	r3, .L14+16
+ 132 0020 1868     		ldr	r0, [r3]	@ float
+ 133 0022 FFF7FEFF 		bl	__aeabi_f2d
+ 134              	.LVL3:
+ 135 0026 0446     		mov	r4, r0
+ 136 0028 0D46     		mov	r5, r1
+ 137 002a 164B     		ldr	r3, .L14+20
+ 138 002c 1868     		ldr	r0, [r3]	@ float
+ 139 002e FFF7FEFF 		bl	__aeabi_f2d
+ 140              	.LVL4:
+ 141 0032 0FA3     		adr	r3, .L14
+ 142 0034 D3E90023 		ldrd	r2, [r3]
+ 143 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 144              	.LVL5:
+ 145 003c 0246     		mov	r2, r0
+ 146 003e 0B46     		mov	r3, r1
+ 147 0040 2046     		mov	r0, r4
+ 148 0042 2946     		mov	r1, r5
+ 149 0044 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 150              	.LVL6:
+ 151 0048 40B1     		cbz	r0, .L10
+   7:ballSensorApp.c ****                 PWM_motor_Stop();
+ 152              		.loc 1 7 0
+ 153 004a 0120     		movs	r0, #1
+ 154 004c FFF7FEFF 		bl	LED_Write
+ 155              	.LVL7:
+   8:ballSensorApp.c ****                 CyDelay(5000);
+ 156              		.loc 1 8 0
+ 157 0050 FFF7FEFF 		bl	PWM_motor_Stop
+ 158              	.LVL8:
+   9:ballSensorApp.c ****             }
+ 159              		.loc 1 9 0
+ 160 0054 41F28830 		movw	r0, #5000
+ 161 0058 FFF7FEFF 		bl	CyDelay
+ 162              	.LVL9:
+ 163              	.L10:
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 6
+
+
+  11:ballSensorApp.c ****     }
+ 164              		.loc 1 11 0
+ 165 005c 0A4B     		ldr	r3, .L14+24
+ 166 005e B3F90000 		ldrsh	r0, [r3]
+ 167 0062 FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_Volts
+ 168              	.LVL10:
+ 169 0066 074B     		ldr	r3, .L14+20
+ 170 0068 1860     		str	r0, [r3]	@ float
+ 171              	.L7:
+ 172 006a 38BD     		pop	{r3, r4, r5, pc}
+ 173              	.L15:
+ 174 006c AFF30080 		.align	3
+ 175              	.L14:
+ 176 0070 FCA9F1D2 		.word	-755914244
+ 177 0074 4D62603F 		.word	1063281229
+ 178 0078 00000000 		.word	measurements
+ 179 007c 67666666 		.word	1717986919
+ 180 0080 00000000 		.word	V_Sample_AVG_float
+ 181 0084 00000000 		.word	max_value
+ 182 0088 00000000 		.word	V_Sample_AVG
+ 183              		.cfi_endproc
+ 184              	.LFE64:
+ 185              		.size	CompareValues, .-CompareValues
+ 186              		.global	__aeabi_fcmplt
+ 187              		.global	__aeabi_fsub
+ 188              		.section	.text.Measure,"ax",%progbits
+ 189              		.align	2
+ 190              		.global	Measure
+ 191              		.thumb
+ 192              		.thumb_func
+ 193              		.type	Measure, %function
+ 194              	Measure:
+ 195              	.LFB65:
+  15:ballSensorApp.c ****     
+ 196              		.loc 1 15 0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+  17:ballSensorApp.c **** 		V_Sample_SUM_2=0;
+ 200              		.loc 1 17 0
+ 201 0000 0023     		movs	r3, #0
+ 202 0002 264A     		ldr	r2, .L26
+ 203 0004 1360     		str	r3, [r2]
+  18:ballSensorApp.c **** 		V_Sample_MIN= ((1<<15)-1) ; // int: ((1<<15)-1) uint: 0-1 (32767)
+ 204              		.loc 1 18 0
+ 205 0006 0021     		movs	r1, #0
+ 206 0008 254A     		ldr	r2, .L26+4
+ 207 000a 1160     		str	r1, [r2]	@ float
+  19:ballSensorApp.c **** 		V_Sample_MAX=1 << 15;       // int: 1<<15       uint: 0   (32768)
+ 208              		.loc 1 19 0
+ 209 000c 47F6FF71 		movw	r1, #32767
+ 210 0010 244A     		ldr	r2, .L26+8
+ 211 0012 1180     		strh	r1, [r2]	@ movhi
+  20:ballSensorApp.c **** 
+ 212              		.loc 1 20 0
+ 213 0014 4FF40041 		mov	r1, #32768
+ 214 0018 234A     		ldr	r2, .L26+12
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 7
+
+
+ 215 001a 1180     		strh	r1, [r2]	@ movhi
+  22:ballSensorApp.c **** 		{
+ 216              		.loc 1 22 0
+ 217 001c 234A     		ldr	r2, .L26+16
+ 218 001e 1380     		strh	r3, [r2]	@ movhi
+ 219 0020 0BE0     		b	.L17
+ 220              	.L19:
+  24:ballSensorApp.c **** 			while(Control_Reg_1_Control);   // Hvad fanden sker der her?? WHILE så længe control register 
+ 221              		.loc 1 24 0
+ 222 0022 0122     		movs	r2, #1
+ 223 0024 224B     		ldr	r3, .L26+20
+ 224 0026 1A70     		strb	r2, [r3]
+ 225              	.L18:
+  25:ballSensorApp.c **** 		}
+ 226              		.loc 1 25 0 discriminator 1
+ 227 0028 214B     		ldr	r3, .L26+20
+ 228 002a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 229 002c 13F0FF0F 		tst	r3, #255
+ 230 0030 FAD1     		bne	.L18
+  22:ballSensorApp.c **** 		{
+ 231              		.loc 1 22 0 discriminator 2
+ 232 0032 1E4A     		ldr	r2, .L26+16
+ 233 0034 1388     		ldrh	r3, [r2]
+ 234 0036 0133     		adds	r3, r3, #1
+ 235 0038 1380     		strh	r3, [r2]	@ movhi
+ 236              	.L17:
+  22:ballSensorApp.c **** 		{
+ 237              		.loc 1 22 0 is_stmt 0 discriminator 1
+ 238 003a 1C4B     		ldr	r3, .L26+16
+ 239 003c 1B88     		ldrh	r3, [r3]
+ 240 003e B3F5806F 		cmp	r3, #1024
+ 241 0042 EED3     		bcc	.L19
+  15:ballSensorApp.c ****     
+ 242              		.loc 1 15 0 is_stmt 1
+ 243 0044 70B5     		push	{r4, r5, r6, lr}
+ 244              		.cfi_def_cfa_offset 16
+ 245              		.cfi_offset 4, -16
+ 246              		.cfi_offset 5, -12
+ 247              		.cfi_offset 6, -8
+ 248              		.cfi_offset 14, -4
+  28:ballSensorApp.c ****         
+ 249              		.loc 1 28 0
+ 250 0046 154B     		ldr	r3, .L26
+ 251 0048 1C68     		ldr	r4, [r3]
+ 252 004a 44F38F24 		sbfx	r4, r4, #10, #16
+ 253 004e 194B     		ldr	r3, .L26+24
+ 254 0050 1C80     		strh	r4, [r3]	@ movhi
+  30:ballSensorApp.c **** 		{
+ 255              		.loc 1 30 0
+ 256 0052 2046     		mov	r0, r4
+ 257 0054 FFF7FEFF 		bl	__aeabi_i2f
+ 258              	.LVL11:
+ 259 0058 0146     		mov	r1, r0
+ 260 005a FFF7FEFF 		bl	__aeabi_fmul
+ 261              	.LVL12:
+ 262 005e 0646     		mov	r6, r0
+ 263 0060 0F4B     		ldr	r3, .L26+4
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 8
+
+
+ 264 0062 1D68     		ldr	r5, [r3]	@ float
+ 265 0064 2946     		mov	r1, r5
+ 266 0066 FFF7FEFF 		bl	__aeabi_fcmplt
+ 267              	.LVL13:
+ 268 006a 50B1     		cbz	r0, .L24
+  32:ballSensorApp.c **** 		}
+ 269              		.loc 1 32 0
+ 270 006c 4FF06A51 		mov	r1, #981467136
+ 271 0070 2846     		mov	r0, r5
+ 272 0072 FFF7FEFF 		bl	__aeabi_fmul
+ 273              	.LVL14:
+ 274 0076 3146     		mov	r1, r6
+ 275 0078 FFF7FEFF 		bl	__aeabi_fsub
+ 276              	.LVL15:
+ 277 007c 0E4B     		ldr	r3, .L26+28
+ 278 007e 1860     		str	r0, [r3]	@ float
+ 279 0080 02E0     		b	.L22
+ 280              	.L24:
+  36:ballSensorApp.c **** 		}
+ 281              		.loc 1 36 0
+ 282 0082 0022     		movs	r2, #0
+ 283 0084 0C4B     		ldr	r3, .L26+28
+ 284 0086 1A60     		str	r2, [r3]	@ float
+ 285              	.L22:
+  39:ballSensorApp.c ****         
+ 286              		.loc 1 39 0
+ 287 0088 0C4A     		ldr	r2, .L26+32
+ 288 008a 1368     		ldr	r3, [r2]
+ 289 008c 0133     		adds	r3, r3, #1
+ 290 008e 1360     		str	r3, [r2]
+  41:ballSensorApp.c ****         
+ 291              		.loc 1 41 0
+ 292 0090 2046     		mov	r0, r4
+ 293 0092 FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_Volts
+ 294              	.LVL16:
+ 295 0096 0A4B     		ldr	r3, .L26+36
+ 296 0098 1860     		str	r0, [r3]	@ float
+  44:ballSensorApp.c ****     
+ 297              		.loc 1 44 0
+ 298 009a 70BD     		pop	{r4, r5, r6, pc}
+ 299              	.L27:
+ 300              		.align	2
+ 301              	.L26:
+ 302 009c 00000000 		.word	V_Sample_SUM_1
+ 303 00a0 00000000 		.word	V_Sample_SUM_2
+ 304 00a4 00000000 		.word	V_Sample_MIN
+ 305 00a8 00000000 		.word	V_Sample_MAX
+ 306 00ac 00000000 		.word	i
+ 307 00b0 7A640040 		.word	1073767546
+ 308 00b4 00000000 		.word	V_Sample_AVG
+ 309 00b8 00000000 		.word	V_Sample_VAR
+ 310 00bc 00000000 		.word	measurements
+ 311 00c0 00000000 		.word	V_Sample_AVG_float
+ 312              		.cfi_endproc
+ 313              	.LFE65:
+ 314              		.size	Measure, .-Measure
+ 315              		.section	.text.DMA_1_Config,"ax",%progbits
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 9
+
+
+ 316              		.align	2
+ 317              		.global	DMA_1_Config
+ 318              		.thumb
+ 319              		.thumb_func
+ 320              		.type	DMA_1_Config, %function
+ 321              	DMA_1_Config:
+ 322              	.LFB66:
+  47:ballSensorApp.c **** 	/* Variable declarations for DMA_1 */
+ 323              		.loc 1 47 0
+ 324              		.cfi_startproc
+ 325              		@ args = 0, pretend = 0, frame = 0
+ 326              		@ frame_needed = 0, uses_anonymous_args = 0
+ 327 0000 38B5     		push	{r3, r4, r5, lr}
+ 328              		.cfi_def_cfa_offset 16
+ 329              		.cfi_offset 3, -16
+ 330              		.cfi_offset 4, -12
+ 331              		.cfi_offset 5, -8
+ 332              		.cfi_offset 14, -4
+  58:ballSensorApp.c **** 	HI16(DMA_1_SRC_BASE), HI16(DMA_1_DST_BASE));
+ 333              		.loc 1 58 0
+ 334 0002 4FF48043 		mov	r3, #16384
+ 335 0006 1A46     		mov	r2, r3
+ 336 0008 0121     		movs	r1, #1
+ 337 000a 0220     		movs	r0, #2
+ 338 000c FFF7FEFF 		bl	DMA_1_DmaInitialize
+ 339              	.LVL17:
+ 340 0010 0446     		mov	r4, r0
+ 341              	.LVL18:
+  60:ballSensorApp.c **** 	CyDmaTdSetConfiguration(DMA_1_TD[0], 2, DMA_INVALID_TD, TD_INC_DST_ADR);
+ 342              		.loc 1 60 0
+ 343 0012 FFF7FEFF 		bl	CyDmaTdAllocate
+ 344              	.LVL19:
+ 345 0016 0546     		mov	r5, r0
+  61:ballSensorApp.c **** 	CyDmaTdSetAddress(DMA_1_TD[0], LO16((uint32)ADC_DelSig_1_DEC_SAMP_PTR), LO16((uint32)Filter_1_STAG
+ 346              		.loc 1 61 0
+ 347 0018 0223     		movs	r3, #2
+ 348 001a FF22     		movs	r2, #255
+ 349 001c 1946     		mov	r1, r3
+ 350 001e FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 351              	.LVL20:
+  62:ballSensorApp.c **** 	CyDmaChSetInitialTd(DMA_1_Chan, DMA_1_TD[0]);
+ 352              		.loc 1 62 0
+ 353 0022 4CF2A172 		movw	r2, #51105
+ 354 0026 44F61061 		movw	r1, #19984
+ 355 002a 2846     		mov	r0, r5
+ 356 002c FFF7FEFF 		bl	CyDmaTdSetAddress
+ 357              	.LVL21:
+  63:ballSensorApp.c **** 	CyDmaChEnable(DMA_1_Chan, 1);
+ 358              		.loc 1 63 0
+ 359 0030 2946     		mov	r1, r5
+ 360 0032 2046     		mov	r0, r4
+ 361 0034 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 362              	.LVL22:
+  64:ballSensorApp.c **** 
+ 363              		.loc 1 64 0
+ 364 0038 0121     		movs	r1, #1
+ 365 003a 2046     		mov	r0, r4
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 10
+
+
+ 366 003c FFF7FEFF 		bl	CyDmaChEnable
+ 367              	.LVL23:
+ 368 0040 38BD     		pop	{r3, r4, r5, pc}
+ 369              		.cfi_endproc
+ 370              	.LFE66:
+ 371              		.size	DMA_1_Config, .-DMA_1_Config
+ 372 0042 00BF     		.section	.text.DMA_2_Config,"ax",%progbits
+ 373              		.align	2
+ 374              		.global	DMA_2_Config
+ 375              		.thumb
+ 376              		.thumb_func
+ 377              		.type	DMA_2_Config, %function
+ 378              	DMA_2_Config:
+ 379              	.LFB67:
+  69:ballSensorApp.c ****     /* Variable declarations for DMA_2 */
+ 380              		.loc 1 69 0
+ 381              		.cfi_startproc
+ 382              		@ args = 0, pretend = 0, frame = 0
+ 383              		@ frame_needed = 0, uses_anonymous_args = 0
+ 384 0000 38B5     		push	{r3, r4, r5, lr}
+ 385              		.cfi_def_cfa_offset 16
+ 386              		.cfi_offset 3, -16
+ 387              		.cfi_offset 4, -12
+ 388              		.cfi_offset 5, -8
+ 389              		.cfi_offset 14, -4
+  80:ballSensorApp.c ****     HI16(DMA_2_SRC_BASE), HI16(DMA_2_DST_BASE));
+ 390              		.loc 1 80 0
+ 391 0002 41F6FF73 		movw	r3, #8191
+ 392 0006 4FF48042 		mov	r2, #16384
+ 393 000a 0121     		movs	r1, #1
+ 394 000c 0220     		movs	r0, #2
+ 395 000e FFF7FEFF 		bl	DMA_2_DmaInitialize
+ 396              	.LVL24:
+ 397 0012 0446     		mov	r4, r0
+ 398              	.LVL25:
+  82:ballSensorApp.c ****     CyDmaTdSetConfiguration(DMA_2_TD[0], 2, DMA_INVALID_TD,  DMA_2__TD_TERMOUT_EN | TD_INC_SRC_ADR 
+ 399              		.loc 1 82 0
+ 400 0014 FFF7FEFF 		bl	CyDmaTdAllocate
+ 401              	.LVL26:
+ 402 0018 0546     		mov	r5, r0
+  83:ballSensorApp.c ****     CyDmaTdSetAddress(DMA_2_TD[0], LO16((uint32)Filter_1_HOLDAM_PTR), LO16((uint32)V_Sample));
+ 403              		.loc 1 83 0
+ 404 001a 0523     		movs	r3, #5
+ 405 001c FF22     		movs	r2, #255
+ 406 001e 0221     		movs	r1, #2
+ 407 0020 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 408              	.LVL27:
+  84:ballSensorApp.c ****     CyDmaChSetInitialTd(DMA_2_Chan, DMA_2_TD[0]);
+ 409              		.loc 1 84 0
+ 410 0024 074A     		ldr	r2, .L32
+ 411 0026 92B2     		uxth	r2, r2
+ 412 0028 4CF2A971 		movw	r1, #51113
+ 413 002c 2846     		mov	r0, r5
+ 414 002e FFF7FEFF 		bl	CyDmaTdSetAddress
+ 415              	.LVL28:
+  85:ballSensorApp.c ****     CyDmaChEnable(DMA_2_Chan, 1);
+ 416              		.loc 1 85 0
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 11
+
+
+ 417 0032 2946     		mov	r1, r5
+ 418 0034 2046     		mov	r0, r4
+ 419 0036 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 420              	.LVL29:
+  86:ballSensorApp.c **** }
+ 421              		.loc 1 86 0
+ 422 003a 0121     		movs	r1, #1
+ 423 003c 2046     		mov	r0, r4
+ 424 003e FFF7FEFF 		bl	CyDmaChEnable
+ 425              	.LVL30:
+ 426 0042 38BD     		pop	{r3, r4, r5, pc}
+ 427              	.LVL31:
+ 428              	.L33:
+ 429              		.align	2
+ 430              	.L32:
+ 431 0044 00000000 		.word	V_Sample
+ 432              		.cfi_endproc
+ 433              	.LFE67:
+ 434              		.size	DMA_2_Config, .-DMA_2_Config
+ 435              		.section	.text.ballSensorInit,"ax",%progbits
+ 436              		.align	2
+ 437              		.global	ballSensorInit
+ 438              		.thumb
+ 439              		.thumb_func
+ 440              		.type	ballSensorInit, %function
+ 441              	ballSensorInit:
+ 442              	.LFB68:
+  90:ballSensorApp.c **** 	Clock_1_Start();
+ 443              		.loc 1 90 0
+ 444              		.cfi_startproc
+ 445              		@ args = 0, pretend = 0, frame = 0
+ 446              		@ frame_needed = 0, uses_anonymous_args = 0
+ 447 0000 08B5     		push	{r3, lr}
+ 448              		.cfi_def_cfa_offset 8
+ 449              		.cfi_offset 3, -8
+ 450              		.cfi_offset 14, -4
+  91:ballSensorApp.c ****     Opamp_1_Start();
+ 451              		.loc 1 91 0
+ 452 0002 FFF7FEFF 		bl	Clock_1_Start
+ 453              	.LVL32:
+  92:ballSensorApp.c **** 	TIA_1_Start();
+ 454              		.loc 1 92 0
+ 455 0006 FFF7FEFF 		bl	Opamp_1_Start
+ 456              	.LVL33:
+  93:ballSensorApp.c ****     UART_1_Start();
+ 457              		.loc 1 93 0
+ 458 000a FFF7FEFF 		bl	TIA_1_Start
+ 459              	.LVL34:
+  94:ballSensorApp.c **** 	Mixer_1_Start();
+ 460              		.loc 1 94 0
+ 461 000e FFF7FEFF 		bl	UART_1_Start
+ 462              	.LVL35:
+  95:ballSensorApp.c **** 	ADC_DelSig_1_Start();
+ 463              		.loc 1 95 0
+ 464 0012 FFF7FEFF 		bl	Mixer_1_Start
+ 465              	.LVL36:
+  96:ballSensorApp.c **** 	ADC_DelSig_1_SetCoherency(ADC_DelSig_1_COHER_MID);
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 12
+
+
+ 466              		.loc 1 96 0
+ 467 0016 FFF7FEFF 		bl	ADC_DelSig_1_Start
+ 468              	.LVL37:
+  97:ballSensorApp.c **** 	ADC_DelSig_1_StartConvert();
+ 469              		.loc 1 97 0
+ 470 001a 0220     		movs	r0, #2
+ 471 001c FFF7FEFF 		bl	ADC_DelSig_1_SetCoherency
+ 472              	.LVL38:
+  98:ballSensorApp.c **** 	DMA_1_Config();
+ 473              		.loc 1 98 0
+ 474 0020 FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+ 475              	.LVL39:
+  99:ballSensorApp.c **** 	Filter_1_Start();
+ 476              		.loc 1 99 0
+ 477 0024 FFF7FEFF 		bl	DMA_1_Config
+ 478              	.LVL40:
+ 100:ballSensorApp.c **** 	Filter_1_SetCoherency(Filter_1_CHANNEL_A, Filter_1_KEY_HIGH);
+ 479              		.loc 1 100 0
+ 480 0028 FFF7FEFF 		bl	Filter_1_Start
+ 481              	.LVL41:
+ 101:ballSensorApp.c **** 	DMA_2_Config();
+ 482              		.loc 1 101 0
+ 483 002c 0221     		movs	r1, #2
+ 484 002e 0020     		movs	r0, #0
+ 485 0030 FFF7FEFF 		bl	Filter_1_SetCoherency
+ 486              	.LVL42:
+ 102:ballSensorApp.c **** 	
+ 487              		.loc 1 102 0
+ 488 0034 FFF7FEFF 		bl	DMA_2_Config
+ 489              	.LVL43:
+ 104:ballSensorApp.c ****     //calibrate_StartEx(calibrate_isr);
+ 490              		.loc 1 104 0
+ 491 0038 0348     		ldr	r0, .L36
+ 492 003a FFF7FEFF 		bl	isr_2_StartEx
+ 493              	.LVL44:
+ 106:ballSensorApp.c **** }
+ 494              		.loc 1 106 0
+ 495 003e 0022     		movs	r2, #0
+ 496 0040 024B     		ldr	r3, .L36+4
+ 497 0042 1A70     		strb	r2, [r3]
+ 498 0044 08BD     		pop	{r3, pc}
+ 499              	.L37:
+ 500 0046 00BF     		.align	2
+ 501              	.L36:
+ 502 0048 00000000 		.word	Sample_int
+ 503 004c 7A640040 		.word	1073767546
+ 504              		.cfi_endproc
+ 505              	.LFE68:
+ 506              		.size	ballSensorInit, .-ballSensorInit
+ 507              		.comm	max_value,4,4
+ 508              		.comm	measurements,4,4
+ 509              		.comm	numberOfMeasurements,255,4
+ 510              		.comm	value,255,4
+ 511              		.comm	i,2,2
+ 512              		.comm	V_Sample_AVG_float,4,4
+ 513              		.comm	V_Sample_VAR,4,4
+ 514              		.comm	V_Sample_AVG,2,2
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 13
+
+
+ 515              		.comm	V_Sample_MAX,2,2
+ 516              		.comm	V_Sample_MIN,2,2
+ 517              		.comm	V_Sample_SUM_2,4,4
+ 518              		.comm	V_Sample_SUM_1,4,4
+ 519              		.comm	V_Sample,2,4
+ 520              		.text
+ 521              	.Letext0:
+ 522              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 523              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 524              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 525              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 526              		.file 6 "ballSensorApp.h"
+ 527              		.file 7 "Generated_Source\\PSoC5/LED.h"
+ 528              		.file 8 "Generated_Source\\PSoC5/PWM_motor.h"
+ 529              		.file 9 "Generated_Source\\PSoC5/CyLib.h"
+ 530              		.file 10 "Generated_Source\\PSoC5/ADC_DelSig_1.h"
+ 531              		.file 11 "Generated_Source\\PSoC5/DMA_1_dma.h"
+ 532              		.file 12 "Generated_Source\\PSoC5/CYDMAC.H"
+ 533              		.file 13 "Generated_Source\\PSoC5/DMA_2_dma.h"
+ 534              		.file 14 "Generated_Source\\PSoC5/Clock_1.h"
+ 535              		.file 15 "Generated_Source\\PSoC5/Opamp_1.h"
+ 536              		.file 16 "Generated_Source\\PSoC5/TIA_1.h"
+ 537              		.file 17 "Generated_Source\\PSoC5/UART_1.h"
+ 538              		.file 18 "Generated_Source\\PSoC5/Mixer_1.h"
+ 539              		.file 19 "Generated_Source\\PSoC5/Filter_1.h"
+ 540              		.file 20 "Generated_Source\\PSoC5/isr_2.h"
+ 541              		.section	.debug_info,"",%progbits
+ 542              	.Ldebug_info0:
+ 543 0000 DD050000 		.4byte	0x5dd
+ 544 0004 0400     		.2byte	0x4
+ 545 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 546 000a 04       		.byte	0x4
+ 547 000b 01       		.uleb128 0x1
+ 548 000c 87030000 		.4byte	.LASF65
+ 549 0010 0C       		.byte	0xc
+ 550 0011 D9000000 		.4byte	.LASF66
+ 551 0015 1D040000 		.4byte	.LASF67
+ 552 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 553 001d 00000000 		.4byte	0
+ 554 0021 00000000 		.4byte	.Ldebug_line0
+ 555 0025 02       		.uleb128 0x2
+ 556 0026 01       		.byte	0x1
+ 557 0027 06       		.byte	0x6
+ 558 0028 08020000 		.4byte	.LASF0
+ 559 002c 02       		.uleb128 0x2
+ 560 002d 01       		.byte	0x1
+ 561 002e 08       		.byte	0x8
+ 562 002f FA010000 		.4byte	.LASF1
+ 563 0033 02       		.uleb128 0x2
+ 564 0034 02       		.byte	0x2
+ 565 0035 05       		.byte	0x5
+ 566 0036 72000000 		.4byte	.LASF2
+ 567 003a 02       		.uleb128 0x2
+ 568 003b 02       		.byte	0x2
+ 569 003c 07       		.byte	0x7
+ 570 003d B0020000 		.4byte	.LASF3
+ 571 0041 03       		.uleb128 0x3
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 14
+
+
+ 572 0042 3F030000 		.4byte	.LASF9
+ 573 0046 02       		.byte	0x2
+ 574 0047 3F       		.byte	0x3f
+ 575 0048 4C000000 		.4byte	0x4c
+ 576 004c 02       		.uleb128 0x2
+ 577 004d 04       		.byte	0x4
+ 578 004e 05       		.byte	0x5
+ 579 004f 8B010000 		.4byte	.LASF4
+ 580 0053 02       		.uleb128 0x2
+ 581 0054 04       		.byte	0x4
+ 582 0055 07       		.byte	0x7
+ 583 0056 EE020000 		.4byte	.LASF5
+ 584 005a 02       		.uleb128 0x2
+ 585 005b 08       		.byte	0x8
+ 586 005c 05       		.byte	0x5
+ 587 005d 69010000 		.4byte	.LASF6
+ 588 0061 02       		.uleb128 0x2
+ 589 0062 08       		.byte	0x8
+ 590 0063 07       		.byte	0x7
+ 591 0064 14020000 		.4byte	.LASF7
+ 592 0068 04       		.uleb128 0x4
+ 593 0069 04       		.byte	0x4
+ 594 006a 05       		.byte	0x5
+ 595 006b 696E7400 		.ascii	"int\000"
+ 596 006f 02       		.uleb128 0x2
+ 597 0070 04       		.byte	0x4
+ 598 0071 07       		.byte	0x7
+ 599 0072 39020000 		.4byte	.LASF8
+ 600 0076 03       		.uleb128 0x3
+ 601 0077 A8020000 		.4byte	.LASF10
+ 602 007b 03       		.byte	0x3
+ 603 007c 2C       		.byte	0x2c
+ 604 007d 41000000 		.4byte	0x41
+ 605 0081 05       		.uleb128 0x5
+ 606 0082 2A010000 		.4byte	.LASF11
+ 607 0086 04       		.byte	0x4
+ 608 0087 E401     		.2byte	0x1e4
+ 609 0089 2C000000 		.4byte	0x2c
+ 610 008d 05       		.uleb128 0x5
+ 611 008e 1D010000 		.4byte	.LASF12
+ 612 0092 04       		.byte	0x4
+ 613 0093 E501     		.2byte	0x1e5
+ 614 0095 3A000000 		.4byte	0x3a
+ 615 0099 05       		.uleb128 0x5
+ 616 009a 22030000 		.4byte	.LASF13
+ 617 009e 04       		.byte	0x4
+ 618 009f E601     		.2byte	0x1e6
+ 619 00a1 53000000 		.4byte	0x53
+ 620 00a5 05       		.uleb128 0x5
+ 621 00a6 24010000 		.4byte	.LASF14
+ 622 00aa 04       		.byte	0x4
+ 623 00ab E801     		.2byte	0x1e8
+ 624 00ad 33000000 		.4byte	0x33
+ 625 00b1 05       		.uleb128 0x5
+ 626 00b2 1C030000 		.4byte	.LASF15
+ 627 00b6 04       		.byte	0x4
+ 628 00b7 E901     		.2byte	0x1e9
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 15
+
+
+ 629 00b9 4C000000 		.4byte	0x4c
+ 630 00bd 02       		.uleb128 0x2
+ 631 00be 04       		.byte	0x4
+ 632 00bf 04       		.byte	0x4
+ 633 00c0 63010000 		.4byte	.LASF16
+ 634 00c4 02       		.uleb128 0x2
+ 635 00c5 08       		.byte	0x8
+ 636 00c6 04       		.byte	0x4
+ 637 00c7 52000000 		.4byte	.LASF17
+ 638 00cb 02       		.uleb128 0x2
+ 639 00cc 01       		.byte	0x1
+ 640 00cd 08       		.byte	0x8
+ 641 00ce A3020000 		.4byte	.LASF18
+ 642 00d2 05       		.uleb128 0x5
+ 643 00d3 E9020000 		.4byte	.LASF19
+ 644 00d7 04       		.byte	0x4
+ 645 00d8 8E02     		.2byte	0x28e
+ 646 00da DE000000 		.4byte	0xde
+ 647 00de 06       		.uleb128 0x6
+ 648 00df 81000000 		.4byte	0x81
+ 649 00e3 02       		.uleb128 0x2
+ 650 00e4 08       		.byte	0x8
+ 651 00e5 04       		.byte	0x4
+ 652 00e6 E4010000 		.4byte	.LASF20
+ 653 00ea 02       		.uleb128 0x2
+ 654 00eb 04       		.byte	0x4
+ 655 00ec 07       		.byte	0x7
+ 656 00ed AB000000 		.4byte	.LASF21
+ 657 00f1 07       		.uleb128 0x7
+ 658 00f2 30010000 		.4byte	.LASF68
+ 659 00f6 01       		.byte	0x1
+ 660 00f7 6D       		.byte	0x6d
+ 661 00f8 00000000 		.4byte	.LFB69
+ 662 00fc 64000000 		.4byte	.LFE69-.LFB69
+ 663 0100 01       		.uleb128 0x1
+ 664 0101 9C       		.byte	0x9c
+ 665 0102 08       		.uleb128 0x8
+ 666 0103 2B020000 		.4byte	.LASF22
+ 667 0107 01       		.byte	0x1
+ 668 0108 04       		.byte	0x4
+ 669 0109 00000000 		.4byte	.LFB64
+ 670 010d 8C000000 		.4byte	.LFE64-.LFB64
+ 671 0111 01       		.uleb128 0x1
+ 672 0112 9C       		.byte	0x9c
+ 673 0113 52010000 		.4byte	0x152
+ 674 0117 09       		.uleb128 0x9
+ 675 0118 50000000 		.4byte	.LVL7
+ 676 011c EE040000 		.4byte	0x4ee
+ 677 0120 2A010000 		.4byte	0x12a
+ 678 0124 0A       		.uleb128 0xa
+ 679 0125 01       		.uleb128 0x1
+ 680 0126 50       		.byte	0x50
+ 681 0127 01       		.uleb128 0x1
+ 682 0128 31       		.byte	0x31
+ 683 0129 00       		.byte	0
+ 684 012a 0B       		.uleb128 0xb
+ 685 012b 54000000 		.4byte	.LVL8
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 16
+
+
+ 686 012f F9040000 		.4byte	0x4f9
+ 687 0133 09       		.uleb128 0x9
+ 688 0134 5C000000 		.4byte	.LVL9
+ 689 0138 04050000 		.4byte	0x504
+ 690 013c 48010000 		.4byte	0x148
+ 691 0140 0A       		.uleb128 0xa
+ 692 0141 01       		.uleb128 0x1
+ 693 0142 50       		.byte	0x50
+ 694 0143 03       		.uleb128 0x3
+ 695 0144 0A       		.byte	0xa
+ 696 0145 8813     		.2byte	0x1388
+ 697 0147 00       		.byte	0
+ 698 0148 0B       		.uleb128 0xb
+ 699 0149 66000000 		.4byte	.LVL10
+ 700 014d 0F050000 		.4byte	0x50f
+ 701 0151 00       		.byte	0
+ 702 0152 0C       		.uleb128 0xc
+ 703 0153 C3020000 		.4byte	.LASF69
+ 704 0157 01       		.byte	0x1
+ 705 0158 0F       		.byte	0xf
+ 706 0159 BD000000 		.4byte	0xbd
+ 707 015d 00000000 		.4byte	.LFB65
+ 708 0161 C4000000 		.4byte	.LFE65-.LFB65
+ 709 0165 01       		.uleb128 0x1
+ 710 0166 9C       		.byte	0x9c
+ 711 0167 7C010000 		.4byte	0x17c
+ 712 016b 0D       		.uleb128 0xd
+ 713 016c 96000000 		.4byte	.LVL16
+ 714 0170 0F050000 		.4byte	0x50f
+ 715 0174 0A       		.uleb128 0xa
+ 716 0175 01       		.uleb128 0x1
+ 717 0176 50       		.byte	0x50
+ 718 0177 02       		.uleb128 0x2
+ 719 0178 74       		.byte	0x74
+ 720 0179 00       		.sleb128 0
+ 721 017a 00       		.byte	0
+ 722 017b 00       		.byte	0
+ 723 017c 0E       		.uleb128 0xe
+ 724 017d E9000000 		.4byte	.LASF23
+ 725 0181 01       		.byte	0x1
+ 726 0182 2E       		.byte	0x2e
+ 727 0183 00000000 		.4byte	.LFB66
+ 728 0187 42000000 		.4byte	.LFE66-.LFB66
+ 729 018b 01       		.uleb128 0x1
+ 730 018c 9C       		.byte	0x9c
+ 731 018d 4E020000 		.4byte	0x24e
+ 732 0191 0F       		.uleb128 0xf
+ 733 0192 77010000 		.4byte	.LASF25
+ 734 0196 01       		.byte	0x1
+ 735 0197 32       		.byte	0x32
+ 736 0198 81000000 		.4byte	0x81
+ 737 019c 01       		.uleb128 0x1
+ 738 019d 54       		.byte	0x54
+ 739 019e 10       		.uleb128 0x10
+ 740 019f 7C000000 		.4byte	.LASF27
+ 741 01a3 01       		.byte	0x1
+ 742 01a4 33       		.byte	0x33
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 17
+
+
+ 743 01a5 4E020000 		.4byte	0x24e
+ 744 01a9 09       		.uleb128 0x9
+ 745 01aa 10000000 		.4byte	.LVL17
+ 746 01ae 1A050000 		.4byte	0x51a
+ 747 01b2 CF010000 		.4byte	0x1cf
+ 748 01b6 0A       		.uleb128 0xa
+ 749 01b7 01       		.uleb128 0x1
+ 750 01b8 50       		.byte	0x50
+ 751 01b9 01       		.uleb128 0x1
+ 752 01ba 32       		.byte	0x32
+ 753 01bb 0A       		.uleb128 0xa
+ 754 01bc 01       		.uleb128 0x1
+ 755 01bd 51       		.byte	0x51
+ 756 01be 01       		.uleb128 0x1
+ 757 01bf 31       		.byte	0x31
+ 758 01c0 0A       		.uleb128 0xa
+ 759 01c1 01       		.uleb128 0x1
+ 760 01c2 52       		.byte	0x52
+ 761 01c3 03       		.uleb128 0x3
+ 762 01c4 0A       		.byte	0xa
+ 763 01c5 0040     		.2byte	0x4000
+ 764 01c7 0A       		.uleb128 0xa
+ 765 01c8 01       		.uleb128 0x1
+ 766 01c9 53       		.byte	0x53
+ 767 01ca 03       		.uleb128 0x3
+ 768 01cb 0A       		.byte	0xa
+ 769 01cc 0040     		.2byte	0x4000
+ 770 01ce 00       		.byte	0
+ 771 01cf 0B       		.uleb128 0xb
+ 772 01d0 16000000 		.4byte	.LVL19
+ 773 01d4 25050000 		.4byte	0x525
+ 774 01d8 09       		.uleb128 0x9
+ 775 01d9 22000000 		.4byte	.LVL20
+ 776 01dd 30050000 		.4byte	0x530
+ 777 01e1 FC010000 		.4byte	0x1fc
+ 778 01e5 0A       		.uleb128 0xa
+ 779 01e6 01       		.uleb128 0x1
+ 780 01e7 50       		.byte	0x50
+ 781 01e8 02       		.uleb128 0x2
+ 782 01e9 75       		.byte	0x75
+ 783 01ea 00       		.sleb128 0
+ 784 01eb 0A       		.uleb128 0xa
+ 785 01ec 01       		.uleb128 0x1
+ 786 01ed 51       		.byte	0x51
+ 787 01ee 01       		.uleb128 0x1
+ 788 01ef 32       		.byte	0x32
+ 789 01f0 0A       		.uleb128 0xa
+ 790 01f1 01       		.uleb128 0x1
+ 791 01f2 52       		.byte	0x52
+ 792 01f3 02       		.uleb128 0x2
+ 793 01f4 09       		.byte	0x9
+ 794 01f5 FF       		.byte	0xff
+ 795 01f6 0A       		.uleb128 0xa
+ 796 01f7 01       		.uleb128 0x1
+ 797 01f8 53       		.byte	0x53
+ 798 01f9 01       		.uleb128 0x1
+ 799 01fa 32       		.byte	0x32
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 18
+
+
+ 800 01fb 00       		.byte	0
+ 801 01fc 09       		.uleb128 0x9
+ 802 01fd 30000000 		.4byte	.LVL21
+ 803 0201 3B050000 		.4byte	0x53b
+ 804 0205 1E020000 		.4byte	0x21e
+ 805 0209 0A       		.uleb128 0xa
+ 806 020a 01       		.uleb128 0x1
+ 807 020b 50       		.byte	0x50
+ 808 020c 02       		.uleb128 0x2
+ 809 020d 75       		.byte	0x75
+ 810 020e 00       		.sleb128 0
+ 811 020f 0A       		.uleb128 0xa
+ 812 0210 01       		.uleb128 0x1
+ 813 0211 51       		.byte	0x51
+ 814 0212 03       		.uleb128 0x3
+ 815 0213 0A       		.byte	0xa
+ 816 0214 104E     		.2byte	0x4e10
+ 817 0216 0A       		.uleb128 0xa
+ 818 0217 01       		.uleb128 0x1
+ 819 0218 52       		.byte	0x52
+ 820 0219 03       		.uleb128 0x3
+ 821 021a 0B       		.byte	0xb
+ 822 021b A1C7     		.2byte	0xc7a1
+ 823 021d 00       		.byte	0
+ 824 021e 09       		.uleb128 0x9
+ 825 021f 38000000 		.4byte	.LVL22
+ 826 0223 46050000 		.4byte	0x546
+ 827 0227 38020000 		.4byte	0x238
+ 828 022b 0A       		.uleb128 0xa
+ 829 022c 01       		.uleb128 0x1
+ 830 022d 50       		.byte	0x50
+ 831 022e 02       		.uleb128 0x2
+ 832 022f 74       		.byte	0x74
+ 833 0230 00       		.sleb128 0
+ 834 0231 0A       		.uleb128 0xa
+ 835 0232 01       		.uleb128 0x1
+ 836 0233 51       		.byte	0x51
+ 837 0234 02       		.uleb128 0x2
+ 838 0235 75       		.byte	0x75
+ 839 0236 00       		.sleb128 0
+ 840 0237 00       		.byte	0
+ 841 0238 0D       		.uleb128 0xd
+ 842 0239 40000000 		.4byte	.LVL23
+ 843 023d 51050000 		.4byte	0x551
+ 844 0241 0A       		.uleb128 0xa
+ 845 0242 01       		.uleb128 0x1
+ 846 0243 50       		.byte	0x50
+ 847 0244 02       		.uleb128 0x2
+ 848 0245 74       		.byte	0x74
+ 849 0246 00       		.sleb128 0
+ 850 0247 0A       		.uleb128 0xa
+ 851 0248 01       		.uleb128 0x1
+ 852 0249 51       		.byte	0x51
+ 853 024a 01       		.uleb128 0x1
+ 854 024b 31       		.byte	0x31
+ 855 024c 00       		.byte	0
+ 856 024d 00       		.byte	0
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 19
+
+
+ 857 024e 11       		.uleb128 0x11
+ 858 024f 81000000 		.4byte	0x81
+ 859 0253 5E020000 		.4byte	0x25e
+ 860 0257 12       		.uleb128 0x12
+ 861 0258 EA000000 		.4byte	0xea
+ 862 025c 00       		.byte	0
+ 863 025d 00       		.byte	0
+ 864 025e 0E       		.uleb128 0xe
+ 865 025f 5F030000 		.4byte	.LASF24
+ 866 0263 01       		.byte	0x1
+ 867 0264 44       		.byte	0x44
+ 868 0265 00000000 		.4byte	.LFB67
+ 869 0269 48000000 		.4byte	.LFE67-.LFB67
+ 870 026d 01       		.uleb128 0x1
+ 871 026e 9C       		.byte	0x9c
+ 872 026f 34030000 		.4byte	0x334
+ 873 0273 13       		.uleb128 0x13
+ 874 0274 B4000000 		.4byte	.LASF26
+ 875 0278 01       		.byte	0x1
+ 876 0279 48       		.byte	0x48
+ 877 027a 81000000 		.4byte	0x81
+ 878 027e 00000000 		.4byte	.LLST0
+ 879 0282 10       		.uleb128 0x10
+ 880 0283 82010000 		.4byte	.LASF28
+ 881 0287 01       		.byte	0x1
+ 882 0288 49       		.byte	0x49
+ 883 0289 4E020000 		.4byte	0x24e
+ 884 028d 09       		.uleb128 0x9
+ 885 028e 12000000 		.4byte	.LVL24
+ 886 0292 5C050000 		.4byte	0x55c
+ 887 0296 B3020000 		.4byte	0x2b3
+ 888 029a 0A       		.uleb128 0xa
+ 889 029b 01       		.uleb128 0x1
+ 890 029c 50       		.byte	0x50
+ 891 029d 01       		.uleb128 0x1
+ 892 029e 32       		.byte	0x32
+ 893 029f 0A       		.uleb128 0xa
+ 894 02a0 01       		.uleb128 0x1
+ 895 02a1 51       		.byte	0x51
+ 896 02a2 01       		.uleb128 0x1
+ 897 02a3 31       		.byte	0x31
+ 898 02a4 0A       		.uleb128 0xa
+ 899 02a5 01       		.uleb128 0x1
+ 900 02a6 52       		.byte	0x52
+ 901 02a7 03       		.uleb128 0x3
+ 902 02a8 0A       		.byte	0xa
+ 903 02a9 0040     		.2byte	0x4000
+ 904 02ab 0A       		.uleb128 0xa
+ 905 02ac 01       		.uleb128 0x1
+ 906 02ad 53       		.byte	0x53
+ 907 02ae 03       		.uleb128 0x3
+ 908 02af 0A       		.byte	0xa
+ 909 02b0 FF1F     		.2byte	0x1fff
+ 910 02b2 00       		.byte	0
+ 911 02b3 0B       		.uleb128 0xb
+ 912 02b4 18000000 		.4byte	.LVL26
+ 913 02b8 25050000 		.4byte	0x525
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 20
+
+
+ 914 02bc 09       		.uleb128 0x9
+ 915 02bd 24000000 		.4byte	.LVL27
+ 916 02c1 30050000 		.4byte	0x530
+ 917 02c5 E0020000 		.4byte	0x2e0
+ 918 02c9 0A       		.uleb128 0xa
+ 919 02ca 01       		.uleb128 0x1
+ 920 02cb 50       		.byte	0x50
+ 921 02cc 02       		.uleb128 0x2
+ 922 02cd 75       		.byte	0x75
+ 923 02ce 00       		.sleb128 0
+ 924 02cf 0A       		.uleb128 0xa
+ 925 02d0 01       		.uleb128 0x1
+ 926 02d1 51       		.byte	0x51
+ 927 02d2 01       		.uleb128 0x1
+ 928 02d3 32       		.byte	0x32
+ 929 02d4 0A       		.uleb128 0xa
+ 930 02d5 01       		.uleb128 0x1
+ 931 02d6 52       		.byte	0x52
+ 932 02d7 02       		.uleb128 0x2
+ 933 02d8 09       		.byte	0x9
+ 934 02d9 FF       		.byte	0xff
+ 935 02da 0A       		.uleb128 0xa
+ 936 02db 01       		.uleb128 0x1
+ 937 02dc 53       		.byte	0x53
+ 938 02dd 01       		.uleb128 0x1
+ 939 02de 35       		.byte	0x35
+ 940 02df 00       		.byte	0
+ 941 02e0 09       		.uleb128 0x9
+ 942 02e1 32000000 		.4byte	.LVL28
+ 943 02e5 3B050000 		.4byte	0x53b
+ 944 02e9 04030000 		.4byte	0x304
+ 945 02ed 0A       		.uleb128 0xa
+ 946 02ee 01       		.uleb128 0x1
+ 947 02ef 50       		.byte	0x50
+ 948 02f0 02       		.uleb128 0x2
+ 949 02f1 75       		.byte	0x75
+ 950 02f2 00       		.sleb128 0
+ 951 02f3 0A       		.uleb128 0xa
+ 952 02f4 01       		.uleb128 0x1
+ 953 02f5 51       		.byte	0x51
+ 954 02f6 03       		.uleb128 0x3
+ 955 02f7 0B       		.byte	0xb
+ 956 02f8 A9C7     		.2byte	0xc7a9
+ 957 02fa 0A       		.uleb128 0xa
+ 958 02fb 01       		.uleb128 0x1
+ 959 02fc 52       		.byte	0x52
+ 960 02fd 05       		.uleb128 0x5
+ 961 02fe 03       		.byte	0x3
+ 962 02ff 00000000 		.4byte	V_Sample
+ 963 0303 00       		.byte	0
+ 964 0304 09       		.uleb128 0x9
+ 965 0305 3A000000 		.4byte	.LVL29
+ 966 0309 46050000 		.4byte	0x546
+ 967 030d 1E030000 		.4byte	0x31e
+ 968 0311 0A       		.uleb128 0xa
+ 969 0312 01       		.uleb128 0x1
+ 970 0313 50       		.byte	0x50
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 21
+
+
+ 971 0314 02       		.uleb128 0x2
+ 972 0315 74       		.byte	0x74
+ 973 0316 00       		.sleb128 0
+ 974 0317 0A       		.uleb128 0xa
+ 975 0318 01       		.uleb128 0x1
+ 976 0319 51       		.byte	0x51
+ 977 031a 02       		.uleb128 0x2
+ 978 031b 75       		.byte	0x75
+ 979 031c 00       		.sleb128 0
+ 980 031d 00       		.byte	0
+ 981 031e 0D       		.uleb128 0xd
+ 982 031f 42000000 		.4byte	.LVL30
+ 983 0323 51050000 		.4byte	0x551
+ 984 0327 0A       		.uleb128 0xa
+ 985 0328 01       		.uleb128 0x1
+ 986 0329 50       		.byte	0x50
+ 987 032a 02       		.uleb128 0x2
+ 988 032b 74       		.byte	0x74
+ 989 032c 00       		.sleb128 0
+ 990 032d 0A       		.uleb128 0xa
+ 991 032e 01       		.uleb128 0x1
+ 992 032f 51       		.byte	0x51
+ 993 0330 01       		.uleb128 0x1
+ 994 0331 31       		.byte	0x31
+ 995 0332 00       		.byte	0
+ 996 0333 00       		.byte	0
+ 997 0334 0E       		.uleb128 0xe
+ 998 0335 31000000 		.4byte	.LASF29
+ 999 0339 01       		.byte	0x1
+ 1000 033a 59       		.byte	0x59
+ 1001 033b 00000000 		.4byte	.LFB68
+ 1002 033f 50000000 		.4byte	.LFE68-.LFB68
+ 1003 0343 01       		.uleb128 0x1
+ 1004 0344 9C       		.byte	0x9c
+ 1005 0345 E2030000 		.4byte	0x3e2
+ 1006 0349 0B       		.uleb128 0xb
+ 1007 034a 06000000 		.4byte	.LVL32
+ 1008 034e 67050000 		.4byte	0x567
+ 1009 0352 0B       		.uleb128 0xb
+ 1010 0353 0A000000 		.4byte	.LVL33
+ 1011 0357 72050000 		.4byte	0x572
+ 1012 035b 0B       		.uleb128 0xb
+ 1013 035c 0E000000 		.4byte	.LVL34
+ 1014 0360 7D050000 		.4byte	0x57d
+ 1015 0364 0B       		.uleb128 0xb
+ 1016 0365 12000000 		.4byte	.LVL35
+ 1017 0369 88050000 		.4byte	0x588
+ 1018 036d 0B       		.uleb128 0xb
+ 1019 036e 16000000 		.4byte	.LVL36
+ 1020 0372 93050000 		.4byte	0x593
+ 1021 0376 0B       		.uleb128 0xb
+ 1022 0377 1A000000 		.4byte	.LVL37
+ 1023 037b 9E050000 		.4byte	0x59e
+ 1024 037f 09       		.uleb128 0x9
+ 1025 0380 20000000 		.4byte	.LVL38
+ 1026 0384 A9050000 		.4byte	0x5a9
+ 1027 0388 92030000 		.4byte	0x392
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 22
+
+
+ 1028 038c 0A       		.uleb128 0xa
+ 1029 038d 01       		.uleb128 0x1
+ 1030 038e 50       		.byte	0x50
+ 1031 038f 01       		.uleb128 0x1
+ 1032 0390 32       		.byte	0x32
+ 1033 0391 00       		.byte	0
+ 1034 0392 0B       		.uleb128 0xb
+ 1035 0393 24000000 		.4byte	.LVL39
+ 1036 0397 B4050000 		.4byte	0x5b4
+ 1037 039b 0B       		.uleb128 0xb
+ 1038 039c 28000000 		.4byte	.LVL40
+ 1039 03a0 7C010000 		.4byte	0x17c
+ 1040 03a4 0B       		.uleb128 0xb
+ 1041 03a5 2C000000 		.4byte	.LVL41
+ 1042 03a9 BF050000 		.4byte	0x5bf
+ 1043 03ad 09       		.uleb128 0x9
+ 1044 03ae 34000000 		.4byte	.LVL42
+ 1045 03b2 CA050000 		.4byte	0x5ca
+ 1046 03b6 C5030000 		.4byte	0x3c5
+ 1047 03ba 0A       		.uleb128 0xa
+ 1048 03bb 01       		.uleb128 0x1
+ 1049 03bc 50       		.byte	0x50
+ 1050 03bd 01       		.uleb128 0x1
+ 1051 03be 30       		.byte	0x30
+ 1052 03bf 0A       		.uleb128 0xa
+ 1053 03c0 01       		.uleb128 0x1
+ 1054 03c1 51       		.byte	0x51
+ 1055 03c2 01       		.uleb128 0x1
+ 1056 03c3 32       		.byte	0x32
+ 1057 03c4 00       		.byte	0
+ 1058 03c5 0B       		.uleb128 0xb
+ 1059 03c6 38000000 		.4byte	.LVL43
+ 1060 03ca 5E020000 		.4byte	0x25e
+ 1061 03ce 0D       		.uleb128 0xd
+ 1062 03cf 3E000000 		.4byte	.LVL44
+ 1063 03d3 D5050000 		.4byte	0x5d5
+ 1064 03d7 0A       		.uleb128 0xa
+ 1065 03d8 01       		.uleb128 0x1
+ 1066 03d9 50       		.byte	0x50
+ 1067 03da 05       		.uleb128 0x5
+ 1068 03db 03       		.byte	0x3
+ 1069 03dc 00000000 		.4byte	Sample_int
+ 1070 03e0 00       		.byte	0
+ 1071 03e1 00       		.byte	0
+ 1072 03e2 14       		.uleb128 0x14
+ 1073 03e3 7A030000 		.4byte	.LASF30
+ 1074 03e7 05       		.byte	0x5
+ 1075 03e8 1207     		.2byte	0x712
+ 1076 03ea EE030000 		.4byte	0x3ee
+ 1077 03ee 06       		.uleb128 0x6
+ 1078 03ef 76000000 		.4byte	0x76
+ 1079 03f3 11       		.uleb128 0x11
+ 1080 03f4 A5000000 		.4byte	0xa5
+ 1081 03f8 03040000 		.4byte	0x403
+ 1082 03fc 12       		.uleb128 0x12
+ 1083 03fd EA000000 		.4byte	0xea
+ 1084 0401 00       		.byte	0
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 23
+
+
+ 1085 0402 00       		.byte	0
+ 1086 0403 15       		.uleb128 0x15
+ 1087 0404 29030000 		.4byte	.LASF31
+ 1088 0408 06       		.byte	0x6
+ 1089 0409 09       		.byte	0x9
+ 1090 040a F3030000 		.4byte	0x3f3
+ 1091 040e 05       		.uleb128 0x5
+ 1092 040f 03       		.byte	0x3
+ 1093 0410 00000000 		.4byte	V_Sample
+ 1094 0414 15       		.uleb128 0x15
+ 1095 0415 CB020000 		.4byte	.LASF32
+ 1096 0419 06       		.byte	0x6
+ 1097 041a 0A       		.byte	0xa
+ 1098 041b B1000000 		.4byte	0xb1
+ 1099 041f 05       		.uleb128 0x5
+ 1100 0420 03       		.byte	0x3
+ 1101 0421 00000000 		.4byte	V_Sample_SUM_1
+ 1102 0425 15       		.uleb128 0x15
+ 1103 0426 DA020000 		.4byte	.LASF33
+ 1104 042a 06       		.byte	0x6
+ 1105 042b 0B       		.byte	0xb
+ 1106 042c BD000000 		.4byte	0xbd
+ 1107 0430 05       		.uleb128 0x5
+ 1108 0431 03       		.byte	0x3
+ 1109 0432 00000000 		.4byte	V_Sample_SUM_2
+ 1110 0436 15       		.uleb128 0x15
+ 1111 0437 49010000 		.4byte	.LASF34
+ 1112 043b 06       		.byte	0x6
+ 1113 043c 0C       		.byte	0xc
+ 1114 043d A5000000 		.4byte	0xa5
+ 1115 0441 05       		.uleb128 0x5
+ 1116 0442 03       		.byte	0x3
+ 1117 0443 00000000 		.4byte	V_Sample_MIN
+ 1118 0447 15       		.uleb128 0x15
+ 1119 0448 F6000000 		.4byte	.LASF35
+ 1120 044c 06       		.byte	0x6
+ 1121 044d 0D       		.byte	0xd
+ 1122 044e A5000000 		.4byte	0xa5
+ 1123 0452 05       		.uleb128 0x5
+ 1124 0453 03       		.byte	0x3
+ 1125 0454 00000000 		.4byte	V_Sample_MAX
+ 1126 0458 15       		.uleb128 0x15
+ 1127 0459 BF000000 		.4byte	.LASF36
+ 1128 045d 06       		.byte	0x6
+ 1129 045e 0E       		.byte	0xe
+ 1130 045f A5000000 		.4byte	0xa5
+ 1131 0463 05       		.uleb128 0x5
+ 1132 0464 03       		.byte	0x3
+ 1133 0465 00000000 		.4byte	V_Sample_AVG
+ 1134 0469 15       		.uleb128 0x15
+ 1135 046a CC000000 		.4byte	.LASF37
+ 1136 046e 06       		.byte	0x6
+ 1137 046f 0F       		.byte	0xf
+ 1138 0470 BD000000 		.4byte	0xbd
+ 1139 0474 05       		.uleb128 0x5
+ 1140 0475 03       		.byte	0x3
+ 1141 0476 00000000 		.4byte	V_Sample_VAR
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 24
+
+
+ 1142 047a 15       		.uleb128 0x15
+ 1143 047b 10000000 		.4byte	.LASF38
+ 1144 047f 06       		.byte	0x6
+ 1145 0480 10       		.byte	0x10
+ 1146 0481 BD000000 		.4byte	0xbd
+ 1147 0485 05       		.uleb128 0x5
+ 1148 0486 03       		.byte	0x3
+ 1149 0487 00000000 		.4byte	V_Sample_AVG_float
+ 1150 048b 16       		.uleb128 0x16
+ 1151 048c 6900     		.ascii	"i\000"
+ 1152 048e 06       		.byte	0x6
+ 1153 048f 11       		.byte	0x11
+ 1154 0490 8D000000 		.4byte	0x8d
+ 1155 0494 05       		.uleb128 0x5
+ 1156 0495 03       		.byte	0x3
+ 1157 0496 00000000 		.4byte	i
+ 1158 049a 11       		.uleb128 0x11
+ 1159 049b CB000000 		.4byte	0xcb
+ 1160 049f AA040000 		.4byte	0x4aa
+ 1161 04a3 12       		.uleb128 0x12
+ 1162 04a4 EA000000 		.4byte	0xea
+ 1163 04a8 FE       		.byte	0xfe
+ 1164 04a9 00       		.byte	0
+ 1165 04aa 15       		.uleb128 0x15
+ 1166 04ab 03010000 		.4byte	.LASF39
+ 1167 04af 06       		.byte	0x6
+ 1168 04b0 13       		.byte	0x13
+ 1169 04b1 9A040000 		.4byte	0x49a
+ 1170 04b5 05       		.uleb128 0x5
+ 1171 04b6 03       		.byte	0x3
+ 1172 04b7 00000000 		.4byte	value
+ 1173 04bb 15       		.uleb128 0x15
+ 1174 04bc 8E020000 		.4byte	.LASF40
+ 1175 04c0 06       		.byte	0x6
+ 1176 04c1 14       		.byte	0x14
+ 1177 04c2 9A040000 		.4byte	0x49a
+ 1178 04c6 05       		.uleb128 0x5
+ 1179 04c7 03       		.byte	0x3
+ 1180 04c8 00000000 		.4byte	numberOfMeasurements
+ 1181 04cc 15       		.uleb128 0x15
+ 1182 04cd 32030000 		.4byte	.LASF41
+ 1183 04d1 06       		.byte	0x6
+ 1184 04d2 15       		.byte	0x15
+ 1185 04d3 68000000 		.4byte	0x68
+ 1186 04d7 05       		.uleb128 0x5
+ 1187 04d8 03       		.byte	0x3
+ 1188 04d9 00000000 		.4byte	measurements
+ 1189 04dd 15       		.uleb128 0x15
+ 1190 04de F0010000 		.4byte	.LASF42
+ 1191 04e2 06       		.byte	0x6
+ 1192 04e3 16       		.byte	0x16
+ 1193 04e4 BD000000 		.4byte	0xbd
+ 1194 04e8 05       		.uleb128 0x5
+ 1195 04e9 03       		.byte	0x3
+ 1196 04ea 00000000 		.4byte	max_value
+ 1197 04ee 17       		.uleb128 0x17
+ 1198 04ef 68000000 		.4byte	.LASF43
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 25
+
+
+ 1199 04f3 68000000 		.4byte	.LASF43
+ 1200 04f7 07       		.byte	0x7
+ 1201 04f8 26       		.byte	0x26
+ 1202 04f9 17       		.uleb128 0x17
+ 1203 04fa 46020000 		.4byte	.LASF44
+ 1204 04fe 46020000 		.4byte	.LASF44
+ 1205 0502 08       		.byte	0x8
+ 1206 0503 93       		.byte	0x93
+ 1207 0504 17       		.uleb128 0x17
+ 1208 0505 15040000 		.4byte	.LASF45
+ 1209 0509 15040000 		.4byte	.LASF45
+ 1210 050d 09       		.byte	0x9
+ 1211 050e 76       		.byte	0x76
+ 1212 050f 17       		.uleb128 0x17
+ 1213 0510 00030000 		.4byte	.LASF46
+ 1214 0514 00030000 		.4byte	.LASF46
+ 1215 0518 0A       		.byte	0xa
+ 1216 0519 49       		.byte	0x49
+ 1217 051a 17       		.uleb128 0x17
+ 1218 051b C2010000 		.4byte	.LASF47
+ 1219 051f C2010000 		.4byte	.LASF47
+ 1220 0523 0B       		.byte	0xb
+ 1221 0524 1E       		.byte	0x1e
+ 1222 0525 17       		.uleb128 0x17
+ 1223 0526 00000000 		.4byte	.LASF48
+ 1224 052a 00000000 		.4byte	.LASF48
+ 1225 052e 0C       		.byte	0xc
+ 1226 052f 38       		.byte	0x38
+ 1227 0530 17       		.uleb128 0x17
+ 1228 0531 85000000 		.4byte	.LASF49
+ 1229 0535 85000000 		.4byte	.LASF49
+ 1230 0539 0C       		.byte	0xc
+ 1231 053a 3B       		.byte	0x3b
+ 1232 053b 17       		.uleb128 0x17
+ 1233 053c 40000000 		.4byte	.LASF50
+ 1234 0540 40000000 		.4byte	.LASF50
+ 1235 0544 0C       		.byte	0xc
+ 1236 0545 3F       		.byte	0x3f
+ 1237 0546 17       		.uleb128 0x17
+ 1238 0547 09010000 		.4byte	.LASF51
+ 1239 054b 09010000 		.4byte	.LASF51
+ 1240 054f 0C       		.byte	0xc
+ 1241 0550 2F       		.byte	0x2f
+ 1242 0551 17       		.uleb128 0x17
+ 1243 0552 9D000000 		.4byte	.LASF52
+ 1244 0556 9D000000 		.4byte	.LASF52
+ 1245 055a 0C       		.byte	0xc
+ 1246 055b 29       		.byte	0x29
+ 1247 055c 17       		.uleb128 0x17
+ 1248 055d 94010000 		.4byte	.LASF53
+ 1249 0561 94010000 		.4byte	.LASF53
+ 1250 0565 0D       		.byte	0xd
+ 1251 0566 1E       		.byte	0x1e
+ 1252 0567 17       		.uleb128 0x17
+ 1253 0568 23000000 		.4byte	.LASF54
+ 1254 056c 23000000 		.4byte	.LASF54
+ 1255 0570 0E       		.byte	0xe
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 26
+
+
+ 1256 0571 27       		.byte	0x27
+ 1257 0572 17       		.uleb128 0x17
+ 1258 0573 6C030000 		.4byte	.LASF55
+ 1259 0577 6C030000 		.4byte	.LASF55
+ 1260 057b 0F       		.byte	0xf
+ 1261 057c 33       		.byte	0x33
+ 1262 057d 17       		.uleb128 0x17
+ 1263 057e 6F020000 		.4byte	.LASF56
+ 1264 0582 6F020000 		.4byte	.LASF56
+ 1265 0586 10       		.byte	0x10
+ 1266 0587 3D       		.byte	0x3d
+ 1267 0588 17       		.uleb128 0x17
+ 1268 0589 56010000 		.4byte	.LASF57
+ 1269 058d 56010000 		.4byte	.LASF57
+ 1270 0591 11       		.byte	0x11
+ 1271 0592 54       		.byte	0x54
+ 1272 0593 17       		.uleb128 0x17
+ 1273 0594 3B010000 		.4byte	.LASF58
+ 1274 0598 3B010000 		.4byte	.LASF58
+ 1275 059c 12       		.byte	0x12
+ 1276 059d 3D       		.byte	0x3d
+ 1277 059e 17       		.uleb128 0x17
+ 1278 059f 7B020000 		.4byte	.LASF59
+ 1279 05a3 7B020000 		.4byte	.LASF59
+ 1280 05a7 0A       		.byte	0xa
+ 1281 05a8 3A       		.byte	0x3a
+ 1282 05a9 17       		.uleb128 0x17
+ 1283 05aa A8010000 		.4byte	.LASF60
+ 1284 05ae A8010000 		.4byte	.LASF60
+ 1285 05b2 0A       		.byte	0xa
+ 1286 05b3 50       		.byte	0x50
+ 1287 05b4 17       		.uleb128 0x17
+ 1288 05b5 55020000 		.4byte	.LASF61
+ 1289 05b9 55020000 		.4byte	.LASF61
+ 1290 05bd 0A       		.byte	0xa
+ 1291 05be 3D       		.byte	0x3d
+ 1292 05bf 17       		.uleb128 0x17
+ 1293 05c0 59000000 		.4byte	.LASF62
+ 1294 05c4 59000000 		.4byte	.LASF62
+ 1295 05c8 13       		.byte	0x13
+ 1296 05c9 3C       		.byte	0x3c
+ 1297 05ca 17       		.uleb128 0x17
+ 1298 05cb 49030000 		.4byte	.LASF63
+ 1299 05cf 49030000 		.4byte	.LASF63
+ 1300 05d3 13       		.byte	0x13
+ 1301 05d4 4A       		.byte	0x4a
+ 1302 05d5 17       		.uleb128 0x17
+ 1303 05d6 D6010000 		.4byte	.LASF64
+ 1304 05da D6010000 		.4byte	.LASF64
+ 1305 05de 14       		.byte	0x14
+ 1306 05df 18       		.byte	0x18
+ 1307 05e0 00       		.byte	0
+ 1308              		.section	.debug_abbrev,"",%progbits
+ 1309              	.Ldebug_abbrev0:
+ 1310 0000 01       		.uleb128 0x1
+ 1311 0001 11       		.uleb128 0x11
+ 1312 0002 01       		.byte	0x1
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 27
+
+
+ 1313 0003 25       		.uleb128 0x25
+ 1314 0004 0E       		.uleb128 0xe
+ 1315 0005 13       		.uleb128 0x13
+ 1316 0006 0B       		.uleb128 0xb
+ 1317 0007 03       		.uleb128 0x3
+ 1318 0008 0E       		.uleb128 0xe
+ 1319 0009 1B       		.uleb128 0x1b
+ 1320 000a 0E       		.uleb128 0xe
+ 1321 000b 55       		.uleb128 0x55
+ 1322 000c 17       		.uleb128 0x17
+ 1323 000d 11       		.uleb128 0x11
+ 1324 000e 01       		.uleb128 0x1
+ 1325 000f 10       		.uleb128 0x10
+ 1326 0010 17       		.uleb128 0x17
+ 1327 0011 00       		.byte	0
+ 1328 0012 00       		.byte	0
+ 1329 0013 02       		.uleb128 0x2
+ 1330 0014 24       		.uleb128 0x24
+ 1331 0015 00       		.byte	0
+ 1332 0016 0B       		.uleb128 0xb
+ 1333 0017 0B       		.uleb128 0xb
+ 1334 0018 3E       		.uleb128 0x3e
+ 1335 0019 0B       		.uleb128 0xb
+ 1336 001a 03       		.uleb128 0x3
+ 1337 001b 0E       		.uleb128 0xe
+ 1338 001c 00       		.byte	0
+ 1339 001d 00       		.byte	0
+ 1340 001e 03       		.uleb128 0x3
+ 1341 001f 16       		.uleb128 0x16
+ 1342 0020 00       		.byte	0
+ 1343 0021 03       		.uleb128 0x3
+ 1344 0022 0E       		.uleb128 0xe
+ 1345 0023 3A       		.uleb128 0x3a
+ 1346 0024 0B       		.uleb128 0xb
+ 1347 0025 3B       		.uleb128 0x3b
+ 1348 0026 0B       		.uleb128 0xb
+ 1349 0027 49       		.uleb128 0x49
+ 1350 0028 13       		.uleb128 0x13
+ 1351 0029 00       		.byte	0
+ 1352 002a 00       		.byte	0
+ 1353 002b 04       		.uleb128 0x4
+ 1354 002c 24       		.uleb128 0x24
+ 1355 002d 00       		.byte	0
+ 1356 002e 0B       		.uleb128 0xb
+ 1357 002f 0B       		.uleb128 0xb
+ 1358 0030 3E       		.uleb128 0x3e
+ 1359 0031 0B       		.uleb128 0xb
+ 1360 0032 03       		.uleb128 0x3
+ 1361 0033 08       		.uleb128 0x8
+ 1362 0034 00       		.byte	0
+ 1363 0035 00       		.byte	0
+ 1364 0036 05       		.uleb128 0x5
+ 1365 0037 16       		.uleb128 0x16
+ 1366 0038 00       		.byte	0
+ 1367 0039 03       		.uleb128 0x3
+ 1368 003a 0E       		.uleb128 0xe
+ 1369 003b 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 28
+
+
+ 1370 003c 0B       		.uleb128 0xb
+ 1371 003d 3B       		.uleb128 0x3b
+ 1372 003e 05       		.uleb128 0x5
+ 1373 003f 49       		.uleb128 0x49
+ 1374 0040 13       		.uleb128 0x13
+ 1375 0041 00       		.byte	0
+ 1376 0042 00       		.byte	0
+ 1377 0043 06       		.uleb128 0x6
+ 1378 0044 35       		.uleb128 0x35
+ 1379 0045 00       		.byte	0
+ 1380 0046 49       		.uleb128 0x49
+ 1381 0047 13       		.uleb128 0x13
+ 1382 0048 00       		.byte	0
+ 1383 0049 00       		.byte	0
+ 1384 004a 07       		.uleb128 0x7
+ 1385 004b 2E       		.uleb128 0x2e
+ 1386 004c 00       		.byte	0
+ 1387 004d 3F       		.uleb128 0x3f
+ 1388 004e 19       		.uleb128 0x19
+ 1389 004f 03       		.uleb128 0x3
+ 1390 0050 0E       		.uleb128 0xe
+ 1391 0051 3A       		.uleb128 0x3a
+ 1392 0052 0B       		.uleb128 0xb
+ 1393 0053 3B       		.uleb128 0x3b
+ 1394 0054 0B       		.uleb128 0xb
+ 1395 0055 27       		.uleb128 0x27
+ 1396 0056 19       		.uleb128 0x19
+ 1397 0057 11       		.uleb128 0x11
+ 1398 0058 01       		.uleb128 0x1
+ 1399 0059 12       		.uleb128 0x12
+ 1400 005a 06       		.uleb128 0x6
+ 1401 005b 40       		.uleb128 0x40
+ 1402 005c 18       		.uleb128 0x18
+ 1403 005d 9642     		.uleb128 0x2116
+ 1404 005f 19       		.uleb128 0x19
+ 1405 0060 00       		.byte	0
+ 1406 0061 00       		.byte	0
+ 1407 0062 08       		.uleb128 0x8
+ 1408 0063 2E       		.uleb128 0x2e
+ 1409 0064 01       		.byte	0x1
+ 1410 0065 3F       		.uleb128 0x3f
+ 1411 0066 19       		.uleb128 0x19
+ 1412 0067 03       		.uleb128 0x3
+ 1413 0068 0E       		.uleb128 0xe
+ 1414 0069 3A       		.uleb128 0x3a
+ 1415 006a 0B       		.uleb128 0xb
+ 1416 006b 3B       		.uleb128 0x3b
+ 1417 006c 0B       		.uleb128 0xb
+ 1418 006d 11       		.uleb128 0x11
+ 1419 006e 01       		.uleb128 0x1
+ 1420 006f 12       		.uleb128 0x12
+ 1421 0070 06       		.uleb128 0x6
+ 1422 0071 40       		.uleb128 0x40
+ 1423 0072 18       		.uleb128 0x18
+ 1424 0073 9642     		.uleb128 0x2116
+ 1425 0075 19       		.uleb128 0x19
+ 1426 0076 01       		.uleb128 0x1
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 29
+
+
+ 1427 0077 13       		.uleb128 0x13
+ 1428 0078 00       		.byte	0
+ 1429 0079 00       		.byte	0
+ 1430 007a 09       		.uleb128 0x9
+ 1431 007b 898201   		.uleb128 0x4109
+ 1432 007e 01       		.byte	0x1
+ 1433 007f 11       		.uleb128 0x11
+ 1434 0080 01       		.uleb128 0x1
+ 1435 0081 31       		.uleb128 0x31
+ 1436 0082 13       		.uleb128 0x13
+ 1437 0083 01       		.uleb128 0x1
+ 1438 0084 13       		.uleb128 0x13
+ 1439 0085 00       		.byte	0
+ 1440 0086 00       		.byte	0
+ 1441 0087 0A       		.uleb128 0xa
+ 1442 0088 8A8201   		.uleb128 0x410a
+ 1443 008b 00       		.byte	0
+ 1444 008c 02       		.uleb128 0x2
+ 1445 008d 18       		.uleb128 0x18
+ 1446 008e 9142     		.uleb128 0x2111
+ 1447 0090 18       		.uleb128 0x18
+ 1448 0091 00       		.byte	0
+ 1449 0092 00       		.byte	0
+ 1450 0093 0B       		.uleb128 0xb
+ 1451 0094 898201   		.uleb128 0x4109
+ 1452 0097 00       		.byte	0
+ 1453 0098 11       		.uleb128 0x11
+ 1454 0099 01       		.uleb128 0x1
+ 1455 009a 31       		.uleb128 0x31
+ 1456 009b 13       		.uleb128 0x13
+ 1457 009c 00       		.byte	0
+ 1458 009d 00       		.byte	0
+ 1459 009e 0C       		.uleb128 0xc
+ 1460 009f 2E       		.uleb128 0x2e
+ 1461 00a0 01       		.byte	0x1
+ 1462 00a1 3F       		.uleb128 0x3f
+ 1463 00a2 19       		.uleb128 0x19
+ 1464 00a3 03       		.uleb128 0x3
+ 1465 00a4 0E       		.uleb128 0xe
+ 1466 00a5 3A       		.uleb128 0x3a
+ 1467 00a6 0B       		.uleb128 0xb
+ 1468 00a7 3B       		.uleb128 0x3b
+ 1469 00a8 0B       		.uleb128 0xb
+ 1470 00a9 49       		.uleb128 0x49
+ 1471 00aa 13       		.uleb128 0x13
+ 1472 00ab 11       		.uleb128 0x11
+ 1473 00ac 01       		.uleb128 0x1
+ 1474 00ad 12       		.uleb128 0x12
+ 1475 00ae 06       		.uleb128 0x6
+ 1476 00af 40       		.uleb128 0x40
+ 1477 00b0 18       		.uleb128 0x18
+ 1478 00b1 9642     		.uleb128 0x2116
+ 1479 00b3 19       		.uleb128 0x19
+ 1480 00b4 01       		.uleb128 0x1
+ 1481 00b5 13       		.uleb128 0x13
+ 1482 00b6 00       		.byte	0
+ 1483 00b7 00       		.byte	0
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 30
+
+
+ 1484 00b8 0D       		.uleb128 0xd
+ 1485 00b9 898201   		.uleb128 0x4109
+ 1486 00bc 01       		.byte	0x1
+ 1487 00bd 11       		.uleb128 0x11
+ 1488 00be 01       		.uleb128 0x1
+ 1489 00bf 31       		.uleb128 0x31
+ 1490 00c0 13       		.uleb128 0x13
+ 1491 00c1 00       		.byte	0
+ 1492 00c2 00       		.byte	0
+ 1493 00c3 0E       		.uleb128 0xe
+ 1494 00c4 2E       		.uleb128 0x2e
+ 1495 00c5 01       		.byte	0x1
+ 1496 00c6 3F       		.uleb128 0x3f
+ 1497 00c7 19       		.uleb128 0x19
+ 1498 00c8 03       		.uleb128 0x3
+ 1499 00c9 0E       		.uleb128 0xe
+ 1500 00ca 3A       		.uleb128 0x3a
+ 1501 00cb 0B       		.uleb128 0xb
+ 1502 00cc 3B       		.uleb128 0x3b
+ 1503 00cd 0B       		.uleb128 0xb
+ 1504 00ce 11       		.uleb128 0x11
+ 1505 00cf 01       		.uleb128 0x1
+ 1506 00d0 12       		.uleb128 0x12
+ 1507 00d1 06       		.uleb128 0x6
+ 1508 00d2 40       		.uleb128 0x40
+ 1509 00d3 18       		.uleb128 0x18
+ 1510 00d4 9742     		.uleb128 0x2117
+ 1511 00d6 19       		.uleb128 0x19
+ 1512 00d7 01       		.uleb128 0x1
+ 1513 00d8 13       		.uleb128 0x13
+ 1514 00d9 00       		.byte	0
+ 1515 00da 00       		.byte	0
+ 1516 00db 0F       		.uleb128 0xf
+ 1517 00dc 34       		.uleb128 0x34
+ 1518 00dd 00       		.byte	0
+ 1519 00de 03       		.uleb128 0x3
+ 1520 00df 0E       		.uleb128 0xe
+ 1521 00e0 3A       		.uleb128 0x3a
+ 1522 00e1 0B       		.uleb128 0xb
+ 1523 00e2 3B       		.uleb128 0x3b
+ 1524 00e3 0B       		.uleb128 0xb
+ 1525 00e4 49       		.uleb128 0x49
+ 1526 00e5 13       		.uleb128 0x13
+ 1527 00e6 02       		.uleb128 0x2
+ 1528 00e7 18       		.uleb128 0x18
+ 1529 00e8 00       		.byte	0
+ 1530 00e9 00       		.byte	0
+ 1531 00ea 10       		.uleb128 0x10
+ 1532 00eb 34       		.uleb128 0x34
+ 1533 00ec 00       		.byte	0
+ 1534 00ed 03       		.uleb128 0x3
+ 1535 00ee 0E       		.uleb128 0xe
+ 1536 00ef 3A       		.uleb128 0x3a
+ 1537 00f0 0B       		.uleb128 0xb
+ 1538 00f1 3B       		.uleb128 0x3b
+ 1539 00f2 0B       		.uleb128 0xb
+ 1540 00f3 49       		.uleb128 0x49
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 31
+
+
+ 1541 00f4 13       		.uleb128 0x13
+ 1542 00f5 00       		.byte	0
+ 1543 00f6 00       		.byte	0
+ 1544 00f7 11       		.uleb128 0x11
+ 1545 00f8 01       		.uleb128 0x1
+ 1546 00f9 01       		.byte	0x1
+ 1547 00fa 49       		.uleb128 0x49
+ 1548 00fb 13       		.uleb128 0x13
+ 1549 00fc 01       		.uleb128 0x1
+ 1550 00fd 13       		.uleb128 0x13
+ 1551 00fe 00       		.byte	0
+ 1552 00ff 00       		.byte	0
+ 1553 0100 12       		.uleb128 0x12
+ 1554 0101 21       		.uleb128 0x21
+ 1555 0102 00       		.byte	0
+ 1556 0103 49       		.uleb128 0x49
+ 1557 0104 13       		.uleb128 0x13
+ 1558 0105 2F       		.uleb128 0x2f
+ 1559 0106 0B       		.uleb128 0xb
+ 1560 0107 00       		.byte	0
+ 1561 0108 00       		.byte	0
+ 1562 0109 13       		.uleb128 0x13
+ 1563 010a 34       		.uleb128 0x34
+ 1564 010b 00       		.byte	0
+ 1565 010c 03       		.uleb128 0x3
+ 1566 010d 0E       		.uleb128 0xe
+ 1567 010e 3A       		.uleb128 0x3a
+ 1568 010f 0B       		.uleb128 0xb
+ 1569 0110 3B       		.uleb128 0x3b
+ 1570 0111 0B       		.uleb128 0xb
+ 1571 0112 49       		.uleb128 0x49
+ 1572 0113 13       		.uleb128 0x13
+ 1573 0114 02       		.uleb128 0x2
+ 1574 0115 17       		.uleb128 0x17
+ 1575 0116 00       		.byte	0
+ 1576 0117 00       		.byte	0
+ 1577 0118 14       		.uleb128 0x14
+ 1578 0119 34       		.uleb128 0x34
+ 1579 011a 00       		.byte	0
+ 1580 011b 03       		.uleb128 0x3
+ 1581 011c 0E       		.uleb128 0xe
+ 1582 011d 3A       		.uleb128 0x3a
+ 1583 011e 0B       		.uleb128 0xb
+ 1584 011f 3B       		.uleb128 0x3b
+ 1585 0120 05       		.uleb128 0x5
+ 1586 0121 49       		.uleb128 0x49
+ 1587 0122 13       		.uleb128 0x13
+ 1588 0123 3F       		.uleb128 0x3f
+ 1589 0124 19       		.uleb128 0x19
+ 1590 0125 3C       		.uleb128 0x3c
+ 1591 0126 19       		.uleb128 0x19
+ 1592 0127 00       		.byte	0
+ 1593 0128 00       		.byte	0
+ 1594 0129 15       		.uleb128 0x15
+ 1595 012a 34       		.uleb128 0x34
+ 1596 012b 00       		.byte	0
+ 1597 012c 03       		.uleb128 0x3
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 32
+
+
+ 1598 012d 0E       		.uleb128 0xe
+ 1599 012e 3A       		.uleb128 0x3a
+ 1600 012f 0B       		.uleb128 0xb
+ 1601 0130 3B       		.uleb128 0x3b
+ 1602 0131 0B       		.uleb128 0xb
+ 1603 0132 49       		.uleb128 0x49
+ 1604 0133 13       		.uleb128 0x13
+ 1605 0134 3F       		.uleb128 0x3f
+ 1606 0135 19       		.uleb128 0x19
+ 1607 0136 02       		.uleb128 0x2
+ 1608 0137 18       		.uleb128 0x18
+ 1609 0138 00       		.byte	0
+ 1610 0139 00       		.byte	0
+ 1611 013a 16       		.uleb128 0x16
+ 1612 013b 34       		.uleb128 0x34
+ 1613 013c 00       		.byte	0
+ 1614 013d 03       		.uleb128 0x3
+ 1615 013e 08       		.uleb128 0x8
+ 1616 013f 3A       		.uleb128 0x3a
+ 1617 0140 0B       		.uleb128 0xb
+ 1618 0141 3B       		.uleb128 0x3b
+ 1619 0142 0B       		.uleb128 0xb
+ 1620 0143 49       		.uleb128 0x49
+ 1621 0144 13       		.uleb128 0x13
+ 1622 0145 3F       		.uleb128 0x3f
+ 1623 0146 19       		.uleb128 0x19
+ 1624 0147 02       		.uleb128 0x2
+ 1625 0148 18       		.uleb128 0x18
+ 1626 0149 00       		.byte	0
+ 1627 014a 00       		.byte	0
+ 1628 014b 17       		.uleb128 0x17
+ 1629 014c 2E       		.uleb128 0x2e
+ 1630 014d 00       		.byte	0
+ 1631 014e 3F       		.uleb128 0x3f
+ 1632 014f 19       		.uleb128 0x19
+ 1633 0150 3C       		.uleb128 0x3c
+ 1634 0151 19       		.uleb128 0x19
+ 1635 0152 6E       		.uleb128 0x6e
+ 1636 0153 0E       		.uleb128 0xe
+ 1637 0154 03       		.uleb128 0x3
+ 1638 0155 0E       		.uleb128 0xe
+ 1639 0156 3A       		.uleb128 0x3a
+ 1640 0157 0B       		.uleb128 0xb
+ 1641 0158 3B       		.uleb128 0x3b
+ 1642 0159 0B       		.uleb128 0xb
+ 1643 015a 00       		.byte	0
+ 1644 015b 00       		.byte	0
+ 1645 015c 00       		.byte	0
+ 1646              		.section	.debug_loc,"",%progbits
+ 1647              	.Ldebug_loc0:
+ 1648              	.LLST0:
+ 1649 0000 14000000 		.4byte	.LVL25
+ 1650 0004 44000000 		.4byte	.LVL31
+ 1651 0008 0100     		.2byte	0x1
+ 1652 000a 54       		.byte	0x54
+ 1653 000b 00000000 		.4byte	0
+ 1654 000f 00000000 		.4byte	0
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 33
+
+
+ 1655              		.section	.debug_aranges,"",%progbits
+ 1656 0000 44000000 		.4byte	0x44
+ 1657 0004 0200     		.2byte	0x2
+ 1658 0006 00000000 		.4byte	.Ldebug_info0
+ 1659 000a 04       		.byte	0x4
+ 1660 000b 00       		.byte	0
+ 1661 000c 0000     		.2byte	0
+ 1662 000e 0000     		.2byte	0
+ 1663 0010 00000000 		.4byte	.LFB69
+ 1664 0014 64000000 		.4byte	.LFE69-.LFB69
+ 1665 0018 00000000 		.4byte	.LFB64
+ 1666 001c 8C000000 		.4byte	.LFE64-.LFB64
+ 1667 0020 00000000 		.4byte	.LFB65
+ 1668 0024 C4000000 		.4byte	.LFE65-.LFB65
+ 1669 0028 00000000 		.4byte	.LFB66
+ 1670 002c 42000000 		.4byte	.LFE66-.LFB66
+ 1671 0030 00000000 		.4byte	.LFB67
+ 1672 0034 48000000 		.4byte	.LFE67-.LFB67
+ 1673 0038 00000000 		.4byte	.LFB68
+ 1674 003c 50000000 		.4byte	.LFE68-.LFB68
+ 1675 0040 00000000 		.4byte	0
+ 1676 0044 00000000 		.4byte	0
+ 1677              		.section	.debug_ranges,"",%progbits
+ 1678              	.Ldebug_ranges0:
+ 1679 0000 00000000 		.4byte	.LFB69
+ 1680 0004 64000000 		.4byte	.LFE69
+ 1681 0008 00000000 		.4byte	.LFB64
+ 1682 000c 8C000000 		.4byte	.LFE64
+ 1683 0010 00000000 		.4byte	.LFB65
+ 1684 0014 C4000000 		.4byte	.LFE65
+ 1685 0018 00000000 		.4byte	.LFB66
+ 1686 001c 42000000 		.4byte	.LFE66
+ 1687 0020 00000000 		.4byte	.LFB67
+ 1688 0024 48000000 		.4byte	.LFE67
+ 1689 0028 00000000 		.4byte	.LFB68
+ 1690 002c 50000000 		.4byte	.LFE68
+ 1691 0030 00000000 		.4byte	0
+ 1692 0034 00000000 		.4byte	0
+ 1693              		.section	.debug_line,"",%progbits
+ 1694              	.Ldebug_line0:
+ 1695 0000 E0020000 		.section	.debug_str,"MS",%progbits,1
+ 1695      02001E02 
+ 1695      00000201 
+ 1695      FB0E0D00 
+ 1695      01010101 
+ 1696              	.LASF48:
+ 1697 0000 4379446D 		.ascii	"CyDmaTdAllocate\000"
+ 1697      61546441 
+ 1697      6C6C6F63 
+ 1697      61746500 
+ 1698              	.LASF38:
+ 1699 0010 565F5361 		.ascii	"V_Sample_AVG_float\000"
+ 1699      6D706C65 
+ 1699      5F415647 
+ 1699      5F666C6F 
+ 1699      617400
+ 1700              	.LASF54:
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 34
+
+
+ 1701 0023 436C6F63 		.ascii	"Clock_1_Start\000"
+ 1701      6B5F315F 
+ 1701      53746172 
+ 1701      7400
+ 1702              	.LASF29:
+ 1703 0031 62616C6C 		.ascii	"ballSensorInit\000"
+ 1703      53656E73 
+ 1703      6F72496E 
+ 1703      697400
+ 1704              	.LASF50:
+ 1705 0040 4379446D 		.ascii	"CyDmaTdSetAddress\000"
+ 1705      61546453 
+ 1705      65744164 
+ 1705      64726573 
+ 1705      7300
+ 1706              	.LASF17:
+ 1707 0052 646F7562 		.ascii	"double\000"
+ 1707      6C6500
+ 1708              	.LASF62:
+ 1709 0059 46696C74 		.ascii	"Filter_1_Start\000"
+ 1709      65725F31 
+ 1709      5F537461 
+ 1709      727400
+ 1710              	.LASF43:
+ 1711 0068 4C45445F 		.ascii	"LED_Write\000"
+ 1711      57726974 
+ 1711      6500
+ 1712              	.LASF2:
+ 1713 0072 73686F72 		.ascii	"short int\000"
+ 1713      7420696E 
+ 1713      7400
+ 1714              	.LASF27:
+ 1715 007c 444D415F 		.ascii	"DMA_1_TD\000"
+ 1715      315F5444 
+ 1715      00
+ 1716              	.LASF49:
+ 1717 0085 4379446D 		.ascii	"CyDmaTdSetConfiguration\000"
+ 1717      61546453 
+ 1717      6574436F 
+ 1717      6E666967 
+ 1717      75726174 
+ 1718              	.LASF52:
+ 1719 009d 4379446D 		.ascii	"CyDmaChEnable\000"
+ 1719      61436845 
+ 1719      6E61626C 
+ 1719      6500
+ 1720              	.LASF21:
+ 1721 00ab 73697A65 		.ascii	"sizetype\000"
+ 1721      74797065 
+ 1721      00
+ 1722              	.LASF26:
+ 1723 00b4 444D415F 		.ascii	"DMA_2_Chan\000"
+ 1723      325F4368 
+ 1723      616E00
+ 1724              	.LASF36:
+ 1725 00bf 565F5361 		.ascii	"V_Sample_AVG\000"
+ 1725      6D706C65 
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 35
+
+
+ 1725      5F415647 
+ 1725      00
+ 1726              	.LASF37:
+ 1727 00cc 565F5361 		.ascii	"V_Sample_VAR\000"
+ 1727      6D706C65 
+ 1727      5F564152 
+ 1727      00
+ 1728              	.LASF66:
+ 1729 00d9 62616C6C 		.ascii	"ballSensorApp.c\000"
+ 1729      53656E73 
+ 1729      6F724170 
+ 1729      702E6300 
+ 1730              	.LASF23:
+ 1731 00e9 444D415F 		.ascii	"DMA_1_Config\000"
+ 1731      315F436F 
+ 1731      6E666967 
+ 1731      00
+ 1732              	.LASF35:
+ 1733 00f6 565F5361 		.ascii	"V_Sample_MAX\000"
+ 1733      6D706C65 
+ 1733      5F4D4158 
+ 1733      00
+ 1734              	.LASF39:
+ 1735 0103 76616C75 		.ascii	"value\000"
+ 1735      6500
+ 1736              	.LASF51:
+ 1737 0109 4379446D 		.ascii	"CyDmaChSetInitialTd\000"
+ 1737      61436853 
+ 1737      6574496E 
+ 1737      69746961 
+ 1737      6C546400 
+ 1738              	.LASF12:
+ 1739 011d 75696E74 		.ascii	"uint16\000"
+ 1739      313600
+ 1740              	.LASF14:
+ 1741 0124 696E7431 		.ascii	"int16\000"
+ 1741      3600
+ 1742              	.LASF11:
+ 1743 012a 75696E74 		.ascii	"uint8\000"
+ 1743      3800
+ 1744              	.LASF68:
+ 1745 0130 53616D70 		.ascii	"Sample_int\000"
+ 1745      6C655F69 
+ 1745      6E7400
+ 1746              	.LASF58:
+ 1747 013b 4D697865 		.ascii	"Mixer_1_Start\000"
+ 1747      725F315F 
+ 1747      53746172 
+ 1747      7400
+ 1748              	.LASF34:
+ 1749 0149 565F5361 		.ascii	"V_Sample_MIN\000"
+ 1749      6D706C65 
+ 1749      5F4D494E 
+ 1749      00
+ 1750              	.LASF57:
+ 1751 0156 55415254 		.ascii	"UART_1_Start\000"
+ 1751      5F315F53 
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 36
+
+
+ 1751      74617274 
+ 1751      00
+ 1752              	.LASF16:
+ 1753 0163 666C6F61 		.ascii	"float\000"
+ 1753      7400
+ 1754              	.LASF6:
+ 1755 0169 6C6F6E67 		.ascii	"long long int\000"
+ 1755      206C6F6E 
+ 1755      6720696E 
+ 1755      7400
+ 1756              	.LASF25:
+ 1757 0177 444D415F 		.ascii	"DMA_1_Chan\000"
+ 1757      315F4368 
+ 1757      616E00
+ 1758              	.LASF28:
+ 1759 0182 444D415F 		.ascii	"DMA_2_TD\000"
+ 1759      325F5444 
+ 1759      00
+ 1760              	.LASF4:
+ 1761 018b 6C6F6E67 		.ascii	"long int\000"
+ 1761      20696E74 
+ 1761      00
+ 1762              	.LASF53:
+ 1763 0194 444D415F 		.ascii	"DMA_2_DmaInitialize\000"
+ 1763      325F446D 
+ 1763      61496E69 
+ 1763      7469616C 
+ 1763      697A6500 
+ 1764              	.LASF60:
+ 1765 01a8 4144435F 		.ascii	"ADC_DelSig_1_SetCoherency\000"
+ 1765      44656C53 
+ 1765      69675F31 
+ 1765      5F536574 
+ 1765      436F6865 
+ 1766              	.LASF47:
+ 1767 01c2 444D415F 		.ascii	"DMA_1_DmaInitialize\000"
+ 1767      315F446D 
+ 1767      61496E69 
+ 1767      7469616C 
+ 1767      697A6500 
+ 1768              	.LASF64:
+ 1769 01d6 6973725F 		.ascii	"isr_2_StartEx\000"
+ 1769      325F5374 
+ 1769      61727445 
+ 1769      7800
+ 1770              	.LASF20:
+ 1771 01e4 6C6F6E67 		.ascii	"long double\000"
+ 1771      20646F75 
+ 1771      626C6500 
+ 1772              	.LASF42:
+ 1773 01f0 6D61785F 		.ascii	"max_value\000"
+ 1773      76616C75 
+ 1773      6500
+ 1774              	.LASF1:
+ 1775 01fa 756E7369 		.ascii	"unsigned char\000"
+ 1775      676E6564 
+ 1775      20636861 
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 37
+
+
+ 1775      7200
+ 1776              	.LASF0:
+ 1777 0208 7369676E 		.ascii	"signed char\000"
+ 1777      65642063 
+ 1777      68617200 
+ 1778              	.LASF7:
+ 1779 0214 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1779      206C6F6E 
+ 1779      6720756E 
+ 1779      7369676E 
+ 1779      65642069 
+ 1780              	.LASF22:
+ 1781 022b 436F6D70 		.ascii	"CompareValues\000"
+ 1781      61726556 
+ 1781      616C7565 
+ 1781      7300
+ 1782              	.LASF8:
+ 1783 0239 756E7369 		.ascii	"unsigned int\000"
+ 1783      676E6564 
+ 1783      20696E74 
+ 1783      00
+ 1784              	.LASF44:
+ 1785 0246 50574D5F 		.ascii	"PWM_motor_Stop\000"
+ 1785      6D6F746F 
+ 1785      725F5374 
+ 1785      6F7000
+ 1786              	.LASF61:
+ 1787 0255 4144435F 		.ascii	"ADC_DelSig_1_StartConvert\000"
+ 1787      44656C53 
+ 1787      69675F31 
+ 1787      5F537461 
+ 1787      7274436F 
+ 1788              	.LASF56:
+ 1789 026f 5449415F 		.ascii	"TIA_1_Start\000"
+ 1789      315F5374 
+ 1789      61727400 
+ 1790              	.LASF59:
+ 1791 027b 4144435F 		.ascii	"ADC_DelSig_1_Start\000"
+ 1791      44656C53 
+ 1791      69675F31 
+ 1791      5F537461 
+ 1791      727400
+ 1792              	.LASF40:
+ 1793 028e 6E756D62 		.ascii	"numberOfMeasurements\000"
+ 1793      65724F66 
+ 1793      4D656173 
+ 1793      7572656D 
+ 1793      656E7473 
+ 1794              	.LASF18:
+ 1795 02a3 63686172 		.ascii	"char\000"
+ 1795      00
+ 1796              	.LASF10:
+ 1797 02a8 696E7433 		.ascii	"int32_t\000"
+ 1797      325F7400 
+ 1798              	.LASF3:
+ 1799 02b0 73686F72 		.ascii	"short unsigned int\000"
+ 1799      7420756E 
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 38
+
+
+ 1799      7369676E 
+ 1799      65642069 
+ 1799      6E7400
+ 1800              	.LASF69:
+ 1801 02c3 4D656173 		.ascii	"Measure\000"
+ 1801      75726500 
+ 1802              	.LASF32:
+ 1803 02cb 565F5361 		.ascii	"V_Sample_SUM_1\000"
+ 1803      6D706C65 
+ 1803      5F53554D 
+ 1803      5F3100
+ 1804              	.LASF33:
+ 1805 02da 565F5361 		.ascii	"V_Sample_SUM_2\000"
+ 1805      6D706C65 
+ 1805      5F53554D 
+ 1805      5F3200
+ 1806              	.LASF19:
+ 1807 02e9 72656738 		.ascii	"reg8\000"
+ 1807      00
+ 1808              	.LASF5:
+ 1809 02ee 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1809      20756E73 
+ 1809      69676E65 
+ 1809      6420696E 
+ 1809      7400
+ 1810              	.LASF46:
+ 1811 0300 4144435F 		.ascii	"ADC_DelSig_1_CountsTo_Volts\000"
+ 1811      44656C53 
+ 1811      69675F31 
+ 1811      5F436F75 
+ 1811      6E747354 
+ 1812              	.LASF15:
+ 1813 031c 696E7433 		.ascii	"int32\000"
+ 1813      3200
+ 1814              	.LASF13:
+ 1815 0322 75696E74 		.ascii	"uint32\000"
+ 1815      333200
+ 1816              	.LASF31:
+ 1817 0329 565F5361 		.ascii	"V_Sample\000"
+ 1817      6D706C65 
+ 1817      00
+ 1818              	.LASF41:
+ 1819 0332 6D656173 		.ascii	"measurements\000"
+ 1819      7572656D 
+ 1819      656E7473 
+ 1819      00
+ 1820              	.LASF9:
+ 1821 033f 5F5F696E 		.ascii	"__int32_t\000"
+ 1821      7433325F 
+ 1821      7400
+ 1822              	.LASF63:
+ 1823 0349 46696C74 		.ascii	"Filter_1_SetCoherency\000"
+ 1823      65725F31 
+ 1823      5F536574 
+ 1823      436F6865 
+ 1823      72656E63 
+ 1824              	.LASF24:
+ARM GAS  C:\Users\CHRIST~1\AppData\Local\Temp\ccfrOZ4v.s 			page 39
+
+
+ 1825 035f 444D415F 		.ascii	"DMA_2_Config\000"
+ 1825      325F436F 
+ 1825      6E666967 
+ 1825      00
+ 1826              	.LASF55:
+ 1827 036c 4F70616D 		.ascii	"Opamp_1_Start\000"
+ 1827      705F315F 
+ 1827      53746172 
+ 1827      7400
+ 1828              	.LASF30:
+ 1829 037a 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1829      52784275 
+ 1829      66666572 
+ 1829      00
+ 1830              	.LASF65:
+ 1831 0387 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1831      43313120 
+ 1831      352E342E 
+ 1831      31203230 
+ 1831      31363036 
+ 1832 03ba 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1832      20726576 
+ 1832      6973696F 
+ 1832      6E203233 
+ 1832      37373135 
+ 1833 03ed 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1833      66756E63 
+ 1833      74696F6E 
+ 1833      2D736563 
+ 1833      74696F6E 
+ 1834              	.LASF45:
+ 1835 0415 43794465 		.ascii	"CyDelay\000"
+ 1835      6C617900 
+ 1836              	.LASF67:
+ 1837 041d 433A5C55 		.ascii	"C:\\Users\\Christian\\Desktop\\3. Semester\\PRJ3\\U"
+ 1837      73657273 
+ 1837      5C436872 
+ 1837      69737469 
+ 1837      616E5C44 
+ 1838 044a 6C747261 		.ascii	"ltrasoundv2\\Ultrasoundv2.cydsn\000"
+ 1838      736F756E 
+ 1838      6476325C 
+ 1838      556C7472 
+ 1838      61736F75 
+ 1839              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

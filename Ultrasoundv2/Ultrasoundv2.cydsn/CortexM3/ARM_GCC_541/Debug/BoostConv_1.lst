@@ -1,0 +1,2861 @@
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"BoostConv_1.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.BoostConv_1_Enable,"ax",%progbits
+  20              		.align	2
+  21              		.global	BoostConv_1_Enable
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	BoostConv_1_Enable, %function
+  25              	BoostConv_1_Enable:
+  26              	.LFB3:
+  27              		.file 1 "Generated_Source\\PSoC5\\BoostConv_1.c"
+   1:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+   2:Generated_Source\PSoC5/BoostConv_1.c **** * File Name: BoostConv_1.c
+   3:Generated_Source\PSoC5/BoostConv_1.c **** * Version 5.0
+   4:Generated_Source\PSoC5/BoostConv_1.c **** *
+   5:Generated_Source\PSoC5/BoostConv_1.c **** * Description:
+   6:Generated_Source\PSoC5/BoostConv_1.c **** *  This file provides the source code to the API for the Boost Component.
+   7:Generated_Source\PSoC5/BoostConv_1.c **** *
+   8:Generated_Source\PSoC5/BoostConv_1.c **** * Note:
+   9:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+  10:Generated_Source\PSoC5/BoostConv_1.c **** *
+  11:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+  12:Generated_Source\PSoC5/BoostConv_1.c **** * Copyright 2008-2013, Cypress Semiconductor Corporation.  All rights reserved.
+  13:Generated_Source\PSoC5/BoostConv_1.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:Generated_Source\PSoC5/BoostConv_1.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:Generated_Source\PSoC5/BoostConv_1.c **** * the software package with which this file was provided.
+  16:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+  17:Generated_Source\PSoC5/BoostConv_1.c **** 
+  18:Generated_Source\PSoC5/BoostConv_1.c **** #include "BoostConv_1.h"
+  19:Generated_Source\PSoC5/BoostConv_1.c **** 
+  20:Generated_Source\PSoC5/BoostConv_1.c **** uint8 BoostConv_1_initVar = 0u;
+  21:Generated_Source\PSoC5/BoostConv_1.c **** static BoostConv_1_BACKUP_STRUCT BoostConv_1_backup = {BoostConv_1_INIT_VOUT,
+  22:Generated_Source\PSoC5/BoostConv_1.c ****                                                                  BoostConv_1_BOOSTMODE_ACTIVE};
+  23:Generated_Source\PSoC5/BoostConv_1.c **** 
+  24:Generated_Source\PSoC5/BoostConv_1.c **** 
+  25:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+  26:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_Init
+  27:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+  28:Generated_Source\PSoC5/BoostConv_1.c **** *
+  29:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+  30:Generated_Source\PSoC5/BoostConv_1.c **** *  Inits/Restores default BoostConv configuration provided with customizer.
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 2
+
+
+  31:Generated_Source\PSoC5/BoostConv_1.c **** *
+  32:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+  33:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+  34:Generated_Source\PSoC5/BoostConv_1.c **** *
+  35:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+  36:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+  37:Generated_Source\PSoC5/BoostConv_1.c **** *
+  38:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+  39:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_Init(void) 
+  40:Generated_Source\PSoC5/BoostConv_1.c **** {
+  41:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+  42:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+  43:Generated_Source\PSoC5/BoostConv_1.c **** 
+  44:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+  45:Generated_Source\PSoC5/BoostConv_1.c **** 
+  46:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC3)
+  47:Generated_Source\PSoC5/BoostConv_1.c ****         /* Accessing Boost block registers in read mode has speed limitation and
+  48:Generated_Source\PSoC5/BoostConv_1.c ****          * requires two consecutive reads of registers resides in Boost hard-IP block
+  49:Generated_Source\PSoC5/BoostConv_1.c ****          */
+  50:Generated_Source\PSoC5/BoostConv_1.c ****         (void) BoostConv_1_CONTROL_REG1;
+  51:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_CONTROL_REG1;
+  52:Generated_Source\PSoC5/BoostConv_1.c ****         /* Enables mode control from xmode[1:0] instead of control register 1 */
+  53:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG1 = tmp | BoostConv_1_PWMEXT_ENABLE;
+  54:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC3 */
+  55:Generated_Source\PSoC5/BoostConv_1.c **** 
+  56:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation and
+  57:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+  58:Generated_Source\PSoC5/BoostConv_1.c ****      */
+  59:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_CONTROL_REG2;
+  60:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG2;
+  61:Generated_Source\PSoC5/BoostConv_1.c **** 
+  62:Generated_Source\PSoC5/BoostConv_1.c ****     #if (0u != BoostConv_1_DISABLE_AUTO_BATTERY)
+  63:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG2 = tmp | BoostConv_1_AUTO_BATTERY_DISABLE;
+  64:Generated_Source\PSoC5/BoostConv_1.c ****     #else
+  65:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG2 = tmp & ((uint8) (~BoostConv_1_AUTO_BATTERY_DISABLE));
+  66:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* (0u != BoostConv_1_DISABLE_AUTO_BATTERY) */
+  67:Generated_Source\PSoC5/BoostConv_1.c **** 
+  68:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+  69:Generated_Source\PSoC5/BoostConv_1.c **** 
+  70:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC3)
+  71:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_SelExtClk(BoostConv_1_EXTCLK_SRC);
+  72:Generated_Source\PSoC5/BoostConv_1.c ****     #else /* CY_PSOC5LP */
+  73:Generated_Source\PSoC5/BoostConv_1.c ****         /* Accessing Boost block registers in read mode has speed limitation and
+  74:Generated_Source\PSoC5/BoostConv_1.c ****          * requires two consecutive reads of registers resides in Boost hard-IP block
+  75:Generated_Source\PSoC5/BoostConv_1.c ****          */
+  76:Generated_Source\PSoC5/BoostConv_1.c ****         (void) BoostConv_1_CONTROL_REG1;
+  77:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_CONTROL_REG1;
+  78:Generated_Source\PSoC5/BoostConv_1.c **** 
+  79:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG1 = (tmp & ((uint8) (~BoostConv_1_FREQ_MASK))) |
+  80:Generated_Source\PSoC5/BoostConv_1.c ****                                                          BoostConv_1__SWITCH_FREQ_400KHZ;
+  81:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC3 */
+  82:Generated_Source\PSoC5/BoostConv_1.c **** 
+  83:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_SelVoltage(BoostConv_1_INIT_VOUT);
+  84:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_SetMode(BoostConv_1_BOOSTMODE_ACTIVE);
+  85:Generated_Source\PSoC5/BoostConv_1.c **** }
+  86:Generated_Source\PSoC5/BoostConv_1.c **** 
+  87:Generated_Source\PSoC5/BoostConv_1.c **** 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 3
+
+
+  88:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+  89:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_Start
+  90:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+  91:Generated_Source\PSoC5/BoostConv_1.c **** *
+  92:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+  93:Generated_Source\PSoC5/BoostConv_1.c **** *  Starts the BoostConv_1 component and puts the boost block into Active
+  94:Generated_Source\PSoC5/BoostConv_1.c **** *  mode. The component is in this state when the chip powers up. This is the
+  95:Generated_Source\PSoC5/BoostConv_1.c **** *  preferred method to begin component operation. BoostConv_1_Start()
+  96:Generated_Source\PSoC5/BoostConv_1.c **** *  sets the initVar variable, calls the BoostConv_1_Init() function, and
+  97:Generated_Source\PSoC5/BoostConv_1.c **** *  then calls the BoostConv_1_Enable() function.
+  98:Generated_Source\PSoC5/BoostConv_1.c **** *
+  99:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 100:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 101:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 102:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 103:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 104:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 105:Generated_Source\PSoC5/BoostConv_1.c **** * Global variables:
+ 106:Generated_Source\PSoC5/BoostConv_1.c **** *  BoostConv_1_initVar - used to check initial configuration, modified on
+ 107:Generated_Source\PSoC5/BoostConv_1.c **** *  first function call.
+ 108:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 109:Generated_Source\PSoC5/BoostConv_1.c **** * Side Effect:
+ 110:Generated_Source\PSoC5/BoostConv_1.c **** *  If the initVar variable is already set, this function: 1) sets init value
+ 111:Generated_Source\PSoC5/BoostConv_1.c **** *  of target output voltage (from customizer) and mode (Active mode) or
+ 112:Generated_Source\PSoC5/BoostConv_1.c **** *  restores target output voltage and mode saved by BoostConv_1_Stop()
+ 113:Generated_Source\PSoC5/BoostConv_1.c **** *  function; 2) calls the BoostConv_1_Enable() function.
+ 114:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 115:Generated_Source\PSoC5/BoostConv_1.c **** * Reentrant:
+ 116:Generated_Source\PSoC5/BoostConv_1.c **** *  No.
+ 117:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 118:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 119:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_Start(void) 
+ 120:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 121:Generated_Source\PSoC5/BoostConv_1.c ****     uint16 timeout = BoostConv_1_STARTUP_TIMEOUT;
+ 122:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 123:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 124:Generated_Source\PSoC5/BoostConv_1.c ****     do
+ 125:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 126:Generated_Source\PSoC5/BoostConv_1.c ****         CyDelayUs(1u);
+ 127:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_ReadStatus();
+ 128:Generated_Source\PSoC5/BoostConv_1.c ****         timeout--;
+ 129:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 130:Generated_Source\PSoC5/BoostConv_1.c ****     } while ((0u != timeout) && (BoostConv_1_RDY != (tmp & BoostConv_1_RDY)));
+ 131:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 132:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_ReadStatus();
+ 133:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 134:Generated_Source\PSoC5/BoostConv_1.c ****     if (BoostConv_1_RDY == (tmp & BoostConv_1_RDY))
+ 135:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 136:Generated_Source\PSoC5/BoostConv_1.c ****         if (0u == BoostConv_1_initVar)
+ 137:Generated_Source\PSoC5/BoostConv_1.c ****         {
+ 138:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_Init();
+ 139:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_initVar = 1u;
+ 140:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 141:Generated_Source\PSoC5/BoostConv_1.c ****         else
+ 142:Generated_Source\PSoC5/BoostConv_1.c ****         {
+ 143:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_SelVoltage(BoostConv_1_backup.selVoltage);
+ 144:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_SetMode(BoostConv_1_backup.mode);
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 4
+
+
+ 145:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 146:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 147:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_Enable();
+ 148:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 149:Generated_Source\PSoC5/BoostConv_1.c ****     else
+ 150:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 151:Generated_Source\PSoC5/BoostConv_1.c ****         /* Boost internal circuits have not been initialized.
+ 152:Generated_Source\PSoC5/BoostConv_1.c ****          * Halt CPU in debug mode.
+ 153:Generated_Source\PSoC5/BoostConv_1.c ****          */
+ 154:Generated_Source\PSoC5/BoostConv_1.c ****         CYASSERT(0u != 0u);
+ 155:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 156:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 157:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 158:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 159:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 160:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_Stop
+ 161:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 162:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 163:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 164:Generated_Source\PSoC5/BoostConv_1.c **** *  Saves boost converter target output voltage and mode. Disables
+ 165:Generated_Source\PSoC5/BoostConv_1.c **** *  the BoostConv_1 component.
+ 166:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 167:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 168:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 169:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 170:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 171:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 172:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 173:Generated_Source\PSoC5/BoostConv_1.c **** * Side Effect:
+ 174:Generated_Source\PSoC5/BoostConv_1.c **** * Turns off power to the boost converter circuitry. For PSoC 3 sets the boost
+ 175:Generated_Source\PSoC5/BoostConv_1.c **** * converter to Standby mode, for PSoC 5LP to Sleep mode.
+ 176:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 177:Generated_Source\PSoC5/BoostConv_1.c **** * Reentrant:
+ 178:Generated_Source\PSoC5/BoostConv_1.c **** *  No.
+ 179:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 180:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 181:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_Stop(void) 
+ 182:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 183:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 184:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+ 185:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 186:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+ 187:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 188:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation and
+ 189:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+ 190:Generated_Source\PSoC5/BoostConv_1.c ****      */
+ 191:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_CONTROL_REG0;
+ 192:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG0;
+ 193:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 194:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_backup.mode = (tmp & BoostConv_1_MODE_MASK) >> BoostConv_1_MODE_SHIFT;
+ 195:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_backup.selVoltage = tmp & BoostConv_1_VOLTAGE_MASK;
+ 196:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 197:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+ 198:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 199:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_SelVoltage(BoostConv_1_VOUT_OFF);
+ 200:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC3)
+ 201:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_SetMode(BoostConv_1_BOOSTMODE_STANDBY);
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 5
+
+
+ 202:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC3 */
+ 203:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC5LP)
+ 204:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_SetMode(BoostConv_1_BOOSTMODE_SLEEP);
+ 205:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC5LP */
+ 206:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_Disable();
+ 207:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 208:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 209:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 210:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 211:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_Enable
+ 212:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 213:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 214:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 215:Generated_Source\PSoC5/BoostConv_1.c **** *  This function enables the boost only when it is in Active mode. By default
+ 216:Generated_Source\PSoC5/BoostConv_1.c **** *  this is enabled.
+ 217:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 218:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 219:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 220:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 221:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 222:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 223:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 224:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 225:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_Enable(void) 
+ 226:Generated_Source\PSoC5/BoostConv_1.c **** {
+  28              		.loc 1 226 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+ 227:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 228:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+ 229:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 230:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+  36              		.loc 1 230 0
+  37 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+  38              	.LVL0:
+ 231:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 232:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation and
+ 233:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+ 234:Generated_Source\PSoC5/BoostConv_1.c ****      */
+ 235:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_CONTROL_REG1;
+  39              		.loc 1 235 0
+  40 0006 044B     		ldr	r3, .L3
+  41 0008 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 236:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG1;
+  42              		.loc 1 236 0
+  43 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  44              	.LVL1:
+ 237:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 238:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG1 = tmp | BoostConv_1_BOOST_ENABLE;
+  45              		.loc 1 238 0
+  46 000c 42F00802 		orr	r2, r2, #8
+  47              	.LVL2:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 6
+
+
+  48 0010 1A70     		strb	r2, [r3]
+ 239:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 240:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+  49              		.loc 1 240 0
+  50 0012 FFF7FEFF 		bl	CyExitCriticalSection
+  51              	.LVL3:
+  52 0016 08BD     		pop	{r3, pc}
+  53              	.L4:
+  54              		.align	2
+  55              	.L3:
+  56 0018 21430040 		.word	1073759009
+  57              		.cfi_endproc
+  58              	.LFE3:
+  59              		.size	BoostConv_1_Enable, .-BoostConv_1_Enable
+  60              		.section	.text.BoostConv_1_Disable,"ax",%progbits
+  61              		.align	2
+  62              		.global	BoostConv_1_Disable
+  63              		.thumb
+  64              		.thumb_func
+  65              		.type	BoostConv_1_Disable, %function
+  66              	BoostConv_1_Disable:
+  67              	.LFB4:
+ 241:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 242:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 243:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 244:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 245:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_Disable
+ 246:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 247:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 248:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 249:Generated_Source\PSoC5/BoostConv_1.c **** *  This function disables the boost.
+ 250:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 251:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 252:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 253:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 254:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 255:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 256:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 257:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 258:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_Disable(void) 
+ 259:Generated_Source\PSoC5/BoostConv_1.c **** {
+  68              		.loc 1 259 0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72 0000 08B5     		push	{r3, lr}
+  73              		.cfi_def_cfa_offset 8
+  74              		.cfi_offset 3, -8
+  75              		.cfi_offset 14, -4
+ 260:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 261:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+ 262:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 263:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+  76              		.loc 1 263 0
+  77 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+  78              	.LVL4:
+ 264:Generated_Source\PSoC5/BoostConv_1.c **** 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 7
+
+
+ 265:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation and
+ 266:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+ 267:Generated_Source\PSoC5/BoostConv_1.c ****      */
+ 268:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_CONTROL_REG1;
+  79              		.loc 1 268 0
+  80 0006 044B     		ldr	r3, .L7
+  81 0008 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 269:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG1;
+  82              		.loc 1 269 0
+  83 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  84              	.LVL5:
+ 270:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 271:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG1 = tmp & ((uint8) (~BoostConv_1_BOOST_ENABLE));
+  85              		.loc 1 271 0
+  86 000c 02F0F702 		and	r2, r2, #247
+  87              	.LVL6:
+  88 0010 1A70     		strb	r2, [r3]
+ 272:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 273:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+  89              		.loc 1 273 0
+  90 0012 FFF7FEFF 		bl	CyExitCriticalSection
+  91              	.LVL7:
+  92 0016 08BD     		pop	{r3, pc}
+  93              	.L8:
+  94              		.align	2
+  95              	.L7:
+  96 0018 21430040 		.word	1073759009
+  97              		.cfi_endproc
+  98              	.LFE4:
+  99              		.size	BoostConv_1_Disable, .-BoostConv_1_Disable
+ 100              		.section	.text.BoostConv_1_SetMode,"ax",%progbits
+ 101              		.align	2
+ 102              		.global	BoostConv_1_SetMode
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.type	BoostConv_1_SetMode, %function
+ 106              	BoostConv_1_SetMode:
+ 107              	.LFB5:
+ 274:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 275:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 276:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 277:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 278:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_SetMode
+ 279:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 280:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 281:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 282:Generated_Source\PSoC5/BoostConv_1.c **** *  This function sets the mode of the Boost: Active, and Standby for PSoC 3 or
+ 283:Generated_Source\PSoC5/BoostConv_1.c **** *  Sleep for PSoC 5LP.
+ 284:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 285:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 286:Generated_Source\PSoC5/BoostConv_1.c **** *  mode: Mode of operation.
+ 287:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 288:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 289:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 290:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 291:Generated_Source\PSoC5/BoostConv_1.c **** * Side Effect:
+ 292:Generated_Source\PSoC5/BoostConv_1.c **** *  PSoC 3:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 8
+
+
+ 293:Generated_Source\PSoC5/BoostConv_1.c **** *   1) For Standby mode, this function enables automatic thump mode
+ 294:Generated_Source\PSoC5/BoostConv_1.c **** *   and sets the switching frequency clock source to the 32-kHz external clock.
+ 295:Generated_Source\PSoC5/BoostConv_1.c **** *   2) For Active mode this function disables automatic thump mode
+ 296:Generated_Source\PSoC5/BoostConv_1.c **** *   and sets the switching frequency clock source to the 400-kHz internal clock.
+ 297:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 298:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 299:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_SetMode(uint8 mode) 
+ 300:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 108              		.loc 1 300 0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              	.LVL8:
+ 113 0000 10B5     		push	{r4, lr}
+ 114              		.cfi_def_cfa_offset 8
+ 115              		.cfi_offset 4, -8
+ 116              		.cfi_offset 14, -4
+ 117 0002 0446     		mov	r4, r0
+ 301:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 302:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+ 303:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 304:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC3)
+ 305:Generated_Source\PSoC5/BoostConv_1.c ****         if (0u == mode)
+ 306:Generated_Source\PSoC5/BoostConv_1.c ****         {
+ 307:Generated_Source\PSoC5/BoostConv_1.c ****             /* Parameter value is incompatible with PSoC 3 device.
+ 308:Generated_Source\PSoC5/BoostConv_1.c ****              * Halt CPU in debug mode.
+ 309:Generated_Source\PSoC5/BoostConv_1.c ****              */
+ 310:Generated_Source\PSoC5/BoostConv_1.c ****             CYASSERT(0u != 0u);
+ 311:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 312:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC3 */
+ 313:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC5LP)
+ 314:Generated_Source\PSoC5/BoostConv_1.c ****         if (1u == mode)
+ 118              		.loc 1 314 0
+ 119 0004 0128     		cmp	r0, #1
+ 120 0006 02D1     		bne	.L10
+ 315:Generated_Source\PSoC5/BoostConv_1.c ****         {
+ 316:Generated_Source\PSoC5/BoostConv_1.c ****             /* Parameter value is incompatible with PSoC 5LP device.
+ 317:Generated_Source\PSoC5/BoostConv_1.c ****              * Halt CPU in debug mode.
+ 318:Generated_Source\PSoC5/BoostConv_1.c ****              */
+ 319:Generated_Source\PSoC5/BoostConv_1.c ****             CYASSERT(0u != 0u);
+ 121              		.loc 1 319 0 discriminator 1
+ 122 0008 0020     		movs	r0, #0
+ 123              	.LVL9:
+ 124 000a FFF7FEFF 		bl	CyHalt
+ 125              	.LVL10:
+ 126              	.L10:
+ 320:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 321:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC5LP */
+ 322:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 323:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+ 127              		.loc 1 323 0
+ 128 000e FFF7FEFF 		bl	CyEnterCriticalSection
+ 129              	.LVL11:
+ 324:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 325:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation and
+ 326:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+ 327:Generated_Source\PSoC5/BoostConv_1.c ****      */
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 9
+
+
+ 328:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_CONTROL_REG0;
+ 130              		.loc 1 328 0
+ 131 0012 064B     		ldr	r3, .L12
+ 132 0014 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 329:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG0;
+ 133              		.loc 1 329 0
+ 134 0016 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 135              	.LVL12:
+ 330:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 331:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG0 = (tmp & ((uint8) (~BoostConv_1_MODE_MASK))) |
+ 332:Generated_Source\PSoC5/BoostConv_1.c ****                                     (BoostConv_1_MODE_MASK & ((uint8) (mode << BoostConv_1_MODE_SHI
+ 136              		.loc 1 332 0
+ 137 0018 6401     		lsls	r4, r4, #5
+ 331:Generated_Source\PSoC5/BoostConv_1.c ****                                     (BoostConv_1_MODE_MASK & ((uint8) (mode << BoostConv_1_MODE_SHI
+ 138              		.loc 1 331 0
+ 139 001a 02F09F02 		and	r2, r2, #159
+ 140              	.LVL13:
+ 141 001e 04F06004 		and	r4, r4, #96
+ 142 0022 1443     		orrs	r4, r4, r2
+ 143 0024 1C70     		strb	r4, [r3]
+ 333:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 334:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+ 144              		.loc 1 334 0
+ 145 0026 FFF7FEFF 		bl	CyExitCriticalSection
+ 146              	.LVL14:
+ 147 002a 10BD     		pop	{r4, pc}
+ 148              	.L13:
+ 149              		.align	2
+ 150              	.L12:
+ 151 002c 20430040 		.word	1073759008
+ 152              		.cfi_endproc
+ 153              	.LFE5:
+ 154              		.size	BoostConv_1_SetMode, .-BoostConv_1_SetMode
+ 155              		.section	.text.BoostConv_1_SelVoltage,"ax",%progbits
+ 156              		.align	2
+ 157              		.global	BoostConv_1_SelVoltage
+ 158              		.thumb
+ 159              		.thumb_func
+ 160              		.type	BoostConv_1_SelVoltage, %function
+ 161              	BoostConv_1_SelVoltage:
+ 162              	.LFB6:
+ 335:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 336:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC3)
+ 337:Generated_Source\PSoC5/BoostConv_1.c ****         if (mode == BoostConv_1_BOOSTMODE_STANDBY)
+ 338:Generated_Source\PSoC5/BoostConv_1.c ****         {
+ 339:Generated_Source\PSoC5/BoostConv_1.c ****            BoostConv_1_SelFreq(BoostConv_1__SWITCH_FREQ_32KHZ);
+ 340:Generated_Source\PSoC5/BoostConv_1.c ****            BoostConv_1_EnableAutoThump();
+ 341:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 342:Generated_Source\PSoC5/BoostConv_1.c ****         else /* mode == BoostConv_1_BOOSTMODE_ACTIVE */
+ 343:Generated_Source\PSoC5/BoostConv_1.c ****         {
+ 344:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_SelFreq(BoostConv_1__SWITCH_FREQ_400KHZ);
+ 345:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_DisableAutoThump();
+ 346:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 347:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC3 */
+ 348:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 349:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 350:Generated_Source\PSoC5/BoostConv_1.c **** 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 10
+
+
+ 351:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 352:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_SelVoltage
+ 353:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 354:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 355:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 356:Generated_Source\PSoC5/BoostConv_1.c **** *  This function selects the target output voltage the boost converter will
+ 357:Generated_Source\PSoC5/BoostConv_1.c **** *  maintain.
+ 358:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 359:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 360:Generated_Source\PSoC5/BoostConv_1.c **** *  voltage: Desired output voltage.
+ 361:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 362:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 363:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 364:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 365:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 366:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_SelVoltage(uint8 voltage) 
+ 367:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 163              		.loc 1 367 0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167              	.LVL15:
+ 168 0000 10B5     		push	{r4, lr}
+ 169              		.cfi_def_cfa_offset 8
+ 170              		.cfi_offset 4, -8
+ 171              		.cfi_offset 14, -4
+ 172 0002 0446     		mov	r4, r0
+ 368:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 369:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+ 370:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 371:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+ 173              		.loc 1 371 0
+ 174 0004 FFF7FEFF 		bl	CyEnterCriticalSection
+ 175              	.LVL16:
+ 372:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 373:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation and
+ 374:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+ 375:Generated_Source\PSoC5/BoostConv_1.c ****      */
+ 376:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_CONTROL_REG0;
+ 176              		.loc 1 376 0
+ 177 0008 054B     		ldr	r3, .L16
+ 178 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 377:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG0;
+ 179              		.loc 1 377 0
+ 180 000c 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 181              	.LVL17:
+ 378:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 379:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG0 = (tmp & ((uint8) (~BoostConv_1_VOLTAGE_MASK))) |
+ 182              		.loc 1 379 0
+ 183 000e 02F0E002 		and	r2, r2, #224
+ 184              	.LVL18:
+ 185 0012 04F01F04 		and	r4, r4, #31
+ 186 0016 1443     		orrs	r4, r4, r2
+ 187 0018 1C70     		strb	r4, [r3]
+ 380:Generated_Source\PSoC5/BoostConv_1.c ****                                             (BoostConv_1_VOLTAGE_MASK & voltage);
+ 381:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 382:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 11
+
+
+ 188              		.loc 1 382 0
+ 189 001a FFF7FEFF 		bl	CyExitCriticalSection
+ 190              	.LVL19:
+ 191 001e 10BD     		pop	{r4, pc}
+ 192              	.L17:
+ 193              		.align	2
+ 194              	.L16:
+ 195 0020 20430040 		.word	1073759008
+ 196              		.cfi_endproc
+ 197              	.LFE6:
+ 198              		.size	BoostConv_1_SelVoltage, .-BoostConv_1_SelVoltage
+ 199              		.section	.text.BoostConv_1_Init,"ax",%progbits
+ 200              		.align	2
+ 201              		.global	BoostConv_1_Init
+ 202              		.thumb
+ 203              		.thumb_func
+ 204              		.type	BoostConv_1_Init, %function
+ 205              	BoostConv_1_Init:
+ 206              	.LFB0:
+  40:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 207              		.loc 1 40 0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211 0000 08B5     		push	{r3, lr}
+ 212              		.cfi_def_cfa_offset 8
+ 213              		.cfi_offset 3, -8
+ 214              		.cfi_offset 14, -4
+  44:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 215              		.loc 1 44 0
+ 216 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+ 217              	.LVL20:
+  59:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG2;
+ 218              		.loc 1 59 0
+ 219 0006 0B4B     		ldr	r3, .L20
+ 220 0008 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  60:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 221              		.loc 1 60 0
+ 222 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 223              	.LVL21:
+  65:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* (0u != BoostConv_1_DISABLE_AUTO_BATTERY) */
+ 224              		.loc 1 65 0
+ 225 000c 02F0FD02 		and	r2, r2, #253
+ 226              	.LVL22:
+ 227 0010 1A70     		strb	r2, [r3]
+  68:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 228              		.loc 1 68 0
+ 229 0012 FFF7FEFF 		bl	CyExitCriticalSection
+ 230              	.LVL23:
+  76:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_CONTROL_REG1;
+ 231              		.loc 1 76 0
+ 232 0016 084A     		ldr	r2, .L20+4
+ 233 0018 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  77:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 234              		.loc 1 77 0
+ 235 001a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 236              	.LVL24:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 12
+
+
+  79:Generated_Source\PSoC5/BoostConv_1.c ****                                                          BoostConv_1__SWITCH_FREQ_400KHZ;
+ 237              		.loc 1 79 0
+ 238 001c 03F0FC03 		and	r3, r3, #252
+ 239              	.LVL25:
+ 240 0020 43F00103 		orr	r3, r3, #1
+ 241 0024 1370     		strb	r3, [r2]
+  83:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_SetMode(BoostConv_1_BOOSTMODE_ACTIVE);
+ 242              		.loc 1 83 0
+ 243 0026 1A20     		movs	r0, #26
+ 244 0028 FFF7FEFF 		bl	BoostConv_1_SelVoltage
+ 245              	.LVL26:
+  84:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 246              		.loc 1 84 0
+ 247 002c 0320     		movs	r0, #3
+ 248 002e FFF7FEFF 		bl	BoostConv_1_SetMode
+ 249              	.LVL27:
+ 250 0032 08BD     		pop	{r3, pc}
+ 251              	.L21:
+ 252              		.align	2
+ 253              	.L20:
+ 254 0034 22430040 		.word	1073759010
+ 255 0038 21430040 		.word	1073759009
+ 256              		.cfi_endproc
+ 257              	.LFE0:
+ 258              		.size	BoostConv_1_Init, .-BoostConv_1_Init
+ 259              		.section	.text.BoostConv_1_Stop,"ax",%progbits
+ 260              		.align	2
+ 261              		.global	BoostConv_1_Stop
+ 262              		.thumb
+ 263              		.thumb_func
+ 264              		.type	BoostConv_1_Stop, %function
+ 265              	BoostConv_1_Stop:
+ 266              	.LFB2:
+ 182:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 267              		.loc 1 182 0
+ 268              		.cfi_startproc
+ 269              		@ args = 0, pretend = 0, frame = 0
+ 270              		@ frame_needed = 0, uses_anonymous_args = 0
+ 271 0000 08B5     		push	{r3, lr}
+ 272              		.cfi_def_cfa_offset 8
+ 273              		.cfi_offset 3, -8
+ 274              		.cfi_offset 14, -4
+ 186:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 275              		.loc 1 186 0
+ 276 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+ 277              	.LVL28:
+ 191:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG0;
+ 278              		.loc 1 191 0
+ 279 0006 0B4B     		ldr	r3, .L24
+ 280 0008 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 192:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 281              		.loc 1 192 0
+ 282 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 283 000c DBB2     		uxtb	r3, r3
+ 284              	.LVL29:
+ 194:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_backup.selVoltage = tmp & BoostConv_1_VOLTAGE_MASK;
+ 285              		.loc 1 194 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 13
+
+
+ 286 000e 0A4A     		ldr	r2, .L24+4
+ 287 0010 C3F34111 		ubfx	r1, r3, #5, #2
+ 288 0014 5170     		strb	r1, [r2, #1]
+ 195:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 289              		.loc 1 195 0
+ 290 0016 03F01F03 		and	r3, r3, #31
+ 291              	.LVL30:
+ 292 001a 1370     		strb	r3, [r2]
+ 197:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 293              		.loc 1 197 0
+ 294 001c FFF7FEFF 		bl	CyExitCriticalSection
+ 295              	.LVL31:
+ 199:Generated_Source\PSoC5/BoostConv_1.c ****     #if (CY_PSOC3)
+ 296              		.loc 1 199 0
+ 297 0020 0020     		movs	r0, #0
+ 298 0022 FFF7FEFF 		bl	BoostConv_1_SelVoltage
+ 299              	.LVL32:
+ 204:Generated_Source\PSoC5/BoostConv_1.c ****     #endif /* CY_PSOC5LP */
+ 300              		.loc 1 204 0
+ 301 0026 0020     		movs	r0, #0
+ 302 0028 FFF7FEFF 		bl	BoostConv_1_SetMode
+ 303              	.LVL33:
+ 206:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 304              		.loc 1 206 0
+ 305 002c FFF7FEFF 		bl	BoostConv_1_Disable
+ 306              	.LVL34:
+ 307 0030 08BD     		pop	{r3, pc}
+ 308              	.L25:
+ 309 0032 00BF     		.align	2
+ 310              	.L24:
+ 311 0034 20430040 		.word	1073759008
+ 312 0038 00000000 		.word	.LANCHOR0
+ 313              		.cfi_endproc
+ 314              	.LFE2:
+ 315              		.size	BoostConv_1_Stop, .-BoostConv_1_Stop
+ 316              		.section	.text.BoostConv_1_ManualThump,"ax",%progbits
+ 317              		.align	2
+ 318              		.global	BoostConv_1_ManualThump
+ 319              		.thumb
+ 320              		.thumb_func
+ 321              		.type	BoostConv_1_ManualThump, %function
+ 322              	BoostConv_1_ManualThump:
+ 323              	.LFB7:
+ 383:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 384:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 385:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 386:Generated_Source\PSoC5/BoostConv_1.c **** #if (CY_PSOC3)
+ 387:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 388:Generated_Source\PSoC5/BoostConv_1.c ****     /*******************************************************************************
+ 389:Generated_Source\PSoC5/BoostConv_1.c ****     * Function Name: BoostConv_1_SelFreq
+ 390:Generated_Source\PSoC5/BoostConv_1.c ****     ********************************************************************************
+ 391:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 392:Generated_Source\PSoC5/BoostConv_1.c ****     * Summary:
+ 393:Generated_Source\PSoC5/BoostConv_1.c ****     *  This function sets the frequency to one of the 2 possible values:
+ 394:Generated_Source\PSoC5/BoostConv_1.c ****     *  400kHz (which is generated internal to the Boost Converter block with a
+ 395:Generated_Source\PSoC5/BoostConv_1.c ****     *  dedicated oscillator) or 32kHz (which comes from the chips ECO-32kHz or
+ 396:Generated_Source\PSoC5/BoostConv_1.c ****     *  ILO-32kHz). The 32kHz frequency is only applicable for PSoC 3.
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 14
+
+
+ 397:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 398:Generated_Source\PSoC5/BoostConv_1.c ****     * Parameters:
+ 399:Generated_Source\PSoC5/BoostConv_1.c ****     *  frequency: Desired switching frequency.
+ 400:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 401:Generated_Source\PSoC5/BoostConv_1.c ****     * Return:
+ 402:Generated_Source\PSoC5/BoostConv_1.c ****     *  None.
+ 403:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 404:Generated_Source\PSoC5/BoostConv_1.c ****     *******************************************************************************/
+ 405:Generated_Source\PSoC5/BoostConv_1.c ****     void BoostConv_1_SelFreq(uint8 frequency) 
+ 406:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 407:Generated_Source\PSoC5/BoostConv_1.c ****         uint8 tmp;
+ 408:Generated_Source\PSoC5/BoostConv_1.c ****         uint8 enableInterrupts;
+ 409:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 410:Generated_Source\PSoC5/BoostConv_1.c ****         enableInterrupts = CyEnterCriticalSection();
+ 411:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 412:Generated_Source\PSoC5/BoostConv_1.c ****         /* Accessing Boost block registers in read mode has speed limitation and
+ 413:Generated_Source\PSoC5/BoostConv_1.c ****          * requires two consecutive reads of registers resides in Boost hard-IP block
+ 414:Generated_Source\PSoC5/BoostConv_1.c ****          */
+ 415:Generated_Source\PSoC5/BoostConv_1.c ****         (void) BoostConv_1_CONTROL_REG1;
+ 416:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_CONTROL_REG1;
+ 417:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 418:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG1 = (tmp & ((uint8) (~BoostConv_1_FREQ_MASK))) |
+ 419:Generated_Source\PSoC5/BoostConv_1.c ****                                                 (BoostConv_1_FREQ_MASK & frequency);
+ 420:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 421:Generated_Source\PSoC5/BoostConv_1.c ****         CyExitCriticalSection(enableInterrupts);
+ 422:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 423:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 424:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 425:Generated_Source\PSoC5/BoostConv_1.c ****     /*******************************************************************************
+ 426:Generated_Source\PSoC5/BoostConv_1.c ****     * Function Name: BoostConv_1_SelExtClk
+ 427:Generated_Source\PSoC5/BoostConv_1.c ****     ********************************************************************************
+ 428:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 429:Generated_Source\PSoC5/BoostConv_1.c ****     * Summary:
+ 430:Generated_Source\PSoC5/BoostConv_1.c ****     *  This function sets the source of 32kHz frequency: the chips ECO-32kHz
+ 431:Generated_Source\PSoC5/BoostConv_1.c ****     *  or ILO-32kHz.
+ 432:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 433:Generated_Source\PSoC5/BoostConv_1.c ****     * Parameters:
+ 434:Generated_Source\PSoC5/BoostConv_1.c ****     *  source: source of 32kHz frequency.
+ 435:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 436:Generated_Source\PSoC5/BoostConv_1.c ****     * Return:
+ 437:Generated_Source\PSoC5/BoostConv_1.c ****     *  None.
+ 438:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 439:Generated_Source\PSoC5/BoostConv_1.c ****     *******************************************************************************/
+ 440:Generated_Source\PSoC5/BoostConv_1.c ****     void  BoostConv_1_SelExtClk(uint8 source) 
+ 441:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 442:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG4 = (BoostConv_1_CONTROL_REG4 & ((uint8) (~BoostConv_1_EXTCLK_SRC_MA
+ 443:Generated_Source\PSoC5/BoostConv_1.c ****                                         | (BoostConv_1_EXTCLK_SRC_MASK &
+ 444:Generated_Source\PSoC5/BoostConv_1.c ****                                         ((uint8) (source << BoostConv_1_EXTCLK_SRC_SHIFT)));
+ 445:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 446:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 447:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 448:Generated_Source\PSoC5/BoostConv_1.c ****     /*******************************************************************************
+ 449:Generated_Source\PSoC5/BoostConv_1.c ****     * Function Name: BoostConv_1_EnableAutoThump
+ 450:Generated_Source\PSoC5/BoostConv_1.c ****     ********************************************************************************
+ 451:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 452:Generated_Source\PSoC5/BoostConv_1.c ****     * Summary:
+ 453:Generated_Source\PSoC5/BoostConv_1.c ****     *  This function enables automatic thump mode (only available when Boost is
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 15
+
+
+ 454:Generated_Source\PSoC5/BoostConv_1.c ****     *  in Standby mode)
+ 455:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 456:Generated_Source\PSoC5/BoostConv_1.c ****     * Parameters:
+ 457:Generated_Source\PSoC5/BoostConv_1.c ****     *  None.
+ 458:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 459:Generated_Source\PSoC5/BoostConv_1.c ****     * Return:
+ 460:Generated_Source\PSoC5/BoostConv_1.c ****     *  None.
+ 461:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 462:Generated_Source\PSoC5/BoostConv_1.c ****     *******************************************************************************/
+ 463:Generated_Source\PSoC5/BoostConv_1.c ****     void BoostConv_1_EnableAutoThump(void) 
+ 464:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 465:Generated_Source\PSoC5/BoostConv_1.c ****         uint8 tmp;
+ 466:Generated_Source\PSoC5/BoostConv_1.c ****         uint8 enableInterrupts;
+ 467:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 468:Generated_Source\PSoC5/BoostConv_1.c ****         enableInterrupts = CyEnterCriticalSection();
+ 469:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 470:Generated_Source\PSoC5/BoostConv_1.c ****         /* Accessing Boost block registers in read mode has speed limitation and
+ 471:Generated_Source\PSoC5/BoostConv_1.c ****          * requires two consecutive reads of registers resides in Boost hard-IP block
+ 472:Generated_Source\PSoC5/BoostConv_1.c ****          */
+ 473:Generated_Source\PSoC5/BoostConv_1.c ****         (void) BoostConv_1_CONTROL_REG2;
+ 474:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_CONTROL_REG2;
+ 475:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 476:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG2 = tmp | BoostConv_1_AUTO_THUMP_ENABLE;
+ 477:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 478:Generated_Source\PSoC5/BoostConv_1.c ****         CyExitCriticalSection(enableInterrupts);
+ 479:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 480:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 481:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 482:Generated_Source\PSoC5/BoostConv_1.c ****     /*******************************************************************************
+ 483:Generated_Source\PSoC5/BoostConv_1.c ****     * Function Name: BoostConv_1_DisableAutoThump
+ 484:Generated_Source\PSoC5/BoostConv_1.c ****     ********************************************************************************
+ 485:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 486:Generated_Source\PSoC5/BoostConv_1.c ****     * Summary:
+ 487:Generated_Source\PSoC5/BoostConv_1.c ****     *  This function disables automatic thump mode (only available when Boost is
+ 488:Generated_Source\PSoC5/BoostConv_1.c ****     *  in Standby mode)
+ 489:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 490:Generated_Source\PSoC5/BoostConv_1.c ****     * Parameters:
+ 491:Generated_Source\PSoC5/BoostConv_1.c ****     *  None.
+ 492:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 493:Generated_Source\PSoC5/BoostConv_1.c ****     * Return:
+ 494:Generated_Source\PSoC5/BoostConv_1.c ****     *  None.
+ 495:Generated_Source\PSoC5/BoostConv_1.c ****     *
+ 496:Generated_Source\PSoC5/BoostConv_1.c ****     *******************************************************************************/
+ 497:Generated_Source\PSoC5/BoostConv_1.c ****     void BoostConv_1_DisableAutoThump(void) 
+ 498:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 499:Generated_Source\PSoC5/BoostConv_1.c ****         uint8 tmp;
+ 500:Generated_Source\PSoC5/BoostConv_1.c ****         uint8 enableInterrupts;
+ 501:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 502:Generated_Source\PSoC5/BoostConv_1.c ****         enableInterrupts = CyEnterCriticalSection();
+ 503:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 504:Generated_Source\PSoC5/BoostConv_1.c ****         /* Accessing Boost block registers in read mode has speed limitation and
+ 505:Generated_Source\PSoC5/BoostConv_1.c ****          * requires two consecutive reads of registers resides in Boost hard-IP block
+ 506:Generated_Source\PSoC5/BoostConv_1.c ****          */
+ 507:Generated_Source\PSoC5/BoostConv_1.c ****         (void) BoostConv_1_CONTROL_REG2;
+ 508:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_CONTROL_REG2;
+ 509:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 510:Generated_Source\PSoC5/BoostConv_1.c ****         BoostConv_1_CONTROL_REG2 = tmp & ((uint8) (~BoostConv_1_AUTO_THUMP_ENABLE));
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 16
+
+
+ 511:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 512:Generated_Source\PSoC5/BoostConv_1.c ****         CyExitCriticalSection(enableInterrupts);
+ 513:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 514:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 515:Generated_Source\PSoC5/BoostConv_1.c **** #endif /* CY_PSOC3 */
+ 516:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 517:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 518:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 519:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_ManualThump
+ 520:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 521:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 522:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 523:Generated_Source\PSoC5/BoostConv_1.c **** *  This function forces a single pulse of the boost converter switch
+ 524:Generated_Source\PSoC5/BoostConv_1.c **** *  transistors.
+ 525:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 526:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 527:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 528:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 529:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 530:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 531:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 532:Generated_Source\PSoC5/BoostConv_1.c **** * Theory:
+ 533:Generated_Source\PSoC5/BoostConv_1.c **** *  Thump - produces one ~500ns pulse when set. Must be reset to 0 before another
+ 534:Generated_Source\PSoC5/BoostConv_1.c **** *  pulse can be generated. It should not re-set the bit until after the 500ns
+ 535:Generated_Source\PSoC5/BoostConv_1.c **** *  pulse has expired. Used for discrete switch control.
+ 536:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 537:Generated_Source\PSoC5/BoostConv_1.c **** * Side Effects:
+ 538:Generated_Source\PSoC5/BoostConv_1.c **** *  This routine writes a "0" followed by a "1" to the bit 7 "thump" bit in the
+ 539:Generated_Source\PSoC5/BoostConv_1.c **** *  boost block BOOST_CR0 register.
+ 540:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 541:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 542:Generated_Source\PSoC5/BoostConv_1.c **** void BoostConv_1_ManualThump(void) 
+ 543:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 324              		.loc 1 543 0
+ 325              		.cfi_startproc
+ 326              		@ args = 0, pretend = 0, frame = 0
+ 327              		@ frame_needed = 0, uses_anonymous_args = 0
+ 328 0000 70B5     		push	{r4, r5, r6, lr}
+ 329              		.cfi_def_cfa_offset 16
+ 330              		.cfi_offset 4, -16
+ 331              		.cfi_offset 5, -12
+ 332              		.cfi_offset 6, -8
+ 333              		.cfi_offset 14, -4
+ 544:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 545:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+ 546:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 547:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+ 334              		.loc 1 547 0
+ 335 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+ 336              	.LVL35:
+ 337 0006 0646     		mov	r6, r0
+ 338              	.LVL36:
+ 548:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 549:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation  and
+ 550:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+ 551:Generated_Source\PSoC5/BoostConv_1.c ****      */
+ 552:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_CONTROL_REG0;
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 17
+
+
+ 339              		.loc 1 552 0
+ 340 0008 084D     		ldr	r5, .L28
+ 341 000a 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 553:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_CONTROL_REG0;
+ 342              		.loc 1 553 0
+ 343 000c 2C78     		ldrb	r4, [r5]	@ zero_extendqisi2
+ 344 000e E4B2     		uxtb	r4, r4
+ 345              	.LVL37:
+ 554:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 555:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG0 = tmp | BoostConv_1_MANUAL_THUMP_ENABLE;
+ 346              		.loc 1 555 0
+ 347 0010 44F00103 		orr	r3, r4, #1
+ 348 0014 2B70     		strb	r3, [r5]
+ 556:Generated_Source\PSoC5/BoostConv_1.c ****     CyDelayUs(1u);
+ 349              		.loc 1 556 0
+ 350 0016 0120     		movs	r0, #1
+ 351 0018 FFF7FEFF 		bl	CyDelayUs
+ 352              	.LVL38:
+ 557:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG0 = tmp & ((uint8) (~BoostConv_1_MANUAL_THUMP_ENABLE));
+ 353              		.loc 1 557 0
+ 354 001c 04F0FE04 		and	r4, r4, #254
+ 355              	.LVL39:
+ 356 0020 2C70     		strb	r4, [r5]
+ 558:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 559:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+ 357              		.loc 1 559 0
+ 358 0022 3046     		mov	r0, r6
+ 359 0024 FFF7FEFF 		bl	CyExitCriticalSection
+ 360              	.LVL40:
+ 361 0028 70BD     		pop	{r4, r5, r6, pc}
+ 362              	.LVL41:
+ 363              	.L29:
+ 364 002a 00BF     		.align	2
+ 365              	.L28:
+ 366 002c 20430040 		.word	1073759008
+ 367              		.cfi_endproc
+ 368              	.LFE7:
+ 369              		.size	BoostConv_1_ManualThump, .-BoostConv_1_ManualThump
+ 370              		.section	.text.BoostConv_1_ReadStatus,"ax",%progbits
+ 371              		.align	2
+ 372              		.global	BoostConv_1_ReadStatus
+ 373              		.thumb
+ 374              		.thumb_func
+ 375              		.type	BoostConv_1_ReadStatus, %function
+ 376              	BoostConv_1_ReadStatus:
+ 377              	.LFB8:
+ 560:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 561:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 562:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 563:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 564:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_ReadStatus
+ 565:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 566:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 567:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 568:Generated_Source\PSoC5/BoostConv_1.c **** *  This function returns the contents of the boost block status register.
+ 569:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 570:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 18
+
+
+ 571:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 572:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 573:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 574:Generated_Source\PSoC5/BoostConv_1.c **** *  Boost block status register.
+ 575:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 576:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 577:Generated_Source\PSoC5/BoostConv_1.c **** uint8 BoostConv_1_ReadStatus(void) 
+ 578:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 378              		.loc 1 578 0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 382 0000 10B5     		push	{r4, lr}
+ 383              		.cfi_def_cfa_offset 8
+ 384              		.cfi_offset 4, -8
+ 385              		.cfi_offset 14, -4
+ 579:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 580:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 enableInterrupts;
+ 581:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 582:Generated_Source\PSoC5/BoostConv_1.c ****     enableInterrupts = CyEnterCriticalSection();
+ 386              		.loc 1 582 0
+ 387 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+ 388              	.LVL42:
+ 583:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 584:Generated_Source\PSoC5/BoostConv_1.c ****     /* Accessing Boost block registers in read mode has speed limitation and
+ 585:Generated_Source\PSoC5/BoostConv_1.c ****      * requires two consecutive reads of registers resides in Boost hard-IP block
+ 586:Generated_Source\PSoC5/BoostConv_1.c ****      */
+ 587:Generated_Source\PSoC5/BoostConv_1.c ****     (void) BoostConv_1_STATUS_REG;
+ 389              		.loc 1 587 0
+ 390 0006 044B     		ldr	r3, .L32
+ 391 0008 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 588:Generated_Source\PSoC5/BoostConv_1.c ****     tmp = BoostConv_1_STATUS_REG;
+ 392              		.loc 1 588 0
+ 393 000a 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
+ 394 000c E4B2     		uxtb	r4, r4
+ 395              	.LVL43:
+ 589:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 590:Generated_Source\PSoC5/BoostConv_1.c ****     CyExitCriticalSection(enableInterrupts);
+ 396              		.loc 1 590 0
+ 397 000e FFF7FEFF 		bl	CyExitCriticalSection
+ 398              	.LVL44:
+ 591:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 592:Generated_Source\PSoC5/BoostConv_1.c ****     return (tmp);
+ 593:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 399              		.loc 1 593 0
+ 400 0012 2046     		mov	r0, r4
+ 401 0014 10BD     		pop	{r4, pc}
+ 402              	.LVL45:
+ 403              	.L33:
+ 404 0016 00BF     		.align	2
+ 405              	.L32:
+ 406 0018 24430040 		.word	1073759012
+ 407              		.cfi_endproc
+ 408              	.LFE8:
+ 409              		.size	BoostConv_1_ReadStatus, .-BoostConv_1_ReadStatus
+ 410              		.section	.text.BoostConv_1_Start,"ax",%progbits
+ 411              		.align	2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 19
+
+
+ 412              		.global	BoostConv_1_Start
+ 413              		.thumb
+ 414              		.thumb_func
+ 415              		.type	BoostConv_1_Start, %function
+ 416              	BoostConv_1_Start:
+ 417              	.LFB1:
+ 120:Generated_Source\PSoC5/BoostConv_1.c ****     uint16 timeout = BoostConv_1_STARTUP_TIMEOUT;
+ 418              		.loc 1 120 0
+ 419              		.cfi_startproc
+ 420              		@ args = 0, pretend = 0, frame = 0
+ 421              		@ frame_needed = 0, uses_anonymous_args = 0
+ 422 0000 10B5     		push	{r4, lr}
+ 423              		.cfi_def_cfa_offset 8
+ 424              		.cfi_offset 4, -8
+ 425              		.cfi_offset 14, -4
+ 426              	.LVL46:
+ 121:Generated_Source\PSoC5/BoostConv_1.c ****     uint8 tmp;
+ 427              		.loc 1 121 0
+ 428 0002 42F21074 		movw	r4, #10000
+ 429              	.LVL47:
+ 430              	.L36:
+ 126:Generated_Source\PSoC5/BoostConv_1.c ****         tmp = BoostConv_1_ReadStatus();
+ 431              		.loc 1 126 0 discriminator 2
+ 432 0006 0120     		movs	r0, #1
+ 433 0008 FFF7FEFF 		bl	CyDelayUs
+ 434              	.LVL48:
+ 127:Generated_Source\PSoC5/BoostConv_1.c ****         timeout--;
+ 435              		.loc 1 127 0 discriminator 2
+ 436 000c FFF7FEFF 		bl	BoostConv_1_ReadStatus
+ 437              	.LVL49:
+ 128:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 438              		.loc 1 128 0 discriminator 2
+ 439 0010 013C     		subs	r4, r4, #1
+ 440              	.LVL50:
+ 441 0012 A4B2     		uxth	r4, r4
+ 442              	.LVL51:
+ 130:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 443              		.loc 1 130 0 discriminator 2
+ 444 0014 14B1     		cbz	r4, .L35
+ 130:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 445              		.loc 1 130 0 is_stmt 0 discriminator 1
+ 446 0016 10F0800F 		tst	r0, #128
+ 447 001a F4D0     		beq	.L36
+ 448              	.L35:
+ 132:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 449              		.loc 1 132 0 is_stmt 1
+ 450 001c FFF7FEFF 		bl	BoostConv_1_ReadStatus
+ 451              	.LVL52:
+ 134:Generated_Source\PSoC5/BoostConv_1.c ****     {
+ 452              		.loc 1 134 0
+ 453 0020 10F0800F 		tst	r0, #128
+ 454 0024 12D0     		beq	.L37
+ 136:Generated_Source\PSoC5/BoostConv_1.c ****         {
+ 455              		.loc 1 136 0
+ 456 0026 0B4B     		ldr	r3, .L42
+ 457 0028 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 458 002a 2BB9     		cbnz	r3, .L38
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 20
+
+
+ 138:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_initVar = 1u;
+ 459              		.loc 1 138 0
+ 460 002c FFF7FEFF 		bl	BoostConv_1_Init
+ 461              	.LVL53:
+ 139:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 462              		.loc 1 139 0
+ 463 0030 0122     		movs	r2, #1
+ 464 0032 084B     		ldr	r3, .L42
+ 465 0034 1A70     		strb	r2, [r3]
+ 466 0036 06E0     		b	.L39
+ 467              	.LVL54:
+ 468              	.L38:
+ 143:Generated_Source\PSoC5/BoostConv_1.c ****             BoostConv_1_SetMode(BoostConv_1_backup.mode);
+ 469              		.loc 1 143 0
+ 470 0038 074C     		ldr	r4, .L42+4
+ 471              	.LVL55:
+ 472 003a 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 473              	.LVL56:
+ 474 003c FFF7FEFF 		bl	BoostConv_1_SelVoltage
+ 475              	.LVL57:
+ 144:Generated_Source\PSoC5/BoostConv_1.c ****         }
+ 476              		.loc 1 144 0
+ 477 0040 6078     		ldrb	r0, [r4, #1]	@ zero_extendqisi2
+ 478 0042 FFF7FEFF 		bl	BoostConv_1_SetMode
+ 479              	.LVL58:
+ 480              	.L39:
+ 147:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 481              		.loc 1 147 0
+ 482 0046 FFF7FEFF 		bl	BoostConv_1_Enable
+ 483              	.LVL59:
+ 484 004a 10BD     		pop	{r4, pc}
+ 485              	.LVL60:
+ 486              	.L37:
+ 154:Generated_Source\PSoC5/BoostConv_1.c ****     }
+ 487              		.loc 1 154 0 discriminator 1
+ 488 004c 0020     		movs	r0, #0
+ 489              	.LVL61:
+ 490 004e FFF7FEFF 		bl	CyHalt
+ 491              	.LVL62:
+ 492 0052 10BD     		pop	{r4, pc}
+ 493              	.LVL63:
+ 494              	.L43:
+ 495              		.align	2
+ 496              	.L42:
+ 497 0054 00000000 		.word	.LANCHOR1
+ 498 0058 00000000 		.word	.LANCHOR0
+ 499              		.cfi_endproc
+ 500              	.LFE1:
+ 501              		.size	BoostConv_1_Start, .-BoostConv_1_Start
+ 502              		.section	.text.BoostConv_1_EnableInt,"ax",%progbits
+ 503              		.align	2
+ 504              		.global	BoostConv_1_EnableInt
+ 505              		.thumb
+ 506              		.thumb_func
+ 507              		.type	BoostConv_1_EnableInt, %function
+ 508              	BoostConv_1_EnableInt:
+ 509              	.LFB9:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 21
+
+
+ 594:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 595:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 596:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 597:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_EnableInt
+ 598:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 599:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 600:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 601:Generated_Source\PSoC5/BoostConv_1.c **** *  This function enables the Boost block Output Under-Voltage interrupt
+ 602:Generated_Source\PSoC5/BoostConv_1.c **** *  generation.
+ 603:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 604:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 605:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 606:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 607:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 608:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 609:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 610:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 611:Generated_Source\PSoC5/BoostConv_1.c **** void  BoostConv_1_EnableInt(void) 
+ 612:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 510              		.loc 1 612 0
+ 511              		.cfi_startproc
+ 512              		@ args = 0, pretend = 0, frame = 0
+ 513              		@ frame_needed = 0, uses_anonymous_args = 0
+ 514              		@ link register save eliminated.
+ 613:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG4 |= BoostConv_1_INT_ENABLE_MASK;
+ 515              		.loc 1 613 0
+ 516 0000 024A     		ldr	r2, .L45
+ 517 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 518 0004 43F00103 		orr	r3, r3, #1
+ 519 0008 1370     		strb	r3, [r2]
+ 520 000a 7047     		bx	lr
+ 521              	.L46:
+ 522              		.align	2
+ 523              	.L45:
+ 524 000c 25430040 		.word	1073759013
+ 525              		.cfi_endproc
+ 526              	.LFE9:
+ 527              		.size	BoostConv_1_EnableInt, .-BoostConv_1_EnableInt
+ 528              		.section	.text.BoostConv_1_DisableInt,"ax",%progbits
+ 529              		.align	2
+ 530              		.global	BoostConv_1_DisableInt
+ 531              		.thumb
+ 532              		.thumb_func
+ 533              		.type	BoostConv_1_DisableInt, %function
+ 534              	BoostConv_1_DisableInt:
+ 535              	.LFB10:
+ 614:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 615:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 616:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 617:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 618:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_DisableInt
+ 619:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 620:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 621:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 622:Generated_Source\PSoC5/BoostConv_1.c **** *  This function disables the Boost block Output Under-Voltage interrupt
+ 623:Generated_Source\PSoC5/BoostConv_1.c **** *  generation.
+ 624:Generated_Source\PSoC5/BoostConv_1.c **** *
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 22
+
+
+ 625:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 626:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 627:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 628:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 629:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 630:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 631:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 632:Generated_Source\PSoC5/BoostConv_1.c **** void  BoostConv_1_DisableInt(void) 
+ 633:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 536              		.loc 1 633 0
+ 537              		.cfi_startproc
+ 538              		@ args = 0, pretend = 0, frame = 0
+ 539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 540              		@ link register save eliminated.
+ 634:Generated_Source\PSoC5/BoostConv_1.c ****     BoostConv_1_CONTROL_REG4 &= (uint8) (~BoostConv_1_INT_ENABLE_MASK);
+ 541              		.loc 1 634 0
+ 542 0000 024A     		ldr	r2, .L48
+ 543 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 544 0004 03F0FE03 		and	r3, r3, #254
+ 545 0008 1370     		strb	r3, [r2]
+ 546 000a 7047     		bx	lr
+ 547              	.L49:
+ 548              		.align	2
+ 549              	.L48:
+ 550 000c 25430040 		.word	1073759013
+ 551              		.cfi_endproc
+ 552              	.LFE10:
+ 553              		.size	BoostConv_1_DisableInt, .-BoostConv_1_DisableInt
+ 554              		.section	.text.BoostConv_1_ReadIntStatus,"ax",%progbits
+ 555              		.align	2
+ 556              		.global	BoostConv_1_ReadIntStatus
+ 557              		.thumb
+ 558              		.thumb_func
+ 559              		.type	BoostConv_1_ReadIntStatus, %function
+ 560              	BoostConv_1_ReadIntStatus:
+ 561              	.LFB11:
+ 635:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 636:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 637:Generated_Source\PSoC5/BoostConv_1.c **** 
+ 638:Generated_Source\PSoC5/BoostConv_1.c **** /*******************************************************************************
+ 639:Generated_Source\PSoC5/BoostConv_1.c **** * Function Name: BoostConv_1_ReadIntStatus
+ 640:Generated_Source\PSoC5/BoostConv_1.c **** ********************************************************************************
+ 641:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 642:Generated_Source\PSoC5/BoostConv_1.c **** * Summary:
+ 643:Generated_Source\PSoC5/BoostConv_1.c **** *  This function returns the contents of the boost block interrupt status
+ 644:Generated_Source\PSoC5/BoostConv_1.c **** *  register.
+ 645:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 646:Generated_Source\PSoC5/BoostConv_1.c **** * Parameters:
+ 647:Generated_Source\PSoC5/BoostConv_1.c **** *  None.
+ 648:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 649:Generated_Source\PSoC5/BoostConv_1.c **** * Return:
+ 650:Generated_Source\PSoC5/BoostConv_1.c **** *  Boost interrupt status register.
+ 651:Generated_Source\PSoC5/BoostConv_1.c **** *
+ 652:Generated_Source\PSoC5/BoostConv_1.c **** *******************************************************************************/
+ 653:Generated_Source\PSoC5/BoostConv_1.c **** uint8 BoostConv_1_ReadIntStatus(void) 
+ 654:Generated_Source\PSoC5/BoostConv_1.c **** {
+ 562              		.loc 1 654 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 23
+
+
+ 563              		.cfi_startproc
+ 564              		@ args = 0, pretend = 0, frame = 0
+ 565              		@ frame_needed = 0, uses_anonymous_args = 0
+ 566              		@ link register save eliminated.
+ 655:Generated_Source\PSoC5/BoostConv_1.c ****     return (BoostConv_1_STATUS_REG2 & BoostConv_1_INT_ENABLE_MASK);
+ 567              		.loc 1 655 0
+ 568 0000 024B     		ldr	r3, .L51
+ 569 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 656:Generated_Source\PSoC5/BoostConv_1.c **** }
+ 570              		.loc 1 656 0
+ 571 0004 00F00100 		and	r0, r0, #1
+ 572 0008 7047     		bx	lr
+ 573              	.L52:
+ 574 000a 00BF     		.align	2
+ 575              	.L51:
+ 576 000c 26430040 		.word	1073759014
+ 577              		.cfi_endproc
+ 578              	.LFE11:
+ 579              		.size	BoostConv_1_ReadIntStatus, .-BoostConv_1_ReadIntStatus
+ 580              		.global	BoostConv_1_initVar
+ 581              		.data
+ 582              		.align	2
+ 583              		.set	.LANCHOR0,. + 0
+ 584              		.type	BoostConv_1_backup, %object
+ 585              		.size	BoostConv_1_backup, 2
+ 586              	BoostConv_1_backup:
+ 587 0000 1A       		.byte	26
+ 588 0001 03       		.byte	3
+ 589              		.bss
+ 590              		.set	.LANCHOR1,. + 0
+ 591              		.type	BoostConv_1_initVar, %object
+ 592              		.size	BoostConv_1_initVar, 1
+ 593              	BoostConv_1_initVar:
+ 594 0000 00       		.space	1
+ 595              		.text
+ 596              	.Letext0:
+ 597              		.file 2 "Generated_Source\\PSoC5\\cytypes.h"
+ 598              		.file 3 "Generated_Source\\PSoC5\\BoostConv_1.h"
+ 599              		.file 4 "Generated_Source\\PSoC5\\CyLib.h"
+ 600              		.section	.debug_info,"",%progbits
+ 601              	.Ldebug_info0:
+ 602 0000 D5040000 		.4byte	0x4d5
+ 603 0004 0400     		.2byte	0x4
+ 604 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 605 000a 04       		.byte	0x4
+ 606 000b 01       		.uleb128 0x1
+ 607 000c CA000000 		.4byte	.LASF38
+ 608 0010 0C       		.byte	0xc
+ 609 0011 7A000000 		.4byte	.LASF39
+ 610 0015 2E020000 		.4byte	.LASF40
+ 611 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 612 001d 00000000 		.4byte	0
+ 613 0021 00000000 		.4byte	.Ldebug_line0
+ 614 0025 02       		.uleb128 0x2
+ 615 0026 01       		.byte	0x1
+ 616 0027 06       		.byte	0x6
+ 617 0028 2A030000 		.4byte	.LASF0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 24
+
+
+ 618 002c 02       		.uleb128 0x2
+ 619 002d 01       		.byte	0x1
+ 620 002e 08       		.byte	0x8
+ 621 002f BC000000 		.4byte	.LASF1
+ 622 0033 02       		.uleb128 0x2
+ 623 0034 02       		.byte	0x2
+ 624 0035 05       		.byte	0x5
+ 625 0036 DA020000 		.4byte	.LASF2
+ 626 003a 02       		.uleb128 0x2
+ 627 003b 02       		.byte	0x2
+ 628 003c 07       		.byte	0x7
+ 629 003d 55000000 		.4byte	.LASF3
+ 630 0041 02       		.uleb128 0x2
+ 631 0042 04       		.byte	0x4
+ 632 0043 05       		.byte	0x5
+ 633 0044 10030000 		.4byte	.LASF4
+ 634 0048 02       		.uleb128 0x2
+ 635 0049 04       		.byte	0x4
+ 636 004a 07       		.byte	0x7
+ 637 004b 5D010000 		.4byte	.LASF5
+ 638 004f 02       		.uleb128 0x2
+ 639 0050 08       		.byte	0x8
+ 640 0051 05       		.byte	0x5
+ 641 0052 9B020000 		.4byte	.LASF6
+ 642 0056 02       		.uleb128 0x2
+ 643 0057 08       		.byte	0x8
+ 644 0058 07       		.byte	0x7
+ 645 0059 A5000000 		.4byte	.LASF7
+ 646 005d 03       		.uleb128 0x3
+ 647 005e 04       		.byte	0x4
+ 648 005f 05       		.byte	0x5
+ 649 0060 696E7400 		.ascii	"int\000"
+ 650 0064 02       		.uleb128 0x2
+ 651 0065 04       		.byte	0x4
+ 652 0066 07       		.byte	0x7
+ 653 0067 EF010000 		.4byte	.LASF8
+ 654 006b 04       		.uleb128 0x4
+ 655 006c 6F010000 		.4byte	.LASF9
+ 656 0070 02       		.byte	0x2
+ 657 0071 E401     		.2byte	0x1e4
+ 658 0073 2C000000 		.4byte	0x2c
+ 659 0077 04       		.uleb128 0x4
+ 660 0078 BD010000 		.4byte	.LASF10
+ 661 007c 02       		.byte	0x2
+ 662 007d E501     		.2byte	0x1e5
+ 663 007f 3A000000 		.4byte	0x3a
+ 664 0083 02       		.uleb128 0x2
+ 665 0084 04       		.byte	0x4
+ 666 0085 04       		.byte	0x4
+ 667 0086 9F000000 		.4byte	.LASF11
+ 668 008a 02       		.uleb128 0x2
+ 669 008b 08       		.byte	0x8
+ 670 008c 04       		.byte	0x4
+ 671 008d 8E010000 		.4byte	.LASF12
+ 672 0091 02       		.uleb128 0x2
+ 673 0092 01       		.byte	0x1
+ 674 0093 08       		.byte	0x8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 25
+
+
+ 675 0094 19030000 		.4byte	.LASF13
+ 676 0098 04       		.uleb128 0x4
+ 677 0099 58010000 		.4byte	.LASF14
+ 678 009d 02       		.byte	0x2
+ 679 009e 8E02     		.2byte	0x28e
+ 680 00a0 A4000000 		.4byte	0xa4
+ 681 00a4 05       		.uleb128 0x5
+ 682 00a5 6B000000 		.4byte	0x6b
+ 683 00a9 02       		.uleb128 0x2
+ 684 00aa 08       		.byte	0x8
+ 685 00ab 04       		.byte	0x4
+ 686 00ac 1E030000 		.4byte	.LASF15
+ 687 00b0 02       		.uleb128 0x2
+ 688 00b1 04       		.byte	0x4
+ 689 00b2 07       		.byte	0x7
+ 690 00b3 92020000 		.4byte	.LASF16
+ 691 00b7 06       		.uleb128 0x6
+ 692 00b8 02       		.byte	0x2
+ 693 00b9 03       		.byte	0x3
+ 694 00ba 2C       		.byte	0x2c
+ 695 00bb D8000000 		.4byte	0xd8
+ 696 00bf 07       		.uleb128 0x7
+ 697 00c0 73020000 		.4byte	.LASF17
+ 698 00c4 03       		.byte	0x3
+ 699 00c5 2E       		.byte	0x2e
+ 700 00c6 6B000000 		.4byte	0x6b
+ 701 00ca 00       		.byte	0
+ 702 00cb 07       		.uleb128 0x7
+ 703 00cc 29020000 		.4byte	.LASF18
+ 704 00d0 03       		.byte	0x3
+ 705 00d1 2F       		.byte	0x2f
+ 706 00d2 6B000000 		.4byte	0x6b
+ 707 00d6 01       		.byte	0x1
+ 708 00d7 00       		.byte	0
+ 709 00d8 08       		.uleb128 0x8
+ 710 00d9 00000000 		.4byte	.LASF19
+ 711 00dd 03       		.byte	0x3
+ 712 00de 30       		.byte	0x30
+ 713 00df B7000000 		.4byte	0xb7
+ 714 00e3 09       		.uleb128 0x9
+ 715 00e4 A9020000 		.4byte	.LASF21
+ 716 00e8 01       		.byte	0x1
+ 717 00e9 E1       		.byte	0xe1
+ 718 00ea 00000000 		.4byte	.LFB3
+ 719 00ee 1C000000 		.4byte	.LFE3-.LFB3
+ 720 00f2 01       		.uleb128 0x1
+ 721 00f3 9C       		.byte	0x9c
+ 722 00f4 29010000 		.4byte	0x129
+ 723 00f8 0A       		.uleb128 0xa
+ 724 00f9 746D7000 		.ascii	"tmp\000"
+ 725 00fd 01       		.byte	0x1
+ 726 00fe E3       		.byte	0xe3
+ 727 00ff 6B000000 		.4byte	0x6b
+ 728 0103 00000000 		.4byte	.LLST0
+ 729 0107 0B       		.uleb128 0xb
+ 730 0108 7D010000 		.4byte	.LASF20
+ 731 010c 01       		.byte	0x1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 26
+
+
+ 732 010d E4       		.byte	0xe4
+ 733 010e 6B000000 		.4byte	0x6b
+ 734 0112 13000000 		.4byte	.LLST1
+ 735 0116 0C       		.uleb128 0xc
+ 736 0117 06000000 		.4byte	.LVL0
+ 737 011b AC040000 		.4byte	0x4ac
+ 738 011f 0C       		.uleb128 0xc
+ 739 0120 16000000 		.4byte	.LVL3
+ 740 0124 B7040000 		.4byte	0x4b7
+ 741 0128 00       		.byte	0
+ 742 0129 0D       		.uleb128 0xd
+ 743 012a C4010000 		.4byte	.LASF22
+ 744 012e 01       		.byte	0x1
+ 745 012f 0201     		.2byte	0x102
+ 746 0131 00000000 		.4byte	.LFB4
+ 747 0135 1C000000 		.4byte	.LFE4-.LFB4
+ 748 0139 01       		.uleb128 0x1
+ 749 013a 9C       		.byte	0x9c
+ 750 013b 72010000 		.4byte	0x172
+ 751 013f 0E       		.uleb128 0xe
+ 752 0140 746D7000 		.ascii	"tmp\000"
+ 753 0144 01       		.byte	0x1
+ 754 0145 0401     		.2byte	0x104
+ 755 0147 6B000000 		.4byte	0x6b
+ 756 014b 26000000 		.4byte	.LLST2
+ 757 014f 0F       		.uleb128 0xf
+ 758 0150 7D010000 		.4byte	.LASF20
+ 759 0154 01       		.byte	0x1
+ 760 0155 0501     		.2byte	0x105
+ 761 0157 6B000000 		.4byte	0x6b
+ 762 015b 39000000 		.4byte	.LLST3
+ 763 015f 0C       		.uleb128 0xc
+ 764 0160 06000000 		.4byte	.LVL4
+ 765 0164 AC040000 		.4byte	0x4ac
+ 766 0168 0C       		.uleb128 0xc
+ 767 0169 16000000 		.4byte	.LVL7
+ 768 016d B7040000 		.4byte	0x4b7
+ 769 0171 00       		.byte	0
+ 770 0172 0D       		.uleb128 0xd
+ 771 0173 7E020000 		.4byte	.LASF23
+ 772 0177 01       		.byte	0x1
+ 773 0178 2B01     		.2byte	0x12b
+ 774 017a 00000000 		.4byte	.LFB5
+ 775 017e 30000000 		.4byte	.LFE5-.LFB5
+ 776 0182 01       		.uleb128 0x1
+ 777 0183 9C       		.byte	0x9c
+ 778 0184 DE010000 		.4byte	0x1de
+ 779 0188 10       		.uleb128 0x10
+ 780 0189 29020000 		.4byte	.LASF18
+ 781 018d 01       		.byte	0x1
+ 782 018e 2B01     		.2byte	0x12b
+ 783 0190 6B000000 		.4byte	0x6b
+ 784 0194 4C000000 		.4byte	.LLST4
+ 785 0198 0E       		.uleb128 0xe
+ 786 0199 746D7000 		.ascii	"tmp\000"
+ 787 019d 01       		.byte	0x1
+ 788 019e 2D01     		.2byte	0x12d
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 27
+
+
+ 789 01a0 6B000000 		.4byte	0x6b
+ 790 01a4 6D000000 		.4byte	.LLST5
+ 791 01a8 0F       		.uleb128 0xf
+ 792 01a9 7D010000 		.4byte	.LASF20
+ 793 01ad 01       		.byte	0x1
+ 794 01ae 2E01     		.2byte	0x12e
+ 795 01b0 6B000000 		.4byte	0x6b
+ 796 01b4 80000000 		.4byte	.LLST6
+ 797 01b8 11       		.uleb128 0x11
+ 798 01b9 0E000000 		.4byte	.LVL10
+ 799 01bd C2040000 		.4byte	0x4c2
+ 800 01c1 CB010000 		.4byte	0x1cb
+ 801 01c5 12       		.uleb128 0x12
+ 802 01c6 01       		.uleb128 0x1
+ 803 01c7 50       		.byte	0x50
+ 804 01c8 01       		.uleb128 0x1
+ 805 01c9 30       		.byte	0x30
+ 806 01ca 00       		.byte	0
+ 807 01cb 0C       		.uleb128 0xc
+ 808 01cc 12000000 		.4byte	.LVL11
+ 809 01d0 AC040000 		.4byte	0x4ac
+ 810 01d4 0C       		.uleb128 0xc
+ 811 01d5 2A000000 		.4byte	.LVL14
+ 812 01d9 B7040000 		.4byte	0x4b7
+ 813 01dd 00       		.byte	0
+ 814 01de 0D       		.uleb128 0xd
+ 815 01df 1A000000 		.4byte	.LASF24
+ 816 01e3 01       		.byte	0x1
+ 817 01e4 6E01     		.2byte	0x16e
+ 818 01e6 00000000 		.4byte	.LFB6
+ 819 01ea 24000000 		.4byte	.LFE6-.LFB6
+ 820 01ee 01       		.uleb128 0x1
+ 821 01ef 9C       		.byte	0x9c
+ 822 01f0 37020000 		.4byte	0x237
+ 823 01f4 10       		.uleb128 0x10
+ 824 01f5 75010000 		.4byte	.LASF25
+ 825 01f9 01       		.byte	0x1
+ 826 01fa 6E01     		.2byte	0x16e
+ 827 01fc 6B000000 		.4byte	0x6b
+ 828 0200 93000000 		.4byte	.LLST7
+ 829 0204 0E       		.uleb128 0xe
+ 830 0205 746D7000 		.ascii	"tmp\000"
+ 831 0209 01       		.byte	0x1
+ 832 020a 7001     		.2byte	0x170
+ 833 020c 6B000000 		.4byte	0x6b
+ 834 0210 B4000000 		.4byte	.LLST8
+ 835 0214 0F       		.uleb128 0xf
+ 836 0215 7D010000 		.4byte	.LASF20
+ 837 0219 01       		.byte	0x1
+ 838 021a 7101     		.2byte	0x171
+ 839 021c 6B000000 		.4byte	0x6b
+ 840 0220 C7000000 		.4byte	.LLST9
+ 841 0224 0C       		.uleb128 0xc
+ 842 0225 08000000 		.4byte	.LVL16
+ 843 0229 AC040000 		.4byte	0x4ac
+ 844 022d 0C       		.uleb128 0xc
+ 845 022e 1E000000 		.4byte	.LVL19
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 28
+
+
+ 846 0232 B7040000 		.4byte	0x4b7
+ 847 0236 00       		.byte	0
+ 848 0237 09       		.uleb128 0x9
+ 849 0238 44000000 		.4byte	.LASF26
+ 850 023c 01       		.byte	0x1
+ 851 023d 27       		.byte	0x27
+ 852 023e 00000000 		.4byte	.LFB0
+ 853 0242 3C000000 		.4byte	.LFE0-.LFB0
+ 854 0246 01       		.uleb128 0x1
+ 855 0247 9C       		.byte	0x9c
+ 856 0248 9F020000 		.4byte	0x29f
+ 857 024c 0A       		.uleb128 0xa
+ 858 024d 746D7000 		.ascii	"tmp\000"
+ 859 0251 01       		.byte	0x1
+ 860 0252 29       		.byte	0x29
+ 861 0253 6B000000 		.4byte	0x6b
+ 862 0257 DA000000 		.4byte	.LLST10
+ 863 025b 0B       		.uleb128 0xb
+ 864 025c 7D010000 		.4byte	.LASF20
+ 865 0260 01       		.byte	0x1
+ 866 0261 2A       		.byte	0x2a
+ 867 0262 6B000000 		.4byte	0x6b
+ 868 0266 F8000000 		.4byte	.LLST11
+ 869 026a 0C       		.uleb128 0xc
+ 870 026b 06000000 		.4byte	.LVL20
+ 871 026f AC040000 		.4byte	0x4ac
+ 872 0273 0C       		.uleb128 0xc
+ 873 0274 16000000 		.4byte	.LVL23
+ 874 0278 B7040000 		.4byte	0x4b7
+ 875 027c 11       		.uleb128 0x11
+ 876 027d 2C000000 		.4byte	.LVL26
+ 877 0281 DE010000 		.4byte	0x1de
+ 878 0285 8F020000 		.4byte	0x28f
+ 879 0289 12       		.uleb128 0x12
+ 880 028a 01       		.uleb128 0x1
+ 881 028b 50       		.byte	0x50
+ 882 028c 01       		.uleb128 0x1
+ 883 028d 4A       		.byte	0x4a
+ 884 028e 00       		.byte	0
+ 885 028f 13       		.uleb128 0x13
+ 886 0290 32000000 		.4byte	.LVL27
+ 887 0294 72010000 		.4byte	0x172
+ 888 0298 12       		.uleb128 0x12
+ 889 0299 01       		.uleb128 0x1
+ 890 029a 50       		.byte	0x50
+ 891 029b 01       		.uleb128 0x1
+ 892 029c 33       		.byte	0x33
+ 893 029d 00       		.byte	0
+ 894 029e 00       		.byte	0
+ 895 029f 09       		.uleb128 0x9
+ 896 02a0 AC010000 		.4byte	.LASF27
+ 897 02a4 01       		.byte	0x1
+ 898 02a5 B5       		.byte	0xb5
+ 899 02a6 00000000 		.4byte	.LFB2
+ 900 02aa 3C000000 		.4byte	.LFE2-.LFB2
+ 901 02ae 01       		.uleb128 0x1
+ 902 02af 9C       		.byte	0x9c
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 29
+
+
+ 903 02b0 14030000 		.4byte	0x314
+ 904 02b4 0A       		.uleb128 0xa
+ 905 02b5 746D7000 		.ascii	"tmp\000"
+ 906 02b9 01       		.byte	0x1
+ 907 02ba B7       		.byte	0xb7
+ 908 02bb 6B000000 		.4byte	0x6b
+ 909 02bf 0B010000 		.4byte	.LLST12
+ 910 02c3 0B       		.uleb128 0xb
+ 911 02c4 7D010000 		.4byte	.LASF20
+ 912 02c8 01       		.byte	0x1
+ 913 02c9 B8       		.byte	0xb8
+ 914 02ca 6B000000 		.4byte	0x6b
+ 915 02ce 1E010000 		.4byte	.LLST13
+ 916 02d2 0C       		.uleb128 0xc
+ 917 02d3 06000000 		.4byte	.LVL28
+ 918 02d7 AC040000 		.4byte	0x4ac
+ 919 02db 0C       		.uleb128 0xc
+ 920 02dc 20000000 		.4byte	.LVL31
+ 921 02e0 B7040000 		.4byte	0x4b7
+ 922 02e4 11       		.uleb128 0x11
+ 923 02e5 26000000 		.4byte	.LVL32
+ 924 02e9 DE010000 		.4byte	0x1de
+ 925 02ed F7020000 		.4byte	0x2f7
+ 926 02f1 12       		.uleb128 0x12
+ 927 02f2 01       		.uleb128 0x1
+ 928 02f3 50       		.byte	0x50
+ 929 02f4 01       		.uleb128 0x1
+ 930 02f5 30       		.byte	0x30
+ 931 02f6 00       		.byte	0
+ 932 02f7 11       		.uleb128 0x11
+ 933 02f8 2C000000 		.4byte	.LVL33
+ 934 02fc 72010000 		.4byte	0x172
+ 935 0300 0A030000 		.4byte	0x30a
+ 936 0304 12       		.uleb128 0x12
+ 937 0305 01       		.uleb128 0x1
+ 938 0306 50       		.byte	0x50
+ 939 0307 01       		.uleb128 0x1
+ 940 0308 30       		.byte	0x30
+ 941 0309 00       		.byte	0
+ 942 030a 0C       		.uleb128 0xc
+ 943 030b 30000000 		.4byte	.LVL34
+ 944 030f 29010000 		.4byte	0x129
+ 945 0313 00       		.byte	0
+ 946 0314 0D       		.uleb128 0xd
+ 947 0315 E4020000 		.4byte	.LASF28
+ 948 0319 01       		.byte	0x1
+ 949 031a 1E02     		.2byte	0x21e
+ 950 031c 00000000 		.4byte	.LFB7
+ 951 0320 30000000 		.4byte	.LFE7-.LFB7
+ 952 0324 01       		.uleb128 0x1
+ 953 0325 9C       		.byte	0x9c
+ 954 0326 77030000 		.4byte	0x377
+ 955 032a 0E       		.uleb128 0xe
+ 956 032b 746D7000 		.ascii	"tmp\000"
+ 957 032f 01       		.byte	0x1
+ 958 0330 2002     		.2byte	0x220
+ 959 0332 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 30
+
+
+ 960 0336 31010000 		.4byte	.LLST14
+ 961 033a 0F       		.uleb128 0xf
+ 962 033b 7D010000 		.4byte	.LASF20
+ 963 033f 01       		.byte	0x1
+ 964 0340 2102     		.2byte	0x221
+ 965 0342 6B000000 		.4byte	0x6b
+ 966 0346 44010000 		.4byte	.LLST15
+ 967 034a 0C       		.uleb128 0xc
+ 968 034b 06000000 		.4byte	.LVL35
+ 969 034f AC040000 		.4byte	0x4ac
+ 970 0353 11       		.uleb128 0x11
+ 971 0354 1C000000 		.4byte	.LVL38
+ 972 0358 CD040000 		.4byte	0x4cd
+ 973 035c 66030000 		.4byte	0x366
+ 974 0360 12       		.uleb128 0x12
+ 975 0361 01       		.uleb128 0x1
+ 976 0362 50       		.byte	0x50
+ 977 0363 01       		.uleb128 0x1
+ 978 0364 31       		.byte	0x31
+ 979 0365 00       		.byte	0
+ 980 0366 13       		.uleb128 0x13
+ 981 0367 28000000 		.4byte	.LVL40
+ 982 036b B7040000 		.4byte	0x4b7
+ 983 036f 12       		.uleb128 0x12
+ 984 0370 01       		.uleb128 0x1
+ 985 0371 50       		.byte	0x50
+ 986 0372 02       		.uleb128 0x2
+ 987 0373 76       		.byte	0x76
+ 988 0374 00       		.sleb128 0
+ 989 0375 00       		.byte	0
+ 990 0376 00       		.byte	0
+ 991 0377 14       		.uleb128 0x14
+ 992 0378 12020000 		.4byte	.LASF41
+ 993 037c 01       		.byte	0x1
+ 994 037d 4102     		.2byte	0x241
+ 995 037f 6B000000 		.4byte	0x6b
+ 996 0383 00000000 		.4byte	.LFB8
+ 997 0387 1C000000 		.4byte	.LFE8-.LFB8
+ 998 038b 01       		.uleb128 0x1
+ 999 038c 9C       		.byte	0x9c
+ 1000 038d C4030000 		.4byte	0x3c4
+ 1001 0391 0E       		.uleb128 0xe
+ 1002 0392 746D7000 		.ascii	"tmp\000"
+ 1003 0396 01       		.byte	0x1
+ 1004 0397 4302     		.2byte	0x243
+ 1005 0399 6B000000 		.4byte	0x6b
+ 1006 039d 57010000 		.4byte	.LLST16
+ 1007 03a1 0F       		.uleb128 0xf
+ 1008 03a2 7D010000 		.4byte	.LASF20
+ 1009 03a6 01       		.byte	0x1
+ 1010 03a7 4402     		.2byte	0x244
+ 1011 03a9 6B000000 		.4byte	0x6b
+ 1012 03ad 75010000 		.4byte	.LLST17
+ 1013 03b1 0C       		.uleb128 0xc
+ 1014 03b2 06000000 		.4byte	.LVL42
+ 1015 03b6 AC040000 		.4byte	0x4ac
+ 1016 03ba 0C       		.uleb128 0xc
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 31
+
+
+ 1017 03bb 12000000 		.4byte	.LVL44
+ 1018 03bf B7040000 		.4byte	0x4b7
+ 1019 03c3 00       		.byte	0
+ 1020 03c4 09       		.uleb128 0x9
+ 1021 03c5 68000000 		.4byte	.LASF29
+ 1022 03c9 01       		.byte	0x1
+ 1023 03ca 77       		.byte	0x77
+ 1024 03cb 00000000 		.4byte	.LFB1
+ 1025 03cf 5C000000 		.4byte	.LFE1-.LFB1
+ 1026 03d3 01       		.uleb128 0x1
+ 1027 03d4 9C       		.byte	0x9c
+ 1028 03d5 50040000 		.4byte	0x450
+ 1029 03d9 0B       		.uleb128 0xb
+ 1030 03da D2020000 		.4byte	.LASF30
+ 1031 03de 01       		.byte	0x1
+ 1032 03df 79       		.byte	0x79
+ 1033 03e0 77000000 		.4byte	0x77
+ 1034 03e4 88010000 		.4byte	.LLST18
+ 1035 03e8 0A       		.uleb128 0xa
+ 1036 03e9 746D7000 		.ascii	"tmp\000"
+ 1037 03ed 01       		.byte	0x1
+ 1038 03ee 7A       		.byte	0x7a
+ 1039 03ef 6B000000 		.4byte	0x6b
+ 1040 03f3 BF010000 		.4byte	.LLST19
+ 1041 03f7 11       		.uleb128 0x11
+ 1042 03f8 0C000000 		.4byte	.LVL48
+ 1043 03fc CD040000 		.4byte	0x4cd
+ 1044 0400 0A040000 		.4byte	0x40a
+ 1045 0404 12       		.uleb128 0x12
+ 1046 0405 01       		.uleb128 0x1
+ 1047 0406 50       		.byte	0x50
+ 1048 0407 01       		.uleb128 0x1
+ 1049 0408 31       		.byte	0x31
+ 1050 0409 00       		.byte	0
+ 1051 040a 0C       		.uleb128 0xc
+ 1052 040b 10000000 		.4byte	.LVL49
+ 1053 040f 77030000 		.4byte	0x377
+ 1054 0413 0C       		.uleb128 0xc
+ 1055 0414 20000000 		.4byte	.LVL52
+ 1056 0418 77030000 		.4byte	0x377
+ 1057 041c 0C       		.uleb128 0xc
+ 1058 041d 30000000 		.4byte	.LVL53
+ 1059 0421 37020000 		.4byte	0x237
+ 1060 0425 0C       		.uleb128 0xc
+ 1061 0426 40000000 		.4byte	.LVL57
+ 1062 042a DE010000 		.4byte	0x1de
+ 1063 042e 0C       		.uleb128 0xc
+ 1064 042f 46000000 		.4byte	.LVL58
+ 1065 0433 72010000 		.4byte	0x172
+ 1066 0437 0C       		.uleb128 0xc
+ 1067 0438 4A000000 		.4byte	.LVL59
+ 1068 043c E3000000 		.4byte	0xe3
+ 1069 0440 13       		.uleb128 0x13
+ 1070 0441 52000000 		.4byte	.LVL62
+ 1071 0445 C2040000 		.4byte	0x4c2
+ 1072 0449 12       		.uleb128 0x12
+ 1073 044a 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 32
+
+
+ 1074 044b 50       		.byte	0x50
+ 1075 044c 01       		.uleb128 0x1
+ 1076 044d 30       		.byte	0x30
+ 1077 044e 00       		.byte	0
+ 1078 044f 00       		.byte	0
+ 1079 0450 15       		.uleb128 0x15
+ 1080 0451 BC020000 		.4byte	.LASF31
+ 1081 0455 01       		.byte	0x1
+ 1082 0456 6302     		.2byte	0x263
+ 1083 0458 00000000 		.4byte	.LFB9
+ 1084 045c 10000000 		.4byte	.LFE9-.LFB9
+ 1085 0460 01       		.uleb128 0x1
+ 1086 0461 9C       		.byte	0x9c
+ 1087 0462 15       		.uleb128 0x15
+ 1088 0463 95010000 		.4byte	.LASF32
+ 1089 0467 01       		.byte	0x1
+ 1090 0468 7802     		.2byte	0x278
+ 1091 046a 00000000 		.4byte	.LFB10
+ 1092 046e 10000000 		.4byte	.LFE10-.LFB10
+ 1093 0472 01       		.uleb128 0x1
+ 1094 0473 9C       		.byte	0x9c
+ 1095 0474 16       		.uleb128 0x16
+ 1096 0475 40030000 		.4byte	.LASF42
+ 1097 0479 01       		.byte	0x1
+ 1098 047a 8D02     		.2byte	0x28d
+ 1099 047c 6B000000 		.4byte	0x6b
+ 1100 0480 00000000 		.4byte	.LFB11
+ 1101 0484 10000000 		.4byte	.LFE11-.LFB11
+ 1102 0488 01       		.uleb128 0x1
+ 1103 0489 9C       		.byte	0x9c
+ 1104 048a 17       		.uleb128 0x17
+ 1105 048b 31000000 		.4byte	.LASF33
+ 1106 048f 01       		.byte	0x1
+ 1107 0490 15       		.byte	0x15
+ 1108 0491 D8000000 		.4byte	0xd8
+ 1109 0495 05       		.uleb128 0x5
+ 1110 0496 03       		.byte	0x3
+ 1111 0497 00000000 		.4byte	BoostConv_1_backup
+ 1112 049b 18       		.uleb128 0x18
+ 1113 049c FC020000 		.4byte	.LASF43
+ 1114 04a0 01       		.byte	0x1
+ 1115 04a1 14       		.byte	0x14
+ 1116 04a2 6B000000 		.4byte	0x6b
+ 1117 04a6 05       		.uleb128 0x5
+ 1118 04a7 03       		.byte	0x3
+ 1119 04a8 00000000 		.4byte	BoostConv_1_initVar
+ 1120 04ac 19       		.uleb128 0x19
+ 1121 04ad D8010000 		.4byte	.LASF34
+ 1122 04b1 D8010000 		.4byte	.LASF34
+ 1123 04b5 04       		.byte	0x4
+ 1124 04b6 7D       		.byte	0x7d
+ 1125 04b7 19       		.uleb128 0x19
+ 1126 04b8 FC010000 		.4byte	.LASF35
+ 1127 04bc FC010000 		.4byte	.LASF35
+ 1128 04c0 04       		.byte	0x4
+ 1129 04c1 7E       		.byte	0x7e
+ 1130 04c2 19       		.uleb128 0x19
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 33
+
+
+ 1131 04c3 6C020000 		.4byte	.LASF36
+ 1132 04c7 6C020000 		.4byte	.LASF36
+ 1133 04cb 04       		.byte	0x4
+ 1134 04cc 7F       		.byte	0x7f
+ 1135 04cd 19       		.uleb128 0x19
+ 1136 04ce 36030000 		.4byte	.LASF37
+ 1137 04d2 36030000 		.4byte	.LASF37
+ 1138 04d6 04       		.byte	0x4
+ 1139 04d7 77       		.byte	0x77
+ 1140 04d8 00       		.byte	0
+ 1141              		.section	.debug_abbrev,"",%progbits
+ 1142              	.Ldebug_abbrev0:
+ 1143 0000 01       		.uleb128 0x1
+ 1144 0001 11       		.uleb128 0x11
+ 1145 0002 01       		.byte	0x1
+ 1146 0003 25       		.uleb128 0x25
+ 1147 0004 0E       		.uleb128 0xe
+ 1148 0005 13       		.uleb128 0x13
+ 1149 0006 0B       		.uleb128 0xb
+ 1150 0007 03       		.uleb128 0x3
+ 1151 0008 0E       		.uleb128 0xe
+ 1152 0009 1B       		.uleb128 0x1b
+ 1153 000a 0E       		.uleb128 0xe
+ 1154 000b 55       		.uleb128 0x55
+ 1155 000c 17       		.uleb128 0x17
+ 1156 000d 11       		.uleb128 0x11
+ 1157 000e 01       		.uleb128 0x1
+ 1158 000f 10       		.uleb128 0x10
+ 1159 0010 17       		.uleb128 0x17
+ 1160 0011 00       		.byte	0
+ 1161 0012 00       		.byte	0
+ 1162 0013 02       		.uleb128 0x2
+ 1163 0014 24       		.uleb128 0x24
+ 1164 0015 00       		.byte	0
+ 1165 0016 0B       		.uleb128 0xb
+ 1166 0017 0B       		.uleb128 0xb
+ 1167 0018 3E       		.uleb128 0x3e
+ 1168 0019 0B       		.uleb128 0xb
+ 1169 001a 03       		.uleb128 0x3
+ 1170 001b 0E       		.uleb128 0xe
+ 1171 001c 00       		.byte	0
+ 1172 001d 00       		.byte	0
+ 1173 001e 03       		.uleb128 0x3
+ 1174 001f 24       		.uleb128 0x24
+ 1175 0020 00       		.byte	0
+ 1176 0021 0B       		.uleb128 0xb
+ 1177 0022 0B       		.uleb128 0xb
+ 1178 0023 3E       		.uleb128 0x3e
+ 1179 0024 0B       		.uleb128 0xb
+ 1180 0025 03       		.uleb128 0x3
+ 1181 0026 08       		.uleb128 0x8
+ 1182 0027 00       		.byte	0
+ 1183 0028 00       		.byte	0
+ 1184 0029 04       		.uleb128 0x4
+ 1185 002a 16       		.uleb128 0x16
+ 1186 002b 00       		.byte	0
+ 1187 002c 03       		.uleb128 0x3
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 34
+
+
+ 1188 002d 0E       		.uleb128 0xe
+ 1189 002e 3A       		.uleb128 0x3a
+ 1190 002f 0B       		.uleb128 0xb
+ 1191 0030 3B       		.uleb128 0x3b
+ 1192 0031 05       		.uleb128 0x5
+ 1193 0032 49       		.uleb128 0x49
+ 1194 0033 13       		.uleb128 0x13
+ 1195 0034 00       		.byte	0
+ 1196 0035 00       		.byte	0
+ 1197 0036 05       		.uleb128 0x5
+ 1198 0037 35       		.uleb128 0x35
+ 1199 0038 00       		.byte	0
+ 1200 0039 49       		.uleb128 0x49
+ 1201 003a 13       		.uleb128 0x13
+ 1202 003b 00       		.byte	0
+ 1203 003c 00       		.byte	0
+ 1204 003d 06       		.uleb128 0x6
+ 1205 003e 13       		.uleb128 0x13
+ 1206 003f 01       		.byte	0x1
+ 1207 0040 0B       		.uleb128 0xb
+ 1208 0041 0B       		.uleb128 0xb
+ 1209 0042 3A       		.uleb128 0x3a
+ 1210 0043 0B       		.uleb128 0xb
+ 1211 0044 3B       		.uleb128 0x3b
+ 1212 0045 0B       		.uleb128 0xb
+ 1213 0046 01       		.uleb128 0x1
+ 1214 0047 13       		.uleb128 0x13
+ 1215 0048 00       		.byte	0
+ 1216 0049 00       		.byte	0
+ 1217 004a 07       		.uleb128 0x7
+ 1218 004b 0D       		.uleb128 0xd
+ 1219 004c 00       		.byte	0
+ 1220 004d 03       		.uleb128 0x3
+ 1221 004e 0E       		.uleb128 0xe
+ 1222 004f 3A       		.uleb128 0x3a
+ 1223 0050 0B       		.uleb128 0xb
+ 1224 0051 3B       		.uleb128 0x3b
+ 1225 0052 0B       		.uleb128 0xb
+ 1226 0053 49       		.uleb128 0x49
+ 1227 0054 13       		.uleb128 0x13
+ 1228 0055 38       		.uleb128 0x38
+ 1229 0056 0B       		.uleb128 0xb
+ 1230 0057 00       		.byte	0
+ 1231 0058 00       		.byte	0
+ 1232 0059 08       		.uleb128 0x8
+ 1233 005a 16       		.uleb128 0x16
+ 1234 005b 00       		.byte	0
+ 1235 005c 03       		.uleb128 0x3
+ 1236 005d 0E       		.uleb128 0xe
+ 1237 005e 3A       		.uleb128 0x3a
+ 1238 005f 0B       		.uleb128 0xb
+ 1239 0060 3B       		.uleb128 0x3b
+ 1240 0061 0B       		.uleb128 0xb
+ 1241 0062 49       		.uleb128 0x49
+ 1242 0063 13       		.uleb128 0x13
+ 1243 0064 00       		.byte	0
+ 1244 0065 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 35
+
+
+ 1245 0066 09       		.uleb128 0x9
+ 1246 0067 2E       		.uleb128 0x2e
+ 1247 0068 01       		.byte	0x1
+ 1248 0069 3F       		.uleb128 0x3f
+ 1249 006a 19       		.uleb128 0x19
+ 1250 006b 03       		.uleb128 0x3
+ 1251 006c 0E       		.uleb128 0xe
+ 1252 006d 3A       		.uleb128 0x3a
+ 1253 006e 0B       		.uleb128 0xb
+ 1254 006f 3B       		.uleb128 0x3b
+ 1255 0070 0B       		.uleb128 0xb
+ 1256 0071 27       		.uleb128 0x27
+ 1257 0072 19       		.uleb128 0x19
+ 1258 0073 11       		.uleb128 0x11
+ 1259 0074 01       		.uleb128 0x1
+ 1260 0075 12       		.uleb128 0x12
+ 1261 0076 06       		.uleb128 0x6
+ 1262 0077 40       		.uleb128 0x40
+ 1263 0078 18       		.uleb128 0x18
+ 1264 0079 9742     		.uleb128 0x2117
+ 1265 007b 19       		.uleb128 0x19
+ 1266 007c 01       		.uleb128 0x1
+ 1267 007d 13       		.uleb128 0x13
+ 1268 007e 00       		.byte	0
+ 1269 007f 00       		.byte	0
+ 1270 0080 0A       		.uleb128 0xa
+ 1271 0081 34       		.uleb128 0x34
+ 1272 0082 00       		.byte	0
+ 1273 0083 03       		.uleb128 0x3
+ 1274 0084 08       		.uleb128 0x8
+ 1275 0085 3A       		.uleb128 0x3a
+ 1276 0086 0B       		.uleb128 0xb
+ 1277 0087 3B       		.uleb128 0x3b
+ 1278 0088 0B       		.uleb128 0xb
+ 1279 0089 49       		.uleb128 0x49
+ 1280 008a 13       		.uleb128 0x13
+ 1281 008b 02       		.uleb128 0x2
+ 1282 008c 17       		.uleb128 0x17
+ 1283 008d 00       		.byte	0
+ 1284 008e 00       		.byte	0
+ 1285 008f 0B       		.uleb128 0xb
+ 1286 0090 34       		.uleb128 0x34
+ 1287 0091 00       		.byte	0
+ 1288 0092 03       		.uleb128 0x3
+ 1289 0093 0E       		.uleb128 0xe
+ 1290 0094 3A       		.uleb128 0x3a
+ 1291 0095 0B       		.uleb128 0xb
+ 1292 0096 3B       		.uleb128 0x3b
+ 1293 0097 0B       		.uleb128 0xb
+ 1294 0098 49       		.uleb128 0x49
+ 1295 0099 13       		.uleb128 0x13
+ 1296 009a 02       		.uleb128 0x2
+ 1297 009b 17       		.uleb128 0x17
+ 1298 009c 00       		.byte	0
+ 1299 009d 00       		.byte	0
+ 1300 009e 0C       		.uleb128 0xc
+ 1301 009f 898201   		.uleb128 0x4109
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 36
+
+
+ 1302 00a2 00       		.byte	0
+ 1303 00a3 11       		.uleb128 0x11
+ 1304 00a4 01       		.uleb128 0x1
+ 1305 00a5 31       		.uleb128 0x31
+ 1306 00a6 13       		.uleb128 0x13
+ 1307 00a7 00       		.byte	0
+ 1308 00a8 00       		.byte	0
+ 1309 00a9 0D       		.uleb128 0xd
+ 1310 00aa 2E       		.uleb128 0x2e
+ 1311 00ab 01       		.byte	0x1
+ 1312 00ac 3F       		.uleb128 0x3f
+ 1313 00ad 19       		.uleb128 0x19
+ 1314 00ae 03       		.uleb128 0x3
+ 1315 00af 0E       		.uleb128 0xe
+ 1316 00b0 3A       		.uleb128 0x3a
+ 1317 00b1 0B       		.uleb128 0xb
+ 1318 00b2 3B       		.uleb128 0x3b
+ 1319 00b3 05       		.uleb128 0x5
+ 1320 00b4 27       		.uleb128 0x27
+ 1321 00b5 19       		.uleb128 0x19
+ 1322 00b6 11       		.uleb128 0x11
+ 1323 00b7 01       		.uleb128 0x1
+ 1324 00b8 12       		.uleb128 0x12
+ 1325 00b9 06       		.uleb128 0x6
+ 1326 00ba 40       		.uleb128 0x40
+ 1327 00bb 18       		.uleb128 0x18
+ 1328 00bc 9742     		.uleb128 0x2117
+ 1329 00be 19       		.uleb128 0x19
+ 1330 00bf 01       		.uleb128 0x1
+ 1331 00c0 13       		.uleb128 0x13
+ 1332 00c1 00       		.byte	0
+ 1333 00c2 00       		.byte	0
+ 1334 00c3 0E       		.uleb128 0xe
+ 1335 00c4 34       		.uleb128 0x34
+ 1336 00c5 00       		.byte	0
+ 1337 00c6 03       		.uleb128 0x3
+ 1338 00c7 08       		.uleb128 0x8
+ 1339 00c8 3A       		.uleb128 0x3a
+ 1340 00c9 0B       		.uleb128 0xb
+ 1341 00ca 3B       		.uleb128 0x3b
+ 1342 00cb 05       		.uleb128 0x5
+ 1343 00cc 49       		.uleb128 0x49
+ 1344 00cd 13       		.uleb128 0x13
+ 1345 00ce 02       		.uleb128 0x2
+ 1346 00cf 17       		.uleb128 0x17
+ 1347 00d0 00       		.byte	0
+ 1348 00d1 00       		.byte	0
+ 1349 00d2 0F       		.uleb128 0xf
+ 1350 00d3 34       		.uleb128 0x34
+ 1351 00d4 00       		.byte	0
+ 1352 00d5 03       		.uleb128 0x3
+ 1353 00d6 0E       		.uleb128 0xe
+ 1354 00d7 3A       		.uleb128 0x3a
+ 1355 00d8 0B       		.uleb128 0xb
+ 1356 00d9 3B       		.uleb128 0x3b
+ 1357 00da 05       		.uleb128 0x5
+ 1358 00db 49       		.uleb128 0x49
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 37
+
+
+ 1359 00dc 13       		.uleb128 0x13
+ 1360 00dd 02       		.uleb128 0x2
+ 1361 00de 17       		.uleb128 0x17
+ 1362 00df 00       		.byte	0
+ 1363 00e0 00       		.byte	0
+ 1364 00e1 10       		.uleb128 0x10
+ 1365 00e2 05       		.uleb128 0x5
+ 1366 00e3 00       		.byte	0
+ 1367 00e4 03       		.uleb128 0x3
+ 1368 00e5 0E       		.uleb128 0xe
+ 1369 00e6 3A       		.uleb128 0x3a
+ 1370 00e7 0B       		.uleb128 0xb
+ 1371 00e8 3B       		.uleb128 0x3b
+ 1372 00e9 05       		.uleb128 0x5
+ 1373 00ea 49       		.uleb128 0x49
+ 1374 00eb 13       		.uleb128 0x13
+ 1375 00ec 02       		.uleb128 0x2
+ 1376 00ed 17       		.uleb128 0x17
+ 1377 00ee 00       		.byte	0
+ 1378 00ef 00       		.byte	0
+ 1379 00f0 11       		.uleb128 0x11
+ 1380 00f1 898201   		.uleb128 0x4109
+ 1381 00f4 01       		.byte	0x1
+ 1382 00f5 11       		.uleb128 0x11
+ 1383 00f6 01       		.uleb128 0x1
+ 1384 00f7 31       		.uleb128 0x31
+ 1385 00f8 13       		.uleb128 0x13
+ 1386 00f9 01       		.uleb128 0x1
+ 1387 00fa 13       		.uleb128 0x13
+ 1388 00fb 00       		.byte	0
+ 1389 00fc 00       		.byte	0
+ 1390 00fd 12       		.uleb128 0x12
+ 1391 00fe 8A8201   		.uleb128 0x410a
+ 1392 0101 00       		.byte	0
+ 1393 0102 02       		.uleb128 0x2
+ 1394 0103 18       		.uleb128 0x18
+ 1395 0104 9142     		.uleb128 0x2111
+ 1396 0106 18       		.uleb128 0x18
+ 1397 0107 00       		.byte	0
+ 1398 0108 00       		.byte	0
+ 1399 0109 13       		.uleb128 0x13
+ 1400 010a 898201   		.uleb128 0x4109
+ 1401 010d 01       		.byte	0x1
+ 1402 010e 11       		.uleb128 0x11
+ 1403 010f 01       		.uleb128 0x1
+ 1404 0110 31       		.uleb128 0x31
+ 1405 0111 13       		.uleb128 0x13
+ 1406 0112 00       		.byte	0
+ 1407 0113 00       		.byte	0
+ 1408 0114 14       		.uleb128 0x14
+ 1409 0115 2E       		.uleb128 0x2e
+ 1410 0116 01       		.byte	0x1
+ 1411 0117 3F       		.uleb128 0x3f
+ 1412 0118 19       		.uleb128 0x19
+ 1413 0119 03       		.uleb128 0x3
+ 1414 011a 0E       		.uleb128 0xe
+ 1415 011b 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 38
+
+
+ 1416 011c 0B       		.uleb128 0xb
+ 1417 011d 3B       		.uleb128 0x3b
+ 1418 011e 05       		.uleb128 0x5
+ 1419 011f 27       		.uleb128 0x27
+ 1420 0120 19       		.uleb128 0x19
+ 1421 0121 49       		.uleb128 0x49
+ 1422 0122 13       		.uleb128 0x13
+ 1423 0123 11       		.uleb128 0x11
+ 1424 0124 01       		.uleb128 0x1
+ 1425 0125 12       		.uleb128 0x12
+ 1426 0126 06       		.uleb128 0x6
+ 1427 0127 40       		.uleb128 0x40
+ 1428 0128 18       		.uleb128 0x18
+ 1429 0129 9742     		.uleb128 0x2117
+ 1430 012b 19       		.uleb128 0x19
+ 1431 012c 01       		.uleb128 0x1
+ 1432 012d 13       		.uleb128 0x13
+ 1433 012e 00       		.byte	0
+ 1434 012f 00       		.byte	0
+ 1435 0130 15       		.uleb128 0x15
+ 1436 0131 2E       		.uleb128 0x2e
+ 1437 0132 00       		.byte	0
+ 1438 0133 3F       		.uleb128 0x3f
+ 1439 0134 19       		.uleb128 0x19
+ 1440 0135 03       		.uleb128 0x3
+ 1441 0136 0E       		.uleb128 0xe
+ 1442 0137 3A       		.uleb128 0x3a
+ 1443 0138 0B       		.uleb128 0xb
+ 1444 0139 3B       		.uleb128 0x3b
+ 1445 013a 05       		.uleb128 0x5
+ 1446 013b 27       		.uleb128 0x27
+ 1447 013c 19       		.uleb128 0x19
+ 1448 013d 11       		.uleb128 0x11
+ 1449 013e 01       		.uleb128 0x1
+ 1450 013f 12       		.uleb128 0x12
+ 1451 0140 06       		.uleb128 0x6
+ 1452 0141 40       		.uleb128 0x40
+ 1453 0142 18       		.uleb128 0x18
+ 1454 0143 9742     		.uleb128 0x2117
+ 1455 0145 19       		.uleb128 0x19
+ 1456 0146 00       		.byte	0
+ 1457 0147 00       		.byte	0
+ 1458 0148 16       		.uleb128 0x16
+ 1459 0149 2E       		.uleb128 0x2e
+ 1460 014a 00       		.byte	0
+ 1461 014b 3F       		.uleb128 0x3f
+ 1462 014c 19       		.uleb128 0x19
+ 1463 014d 03       		.uleb128 0x3
+ 1464 014e 0E       		.uleb128 0xe
+ 1465 014f 3A       		.uleb128 0x3a
+ 1466 0150 0B       		.uleb128 0xb
+ 1467 0151 3B       		.uleb128 0x3b
+ 1468 0152 05       		.uleb128 0x5
+ 1469 0153 27       		.uleb128 0x27
+ 1470 0154 19       		.uleb128 0x19
+ 1471 0155 49       		.uleb128 0x49
+ 1472 0156 13       		.uleb128 0x13
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 39
+
+
+ 1473 0157 11       		.uleb128 0x11
+ 1474 0158 01       		.uleb128 0x1
+ 1475 0159 12       		.uleb128 0x12
+ 1476 015a 06       		.uleb128 0x6
+ 1477 015b 40       		.uleb128 0x40
+ 1478 015c 18       		.uleb128 0x18
+ 1479 015d 9742     		.uleb128 0x2117
+ 1480 015f 19       		.uleb128 0x19
+ 1481 0160 00       		.byte	0
+ 1482 0161 00       		.byte	0
+ 1483 0162 17       		.uleb128 0x17
+ 1484 0163 34       		.uleb128 0x34
+ 1485 0164 00       		.byte	0
+ 1486 0165 03       		.uleb128 0x3
+ 1487 0166 0E       		.uleb128 0xe
+ 1488 0167 3A       		.uleb128 0x3a
+ 1489 0168 0B       		.uleb128 0xb
+ 1490 0169 3B       		.uleb128 0x3b
+ 1491 016a 0B       		.uleb128 0xb
+ 1492 016b 49       		.uleb128 0x49
+ 1493 016c 13       		.uleb128 0x13
+ 1494 016d 02       		.uleb128 0x2
+ 1495 016e 18       		.uleb128 0x18
+ 1496 016f 00       		.byte	0
+ 1497 0170 00       		.byte	0
+ 1498 0171 18       		.uleb128 0x18
+ 1499 0172 34       		.uleb128 0x34
+ 1500 0173 00       		.byte	0
+ 1501 0174 03       		.uleb128 0x3
+ 1502 0175 0E       		.uleb128 0xe
+ 1503 0176 3A       		.uleb128 0x3a
+ 1504 0177 0B       		.uleb128 0xb
+ 1505 0178 3B       		.uleb128 0x3b
+ 1506 0179 0B       		.uleb128 0xb
+ 1507 017a 49       		.uleb128 0x49
+ 1508 017b 13       		.uleb128 0x13
+ 1509 017c 3F       		.uleb128 0x3f
+ 1510 017d 19       		.uleb128 0x19
+ 1511 017e 02       		.uleb128 0x2
+ 1512 017f 18       		.uleb128 0x18
+ 1513 0180 00       		.byte	0
+ 1514 0181 00       		.byte	0
+ 1515 0182 19       		.uleb128 0x19
+ 1516 0183 2E       		.uleb128 0x2e
+ 1517 0184 00       		.byte	0
+ 1518 0185 3F       		.uleb128 0x3f
+ 1519 0186 19       		.uleb128 0x19
+ 1520 0187 3C       		.uleb128 0x3c
+ 1521 0188 19       		.uleb128 0x19
+ 1522 0189 6E       		.uleb128 0x6e
+ 1523 018a 0E       		.uleb128 0xe
+ 1524 018b 03       		.uleb128 0x3
+ 1525 018c 0E       		.uleb128 0xe
+ 1526 018d 3A       		.uleb128 0x3a
+ 1527 018e 0B       		.uleb128 0xb
+ 1528 018f 3B       		.uleb128 0x3b
+ 1529 0190 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 40
+
+
+ 1530 0191 00       		.byte	0
+ 1531 0192 00       		.byte	0
+ 1532 0193 00       		.byte	0
+ 1533              		.section	.debug_loc,"",%progbits
+ 1534              	.Ldebug_loc0:
+ 1535              	.LLST0:
+ 1536 0000 0C000000 		.4byte	.LVL1
+ 1537 0004 10000000 		.4byte	.LVL2
+ 1538 0008 0100     		.2byte	0x1
+ 1539 000a 52       		.byte	0x52
+ 1540 000b 00000000 		.4byte	0
+ 1541 000f 00000000 		.4byte	0
+ 1542              	.LLST1:
+ 1543 0013 06000000 		.4byte	.LVL0
+ 1544 0017 15000000 		.4byte	.LVL3-1
+ 1545 001b 0100     		.2byte	0x1
+ 1546 001d 50       		.byte	0x50
+ 1547 001e 00000000 		.4byte	0
+ 1548 0022 00000000 		.4byte	0
+ 1549              	.LLST2:
+ 1550 0026 0C000000 		.4byte	.LVL5
+ 1551 002a 10000000 		.4byte	.LVL6
+ 1552 002e 0100     		.2byte	0x1
+ 1553 0030 52       		.byte	0x52
+ 1554 0031 00000000 		.4byte	0
+ 1555 0035 00000000 		.4byte	0
+ 1556              	.LLST3:
+ 1557 0039 06000000 		.4byte	.LVL4
+ 1558 003d 15000000 		.4byte	.LVL7-1
+ 1559 0041 0100     		.2byte	0x1
+ 1560 0043 50       		.byte	0x50
+ 1561 0044 00000000 		.4byte	0
+ 1562 0048 00000000 		.4byte	0
+ 1563              	.LLST4:
+ 1564 004c 00000000 		.4byte	.LVL8
+ 1565 0050 0A000000 		.4byte	.LVL9
+ 1566 0054 0100     		.2byte	0x1
+ 1567 0056 50       		.byte	0x50
+ 1568 0057 0A000000 		.4byte	.LVL9
+ 1569 005b 30000000 		.4byte	.LFE5
+ 1570 005f 0400     		.2byte	0x4
+ 1571 0061 F3       		.byte	0xf3
+ 1572 0062 01       		.uleb128 0x1
+ 1573 0063 50       		.byte	0x50
+ 1574 0064 9F       		.byte	0x9f
+ 1575 0065 00000000 		.4byte	0
+ 1576 0069 00000000 		.4byte	0
+ 1577              	.LLST5:
+ 1578 006d 18000000 		.4byte	.LVL12
+ 1579 0071 1E000000 		.4byte	.LVL13
+ 1580 0075 0100     		.2byte	0x1
+ 1581 0077 52       		.byte	0x52
+ 1582 0078 00000000 		.4byte	0
+ 1583 007c 00000000 		.4byte	0
+ 1584              	.LLST6:
+ 1585 0080 12000000 		.4byte	.LVL11
+ 1586 0084 29000000 		.4byte	.LVL14-1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 41
+
+
+ 1587 0088 0100     		.2byte	0x1
+ 1588 008a 50       		.byte	0x50
+ 1589 008b 00000000 		.4byte	0
+ 1590 008f 00000000 		.4byte	0
+ 1591              	.LLST7:
+ 1592 0093 00000000 		.4byte	.LVL15
+ 1593 0097 07000000 		.4byte	.LVL16-1
+ 1594 009b 0100     		.2byte	0x1
+ 1595 009d 50       		.byte	0x50
+ 1596 009e 07000000 		.4byte	.LVL16-1
+ 1597 00a2 24000000 		.4byte	.LFE6
+ 1598 00a6 0400     		.2byte	0x4
+ 1599 00a8 F3       		.byte	0xf3
+ 1600 00a9 01       		.uleb128 0x1
+ 1601 00aa 50       		.byte	0x50
+ 1602 00ab 9F       		.byte	0x9f
+ 1603 00ac 00000000 		.4byte	0
+ 1604 00b0 00000000 		.4byte	0
+ 1605              	.LLST8:
+ 1606 00b4 0E000000 		.4byte	.LVL17
+ 1607 00b8 12000000 		.4byte	.LVL18
+ 1608 00bc 0100     		.2byte	0x1
+ 1609 00be 52       		.byte	0x52
+ 1610 00bf 00000000 		.4byte	0
+ 1611 00c3 00000000 		.4byte	0
+ 1612              	.LLST9:
+ 1613 00c7 08000000 		.4byte	.LVL16
+ 1614 00cb 1D000000 		.4byte	.LVL19-1
+ 1615 00cf 0100     		.2byte	0x1
+ 1616 00d1 50       		.byte	0x50
+ 1617 00d2 00000000 		.4byte	0
+ 1618 00d6 00000000 		.4byte	0
+ 1619              	.LLST10:
+ 1620 00da 0C000000 		.4byte	.LVL21
+ 1621 00de 10000000 		.4byte	.LVL22
+ 1622 00e2 0100     		.2byte	0x1
+ 1623 00e4 52       		.byte	0x52
+ 1624 00e5 1C000000 		.4byte	.LVL24
+ 1625 00e9 20000000 		.4byte	.LVL25
+ 1626 00ed 0100     		.2byte	0x1
+ 1627 00ef 53       		.byte	0x53
+ 1628 00f0 00000000 		.4byte	0
+ 1629 00f4 00000000 		.4byte	0
+ 1630              	.LLST11:
+ 1631 00f8 06000000 		.4byte	.LVL20
+ 1632 00fc 15000000 		.4byte	.LVL23-1
+ 1633 0100 0100     		.2byte	0x1
+ 1634 0102 50       		.byte	0x50
+ 1635 0103 00000000 		.4byte	0
+ 1636 0107 00000000 		.4byte	0
+ 1637              	.LLST12:
+ 1638 010b 0E000000 		.4byte	.LVL29
+ 1639 010f 1A000000 		.4byte	.LVL30
+ 1640 0113 0100     		.2byte	0x1
+ 1641 0115 53       		.byte	0x53
+ 1642 0116 00000000 		.4byte	0
+ 1643 011a 00000000 		.4byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 42
+
+
+ 1644              	.LLST13:
+ 1645 011e 06000000 		.4byte	.LVL28
+ 1646 0122 1F000000 		.4byte	.LVL31-1
+ 1647 0126 0100     		.2byte	0x1
+ 1648 0128 50       		.byte	0x50
+ 1649 0129 00000000 		.4byte	0
+ 1650 012d 00000000 		.4byte	0
+ 1651              	.LLST14:
+ 1652 0131 10000000 		.4byte	.LVL37
+ 1653 0135 20000000 		.4byte	.LVL39
+ 1654 0139 0100     		.2byte	0x1
+ 1655 013b 54       		.byte	0x54
+ 1656 013c 00000000 		.4byte	0
+ 1657 0140 00000000 		.4byte	0
+ 1658              	.LLST15:
+ 1659 0144 08000000 		.4byte	.LVL36
+ 1660 0148 2A000000 		.4byte	.LVL41
+ 1661 014c 0100     		.2byte	0x1
+ 1662 014e 56       		.byte	0x56
+ 1663 014f 00000000 		.4byte	0
+ 1664 0153 00000000 		.4byte	0
+ 1665              	.LLST16:
+ 1666 0157 0E000000 		.4byte	.LVL43
+ 1667 015b 16000000 		.4byte	.LVL45
+ 1668 015f 0100     		.2byte	0x1
+ 1669 0161 54       		.byte	0x54
+ 1670 0162 16000000 		.4byte	.LVL45
+ 1671 0166 1C000000 		.4byte	.LFE8
+ 1672 016a 0100     		.2byte	0x1
+ 1673 016c 50       		.byte	0x50
+ 1674 016d 00000000 		.4byte	0
+ 1675 0171 00000000 		.4byte	0
+ 1676              	.LLST17:
+ 1677 0175 06000000 		.4byte	.LVL42
+ 1678 0179 11000000 		.4byte	.LVL44-1
+ 1679 017d 0100     		.2byte	0x1
+ 1680 017f 50       		.byte	0x50
+ 1681 0180 00000000 		.4byte	0
+ 1682 0184 00000000 		.4byte	0
+ 1683              	.LLST18:
+ 1684 0188 02000000 		.4byte	.LVL46
+ 1685 018c 06000000 		.4byte	.LVL47
+ 1686 0190 0400     		.2byte	0x4
+ 1687 0192 0A       		.byte	0xa
+ 1688 0193 1027     		.2byte	0x2710
+ 1689 0195 9F       		.byte	0x9f
+ 1690 0196 06000000 		.4byte	.LVL47
+ 1691 019a 12000000 		.4byte	.LVL50
+ 1692 019e 0100     		.2byte	0x1
+ 1693 01a0 54       		.byte	0x54
+ 1694 01a1 14000000 		.4byte	.LVL51
+ 1695 01a5 3A000000 		.4byte	.LVL55
+ 1696 01a9 0100     		.2byte	0x1
+ 1697 01ab 54       		.byte	0x54
+ 1698 01ac 4C000000 		.4byte	.LVL60
+ 1699 01b0 54000000 		.4byte	.LVL63
+ 1700 01b4 0100     		.2byte	0x1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 43
+
+
+ 1701 01b6 54       		.byte	0x54
+ 1702 01b7 00000000 		.4byte	0
+ 1703 01bb 00000000 		.4byte	0
+ 1704              	.LLST19:
+ 1705 01bf 10000000 		.4byte	.LVL49
+ 1706 01c3 1F000000 		.4byte	.LVL52-1
+ 1707 01c7 0100     		.2byte	0x1
+ 1708 01c9 50       		.byte	0x50
+ 1709 01ca 20000000 		.4byte	.LVL52
+ 1710 01ce 2F000000 		.4byte	.LVL53-1
+ 1711 01d2 0100     		.2byte	0x1
+ 1712 01d4 50       		.byte	0x50
+ 1713 01d5 38000000 		.4byte	.LVL54
+ 1714 01d9 3C000000 		.4byte	.LVL56
+ 1715 01dd 0100     		.2byte	0x1
+ 1716 01df 50       		.byte	0x50
+ 1717 01e0 4C000000 		.4byte	.LVL60
+ 1718 01e4 4E000000 		.4byte	.LVL61
+ 1719 01e8 0100     		.2byte	0x1
+ 1720 01ea 50       		.byte	0x50
+ 1721 01eb 00000000 		.4byte	0
+ 1722 01ef 00000000 		.4byte	0
+ 1723              		.section	.debug_aranges,"",%progbits
+ 1724 0000 74000000 		.4byte	0x74
+ 1725 0004 0200     		.2byte	0x2
+ 1726 0006 00000000 		.4byte	.Ldebug_info0
+ 1727 000a 04       		.byte	0x4
+ 1728 000b 00       		.byte	0
+ 1729 000c 0000     		.2byte	0
+ 1730 000e 0000     		.2byte	0
+ 1731 0010 00000000 		.4byte	.LFB3
+ 1732 0014 1C000000 		.4byte	.LFE3-.LFB3
+ 1733 0018 00000000 		.4byte	.LFB4
+ 1734 001c 1C000000 		.4byte	.LFE4-.LFB4
+ 1735 0020 00000000 		.4byte	.LFB5
+ 1736 0024 30000000 		.4byte	.LFE5-.LFB5
+ 1737 0028 00000000 		.4byte	.LFB6
+ 1738 002c 24000000 		.4byte	.LFE6-.LFB6
+ 1739 0030 00000000 		.4byte	.LFB0
+ 1740 0034 3C000000 		.4byte	.LFE0-.LFB0
+ 1741 0038 00000000 		.4byte	.LFB2
+ 1742 003c 3C000000 		.4byte	.LFE2-.LFB2
+ 1743 0040 00000000 		.4byte	.LFB7
+ 1744 0044 30000000 		.4byte	.LFE7-.LFB7
+ 1745 0048 00000000 		.4byte	.LFB8
+ 1746 004c 1C000000 		.4byte	.LFE8-.LFB8
+ 1747 0050 00000000 		.4byte	.LFB1
+ 1748 0054 5C000000 		.4byte	.LFE1-.LFB1
+ 1749 0058 00000000 		.4byte	.LFB9
+ 1750 005c 10000000 		.4byte	.LFE9-.LFB9
+ 1751 0060 00000000 		.4byte	.LFB10
+ 1752 0064 10000000 		.4byte	.LFE10-.LFB10
+ 1753 0068 00000000 		.4byte	.LFB11
+ 1754 006c 10000000 		.4byte	.LFE11-.LFB11
+ 1755 0070 00000000 		.4byte	0
+ 1756 0074 00000000 		.4byte	0
+ 1757              		.section	.debug_ranges,"",%progbits
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 44
+
+
+ 1758              	.Ldebug_ranges0:
+ 1759 0000 00000000 		.4byte	.LFB3
+ 1760 0004 1C000000 		.4byte	.LFE3
+ 1761 0008 00000000 		.4byte	.LFB4
+ 1762 000c 1C000000 		.4byte	.LFE4
+ 1763 0010 00000000 		.4byte	.LFB5
+ 1764 0014 30000000 		.4byte	.LFE5
+ 1765 0018 00000000 		.4byte	.LFB6
+ 1766 001c 24000000 		.4byte	.LFE6
+ 1767 0020 00000000 		.4byte	.LFB0
+ 1768 0024 3C000000 		.4byte	.LFE0
+ 1769 0028 00000000 		.4byte	.LFB2
+ 1770 002c 3C000000 		.4byte	.LFE2
+ 1771 0030 00000000 		.4byte	.LFB7
+ 1772 0034 30000000 		.4byte	.LFE7
+ 1773 0038 00000000 		.4byte	.LFB8
+ 1774 003c 1C000000 		.4byte	.LFE8
+ 1775 0040 00000000 		.4byte	.LFB1
+ 1776 0044 5C000000 		.4byte	.LFE1
+ 1777 0048 00000000 		.4byte	.LFB9
+ 1778 004c 10000000 		.4byte	.LFE9
+ 1779 0050 00000000 		.4byte	.LFB10
+ 1780 0054 10000000 		.4byte	.LFE10
+ 1781 0058 00000000 		.4byte	.LFB11
+ 1782 005c 10000000 		.4byte	.LFE11
+ 1783 0060 00000000 		.4byte	0
+ 1784 0064 00000000 		.4byte	0
+ 1785              		.section	.debug_line,"",%progbits
+ 1786              	.Ldebug_line0:
+ 1787 0000 94010000 		.section	.debug_str,"MS",%progbits,1
+ 1787      02006400 
+ 1787      00000201 
+ 1787      FB0E0D00 
+ 1787      01010101 
+ 1788              	.LASF19:
+ 1789 0000 426F6F73 		.ascii	"BoostConv_1_BACKUP_STRUCT\000"
+ 1789      74436F6E 
+ 1789      765F315F 
+ 1789      4241434B 
+ 1789      55505F53 
+ 1790              	.LASF24:
+ 1791 001a 426F6F73 		.ascii	"BoostConv_1_SelVoltage\000"
+ 1791      74436F6E 
+ 1791      765F315F 
+ 1791      53656C56 
+ 1791      6F6C7461 
+ 1792              	.LASF33:
+ 1793 0031 426F6F73 		.ascii	"BoostConv_1_backup\000"
+ 1793      74436F6E 
+ 1793      765F315F 
+ 1793      6261636B 
+ 1793      757000
+ 1794              	.LASF26:
+ 1795 0044 426F6F73 		.ascii	"BoostConv_1_Init\000"
+ 1795      74436F6E 
+ 1795      765F315F 
+ 1795      496E6974 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 45
+
+
+ 1795      00
+ 1796              	.LASF3:
+ 1797 0055 73686F72 		.ascii	"short unsigned int\000"
+ 1797      7420756E 
+ 1797      7369676E 
+ 1797      65642069 
+ 1797      6E7400
+ 1798              	.LASF29:
+ 1799 0068 426F6F73 		.ascii	"BoostConv_1_Start\000"
+ 1799      74436F6E 
+ 1799      765F315F 
+ 1799      53746172 
+ 1799      7400
+ 1800              	.LASF39:
+ 1801 007a 47656E65 		.ascii	"Generated_Source\\PSoC5\\BoostConv_1.c\000"
+ 1801      72617465 
+ 1801      645F536F 
+ 1801      75726365 
+ 1801      5C50536F 
+ 1802              	.LASF11:
+ 1803 009f 666C6F61 		.ascii	"float\000"
+ 1803      7400
+ 1804              	.LASF7:
+ 1805 00a5 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1805      206C6F6E 
+ 1805      6720756E 
+ 1805      7369676E 
+ 1805      65642069 
+ 1806              	.LASF1:
+ 1807 00bc 756E7369 		.ascii	"unsigned char\000"
+ 1807      676E6564 
+ 1807      20636861 
+ 1807      7200
+ 1808              	.LASF38:
+ 1809 00ca 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1809      43313120 
+ 1809      352E342E 
+ 1809      31203230 
+ 1809      31363036 
+ 1810 00fd 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1810      20726576 
+ 1810      6973696F 
+ 1810      6E203233 
+ 1810      37373135 
+ 1811 0130 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1811      66756E63 
+ 1811      74696F6E 
+ 1811      2D736563 
+ 1811      74696F6E 
+ 1812              	.LASF14:
+ 1813 0158 72656738 		.ascii	"reg8\000"
+ 1813      00
+ 1814              	.LASF5:
+ 1815 015d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1815      20756E73 
+ 1815      69676E65 
+ 1815      6420696E 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 46
+
+
+ 1815      7400
+ 1816              	.LASF9:
+ 1817 016f 75696E74 		.ascii	"uint8\000"
+ 1817      3800
+ 1818              	.LASF25:
+ 1819 0175 766F6C74 		.ascii	"voltage\000"
+ 1819      61676500 
+ 1820              	.LASF20:
+ 1821 017d 656E6162 		.ascii	"enableInterrupts\000"
+ 1821      6C65496E 
+ 1821      74657272 
+ 1821      75707473 
+ 1821      00
+ 1822              	.LASF12:
+ 1823 018e 646F7562 		.ascii	"double\000"
+ 1823      6C6500
+ 1824              	.LASF32:
+ 1825 0195 426F6F73 		.ascii	"BoostConv_1_DisableInt\000"
+ 1825      74436F6E 
+ 1825      765F315F 
+ 1825      44697361 
+ 1825      626C6549 
+ 1826              	.LASF27:
+ 1827 01ac 426F6F73 		.ascii	"BoostConv_1_Stop\000"
+ 1827      74436F6E 
+ 1827      765F315F 
+ 1827      53746F70 
+ 1827      00
+ 1828              	.LASF10:
+ 1829 01bd 75696E74 		.ascii	"uint16\000"
+ 1829      313600
+ 1830              	.LASF22:
+ 1831 01c4 426F6F73 		.ascii	"BoostConv_1_Disable\000"
+ 1831      74436F6E 
+ 1831      765F315F 
+ 1831      44697361 
+ 1831      626C6500 
+ 1832              	.LASF34:
+ 1833 01d8 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 1833      74657243 
+ 1833      72697469 
+ 1833      63616C53 
+ 1833      65637469 
+ 1834              	.LASF8:
+ 1835 01ef 756E7369 		.ascii	"unsigned int\000"
+ 1835      676E6564 
+ 1835      20696E74 
+ 1835      00
+ 1836              	.LASF35:
+ 1837 01fc 43794578 		.ascii	"CyExitCriticalSection\000"
+ 1837      69744372 
+ 1837      69746963 
+ 1837      616C5365 
+ 1837      6374696F 
+ 1838              	.LASF41:
+ 1839 0212 426F6F73 		.ascii	"BoostConv_1_ReadStatus\000"
+ 1839      74436F6E 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 47
+
+
+ 1839      765F315F 
+ 1839      52656164 
+ 1839      53746174 
+ 1840              	.LASF18:
+ 1841 0229 6D6F6465 		.ascii	"mode\000"
+ 1841      00
+ 1842              	.LASF40:
+ 1843 022e 433A5C55 		.ascii	"C:\\Users\\lucasiversen\\Desktop\\Ultrasoundv2\\Ult"
+ 1843      73657273 
+ 1843      5C6C7563 
+ 1843      61736976 
+ 1843      65727365 
+ 1844 025c 7261736F 		.ascii	"rasoundv2.cydsn\000"
+ 1844      756E6476 
+ 1844      322E6379 
+ 1844      64736E00 
+ 1845              	.LASF36:
+ 1846 026c 43794861 		.ascii	"CyHalt\000"
+ 1846      6C7400
+ 1847              	.LASF17:
+ 1848 0273 73656C56 		.ascii	"selVoltage\000"
+ 1848      6F6C7461 
+ 1848      676500
+ 1849              	.LASF23:
+ 1850 027e 426F6F73 		.ascii	"BoostConv_1_SetMode\000"
+ 1850      74436F6E 
+ 1850      765F315F 
+ 1850      5365744D 
+ 1850      6F646500 
+ 1851              	.LASF16:
+ 1852 0292 73697A65 		.ascii	"sizetype\000"
+ 1852      74797065 
+ 1852      00
+ 1853              	.LASF6:
+ 1854 029b 6C6F6E67 		.ascii	"long long int\000"
+ 1854      206C6F6E 
+ 1854      6720696E 
+ 1854      7400
+ 1855              	.LASF21:
+ 1856 02a9 426F6F73 		.ascii	"BoostConv_1_Enable\000"
+ 1856      74436F6E 
+ 1856      765F315F 
+ 1856      456E6162 
+ 1856      6C6500
+ 1857              	.LASF31:
+ 1858 02bc 426F6F73 		.ascii	"BoostConv_1_EnableInt\000"
+ 1858      74436F6E 
+ 1858      765F315F 
+ 1858      456E6162 
+ 1858      6C65496E 
+ 1859              	.LASF30:
+ 1860 02d2 74696D65 		.ascii	"timeout\000"
+ 1860      6F757400 
+ 1861              	.LASF2:
+ 1862 02da 73686F72 		.ascii	"short int\000"
+ 1862      7420696E 
+ 1862      7400
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccORfloU.s 			page 48
+
+
+ 1863              	.LASF28:
+ 1864 02e4 426F6F73 		.ascii	"BoostConv_1_ManualThump\000"
+ 1864      74436F6E 
+ 1864      765F315F 
+ 1864      4D616E75 
+ 1864      616C5468 
+ 1865              	.LASF43:
+ 1866 02fc 426F6F73 		.ascii	"BoostConv_1_initVar\000"
+ 1866      74436F6E 
+ 1866      765F315F 
+ 1866      696E6974 
+ 1866      56617200 
+ 1867              	.LASF4:
+ 1868 0310 6C6F6E67 		.ascii	"long int\000"
+ 1868      20696E74 
+ 1868      00
+ 1869              	.LASF13:
+ 1870 0319 63686172 		.ascii	"char\000"
+ 1870      00
+ 1871              	.LASF15:
+ 1872 031e 6C6F6E67 		.ascii	"long double\000"
+ 1872      20646F75 
+ 1872      626C6500 
+ 1873              	.LASF0:
+ 1874 032a 7369676E 		.ascii	"signed char\000"
+ 1874      65642063 
+ 1874      68617200 
+ 1875              	.LASF37:
+ 1876 0336 43794465 		.ascii	"CyDelayUs\000"
+ 1876      6C617955 
+ 1876      7300
+ 1877              	.LASF42:
+ 1878 0340 426F6F73 		.ascii	"BoostConv_1_ReadIntStatus\000"
+ 1878      74436F6E 
+ 1878      765F315F 
+ 1878      52656164 
+ 1878      496E7453 
+ 1879              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
