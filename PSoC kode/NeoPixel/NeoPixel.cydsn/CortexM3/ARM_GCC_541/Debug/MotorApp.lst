@@ -1,0 +1,2573 @@
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"MotorApp.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.driveForwards,"ax",%progbits
+  20              		.align	2
+  21              		.global	driveForwards
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	driveForwards, %function
+  25              	driveForwards:
+  26              	.LFB66:
+  27              		.file 1 "MotorApp.c"
+   1:MotorApp.c    **** #include "MotorApp.h"
+   2:MotorApp.c    **** #include "waitingState.h"
+   3:MotorApp.c    **** 
+   4:MotorApp.c    **** /*
+   5:MotorApp.c    **** Dette er et to dimensionelt array der indeholder de forskellige duty cycles der kan sendes til de t
+   6:MotorApp.c    **** og vil altid køre således. Ved at skifte rundt rundt i første dimension vil beerdroid dreje endt
+   7:MotorApp.c    **** */
+   8:MotorApp.c    **** int driveState[7][2] = {{10, 100},
+   9:MotorApp.c    ****                         {30, 100},
+  10:MotorApp.c    ****                         {50, 100},
+  11:MotorApp.c    ****                         {70, 100},
+  12:MotorApp.c    ****                         {70, 80},
+  13:MotorApp.c    ****                         {70, 60},
+  14:MotorApp.c    ****                         {70, 40}};
+  15:MotorApp.c    **** 
+  16:MotorApp.c    **** 
+  17:MotorApp.c    **** //denne funktion skifter tilfældigt rundt i driveState arrayet
+  18:MotorApp.c    **** void speedSelect()
+  19:MotorApp.c    **** {    
+  20:MotorApp.c    ****     if(randState == 0)                      //Når randstate er 0, laves en ny randstate værdi ime
+  21:MotorApp.c    ****         randState = rand() % 7 - 3;
+  22:MotorApp.c    ****     
+  23:MotorApp.c    ****     if(randState < 0)                       //Hvis randstate er under 0 rykkes en gang ned i arraye
+  24:MotorApp.c    ****     {
+  25:MotorApp.c    ****         changeState(-1);
+  26:MotorApp.c    ****         randState++;                        //randsdtate forøges så den til sidst rammer 0 og der
+  27:MotorApp.c    ****     }
+  28:MotorApp.c    ****     else if(randState > 0)                  //Hvis randstate er over 0 rykkes en gang op i arrayet
+  29:MotorApp.c    ****     {
+  30:MotorApp.c    ****         changeState(1);
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 2
+
+
+  31:MotorApp.c    ****         randState--;                        //randsdtate trækkes 1 fra så den til sidst rammer 0 
+  32:MotorApp.c    ****     }
+  33:MotorApp.c    **** }
+  34:MotorApp.c    **** 
+  35:MotorApp.c    **** void changeState(int change)                //Denne funktion sikre at state ikke forlader driveStat
+  36:MotorApp.c    **** {
+  37:MotorApp.c    ****   
+  38:MotorApp.c    ****     
+  39:MotorApp.c    ****     if(change == 1 || change == -1)
+  40:MotorApp.c    ****     {
+  41:MotorApp.c    ****         if(state > 0 && change == -1)
+  42:MotorApp.c    ****         {
+  43:MotorApp.c    ****             state += change;
+  44:MotorApp.c    ****             changeSpeed();
+  45:MotorApp.c    ****         }
+  46:MotorApp.c    ****         else if(state < 6 && change == 1)
+  47:MotorApp.c    ****         {
+  48:MotorApp.c    ****             state += change;
+  49:MotorApp.c    ****             changeSpeed();
+  50:MotorApp.c    ****         } 
+  51:MotorApp.c    ****     }
+  52:MotorApp.c    **** }
+  53:MotorApp.c    **** 
+  54:MotorApp.c    **** 
+  55:MotorApp.c    **** void driveForwards()                        //Denne funktion sætter motoren til at køre fremad
+  56:MotorApp.c    **** {
+  28              		.loc 1 56 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  57:MotorApp.c    ****     if(running_ == 1)
+  36              		.loc 1 57 0
+  37 0002 0F4B     		ldr	r3, .L4
+  38 0004 1B68     		ldr	r3, [r3]
+  39 0006 012B     		cmp	r3, #1
+  40 0008 19D1     		bne	.L1
+  58:MotorApp.c    ****     {
+  59:MotorApp.c    ****     motorPWM_1_Stop();
+  41              		.loc 1 59 0
+  42 000a FFF7FEFF 		bl	motorPWM_1_Stop
+  43              	.LVL0:
+  60:MotorApp.c    ****     motorPWM_2_Stop();
+  44              		.loc 1 60 0
+  45 000e FFF7FEFF 		bl	motorPWM_2_Stop
+  46              	.LVL1:
+  61:MotorApp.c    ****     
+  62:MotorApp.c    ****     Pin1_dir1_Write(0);
+  47              		.loc 1 62 0
+  48 0012 0020     		movs	r0, #0
+  49 0014 FFF7FEFF 		bl	Pin1_dir1_Write
+  50              	.LVL2:
+  63:MotorApp.c    ****     Pin1_dir2_Write(1);
+  51              		.loc 1 63 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 3
+
+
+  52 0018 0120     		movs	r0, #1
+  53 001a FFF7FEFF 		bl	Pin1_dir2_Write
+  54              	.LVL3:
+  64:MotorApp.c    ****     Pin2_dir1_Write(0);
+  55              		.loc 1 64 0
+  56 001e 0020     		movs	r0, #0
+  57 0020 FFF7FEFF 		bl	Pin2_dir1_Write
+  58              	.LVL4:
+  65:MotorApp.c    ****     Pin2_dir2_Write(1);
+  59              		.loc 1 65 0
+  60 0024 0120     		movs	r0, #1
+  61 0026 FFF7FEFF 		bl	Pin2_dir2_Write
+  62              	.LVL5:
+  66:MotorApp.c    ****     
+  67:MotorApp.c    ****     
+  68:MotorApp.c    ****     motorPWM_1_WriteCompare(80); //Set speed to current drive state on PWM 1
+  63              		.loc 1 68 0
+  64 002a 5020     		movs	r0, #80
+  65 002c FFF7FEFF 		bl	motorPWM_1_WriteCompare
+  66              	.LVL6:
+  69:MotorApp.c    ****     motorPWM_2_WriteCompare(80); //Set speed to current drive state on PWM 2
+  67              		.loc 1 69 0
+  68 0030 5020     		movs	r0, #80
+  69 0032 FFF7FEFF 		bl	motorPWM_2_WriteCompare
+  70              	.LVL7:
+  70:MotorApp.c    ****     
+  71:MotorApp.c    ****     motorPWM_1_Start();
+  71              		.loc 1 71 0
+  72 0036 FFF7FEFF 		bl	motorPWM_1_Start
+  73              	.LVL8:
+  72:MotorApp.c    ****     motorPWM_2_Start();
+  74              		.loc 1 72 0
+  75 003a FFF7FEFF 		bl	motorPWM_2_Start
+  76              	.LVL9:
+  77              	.L1:
+  78 003e 08BD     		pop	{r3, pc}
+  79              	.L5:
+  80              		.align	2
+  81              	.L4:
+  82 0040 00000000 		.word	running_
+  83              		.cfi_endproc
+  84              	.LFE66:
+  85              		.size	driveForwards, .-driveForwards
+  86              		.section	.text.driveBackwards,"ax",%progbits
+  87              		.align	2
+  88              		.global	driveBackwards
+  89              		.thumb
+  90              		.thumb_func
+  91              		.type	driveBackwards, %function
+  92              	driveBackwards:
+  93              	.LFB67:
+  73:MotorApp.c    ****     }
+  74:MotorApp.c    **** }
+  75:MotorApp.c    **** 
+  76:MotorApp.c    **** void driveBackwards()                       //Denne funktion sætter motoren til at køre bagud
+  77:MotorApp.c    **** {
+  94              		.loc 1 77 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 4
+
+
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98 0000 08B5     		push	{r3, lr}
+  99              		.cfi_def_cfa_offset 8
+ 100              		.cfi_offset 3, -8
+ 101              		.cfi_offset 14, -4
+  78:MotorApp.c    ****     if(running_ == 1)
+ 102              		.loc 1 78 0
+ 103 0002 0F4B     		ldr	r3, .L9
+ 104 0004 1B68     		ldr	r3, [r3]
+ 105 0006 012B     		cmp	r3, #1
+ 106 0008 19D1     		bne	.L6
+  79:MotorApp.c    ****     {
+  80:MotorApp.c    ****     motorPWM_1_Stop();
+ 107              		.loc 1 80 0
+ 108 000a FFF7FEFF 		bl	motorPWM_1_Stop
+ 109              	.LVL10:
+  81:MotorApp.c    ****     motorPWM_2_Stop();
+ 110              		.loc 1 81 0
+ 111 000e FFF7FEFF 		bl	motorPWM_2_Stop
+ 112              	.LVL11:
+  82:MotorApp.c    ****     
+  83:MotorApp.c    ****     Pin1_dir1_Write(1);
+ 113              		.loc 1 83 0
+ 114 0012 0120     		movs	r0, #1
+ 115 0014 FFF7FEFF 		bl	Pin1_dir1_Write
+ 116              	.LVL12:
+  84:MotorApp.c    ****     Pin1_dir2_Write(0);
+ 117              		.loc 1 84 0
+ 118 0018 0020     		movs	r0, #0
+ 119 001a FFF7FEFF 		bl	Pin1_dir2_Write
+ 120              	.LVL13:
+  85:MotorApp.c    ****     Pin2_dir1_Write(1);
+ 121              		.loc 1 85 0
+ 122 001e 0120     		movs	r0, #1
+ 123 0020 FFF7FEFF 		bl	Pin2_dir1_Write
+ 124              	.LVL14:
+  86:MotorApp.c    ****     Pin2_dir2_Write(0);
+ 125              		.loc 1 86 0
+ 126 0024 0020     		movs	r0, #0
+ 127 0026 FFF7FEFF 		bl	Pin2_dir2_Write
+ 128              	.LVL15:
+  87:MotorApp.c    ****     
+  88:MotorApp.c    ****     motorPWM_1_WriteCompare(80); //Set speed to current drive state on PWM 1
+ 129              		.loc 1 88 0
+ 130 002a 5020     		movs	r0, #80
+ 131 002c FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 132              	.LVL16:
+  89:MotorApp.c    ****     motorPWM_2_WriteCompare(80); //Set speed to current drive state on PWM 2
+ 133              		.loc 1 89 0
+ 134 0030 5020     		movs	r0, #80
+ 135 0032 FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ 136              	.LVL17:
+  90:MotorApp.c    ****     
+  91:MotorApp.c    ****     motorPWM_1_Start();
+ 137              		.loc 1 91 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 5
+
+
+ 138 0036 FFF7FEFF 		bl	motorPWM_1_Start
+ 139              	.LVL18:
+  92:MotorApp.c    ****     motorPWM_2_Start();
+ 140              		.loc 1 92 0
+ 141 003a FFF7FEFF 		bl	motorPWM_2_Start
+ 142              	.LVL19:
+ 143              	.L6:
+ 144 003e 08BD     		pop	{r3, pc}
+ 145              	.L10:
+ 146              		.align	2
+ 147              	.L9:
+ 148 0040 00000000 		.word	running_
+ 149              		.cfi_endproc
+ 150              	.LFE67:
+ 151              		.size	driveBackwards, .-driveBackwards
+ 152              		.section	.text.motorStop,"ax",%progbits
+ 153              		.align	2
+ 154              		.global	motorStop
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.type	motorStop, %function
+ 158              	motorStop:
+ 159              	.LFB68:
+  93:MotorApp.c    ****     }
+  94:MotorApp.c    **** }
+  95:MotorApp.c    **** 
+  96:MotorApp.c    **** void motorStop()
+  97:MotorApp.c    **** {
+ 160              		.loc 1 97 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164 0000 08B5     		push	{r3, lr}
+ 165              		.cfi_def_cfa_offset 8
+ 166              		.cfi_offset 3, -8
+ 167              		.cfi_offset 14, -4
+  98:MotorApp.c    ****     
+  99:MotorApp.c    ****     
+ 100:MotorApp.c    ****     motorPWM_1_Stop();
+ 168              		.loc 1 100 0
+ 169 0002 FFF7FEFF 		bl	motorPWM_1_Stop
+ 170              	.LVL20:
+ 101:MotorApp.c    ****     motorPWM_2_Stop();
+ 171              		.loc 1 101 0
+ 172 0006 FFF7FEFF 		bl	motorPWM_2_Stop
+ 173              	.LVL21:
+ 174 000a 08BD     		pop	{r3, pc}
+ 175              		.cfi_endproc
+ 176              	.LFE68:
+ 177              		.size	motorStop, .-motorStop
+ 178              		.section	.text.changeSpeed,"ax",%progbits
+ 179              		.align	2
+ 180              		.global	changeSpeed
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.type	changeSpeed, %function
+ 184              	changeSpeed:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 6
+
+
+ 185              	.LFB69:
+ 102:MotorApp.c    ****     
+ 103:MotorApp.c    **** }
+ 104:MotorApp.c    **** 
+ 105:MotorApp.c    **** void changeSpeed()                          //Denne funktion ændre placering i driveState, og herm
+ 106:MotorApp.c    **** {
+ 186              		.loc 1 106 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190 0000 08B5     		push	{r3, lr}
+ 191              		.cfi_def_cfa_offset 8
+ 192              		.cfi_offset 3, -8
+ 193              		.cfi_offset 14, -4
+ 107:MotorApp.c    ****     //state = 3;
+ 108:MotorApp.c    **** 
+ 109:MotorApp.c    ****     motorPWM_1_Stop();
+ 194              		.loc 1 109 0
+ 195 0002 FFF7FEFF 		bl	motorPWM_1_Stop
+ 196              	.LVL22:
+ 110:MotorApp.c    ****     motorPWM_2_Stop();
+ 197              		.loc 1 110 0
+ 198 0006 FFF7FEFF 		bl	motorPWM_2_Stop
+ 199              	.LVL23:
+ 111:MotorApp.c    ****     
+ 112:MotorApp.c    ****     if(driveState[state][0] > 9 && driveState[state][0] < 71)     //sikre at arrayet ikke forlades
+ 200              		.loc 1 112 0
+ 201 000a 154B     		ldr	r3, .L17
+ 202 000c 1A68     		ldr	r2, [r3]
+ 203 000e 154B     		ldr	r3, .L17+4
+ 204 0010 53F83230 		ldr	r3, [r3, r2, lsl #3]
+ 205 0014 0A3B     		subs	r3, r3, #10
+ 206 0016 3C2B     		cmp	r3, #60
+ 207 0018 09D8     		bhi	.L14
+ 113:MotorApp.c    ****     {
+ 114:MotorApp.c    ****         motorPWM_1_WritePeriod(170);
+ 208              		.loc 1 114 0
+ 209 001a AA20     		movs	r0, #170
+ 210 001c FFF7FEFF 		bl	motorPWM_1_WritePeriod
+ 211              	.LVL24:
+ 115:MotorApp.c    ****         motorPWM_1_WriteCompare(driveState[state][0]); //Set speed to current drive state on PWM 1 
+ 212              		.loc 1 115 0
+ 213 0020 0F4B     		ldr	r3, .L17
+ 214 0022 1A68     		ldr	r2, [r3]
+ 215 0024 0F4B     		ldr	r3, .L17+4
+ 216 0026 13F83200 		ldrb	r0, [r3, r2, lsl #3]	@ zero_extendqisi2
+ 217 002a FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 218              	.LVL25:
+ 219              	.L14:
+ 116:MotorApp.c    ****     }
+ 117:MotorApp.c    ****     if(driveState[state][1] > 39 && driveState[state][1] < 101)     //sikre at arrayet ikke forlade
+ 220              		.loc 1 117 0
+ 221 002e 0C4B     		ldr	r3, .L17
+ 222 0030 1A68     		ldr	r2, [r3]
+ 223 0032 0C4B     		ldr	r3, .L17+4
+ 224 0034 03EBC203 		add	r3, r3, r2, lsl #3
+ 225 0038 5B68     		ldr	r3, [r3, #4]
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 7
+
+
+ 226 003a 283B     		subs	r3, r3, #40
+ 227 003c 3C2B     		cmp	r3, #60
+ 228 003e 0AD8     		bhi	.L15
+ 118:MotorApp.c    ****     {
+ 119:MotorApp.c    ****         motorPWM_2_WritePeriod(170);
+ 229              		.loc 1 119 0
+ 230 0040 AA20     		movs	r0, #170
+ 231 0042 FFF7FEFF 		bl	motorPWM_2_WritePeriod
+ 232              	.LVL26:
+ 120:MotorApp.c    ****         motorPWM_2_WriteCompare(driveState[state][1]); //Set speed to current drive state on PWM 2 
+ 233              		.loc 1 120 0
+ 234 0046 064B     		ldr	r3, .L17
+ 235 0048 1A68     		ldr	r2, [r3]
+ 236 004a 064B     		ldr	r3, .L17+4
+ 237 004c 03EBC203 		add	r3, r3, r2, lsl #3
+ 238 0050 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 239 0052 FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ 240              	.LVL27:
+ 241              	.L15:
+ 121:MotorApp.c    ****     }
+ 122:MotorApp.c    ****     
+ 123:MotorApp.c    ****     motorPWM_1_Start();
+ 242              		.loc 1 123 0
+ 243 0056 FFF7FEFF 		bl	motorPWM_1_Start
+ 244              	.LVL28:
+ 124:MotorApp.c    ****     motorPWM_2_Start();
+ 245              		.loc 1 124 0
+ 246 005a FFF7FEFF 		bl	motorPWM_2_Start
+ 247              	.LVL29:
+ 248 005e 08BD     		pop	{r3, pc}
+ 249              	.L18:
+ 250              		.align	2
+ 251              	.L17:
+ 252 0060 00000000 		.word	state
+ 253 0064 00000000 		.word	.LANCHOR0
+ 254              		.cfi_endproc
+ 255              	.LFE69:
+ 256              		.size	changeSpeed, .-changeSpeed
+ 257              		.section	.text.changeState,"ax",%progbits
+ 258              		.align	2
+ 259              		.global	changeState
+ 260              		.thumb
+ 261              		.thumb_func
+ 262              		.type	changeState, %function
+ 263              	changeState:
+ 264              	.LFB65:
+  36:MotorApp.c    ****   
+ 265              		.loc 1 36 0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              	.LVL30:
+ 270 0000 08B5     		push	{r3, lr}
+ 271              		.cfi_def_cfa_offset 8
+ 272              		.cfi_offset 3, -8
+ 273              		.cfi_offset 14, -4
+  39:MotorApp.c    ****     {
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 8
+
+
+ 274              		.loc 1 39 0
+ 275 0002 0128     		cmp	r0, #1
+ 276 0004 02D0     		beq	.L20
+  39:MotorApp.c    ****     {
+ 277              		.loc 1 39 0 is_stmt 0 discriminator 1
+ 278 0006 B0F1FF3F 		cmp	r0, #-1
+ 279 000a 15D1     		bne	.L19
+ 280              	.L20:
+  41:MotorApp.c    ****         {
+ 281              		.loc 1 41 0 is_stmt 1
+ 282 000c 0B4B     		ldr	r3, .L24
+ 283 000e 1B68     		ldr	r3, [r3]
+ 284 0010 002B     		cmp	r3, #0
+ 285 0012 08DD     		ble	.L22
+  41:MotorApp.c    ****         {
+ 286              		.loc 1 41 0 is_stmt 0 discriminator 1
+ 287 0014 B0F1FF3F 		cmp	r0, #-1
+ 288 0018 05D1     		bne	.L22
+  43:MotorApp.c    ****             changeSpeed();
+ 289              		.loc 1 43 0 is_stmt 1
+ 290 001a 1844     		add	r0, r0, r3
+ 291              	.LVL31:
+ 292 001c 074B     		ldr	r3, .L24
+ 293 001e 1860     		str	r0, [r3]
+  44:MotorApp.c    ****         }
+ 294              		.loc 1 44 0
+ 295 0020 FFF7FEFF 		bl	changeSpeed
+ 296              	.LVL32:
+ 297 0024 08BD     		pop	{r3, pc}
+ 298              	.LVL33:
+ 299              	.L22:
+  46:MotorApp.c    ****         {
+ 300              		.loc 1 46 0
+ 301 0026 052B     		cmp	r3, #5
+ 302 0028 06DC     		bgt	.L19
+  46:MotorApp.c    ****         {
+ 303              		.loc 1 46 0 is_stmt 0 discriminator 1
+ 304 002a 0128     		cmp	r0, #1
+ 305 002c 04D1     		bne	.L19
+  48:MotorApp.c    ****             changeSpeed();
+ 306              		.loc 1 48 0 is_stmt 1
+ 307 002e 1844     		add	r0, r0, r3
+ 308              	.LVL34:
+ 309 0030 024B     		ldr	r3, .L24
+ 310 0032 1860     		str	r0, [r3]
+  49:MotorApp.c    ****         } 
+ 311              		.loc 1 49 0
+ 312 0034 FFF7FEFF 		bl	changeSpeed
+ 313              	.LVL35:
+ 314              	.L19:
+ 315 0038 08BD     		pop	{r3, pc}
+ 316              	.L25:
+ 317 003a 00BF     		.align	2
+ 318              	.L24:
+ 319 003c 00000000 		.word	state
+ 320              		.cfi_endproc
+ 321              	.LFE65:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 9
+
+
+ 322              		.size	changeState, .-changeState
+ 323              		.section	.text.speedSelect,"ax",%progbits
+ 324              		.align	2
+ 325              		.global	speedSelect
+ 326              		.thumb
+ 327              		.thumb_func
+ 328              		.type	speedSelect, %function
+ 329              	speedSelect:
+ 330              	.LFB64:
+  19:MotorApp.c    ****     if(randState == 0)                      //Når randstate er 0, laves en ny randstate værdi ime
+ 331              		.loc 1 19 0
+ 332              		.cfi_startproc
+ 333              		@ args = 0, pretend = 0, frame = 0
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+ 335 0000 08B5     		push	{r3, lr}
+ 336              		.cfi_def_cfa_offset 8
+ 337              		.cfi_offset 3, -8
+ 338              		.cfi_offset 14, -4
+  20:MotorApp.c    ****         randState = rand() % 7 - 3;
+ 339              		.loc 1 20 0
+ 340 0002 144B     		ldr	r3, .L31
+ 341 0004 1B68     		ldr	r3, [r3]
+ 342 0006 73B9     		cbnz	r3, .L27
+  21:MotorApp.c    ****     
+ 343              		.loc 1 21 0
+ 344 0008 FFF7FEFF 		bl	rand
+ 345              	.LVL36:
+ 346 000c 124A     		ldr	r2, .L31+4
+ 347 000e 80FB0223 		smull	r2, r3, r0, r2
+ 348 0012 C218     		adds	r2, r0, r3
+ 349 0014 C317     		asrs	r3, r0, #31
+ 350 0016 C3EBA203 		rsb	r3, r3, r2, asr #2
+ 351 001a C3EBC303 		rsb	r3, r3, r3, lsl #3
+ 352 001e C31A     		subs	r3, r0, r3
+ 353 0020 033B     		subs	r3, r3, #3
+ 354 0022 0C4A     		ldr	r2, .L31
+ 355 0024 1360     		str	r3, [r2]
+ 356              	.L27:
+  23:MotorApp.c    ****     {
+ 357              		.loc 1 23 0
+ 358 0026 0B4B     		ldr	r3, .L31
+ 359 0028 1B68     		ldr	r3, [r3]
+ 360 002a 002B     		cmp	r3, #0
+ 361 002c 08DA     		bge	.L28
+  25:MotorApp.c    ****         randState++;                        //randsdtate forøges så den til sidst rammer 0 og der
+ 362              		.loc 1 25 0
+ 363 002e 4FF0FF30 		mov	r0, #-1
+ 364 0032 FFF7FEFF 		bl	changeState
+ 365              	.LVL37:
+  26:MotorApp.c    ****     }
+ 366              		.loc 1 26 0
+ 367 0036 074A     		ldr	r2, .L31
+ 368 0038 1368     		ldr	r3, [r2]
+ 369 003a 0133     		adds	r3, r3, #1
+ 370 003c 1360     		str	r3, [r2]
+ 371 003e 08BD     		pop	{r3, pc}
+ 372              	.L28:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 10
+
+
+  28:MotorApp.c    ****     {
+ 373              		.loc 1 28 0
+ 374 0040 002B     		cmp	r3, #0
+ 375 0042 06DD     		ble	.L26
+  30:MotorApp.c    ****         randState--;                        //randsdtate trækkes 1 fra så den til sidst rammer 0 
+ 376              		.loc 1 30 0
+ 377 0044 0120     		movs	r0, #1
+ 378 0046 FFF7FEFF 		bl	changeState
+ 379              	.LVL38:
+  31:MotorApp.c    ****     }
+ 380              		.loc 1 31 0
+ 381 004a 024A     		ldr	r2, .L31
+ 382 004c 1368     		ldr	r3, [r2]
+ 383 004e 013B     		subs	r3, r3, #1
+ 384 0050 1360     		str	r3, [r2]
+ 385              	.L26:
+ 386 0052 08BD     		pop	{r3, pc}
+ 387              	.L32:
+ 388              		.align	2
+ 389              	.L31:
+ 390 0054 00000000 		.word	randState
+ 391 0058 93244992 		.word	-1840700269
+ 392              		.cfi_endproc
+ 393              	.LFE64:
+ 394              		.size	speedSelect, .-speedSelect
+ 395              		.section	.text.DelayBased90Turn,"ax",%progbits
+ 396              		.align	2
+ 397              		.global	DelayBased90Turn
+ 398              		.thumb
+ 399              		.thumb_func
+ 400              		.type	DelayBased90Turn, %function
+ 401              	DelayBased90Turn:
+ 402              	.LFB70:
+ 125:MotorApp.c    **** }
+ 126:MotorApp.c    **** 
+ 127:MotorApp.c    **** void DelayBased90Turn(int dir)
+ 128:MotorApp.c    **** {
+ 403              		.loc 1 128 0
+ 404              		.cfi_startproc
+ 405              		@ args = 0, pretend = 0, frame = 0
+ 406              		@ frame_needed = 0, uses_anonymous_args = 0
+ 407              	.LVL39:
+ 129:MotorApp.c    ****     if(running_ == 1)
+ 408              		.loc 1 129 0
+ 409 0000 214B     		ldr	r3, .L40
+ 410 0002 1B68     		ldr	r3, [r3]
+ 411 0004 012B     		cmp	r3, #1
+ 412 0006 3ED1     		bne	.L39
+ 128:MotorApp.c    ****     if(running_ == 1)
+ 413              		.loc 1 128 0
+ 414 0008 10B5     		push	{r4, lr}
+ 415              		.cfi_def_cfa_offset 8
+ 416              		.cfi_offset 4, -8
+ 417              		.cfi_offset 14, -4
+ 418 000a 0446     		mov	r4, r0
+ 130:MotorApp.c    ****     {
+ 131:MotorApp.c    ****     motorPWM_1_Stop();
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 11
+
+
+ 419              		.loc 1 131 0
+ 420 000c FFF7FEFF 		bl	motorPWM_1_Stop
+ 421              	.LVL40:
+ 132:MotorApp.c    ****     motorPWM_2_Stop();
+ 422              		.loc 1 132 0
+ 423 0010 FFF7FEFF 		bl	motorPWM_2_Stop
+ 424              	.LVL41:
+ 133:MotorApp.c    ****     
+ 134:MotorApp.c    ****     CyDelay(250);
+ 425              		.loc 1 134 0
+ 426 0014 FA20     		movs	r0, #250
+ 427 0016 FFF7FEFF 		bl	CyDelay
+ 428              	.LVL42:
+ 135:MotorApp.c    ****     
+ 136:MotorApp.c    ****     switch(dir)
+ 429              		.loc 1 136 0
+ 430 001a 012C     		cmp	r4, #1
+ 431 001c 02D0     		beq	.L36
+ 432 001e 022C     		cmp	r4, #2
+ 433 0020 0DD0     		beq	.L37
+ 434 0022 18E0     		b	.L35
+ 435              	.L36:
+ 137:MotorApp.c    ****     {
+ 138:MotorApp.c    ****         case 1 :
+ 139:MotorApp.c    ****             Pin1_dir1_Write(0);
+ 436              		.loc 1 139 0
+ 437 0024 0020     		movs	r0, #0
+ 438 0026 FFF7FEFF 		bl	Pin1_dir1_Write
+ 439              	.LVL43:
+ 140:MotorApp.c    ****             Pin1_dir2_Write(1);
+ 440              		.loc 1 140 0
+ 441 002a 0120     		movs	r0, #1
+ 442 002c FFF7FEFF 		bl	Pin1_dir2_Write
+ 443              	.LVL44:
+ 141:MotorApp.c    ****             Pin2_dir1_Write(1);
+ 444              		.loc 1 141 0
+ 445 0030 0120     		movs	r0, #1
+ 446 0032 FFF7FEFF 		bl	Pin2_dir1_Write
+ 447              	.LVL45:
+ 142:MotorApp.c    ****             Pin2_dir2_Write(0);
+ 448              		.loc 1 142 0
+ 449 0036 0020     		movs	r0, #0
+ 450 0038 FFF7FEFF 		bl	Pin2_dir2_Write
+ 451              	.LVL46:
+ 143:MotorApp.c    ****             break;
+ 452              		.loc 1 143 0
+ 453 003c 0BE0     		b	.L35
+ 454              	.L37:
+ 144:MotorApp.c    ****         case 2 :
+ 145:MotorApp.c    ****             Pin1_dir2_Write(0);
+ 455              		.loc 1 145 0
+ 456 003e 0020     		movs	r0, #0
+ 457 0040 FFF7FEFF 		bl	Pin1_dir2_Write
+ 458              	.LVL47:
+ 146:MotorApp.c    ****             Pin1_dir1_Write(1);
+ 459              		.loc 1 146 0
+ 460 0044 0120     		movs	r0, #1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 12
+
+
+ 461 0046 FFF7FEFF 		bl	Pin1_dir1_Write
+ 462              	.LVL48:
+ 147:MotorApp.c    ****             Pin2_dir2_Write(1);
+ 463              		.loc 1 147 0
+ 464 004a 0120     		movs	r0, #1
+ 465 004c FFF7FEFF 		bl	Pin2_dir2_Write
+ 466              	.LVL49:
+ 148:MotorApp.c    ****             Pin2_dir1_Write(0);
+ 467              		.loc 1 148 0
+ 468 0050 0020     		movs	r0, #0
+ 469 0052 FFF7FEFF 		bl	Pin2_dir1_Write
+ 470              	.LVL50:
+ 471              	.L35:
+ 149:MotorApp.c    ****             break;
+ 150:MotorApp.c    ****     }
+ 151:MotorApp.c    ****     
+ 152:MotorApp.c    ****     
+ 153:MotorApp.c    ****     motorPWM_1_WriteCompare(100);
+ 472              		.loc 1 153 0
+ 473 0056 6420     		movs	r0, #100
+ 474 0058 FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 475              	.LVL51:
+ 154:MotorApp.c    ****     motorPWM_2_WriteCompare(100);
+ 476              		.loc 1 154 0
+ 477 005c 6420     		movs	r0, #100
+ 478 005e FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ 479              	.LVL52:
+ 155:MotorApp.c    ****     
+ 156:MotorApp.c    ****     motorPWM_1_Start();
+ 480              		.loc 1 156 0
+ 481 0062 FFF7FEFF 		bl	motorPWM_1_Start
+ 482              	.LVL53:
+ 157:MotorApp.c    ****     motorPWM_2_Start();
+ 483              		.loc 1 157 0
+ 484 0066 FFF7FEFF 		bl	motorPWM_2_Start
+ 485              	.LVL54:
+ 158:MotorApp.c    ****     
+ 159:MotorApp.c    ****     CyDelay(500);
+ 486              		.loc 1 159 0
+ 487 006a 4FF4FA70 		mov	r0, #500
+ 488 006e FFF7FEFF 		bl	CyDelay
+ 489              	.LVL55:
+ 160:MotorApp.c    ****     
+ 161:MotorApp.c    ****     motorPWM_1_Stop();
+ 490              		.loc 1 161 0
+ 491 0072 FFF7FEFF 		bl	motorPWM_1_Stop
+ 492              	.LVL56:
+ 162:MotorApp.c    ****     motorPWM_2_Stop();
+ 493              		.loc 1 162 0
+ 494 0076 FFF7FEFF 		bl	motorPWM_2_Stop
+ 495              	.LVL57:
+ 163:MotorApp.c    ****     
+ 164:MotorApp.c    ****     CyDelay(250);
+ 496              		.loc 1 164 0
+ 497 007a FA20     		movs	r0, #250
+ 498 007c FFF7FEFF 		bl	CyDelay
+ 499              	.LVL58:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 13
+
+
+ 165:MotorApp.c    ****     
+ 166:MotorApp.c    ****     driveForwards(); 
+ 500              		.loc 1 166 0
+ 501 0080 FFF7FEFF 		bl	driveForwards
+ 502              	.LVL59:
+ 503 0084 10BD     		pop	{r4, pc}
+ 504              	.LVL60:
+ 505              	.L39:
+ 506              		.cfi_def_cfa_offset 0
+ 507              		.cfi_restore 4
+ 508              		.cfi_restore 14
+ 509 0086 7047     		bx	lr
+ 510              	.L41:
+ 511              		.align	2
+ 512              	.L40:
+ 513 0088 00000000 		.word	running_
+ 514              		.cfi_endproc
+ 515              	.LFE70:
+ 516              		.size	DelayBased90Turn, .-DelayBased90Turn
+ 517              		.section	.text.DelayBased180Turn,"ax",%progbits
+ 518              		.align	2
+ 519              		.global	DelayBased180Turn
+ 520              		.thumb
+ 521              		.thumb_func
+ 522              		.type	DelayBased180Turn, %function
+ 523              	DelayBased180Turn:
+ 524              	.LFB71:
+ 167:MotorApp.c    ****     }
+ 168:MotorApp.c    **** }
+ 169:MotorApp.c    **** 
+ 170:MotorApp.c    **** 
+ 171:MotorApp.c    **** void DelayBased180Turn()
+ 172:MotorApp.c    **** {
+ 525              		.loc 1 172 0
+ 526              		.cfi_startproc
+ 527              		@ args = 0, pretend = 0, frame = 0
+ 528              		@ frame_needed = 0, uses_anonymous_args = 0
+ 529 0000 08B5     		push	{r3, lr}
+ 530              		.cfi_def_cfa_offset 8
+ 531              		.cfi_offset 3, -8
+ 532              		.cfi_offset 14, -4
+ 173:MotorApp.c    ****     if(running_ == 1)
+ 533              		.loc 1 173 0
+ 534 0002 1E4B     		ldr	r3, .L45
+ 535 0004 1B68     		ldr	r3, [r3]
+ 536 0006 012B     		cmp	r3, #1
+ 537 0008 36D1     		bne	.L42
+ 174:MotorApp.c    ****     {
+ 175:MotorApp.c    ****     motorPWM_1_Stop();
+ 538              		.loc 1 175 0
+ 539 000a FFF7FEFF 		bl	motorPWM_1_Stop
+ 540              	.LVL61:
+ 176:MotorApp.c    ****     motorPWM_2_Stop();
+ 541              		.loc 1 176 0
+ 542 000e FFF7FEFF 		bl	motorPWM_2_Stop
+ 543              	.LVL62:
+ 177:MotorApp.c    ****     
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 14
+
+
+ 178:MotorApp.c    ****     CyDelay(250);
+ 544              		.loc 1 178 0
+ 545 0012 FA20     		movs	r0, #250
+ 546 0014 FFF7FEFF 		bl	CyDelay
+ 547              	.LVL63:
+ 179:MotorApp.c    ****     
+ 180:MotorApp.c    ****     driveBackwards();
+ 548              		.loc 1 180 0
+ 549 0018 FFF7FEFF 		bl	driveBackwards
+ 550              	.LVL64:
+ 181:MotorApp.c    ****     
+ 182:MotorApp.c    ****     CyDelay(1000);
+ 551              		.loc 1 182 0
+ 552 001c 4FF47A70 		mov	r0, #1000
+ 553 0020 FFF7FEFF 		bl	CyDelay
+ 554              	.LVL65:
+ 183:MotorApp.c    ****     
+ 184:MotorApp.c    ****     motorPWM_1_Stop();
+ 555              		.loc 1 184 0
+ 556 0024 FFF7FEFF 		bl	motorPWM_1_Stop
+ 557              	.LVL66:
+ 185:MotorApp.c    ****     motorPWM_2_Stop();
+ 558              		.loc 1 185 0
+ 559 0028 FFF7FEFF 		bl	motorPWM_2_Stop
+ 560              	.LVL67:
+ 186:MotorApp.c    ****     
+ 187:MotorApp.c    ****     CyDelay(250);
+ 561              		.loc 1 187 0
+ 562 002c FA20     		movs	r0, #250
+ 563 002e FFF7FEFF 		bl	CyDelay
+ 564              	.LVL68:
+ 188:MotorApp.c    ****     
+ 189:MotorApp.c    ****     Pin1_dir1_Write(0);
+ 565              		.loc 1 189 0
+ 566 0032 0020     		movs	r0, #0
+ 567 0034 FFF7FEFF 		bl	Pin1_dir1_Write
+ 568              	.LVL69:
+ 190:MotorApp.c    ****     Pin1_dir2_Write(1);
+ 569              		.loc 1 190 0
+ 570 0038 0120     		movs	r0, #1
+ 571 003a FFF7FEFF 		bl	Pin1_dir2_Write
+ 572              	.LVL70:
+ 191:MotorApp.c    ****     Pin2_dir1_Write(1);
+ 573              		.loc 1 191 0
+ 574 003e 0120     		movs	r0, #1
+ 575 0040 FFF7FEFF 		bl	Pin2_dir1_Write
+ 576              	.LVL71:
+ 192:MotorApp.c    ****     Pin2_dir2_Write(0);
+ 577              		.loc 1 192 0
+ 578 0044 0020     		movs	r0, #0
+ 579 0046 FFF7FEFF 		bl	Pin2_dir2_Write
+ 580              	.LVL72:
+ 193:MotorApp.c    ****     
+ 194:MotorApp.c    ****     motorPWM_1_Start();
+ 581              		.loc 1 194 0
+ 582 004a FFF7FEFF 		bl	motorPWM_1_Start
+ 583              	.LVL73:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 15
+
+
+ 195:MotorApp.c    ****     motorPWM_2_Start();
+ 584              		.loc 1 195 0
+ 585 004e FFF7FEFF 		bl	motorPWM_2_Start
+ 586              	.LVL74:
+ 196:MotorApp.c    ****     
+ 197:MotorApp.c    ****     motorPWM_1_WriteCompare(100);
+ 587              		.loc 1 197 0
+ 588 0052 6420     		movs	r0, #100
+ 589 0054 FFF7FEFF 		bl	motorPWM_1_WriteCompare
+ 590              	.LVL75:
+ 198:MotorApp.c    ****     motorPWM_2_WriteCompare(100);
+ 591              		.loc 1 198 0
+ 592 0058 6420     		movs	r0, #100
+ 593 005a FFF7FEFF 		bl	motorPWM_2_WriteCompare
+ 594              	.LVL76:
+ 199:MotorApp.c    ****     
+ 200:MotorApp.c    ****     CyDelay(1000);
+ 595              		.loc 1 200 0
+ 596 005e 4FF47A70 		mov	r0, #1000
+ 597 0062 FFF7FEFF 		bl	CyDelay
+ 598              	.LVL77:
+ 201:MotorApp.c    ****     
+ 202:MotorApp.c    ****     motorPWM_1_Stop();
+ 599              		.loc 1 202 0
+ 600 0066 FFF7FEFF 		bl	motorPWM_1_Stop
+ 601              	.LVL78:
+ 203:MotorApp.c    ****     motorPWM_2_Stop();
+ 602              		.loc 1 203 0
+ 603 006a FFF7FEFF 		bl	motorPWM_2_Stop
+ 604              	.LVL79:
+ 204:MotorApp.c    ****     
+ 205:MotorApp.c    ****     CyDelay(250);
+ 605              		.loc 1 205 0
+ 606 006e FA20     		movs	r0, #250
+ 607 0070 FFF7FEFF 		bl	CyDelay
+ 608              	.LVL80:
+ 206:MotorApp.c    ****     
+ 207:MotorApp.c    ****     driveForwards();
+ 609              		.loc 1 207 0
+ 610 0074 FFF7FEFF 		bl	driveForwards
+ 611              	.LVL81:
+ 612              	.L42:
+ 613 0078 08BD     		pop	{r3, pc}
+ 614              	.L46:
+ 615 007a 00BF     		.align	2
+ 616              	.L45:
+ 617 007c 00000000 		.word	running_
+ 618              		.cfi_endproc
+ 619              	.LFE71:
+ 620              		.size	DelayBased180Turn, .-DelayBased180Turn
+ 621              		.global	driveState
+ 622              		.comm	running_,4,4
+ 623              		.comm	randturn,4,4
+ 624              		.comm	randState,4,4
+ 625              		.comm	state,4,4
+ 626              		.comm	difficulty,4,4
+ 627              		.comm	buffer,250,4
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 16
+
+
+ 628              		.comm	NP_g_nFrameBufferSize,4,4
+ 629              		.comm	NP_g_pFrameBuffer,4,4
+ 630              		.comm	NP_g_bOwnsBuffer,1,1
+ 631              		.comm	NP_g_nDMA_TD,1,1
+ 632              		.comm	NP_g_nDMA_Chan,1,1
+ 633              		.comm	NP_g_nNumberOfPixels,4,4
+ 634              		.data
+ 635              		.align	2
+ 636              		.set	.LANCHOR0,. + 0
+ 637              		.type	driveState, %object
+ 638              		.size	driveState, 56
+ 639              	driveState:
+ 640 0000 0A000000 		.word	10
+ 641 0004 64000000 		.word	100
+ 642 0008 1E000000 		.word	30
+ 643 000c 64000000 		.word	100
+ 644 0010 32000000 		.word	50
+ 645 0014 64000000 		.word	100
+ 646 0018 46000000 		.word	70
+ 647 001c 64000000 		.word	100
+ 648 0020 46000000 		.word	70
+ 649 0024 50000000 		.word	80
+ 650 0028 46000000 		.word	70
+ 651 002c 3C000000 		.word	60
+ 652 0030 46000000 		.word	70
+ 653 0034 28000000 		.word	40
+ 654              		.text
+ 655              	.Letext0:
+ 656              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 657              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 658              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 659              		.file 5 "Generated_Source\\PSoC5/NP_funcs.h"
+ 660              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 661              		.file 7 "MotorApp.h"
+ 662              		.file 8 "waitingState.h"
+ 663              		.file 9 "Generated_Source\\PSoC5/motorPWM_1.h"
+ 664              		.file 10 "Generated_Source\\PSoC5/motorPWM_2.h"
+ 665              		.file 11 "Generated_Source\\PSoC5/Pin1_dir1.h"
+ 666              		.file 12 "Generated_Source\\PSoC5/Pin1_dir2.h"
+ 667              		.file 13 "Generated_Source\\PSoC5/Pin2_dir1.h"
+ 668              		.file 14 "Generated_Source\\PSoC5/Pin2_dir2.h"
+ 669              		.file 15 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4
+ 670              		.file 16 "Generated_Source\\PSoC5/CyLib.h"
+ 671              		.section	.debug_info,"",%progbits
+ 672              	.Ldebug_info0:
+ 673 0000 81070000 		.4byte	0x781
+ 674 0004 0400     		.2byte	0x4
+ 675 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 676 000a 04       		.byte	0x4
+ 677 000b 01       		.uleb128 0x1
+ 678 000c 11010000 		.4byte	.LASF54
+ 679 0010 0C       		.byte	0xc
+ 680 0011 93000000 		.4byte	.LASF55
+ 681 0015 10000000 		.4byte	.LASF56
+ 682 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 683 001d 00000000 		.4byte	0
+ 684 0021 00000000 		.4byte	.Ldebug_line0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 17
+
+
+ 685 0025 02       		.uleb128 0x2
+ 686 0026 01       		.byte	0x1
+ 687 0027 06       		.byte	0x6
+ 688 0028 92030000 		.4byte	.LASF0
+ 689 002c 02       		.uleb128 0x2
+ 690 002d 01       		.byte	0x1
+ 691 002e 08       		.byte	0x8
+ 692 002f F9010000 		.4byte	.LASF1
+ 693 0033 02       		.uleb128 0x2
+ 694 0034 02       		.byte	0x2
+ 695 0035 05       		.byte	0x5
+ 696 0036 18030000 		.4byte	.LASF2
+ 697 003a 02       		.uleb128 0x2
+ 698 003b 02       		.byte	0x2
+ 699 003c 07       		.byte	0x7
+ 700 003d D3010000 		.4byte	.LASF3
+ 701 0041 03       		.uleb128 0x3
+ 702 0042 78000000 		.4byte	.LASF12
+ 703 0046 02       		.byte	0x2
+ 704 0047 3F       		.byte	0x3f
+ 705 0048 4C000000 		.4byte	0x4c
+ 706 004c 02       		.uleb128 0x2
+ 707 004d 04       		.byte	0x4
+ 708 004e 05       		.byte	0x5
+ 709 004f 61030000 		.4byte	.LASF4
+ 710 0053 02       		.uleb128 0x2
+ 711 0054 04       		.byte	0x4
+ 712 0055 07       		.byte	0x7
+ 713 0056 07020000 		.4byte	.LASF5
+ 714 005a 02       		.uleb128 0x2
+ 715 005b 08       		.byte	0x8
+ 716 005c 05       		.byte	0x5
+ 717 005d BA020000 		.4byte	.LASF6
+ 718 0061 02       		.uleb128 0x2
+ 719 0062 08       		.byte	0x8
+ 720 0063 07       		.byte	0x7
+ 721 0064 65020000 		.4byte	.LASF7
+ 722 0068 04       		.uleb128 0x4
+ 723 0069 04       		.byte	0x4
+ 724 006a 05       		.byte	0x5
+ 725 006b 696E7400 		.ascii	"int\000"
+ 726 006f 02       		.uleb128 0x2
+ 727 0070 04       		.byte	0x4
+ 728 0071 07       		.byte	0x7
+ 729 0072 4A020000 		.4byte	.LASF8
+ 730 0076 02       		.uleb128 0x2
+ 731 0077 08       		.byte	0x8
+ 732 0078 04       		.byte	0x4
+ 733 0079 6F030000 		.4byte	.LASF9
+ 734 007d 02       		.uleb128 0x2
+ 735 007e 04       		.byte	0x4
+ 736 007f 07       		.byte	0x7
+ 737 0080 B1020000 		.4byte	.LASF10
+ 738 0084 02       		.uleb128 0x2
+ 739 0085 01       		.byte	0x1
+ 740 0086 08       		.byte	0x8
+ 741 0087 6A030000 		.4byte	.LASF11
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 18
+
+
+ 742 008b 03       		.uleb128 0x3
+ 743 008c 8F020000 		.4byte	.LASF13
+ 744 0090 03       		.byte	0x3
+ 745 0091 2C       		.byte	0x2c
+ 746 0092 41000000 		.4byte	0x41
+ 747 0096 03       		.uleb128 0x3
+ 748 0097 29030000 		.4byte	.LASF14
+ 749 009b 04       		.byte	0x4
+ 750 009c C2       		.byte	0xc2
+ 751 009d 2C000000 		.4byte	0x2c
+ 752 00a1 02       		.uleb128 0x2
+ 753 00a2 04       		.byte	0x4
+ 754 00a3 04       		.byte	0x4
+ 755 00a4 E9000000 		.4byte	.LASF15
+ 756 00a8 02       		.uleb128 0x2
+ 757 00a9 08       		.byte	0x8
+ 758 00aa 04       		.byte	0x4
+ 759 00ab AE000000 		.4byte	.LASF16
+ 760 00af 05       		.uleb128 0x5
+ 761 00b0 96000000 		.4byte	0x96
+ 762 00b4 06       		.uleb128 0x6
+ 763 00b5 57020000 		.4byte	.LASF17
+ 764 00b9 01       		.byte	0x1
+ 765 00ba 37       		.byte	0x37
+ 766 00bb 00000000 		.4byte	.LFB66
+ 767 00bf 44000000 		.4byte	.LFE66-.LFB66
+ 768 00c3 01       		.uleb128 0x1
+ 769 00c4 9C       		.byte	0x9c
+ 770 00c5 62010000 		.4byte	0x162
+ 771 00c9 07       		.uleb128 0x7
+ 772 00ca 0E000000 		.4byte	.LVL0
+ 773 00ce EA060000 		.4byte	0x6ea
+ 774 00d2 07       		.uleb128 0x7
+ 775 00d3 12000000 		.4byte	.LVL1
+ 776 00d7 F5060000 		.4byte	0x6f5
+ 777 00db 08       		.uleb128 0x8
+ 778 00dc 18000000 		.4byte	.LVL2
+ 779 00e0 00070000 		.4byte	0x700
+ 780 00e4 EE000000 		.4byte	0xee
+ 781 00e8 09       		.uleb128 0x9
+ 782 00e9 01       		.uleb128 0x1
+ 783 00ea 50       		.byte	0x50
+ 784 00eb 01       		.uleb128 0x1
+ 785 00ec 30       		.byte	0x30
+ 786 00ed 00       		.byte	0
+ 787 00ee 08       		.uleb128 0x8
+ 788 00ef 1E000000 		.4byte	.LVL3
+ 789 00f3 0B070000 		.4byte	0x70b
+ 790 00f7 01010000 		.4byte	0x101
+ 791 00fb 09       		.uleb128 0x9
+ 792 00fc 01       		.uleb128 0x1
+ 793 00fd 50       		.byte	0x50
+ 794 00fe 01       		.uleb128 0x1
+ 795 00ff 31       		.byte	0x31
+ 796 0100 00       		.byte	0
+ 797 0101 08       		.uleb128 0x8
+ 798 0102 24000000 		.4byte	.LVL4
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 19
+
+
+ 799 0106 16070000 		.4byte	0x716
+ 800 010a 14010000 		.4byte	0x114
+ 801 010e 09       		.uleb128 0x9
+ 802 010f 01       		.uleb128 0x1
+ 803 0110 50       		.byte	0x50
+ 804 0111 01       		.uleb128 0x1
+ 805 0112 30       		.byte	0x30
+ 806 0113 00       		.byte	0
+ 807 0114 08       		.uleb128 0x8
+ 808 0115 2A000000 		.4byte	.LVL5
+ 809 0119 21070000 		.4byte	0x721
+ 810 011d 27010000 		.4byte	0x127
+ 811 0121 09       		.uleb128 0x9
+ 812 0122 01       		.uleb128 0x1
+ 813 0123 50       		.byte	0x50
+ 814 0124 01       		.uleb128 0x1
+ 815 0125 31       		.byte	0x31
+ 816 0126 00       		.byte	0
+ 817 0127 08       		.uleb128 0x8
+ 818 0128 30000000 		.4byte	.LVL6
+ 819 012c 2C070000 		.4byte	0x72c
+ 820 0130 3B010000 		.4byte	0x13b
+ 821 0134 09       		.uleb128 0x9
+ 822 0135 01       		.uleb128 0x1
+ 823 0136 50       		.byte	0x50
+ 824 0137 02       		.uleb128 0x2
+ 825 0138 08       		.byte	0x8
+ 826 0139 50       		.byte	0x50
+ 827 013a 00       		.byte	0
+ 828 013b 08       		.uleb128 0x8
+ 829 013c 36000000 		.4byte	.LVL7
+ 830 0140 37070000 		.4byte	0x737
+ 831 0144 4F010000 		.4byte	0x14f
+ 832 0148 09       		.uleb128 0x9
+ 833 0149 01       		.uleb128 0x1
+ 834 014a 50       		.byte	0x50
+ 835 014b 02       		.uleb128 0x2
+ 836 014c 08       		.byte	0x8
+ 837 014d 50       		.byte	0x50
+ 838 014e 00       		.byte	0
+ 839 014f 07       		.uleb128 0x7
+ 840 0150 3A000000 		.4byte	.LVL8
+ 841 0154 42070000 		.4byte	0x742
+ 842 0158 07       		.uleb128 0x7
+ 843 0159 3E000000 		.4byte	.LVL9
+ 844 015d 4D070000 		.4byte	0x74d
+ 845 0161 00       		.byte	0
+ 846 0162 06       		.uleb128 0x6
+ 847 0163 97020000 		.4byte	.LASF18
+ 848 0167 01       		.byte	0x1
+ 849 0168 4C       		.byte	0x4c
+ 850 0169 00000000 		.4byte	.LFB67
+ 851 016d 44000000 		.4byte	.LFE67-.LFB67
+ 852 0171 01       		.uleb128 0x1
+ 853 0172 9C       		.byte	0x9c
+ 854 0173 10020000 		.4byte	0x210
+ 855 0177 07       		.uleb128 0x7
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 20
+
+
+ 856 0178 0E000000 		.4byte	.LVL10
+ 857 017c EA060000 		.4byte	0x6ea
+ 858 0180 07       		.uleb128 0x7
+ 859 0181 12000000 		.4byte	.LVL11
+ 860 0185 F5060000 		.4byte	0x6f5
+ 861 0189 08       		.uleb128 0x8
+ 862 018a 18000000 		.4byte	.LVL12
+ 863 018e 00070000 		.4byte	0x700
+ 864 0192 9C010000 		.4byte	0x19c
+ 865 0196 09       		.uleb128 0x9
+ 866 0197 01       		.uleb128 0x1
+ 867 0198 50       		.byte	0x50
+ 868 0199 01       		.uleb128 0x1
+ 869 019a 31       		.byte	0x31
+ 870 019b 00       		.byte	0
+ 871 019c 08       		.uleb128 0x8
+ 872 019d 1E000000 		.4byte	.LVL13
+ 873 01a1 0B070000 		.4byte	0x70b
+ 874 01a5 AF010000 		.4byte	0x1af
+ 875 01a9 09       		.uleb128 0x9
+ 876 01aa 01       		.uleb128 0x1
+ 877 01ab 50       		.byte	0x50
+ 878 01ac 01       		.uleb128 0x1
+ 879 01ad 30       		.byte	0x30
+ 880 01ae 00       		.byte	0
+ 881 01af 08       		.uleb128 0x8
+ 882 01b0 24000000 		.4byte	.LVL14
+ 883 01b4 16070000 		.4byte	0x716
+ 884 01b8 C2010000 		.4byte	0x1c2
+ 885 01bc 09       		.uleb128 0x9
+ 886 01bd 01       		.uleb128 0x1
+ 887 01be 50       		.byte	0x50
+ 888 01bf 01       		.uleb128 0x1
+ 889 01c0 31       		.byte	0x31
+ 890 01c1 00       		.byte	0
+ 891 01c2 08       		.uleb128 0x8
+ 892 01c3 2A000000 		.4byte	.LVL15
+ 893 01c7 21070000 		.4byte	0x721
+ 894 01cb D5010000 		.4byte	0x1d5
+ 895 01cf 09       		.uleb128 0x9
+ 896 01d0 01       		.uleb128 0x1
+ 897 01d1 50       		.byte	0x50
+ 898 01d2 01       		.uleb128 0x1
+ 899 01d3 30       		.byte	0x30
+ 900 01d4 00       		.byte	0
+ 901 01d5 08       		.uleb128 0x8
+ 902 01d6 30000000 		.4byte	.LVL16
+ 903 01da 2C070000 		.4byte	0x72c
+ 904 01de E9010000 		.4byte	0x1e9
+ 905 01e2 09       		.uleb128 0x9
+ 906 01e3 01       		.uleb128 0x1
+ 907 01e4 50       		.byte	0x50
+ 908 01e5 02       		.uleb128 0x2
+ 909 01e6 08       		.byte	0x8
+ 910 01e7 50       		.byte	0x50
+ 911 01e8 00       		.byte	0
+ 912 01e9 08       		.uleb128 0x8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 21
+
+
+ 913 01ea 36000000 		.4byte	.LVL17
+ 914 01ee 37070000 		.4byte	0x737
+ 915 01f2 FD010000 		.4byte	0x1fd
+ 916 01f6 09       		.uleb128 0x9
+ 917 01f7 01       		.uleb128 0x1
+ 918 01f8 50       		.byte	0x50
+ 919 01f9 02       		.uleb128 0x2
+ 920 01fa 08       		.byte	0x8
+ 921 01fb 50       		.byte	0x50
+ 922 01fc 00       		.byte	0
+ 923 01fd 07       		.uleb128 0x7
+ 924 01fe 3A000000 		.4byte	.LVL18
+ 925 0202 42070000 		.4byte	0x742
+ 926 0206 07       		.uleb128 0x7
+ 927 0207 3E000000 		.4byte	.LVL19
+ 928 020b 4D070000 		.4byte	0x74d
+ 929 020f 00       		.byte	0
+ 930 0210 06       		.uleb128 0x6
+ 931 0211 B1010000 		.4byte	.LASF19
+ 932 0215 01       		.byte	0x1
+ 933 0216 60       		.byte	0x60
+ 934 0217 00000000 		.4byte	.LFB68
+ 935 021b 0C000000 		.4byte	.LFE68-.LFB68
+ 936 021f 01       		.uleb128 0x1
+ 937 0220 9C       		.byte	0x9c
+ 938 0221 38020000 		.4byte	0x238
+ 939 0225 07       		.uleb128 0x7
+ 940 0226 06000000 		.4byte	.LVL20
+ 941 022a EA060000 		.4byte	0x6ea
+ 942 022e 07       		.uleb128 0x7
+ 943 022f 0A000000 		.4byte	.LVL21
+ 944 0233 F5060000 		.4byte	0x6f5
+ 945 0237 00       		.byte	0
+ 946 0238 06       		.uleb128 0x6
+ 947 0239 DD000000 		.4byte	.LASF20
+ 948 023d 01       		.byte	0x1
+ 949 023e 69       		.byte	0x69
+ 950 023f 00000000 		.4byte	.LFB69
+ 951 0243 68000000 		.4byte	.LFE69-.LFB69
+ 952 0247 01       		.uleb128 0x1
+ 953 0248 9C       		.byte	0x9c
+ 954 0249 AC020000 		.4byte	0x2ac
+ 955 024d 07       		.uleb128 0x7
+ 956 024e 06000000 		.4byte	.LVL22
+ 957 0252 EA060000 		.4byte	0x6ea
+ 958 0256 07       		.uleb128 0x7
+ 959 0257 0A000000 		.4byte	.LVL23
+ 960 025b F5060000 		.4byte	0x6f5
+ 961 025f 08       		.uleb128 0x8
+ 962 0260 20000000 		.4byte	.LVL24
+ 963 0264 58070000 		.4byte	0x758
+ 964 0268 73020000 		.4byte	0x273
+ 965 026c 09       		.uleb128 0x9
+ 966 026d 01       		.uleb128 0x1
+ 967 026e 50       		.byte	0x50
+ 968 026f 02       		.uleb128 0x2
+ 969 0270 09       		.byte	0x9
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 22
+
+
+ 970 0271 AA       		.byte	0xaa
+ 971 0272 00       		.byte	0
+ 972 0273 07       		.uleb128 0x7
+ 973 0274 2E000000 		.4byte	.LVL25
+ 974 0278 2C070000 		.4byte	0x72c
+ 975 027c 08       		.uleb128 0x8
+ 976 027d 46000000 		.4byte	.LVL26
+ 977 0281 63070000 		.4byte	0x763
+ 978 0285 90020000 		.4byte	0x290
+ 979 0289 09       		.uleb128 0x9
+ 980 028a 01       		.uleb128 0x1
+ 981 028b 50       		.byte	0x50
+ 982 028c 02       		.uleb128 0x2
+ 983 028d 09       		.byte	0x9
+ 984 028e AA       		.byte	0xaa
+ 985 028f 00       		.byte	0
+ 986 0290 07       		.uleb128 0x7
+ 987 0291 56000000 		.4byte	.LVL27
+ 988 0295 37070000 		.4byte	0x737
+ 989 0299 07       		.uleb128 0x7
+ 990 029a 5A000000 		.4byte	.LVL28
+ 991 029e 42070000 		.4byte	0x742
+ 992 02a2 07       		.uleb128 0x7
+ 993 02a3 5E000000 		.4byte	.LVL29
+ 994 02a7 4D070000 		.4byte	0x74d
+ 995 02ab 00       		.byte	0
+ 996 02ac 0A       		.uleb128 0xa
+ 997 02ad 7C020000 		.4byte	.LASF22
+ 998 02b1 01       		.byte	0x1
+ 999 02b2 23       		.byte	0x23
+ 1000 02b3 00000000 		.4byte	.LFB65
+ 1001 02b7 40000000 		.4byte	.LFE65-.LFB65
+ 1002 02bb 01       		.uleb128 0x1
+ 1003 02bc 9C       		.byte	0x9c
+ 1004 02bd E3020000 		.4byte	0x2e3
+ 1005 02c1 0B       		.uleb128 0xb
+ 1006 02c2 88020000 		.4byte	.LASF24
+ 1007 02c6 01       		.byte	0x1
+ 1008 02c7 23       		.byte	0x23
+ 1009 02c8 68000000 		.4byte	0x68
+ 1010 02cc 00000000 		.4byte	.LLST0
+ 1011 02d0 07       		.uleb128 0x7
+ 1012 02d1 24000000 		.4byte	.LVL32
+ 1013 02d5 38020000 		.4byte	0x238
+ 1014 02d9 07       		.uleb128 0x7
+ 1015 02da 38000000 		.4byte	.LVL35
+ 1016 02de 38020000 		.4byte	0x238
+ 1017 02e2 00       		.byte	0
+ 1018 02e3 06       		.uleb128 0x6
+ 1019 02e4 6C000000 		.4byte	.LASF21
+ 1020 02e8 01       		.byte	0x1
+ 1021 02e9 12       		.byte	0x12
+ 1022 02ea 00000000 		.4byte	.LFB64
+ 1023 02ee 5C000000 		.4byte	.LFE64-.LFB64
+ 1024 02f2 01       		.uleb128 0x1
+ 1025 02f3 9C       		.byte	0x9c
+ 1026 02f4 25030000 		.4byte	0x325
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 23
+
+
+ 1027 02f8 07       		.uleb128 0x7
+ 1028 02f9 0C000000 		.4byte	.LVL36
+ 1029 02fd 6E070000 		.4byte	0x76e
+ 1030 0301 08       		.uleb128 0x8
+ 1031 0302 36000000 		.4byte	.LVL37
+ 1032 0306 AC020000 		.4byte	0x2ac
+ 1033 030a 15030000 		.4byte	0x315
+ 1034 030e 09       		.uleb128 0x9
+ 1035 030f 01       		.uleb128 0x1
+ 1036 0310 50       		.byte	0x50
+ 1037 0311 02       		.uleb128 0x2
+ 1038 0312 09       		.byte	0x9
+ 1039 0313 FF       		.byte	0xff
+ 1040 0314 00       		.byte	0
+ 1041 0315 0C       		.uleb128 0xc
+ 1042 0316 4A000000 		.4byte	.LVL38
+ 1043 031a AC020000 		.4byte	0x2ac
+ 1044 031e 09       		.uleb128 0x9
+ 1045 031f 01       		.uleb128 0x1
+ 1046 0320 50       		.byte	0x50
+ 1047 0321 01       		.uleb128 0x1
+ 1048 0322 31       		.byte	0x31
+ 1049 0323 00       		.byte	0
+ 1050 0324 00       		.byte	0
+ 1051 0325 0A       		.uleb128 0xa
+ 1052 0326 2F030000 		.4byte	.LASF23
+ 1053 032a 01       		.byte	0x1
+ 1054 032b 7F       		.byte	0x7f
+ 1055 032c 00000000 		.4byte	.LFB70
+ 1056 0330 8C000000 		.4byte	.LFE70-.LFB70
+ 1057 0334 01       		.uleb128 0x1
+ 1058 0335 9C       		.byte	0x9c
+ 1059 0336 86040000 		.4byte	0x486
+ 1060 033a 0D       		.uleb128 0xd
+ 1061 033b 64697200 		.ascii	"dir\000"
+ 1062 033f 01       		.byte	0x1
+ 1063 0340 7F       		.byte	0x7f
+ 1064 0341 68000000 		.4byte	0x68
+ 1065 0345 3A000000 		.4byte	.LLST1
+ 1066 0349 07       		.uleb128 0x7
+ 1067 034a 10000000 		.4byte	.LVL40
+ 1068 034e EA060000 		.4byte	0x6ea
+ 1069 0352 07       		.uleb128 0x7
+ 1070 0353 14000000 		.4byte	.LVL41
+ 1071 0357 F5060000 		.4byte	0x6f5
+ 1072 035b 08       		.uleb128 0x8
+ 1073 035c 1A000000 		.4byte	.LVL42
+ 1074 0360 79070000 		.4byte	0x779
+ 1075 0364 6F030000 		.4byte	0x36f
+ 1076 0368 09       		.uleb128 0x9
+ 1077 0369 01       		.uleb128 0x1
+ 1078 036a 50       		.byte	0x50
+ 1079 036b 02       		.uleb128 0x2
+ 1080 036c 08       		.byte	0x8
+ 1081 036d FA       		.byte	0xfa
+ 1082 036e 00       		.byte	0
+ 1083 036f 08       		.uleb128 0x8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 24
+
+
+ 1084 0370 2A000000 		.4byte	.LVL43
+ 1085 0374 00070000 		.4byte	0x700
+ 1086 0378 82030000 		.4byte	0x382
+ 1087 037c 09       		.uleb128 0x9
+ 1088 037d 01       		.uleb128 0x1
+ 1089 037e 50       		.byte	0x50
+ 1090 037f 01       		.uleb128 0x1
+ 1091 0380 30       		.byte	0x30
+ 1092 0381 00       		.byte	0
+ 1093 0382 08       		.uleb128 0x8
+ 1094 0383 30000000 		.4byte	.LVL44
+ 1095 0387 0B070000 		.4byte	0x70b
+ 1096 038b 95030000 		.4byte	0x395
+ 1097 038f 09       		.uleb128 0x9
+ 1098 0390 01       		.uleb128 0x1
+ 1099 0391 50       		.byte	0x50
+ 1100 0392 01       		.uleb128 0x1
+ 1101 0393 31       		.byte	0x31
+ 1102 0394 00       		.byte	0
+ 1103 0395 08       		.uleb128 0x8
+ 1104 0396 36000000 		.4byte	.LVL45
+ 1105 039a 16070000 		.4byte	0x716
+ 1106 039e A8030000 		.4byte	0x3a8
+ 1107 03a2 09       		.uleb128 0x9
+ 1108 03a3 01       		.uleb128 0x1
+ 1109 03a4 50       		.byte	0x50
+ 1110 03a5 01       		.uleb128 0x1
+ 1111 03a6 31       		.byte	0x31
+ 1112 03a7 00       		.byte	0
+ 1113 03a8 08       		.uleb128 0x8
+ 1114 03a9 3C000000 		.4byte	.LVL46
+ 1115 03ad 21070000 		.4byte	0x721
+ 1116 03b1 BB030000 		.4byte	0x3bb
+ 1117 03b5 09       		.uleb128 0x9
+ 1118 03b6 01       		.uleb128 0x1
+ 1119 03b7 50       		.byte	0x50
+ 1120 03b8 01       		.uleb128 0x1
+ 1121 03b9 30       		.byte	0x30
+ 1122 03ba 00       		.byte	0
+ 1123 03bb 08       		.uleb128 0x8
+ 1124 03bc 44000000 		.4byte	.LVL47
+ 1125 03c0 0B070000 		.4byte	0x70b
+ 1126 03c4 CE030000 		.4byte	0x3ce
+ 1127 03c8 09       		.uleb128 0x9
+ 1128 03c9 01       		.uleb128 0x1
+ 1129 03ca 50       		.byte	0x50
+ 1130 03cb 01       		.uleb128 0x1
+ 1131 03cc 30       		.byte	0x30
+ 1132 03cd 00       		.byte	0
+ 1133 03ce 08       		.uleb128 0x8
+ 1134 03cf 4A000000 		.4byte	.LVL48
+ 1135 03d3 00070000 		.4byte	0x700
+ 1136 03d7 E1030000 		.4byte	0x3e1
+ 1137 03db 09       		.uleb128 0x9
+ 1138 03dc 01       		.uleb128 0x1
+ 1139 03dd 50       		.byte	0x50
+ 1140 03de 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 25
+
+
+ 1141 03df 31       		.byte	0x31
+ 1142 03e0 00       		.byte	0
+ 1143 03e1 08       		.uleb128 0x8
+ 1144 03e2 50000000 		.4byte	.LVL49
+ 1145 03e6 21070000 		.4byte	0x721
+ 1146 03ea F4030000 		.4byte	0x3f4
+ 1147 03ee 09       		.uleb128 0x9
+ 1148 03ef 01       		.uleb128 0x1
+ 1149 03f0 50       		.byte	0x50
+ 1150 03f1 01       		.uleb128 0x1
+ 1151 03f2 31       		.byte	0x31
+ 1152 03f3 00       		.byte	0
+ 1153 03f4 08       		.uleb128 0x8
+ 1154 03f5 56000000 		.4byte	.LVL50
+ 1155 03f9 16070000 		.4byte	0x716
+ 1156 03fd 07040000 		.4byte	0x407
+ 1157 0401 09       		.uleb128 0x9
+ 1158 0402 01       		.uleb128 0x1
+ 1159 0403 50       		.byte	0x50
+ 1160 0404 01       		.uleb128 0x1
+ 1161 0405 30       		.byte	0x30
+ 1162 0406 00       		.byte	0
+ 1163 0407 08       		.uleb128 0x8
+ 1164 0408 5C000000 		.4byte	.LVL51
+ 1165 040c 2C070000 		.4byte	0x72c
+ 1166 0410 1B040000 		.4byte	0x41b
+ 1167 0414 09       		.uleb128 0x9
+ 1168 0415 01       		.uleb128 0x1
+ 1169 0416 50       		.byte	0x50
+ 1170 0417 02       		.uleb128 0x2
+ 1171 0418 08       		.byte	0x8
+ 1172 0419 64       		.byte	0x64
+ 1173 041a 00       		.byte	0
+ 1174 041b 08       		.uleb128 0x8
+ 1175 041c 62000000 		.4byte	.LVL52
+ 1176 0420 37070000 		.4byte	0x737
+ 1177 0424 2F040000 		.4byte	0x42f
+ 1178 0428 09       		.uleb128 0x9
+ 1179 0429 01       		.uleb128 0x1
+ 1180 042a 50       		.byte	0x50
+ 1181 042b 02       		.uleb128 0x2
+ 1182 042c 08       		.byte	0x8
+ 1183 042d 64       		.byte	0x64
+ 1184 042e 00       		.byte	0
+ 1185 042f 07       		.uleb128 0x7
+ 1186 0430 66000000 		.4byte	.LVL53
+ 1187 0434 42070000 		.4byte	0x742
+ 1188 0438 07       		.uleb128 0x7
+ 1189 0439 6A000000 		.4byte	.LVL54
+ 1190 043d 4D070000 		.4byte	0x74d
+ 1191 0441 08       		.uleb128 0x8
+ 1192 0442 72000000 		.4byte	.LVL55
+ 1193 0446 79070000 		.4byte	0x779
+ 1194 044a 56040000 		.4byte	0x456
+ 1195 044e 09       		.uleb128 0x9
+ 1196 044f 01       		.uleb128 0x1
+ 1197 0450 50       		.byte	0x50
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 26
+
+
+ 1198 0451 03       		.uleb128 0x3
+ 1199 0452 0A       		.byte	0xa
+ 1200 0453 F401     		.2byte	0x1f4
+ 1201 0455 00       		.byte	0
+ 1202 0456 07       		.uleb128 0x7
+ 1203 0457 76000000 		.4byte	.LVL56
+ 1204 045b EA060000 		.4byte	0x6ea
+ 1205 045f 07       		.uleb128 0x7
+ 1206 0460 7A000000 		.4byte	.LVL57
+ 1207 0464 F5060000 		.4byte	0x6f5
+ 1208 0468 08       		.uleb128 0x8
+ 1209 0469 80000000 		.4byte	.LVL58
+ 1210 046d 79070000 		.4byte	0x779
+ 1211 0471 7C040000 		.4byte	0x47c
+ 1212 0475 09       		.uleb128 0x9
+ 1213 0476 01       		.uleb128 0x1
+ 1214 0477 50       		.byte	0x50
+ 1215 0478 02       		.uleb128 0x2
+ 1216 0479 08       		.byte	0x8
+ 1217 047a FA       		.byte	0xfa
+ 1218 047b 00       		.byte	0
+ 1219 047c 07       		.uleb128 0x7
+ 1220 047d 84000000 		.4byte	.LVL59
+ 1221 0481 B4000000 		.4byte	0xb4
+ 1222 0485 00       		.byte	0
+ 1223 0486 06       		.uleb128 0x6
+ 1224 0487 FF000000 		.4byte	.LASF25
+ 1225 048b 01       		.byte	0x1
+ 1226 048c AB       		.byte	0xab
+ 1227 048d 00000000 		.4byte	.LFB71
+ 1228 0491 80000000 		.4byte	.LFE71-.LFB71
+ 1229 0495 01       		.uleb128 0x1
+ 1230 0496 9C       		.byte	0x9c
+ 1231 0497 D0050000 		.4byte	0x5d0
+ 1232 049b 07       		.uleb128 0x7
+ 1233 049c 0E000000 		.4byte	.LVL61
+ 1234 04a0 EA060000 		.4byte	0x6ea
+ 1235 04a4 07       		.uleb128 0x7
+ 1236 04a5 12000000 		.4byte	.LVL62
+ 1237 04a9 F5060000 		.4byte	0x6f5
+ 1238 04ad 08       		.uleb128 0x8
+ 1239 04ae 18000000 		.4byte	.LVL63
+ 1240 04b2 79070000 		.4byte	0x779
+ 1241 04b6 C1040000 		.4byte	0x4c1
+ 1242 04ba 09       		.uleb128 0x9
+ 1243 04bb 01       		.uleb128 0x1
+ 1244 04bc 50       		.byte	0x50
+ 1245 04bd 02       		.uleb128 0x2
+ 1246 04be 08       		.byte	0x8
+ 1247 04bf FA       		.byte	0xfa
+ 1248 04c0 00       		.byte	0
+ 1249 04c1 07       		.uleb128 0x7
+ 1250 04c2 1C000000 		.4byte	.LVL64
+ 1251 04c6 62010000 		.4byte	0x162
+ 1252 04ca 08       		.uleb128 0x8
+ 1253 04cb 24000000 		.4byte	.LVL65
+ 1254 04cf 79070000 		.4byte	0x779
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 27
+
+
+ 1255 04d3 DF040000 		.4byte	0x4df
+ 1256 04d7 09       		.uleb128 0x9
+ 1257 04d8 01       		.uleb128 0x1
+ 1258 04d9 50       		.byte	0x50
+ 1259 04da 03       		.uleb128 0x3
+ 1260 04db 0A       		.byte	0xa
+ 1261 04dc E803     		.2byte	0x3e8
+ 1262 04de 00       		.byte	0
+ 1263 04df 07       		.uleb128 0x7
+ 1264 04e0 28000000 		.4byte	.LVL66
+ 1265 04e4 EA060000 		.4byte	0x6ea
+ 1266 04e8 07       		.uleb128 0x7
+ 1267 04e9 2C000000 		.4byte	.LVL67
+ 1268 04ed F5060000 		.4byte	0x6f5
+ 1269 04f1 08       		.uleb128 0x8
+ 1270 04f2 32000000 		.4byte	.LVL68
+ 1271 04f6 79070000 		.4byte	0x779
+ 1272 04fa 05050000 		.4byte	0x505
+ 1273 04fe 09       		.uleb128 0x9
+ 1274 04ff 01       		.uleb128 0x1
+ 1275 0500 50       		.byte	0x50
+ 1276 0501 02       		.uleb128 0x2
+ 1277 0502 08       		.byte	0x8
+ 1278 0503 FA       		.byte	0xfa
+ 1279 0504 00       		.byte	0
+ 1280 0505 08       		.uleb128 0x8
+ 1281 0506 38000000 		.4byte	.LVL69
+ 1282 050a 00070000 		.4byte	0x700
+ 1283 050e 18050000 		.4byte	0x518
+ 1284 0512 09       		.uleb128 0x9
+ 1285 0513 01       		.uleb128 0x1
+ 1286 0514 50       		.byte	0x50
+ 1287 0515 01       		.uleb128 0x1
+ 1288 0516 30       		.byte	0x30
+ 1289 0517 00       		.byte	0
+ 1290 0518 08       		.uleb128 0x8
+ 1291 0519 3E000000 		.4byte	.LVL70
+ 1292 051d 0B070000 		.4byte	0x70b
+ 1293 0521 2B050000 		.4byte	0x52b
+ 1294 0525 09       		.uleb128 0x9
+ 1295 0526 01       		.uleb128 0x1
+ 1296 0527 50       		.byte	0x50
+ 1297 0528 01       		.uleb128 0x1
+ 1298 0529 31       		.byte	0x31
+ 1299 052a 00       		.byte	0
+ 1300 052b 08       		.uleb128 0x8
+ 1301 052c 44000000 		.4byte	.LVL71
+ 1302 0530 16070000 		.4byte	0x716
+ 1303 0534 3E050000 		.4byte	0x53e
+ 1304 0538 09       		.uleb128 0x9
+ 1305 0539 01       		.uleb128 0x1
+ 1306 053a 50       		.byte	0x50
+ 1307 053b 01       		.uleb128 0x1
+ 1308 053c 31       		.byte	0x31
+ 1309 053d 00       		.byte	0
+ 1310 053e 08       		.uleb128 0x8
+ 1311 053f 4A000000 		.4byte	.LVL72
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 28
+
+
+ 1312 0543 21070000 		.4byte	0x721
+ 1313 0547 51050000 		.4byte	0x551
+ 1314 054b 09       		.uleb128 0x9
+ 1315 054c 01       		.uleb128 0x1
+ 1316 054d 50       		.byte	0x50
+ 1317 054e 01       		.uleb128 0x1
+ 1318 054f 30       		.byte	0x30
+ 1319 0550 00       		.byte	0
+ 1320 0551 07       		.uleb128 0x7
+ 1321 0552 4E000000 		.4byte	.LVL73
+ 1322 0556 42070000 		.4byte	0x742
+ 1323 055a 07       		.uleb128 0x7
+ 1324 055b 52000000 		.4byte	.LVL74
+ 1325 055f 4D070000 		.4byte	0x74d
+ 1326 0563 08       		.uleb128 0x8
+ 1327 0564 58000000 		.4byte	.LVL75
+ 1328 0568 2C070000 		.4byte	0x72c
+ 1329 056c 77050000 		.4byte	0x577
+ 1330 0570 09       		.uleb128 0x9
+ 1331 0571 01       		.uleb128 0x1
+ 1332 0572 50       		.byte	0x50
+ 1333 0573 02       		.uleb128 0x2
+ 1334 0574 08       		.byte	0x8
+ 1335 0575 64       		.byte	0x64
+ 1336 0576 00       		.byte	0
+ 1337 0577 08       		.uleb128 0x8
+ 1338 0578 5E000000 		.4byte	.LVL76
+ 1339 057c 37070000 		.4byte	0x737
+ 1340 0580 8B050000 		.4byte	0x58b
+ 1341 0584 09       		.uleb128 0x9
+ 1342 0585 01       		.uleb128 0x1
+ 1343 0586 50       		.byte	0x50
+ 1344 0587 02       		.uleb128 0x2
+ 1345 0588 08       		.byte	0x8
+ 1346 0589 64       		.byte	0x64
+ 1347 058a 00       		.byte	0
+ 1348 058b 08       		.uleb128 0x8
+ 1349 058c 66000000 		.4byte	.LVL77
+ 1350 0590 79070000 		.4byte	0x779
+ 1351 0594 A0050000 		.4byte	0x5a0
+ 1352 0598 09       		.uleb128 0x9
+ 1353 0599 01       		.uleb128 0x1
+ 1354 059a 50       		.byte	0x50
+ 1355 059b 03       		.uleb128 0x3
+ 1356 059c 0A       		.byte	0xa
+ 1357 059d E803     		.2byte	0x3e8
+ 1358 059f 00       		.byte	0
+ 1359 05a0 07       		.uleb128 0x7
+ 1360 05a1 6A000000 		.4byte	.LVL78
+ 1361 05a5 EA060000 		.4byte	0x6ea
+ 1362 05a9 07       		.uleb128 0x7
+ 1363 05aa 6E000000 		.4byte	.LVL79
+ 1364 05ae F5060000 		.4byte	0x6f5
+ 1365 05b2 08       		.uleb128 0x8
+ 1366 05b3 74000000 		.4byte	.LVL80
+ 1367 05b7 79070000 		.4byte	0x779
+ 1368 05bb C6050000 		.4byte	0x5c6
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 29
+
+
+ 1369 05bf 09       		.uleb128 0x9
+ 1370 05c0 01       		.uleb128 0x1
+ 1371 05c1 50       		.byte	0x50
+ 1372 05c2 02       		.uleb128 0x2
+ 1373 05c3 08       		.byte	0x8
+ 1374 05c4 FA       		.byte	0xfa
+ 1375 05c5 00       		.byte	0
+ 1376 05c6 07       		.uleb128 0x7
+ 1377 05c7 78000000 		.4byte	.LVL81
+ 1378 05cb B4000000 		.4byte	0xb4
+ 1379 05cf 00       		.byte	0
+ 1380 05d0 0E       		.uleb128 0xe
+ 1381 05d1 AE030000 		.4byte	.LASF26
+ 1382 05d5 05       		.byte	0x5
+ 1383 05d6 17       		.byte	0x17
+ 1384 05d7 6F000000 		.4byte	0x6f
+ 1385 05db 05       		.uleb128 0x5
+ 1386 05dc 03       		.byte	0x3
+ 1387 05dd 00000000 		.4byte	NP_g_nNumberOfPixels
+ 1388 05e1 0E       		.uleb128 0xe
+ 1389 05e2 09030000 		.4byte	.LASF27
+ 1390 05e6 05       		.byte	0x5
+ 1391 05e7 18       		.byte	0x18
+ 1392 05e8 96000000 		.4byte	0x96
+ 1393 05ec 05       		.uleb128 0x5
+ 1394 05ed 03       		.byte	0x3
+ 1395 05ee 00000000 		.4byte	NP_g_nDMA_Chan
+ 1396 05f2 0E       		.uleb128 0xe
+ 1397 05f3 19020000 		.4byte	.LASF28
+ 1398 05f7 05       		.byte	0x5
+ 1399 05f8 19       		.byte	0x19
+ 1400 05f9 96000000 		.4byte	0x96
+ 1401 05fd 05       		.uleb128 0x5
+ 1402 05fe 03       		.byte	0x3
+ 1403 05ff 00000000 		.4byte	NP_g_nDMA_TD
+ 1404 0603 0E       		.uleb128 0xe
+ 1405 0604 82000000 		.4byte	.LASF29
+ 1406 0608 05       		.byte	0x5
+ 1407 0609 1A       		.byte	0x1a
+ 1408 060a 96000000 		.4byte	0x96
+ 1409 060e 05       		.uleb128 0x5
+ 1410 060f 03       		.byte	0x3
+ 1411 0610 00000000 		.4byte	NP_g_bOwnsBuffer
+ 1412 0614 0E       		.uleb128 0xe
+ 1413 0615 9F010000 		.4byte	.LASF30
+ 1414 0619 05       		.byte	0x5
+ 1415 061a 1C       		.byte	0x1c
+ 1416 061b 25060000 		.4byte	0x625
+ 1417 061f 05       		.uleb128 0x5
+ 1418 0620 03       		.byte	0x3
+ 1419 0621 00000000 		.4byte	NP_g_pFrameBuffer
+ 1420 0625 0F       		.uleb128 0xf
+ 1421 0626 04       		.byte	0x4
+ 1422 0627 AF000000 		.4byte	0xaf
+ 1423 062b 0E       		.uleb128 0xe
+ 1424 062c F3020000 		.4byte	.LASF31
+ 1425 0630 05       		.byte	0x5
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 30
+
+
+ 1426 0631 1D       		.byte	0x1d
+ 1427 0632 6F000000 		.4byte	0x6f
+ 1428 0636 05       		.uleb128 0x5
+ 1429 0637 03       		.byte	0x3
+ 1430 0638 00000000 		.4byte	NP_g_nFrameBufferSize
+ 1431 063c 10       		.uleb128 0x10
+ 1432 063d 3D020000 		.4byte	.LASF32
+ 1433 0641 06       		.byte	0x6
+ 1434 0642 2A06     		.2byte	0x62a
+ 1435 0644 48060000 		.4byte	0x648
+ 1436 0648 05       		.uleb128 0x5
+ 1437 0649 8B000000 		.4byte	0x8b
+ 1438 064d 11       		.uleb128 0x11
+ 1439 064e 84000000 		.4byte	0x84
+ 1440 0652 5D060000 		.4byte	0x65d
+ 1441 0656 12       		.uleb128 0x12
+ 1442 0657 7D000000 		.4byte	0x7d
+ 1443 065b F9       		.byte	0xf9
+ 1444 065c 00       		.byte	0
+ 1445 065d 0E       		.uleb128 0xe
+ 1446 065e 22030000 		.4byte	.LASF33
+ 1447 0662 07       		.byte	0x7
+ 1448 0663 05       		.byte	0x5
+ 1449 0664 4D060000 		.4byte	0x64d
+ 1450 0668 05       		.uleb128 0x5
+ 1451 0669 03       		.byte	0x3
+ 1452 066a 00000000 		.4byte	buffer
+ 1453 066e 0E       		.uleb128 0xe
+ 1454 066f D8020000 		.4byte	.LASF34
+ 1455 0673 07       		.byte	0x7
+ 1456 0674 08       		.byte	0x8
+ 1457 0675 68000000 		.4byte	0x68
+ 1458 0679 05       		.uleb128 0x5
+ 1459 067a 03       		.byte	0x3
+ 1460 067b 00000000 		.4byte	difficulty
+ 1461 067f 0E       		.uleb128 0xe
+ 1462 0680 D7000000 		.4byte	.LASF35
+ 1463 0684 07       		.byte	0x7
+ 1464 0685 0A       		.byte	0xa
+ 1465 0686 68000000 		.4byte	0x68
+ 1466 068a 05       		.uleb128 0x5
+ 1467 068b 03       		.byte	0x3
+ 1468 068c 00000000 		.4byte	state
+ 1469 0690 0E       		.uleb128 0xe
+ 1470 0691 EF010000 		.4byte	.LASF36
+ 1471 0695 07       		.byte	0x7
+ 1472 0696 0B       		.byte	0xb
+ 1473 0697 68000000 		.4byte	0x68
+ 1474 069b 05       		.uleb128 0x5
+ 1475 069c 03       		.byte	0x3
+ 1476 069d 00000000 		.4byte	randState
+ 1477 06a1 0E       		.uleb128 0xe
+ 1478 06a2 40030000 		.4byte	.LASF37
+ 1479 06a6 07       		.byte	0x7
+ 1480 06a7 0C       		.byte	0xc
+ 1481 06a8 68000000 		.4byte	0x68
+ 1482 06ac 05       		.uleb128 0x5
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 31
+
+
+ 1483 06ad 03       		.byte	0x3
+ 1484 06ae 00000000 		.4byte	randturn
+ 1485 06b2 0E       		.uleb128 0xe
+ 1486 06b3 E6010000 		.4byte	.LASF38
+ 1487 06b7 08       		.byte	0x8
+ 1488 06b8 01       		.byte	0x1
+ 1489 06b9 68000000 		.4byte	0x68
+ 1490 06bd 05       		.uleb128 0x5
+ 1491 06be 03       		.byte	0x3
+ 1492 06bf 00000000 		.4byte	running_
+ 1493 06c3 11       		.uleb128 0x11
+ 1494 06c4 68000000 		.4byte	0x68
+ 1495 06c8 D9060000 		.4byte	0x6d9
+ 1496 06cc 12       		.uleb128 0x12
+ 1497 06cd 7D000000 		.4byte	0x7d
+ 1498 06d1 06       		.byte	0x6
+ 1499 06d2 12       		.uleb128 0x12
+ 1500 06d3 7D000000 		.4byte	0x7d
+ 1501 06d7 01       		.byte	0x1
+ 1502 06d8 00       		.byte	0
+ 1503 06d9 0E       		.uleb128 0xe
+ 1504 06da A6020000 		.4byte	.LASF39
+ 1505 06de 01       		.byte	0x1
+ 1506 06df 08       		.byte	0x8
+ 1507 06e0 C3060000 		.4byte	0x6c3
+ 1508 06e4 05       		.uleb128 0x5
+ 1509 06e5 03       		.byte	0x3
+ 1510 06e6 00000000 		.4byte	driveState
+ 1511 06ea 13       		.uleb128 0x13
+ 1512 06eb 00000000 		.4byte	.LASF40
+ 1513 06ef 00000000 		.4byte	.LASF40
+ 1514 06f3 09       		.byte	0x9
+ 1515 06f4 93       		.byte	0x93
+ 1516 06f5 13       		.uleb128 0x13
+ 1517 06f6 9E030000 		.4byte	.LASF41
+ 1518 06fa 9E030000 		.4byte	.LASF41
+ 1519 06fe 0A       		.byte	0xa
+ 1520 06ff 93       		.byte	0x93
+ 1521 0700 13       		.uleb128 0x13
+ 1522 0701 E3020000 		.4byte	.LASF42
+ 1523 0705 E3020000 		.4byte	.LASF42
+ 1524 0709 0B       		.byte	0xb
+ 1525 070a 26       		.byte	0x26
+ 1526 070b 13       		.uleb128 0x13
+ 1527 070c C8020000 		.4byte	.LASF43
+ 1528 0710 C8020000 		.4byte	.LASF43
+ 1529 0714 0C       		.byte	0xc
+ 1530 0715 26       		.byte	0x26
+ 1531 0716 13       		.uleb128 0x13
+ 1532 0717 9E000000 		.4byte	.LASF44
+ 1533 071b 9E000000 		.4byte	.LASF44
+ 1534 071f 0D       		.byte	0xd
+ 1535 0720 26       		.byte	0x26
+ 1536 0721 13       		.uleb128 0x13
+ 1537 0722 EF000000 		.4byte	.LASF45
+ 1538 0726 EF000000 		.4byte	.LASF45
+ 1539 072a 0E       		.byte	0xe
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 32
+
+
+ 1540 072b 26       		.byte	0x26
+ 1541 072c 13       		.uleb128 0x13
+ 1542 072d BB010000 		.4byte	.LASF46
+ 1543 0731 BB010000 		.4byte	.LASF46
+ 1544 0735 09       		.byte	0x9
+ 1545 0736 C3       		.byte	0xc3
+ 1546 0737 13       		.uleb128 0x13
+ 1547 0738 49030000 		.4byte	.LASF47
+ 1548 073c 49030000 		.4byte	.LASF47
+ 1549 0740 0A       		.byte	0xa
+ 1550 0741 C3       		.byte	0xc3
+ 1551 0742 13       		.uleb128 0x13
+ 1552 0743 C6000000 		.4byte	.LASF48
+ 1553 0747 C6000000 		.4byte	.LASF48
+ 1554 074b 09       		.byte	0x9
+ 1555 074c 92       		.byte	0x92
+ 1556 074d 13       		.uleb128 0x13
+ 1557 074e B5000000 		.4byte	.LASF49
+ 1558 0752 B5000000 		.4byte	.LASF49
+ 1559 0756 0A       		.byte	0xa
+ 1560 0757 92       		.byte	0x92
+ 1561 0758 13       		.uleb128 0x13
+ 1562 0759 26020000 		.4byte	.LASF50
+ 1563 075d 26020000 		.4byte	.LASF50
+ 1564 0761 09       		.byte	0x9
+ 1565 0762 BE       		.byte	0xbe
+ 1566 0763 13       		.uleb128 0x13
+ 1567 0764 7B030000 		.4byte	.LASF51
+ 1568 0768 7B030000 		.4byte	.LASF51
+ 1569 076c 0A       		.byte	0xa
+ 1570 076d BE       		.byte	0xbe
+ 1571 076e 13       		.uleb128 0x13
+ 1572 076f CB030000 		.4byte	.LASF52
+ 1573 0773 CB030000 		.4byte	.LASF52
+ 1574 0777 0F       		.byte	0xf
+ 1575 0778 88       		.byte	0x88
+ 1576 0779 13       		.uleb128 0x13
+ 1577 077a C3030000 		.4byte	.LASF53
+ 1578 077e C3030000 		.4byte	.LASF53
+ 1579 0782 10       		.byte	0x10
+ 1580 0783 77       		.byte	0x77
+ 1581 0784 00       		.byte	0
+ 1582              		.section	.debug_abbrev,"",%progbits
+ 1583              	.Ldebug_abbrev0:
+ 1584 0000 01       		.uleb128 0x1
+ 1585 0001 11       		.uleb128 0x11
+ 1586 0002 01       		.byte	0x1
+ 1587 0003 25       		.uleb128 0x25
+ 1588 0004 0E       		.uleb128 0xe
+ 1589 0005 13       		.uleb128 0x13
+ 1590 0006 0B       		.uleb128 0xb
+ 1591 0007 03       		.uleb128 0x3
+ 1592 0008 0E       		.uleb128 0xe
+ 1593 0009 1B       		.uleb128 0x1b
+ 1594 000a 0E       		.uleb128 0xe
+ 1595 000b 55       		.uleb128 0x55
+ 1596 000c 17       		.uleb128 0x17
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 33
+
+
+ 1597 000d 11       		.uleb128 0x11
+ 1598 000e 01       		.uleb128 0x1
+ 1599 000f 10       		.uleb128 0x10
+ 1600 0010 17       		.uleb128 0x17
+ 1601 0011 00       		.byte	0
+ 1602 0012 00       		.byte	0
+ 1603 0013 02       		.uleb128 0x2
+ 1604 0014 24       		.uleb128 0x24
+ 1605 0015 00       		.byte	0
+ 1606 0016 0B       		.uleb128 0xb
+ 1607 0017 0B       		.uleb128 0xb
+ 1608 0018 3E       		.uleb128 0x3e
+ 1609 0019 0B       		.uleb128 0xb
+ 1610 001a 03       		.uleb128 0x3
+ 1611 001b 0E       		.uleb128 0xe
+ 1612 001c 00       		.byte	0
+ 1613 001d 00       		.byte	0
+ 1614 001e 03       		.uleb128 0x3
+ 1615 001f 16       		.uleb128 0x16
+ 1616 0020 00       		.byte	0
+ 1617 0021 03       		.uleb128 0x3
+ 1618 0022 0E       		.uleb128 0xe
+ 1619 0023 3A       		.uleb128 0x3a
+ 1620 0024 0B       		.uleb128 0xb
+ 1621 0025 3B       		.uleb128 0x3b
+ 1622 0026 0B       		.uleb128 0xb
+ 1623 0027 49       		.uleb128 0x49
+ 1624 0028 13       		.uleb128 0x13
+ 1625 0029 00       		.byte	0
+ 1626 002a 00       		.byte	0
+ 1627 002b 04       		.uleb128 0x4
+ 1628 002c 24       		.uleb128 0x24
+ 1629 002d 00       		.byte	0
+ 1630 002e 0B       		.uleb128 0xb
+ 1631 002f 0B       		.uleb128 0xb
+ 1632 0030 3E       		.uleb128 0x3e
+ 1633 0031 0B       		.uleb128 0xb
+ 1634 0032 03       		.uleb128 0x3
+ 1635 0033 08       		.uleb128 0x8
+ 1636 0034 00       		.byte	0
+ 1637 0035 00       		.byte	0
+ 1638 0036 05       		.uleb128 0x5
+ 1639 0037 35       		.uleb128 0x35
+ 1640 0038 00       		.byte	0
+ 1641 0039 49       		.uleb128 0x49
+ 1642 003a 13       		.uleb128 0x13
+ 1643 003b 00       		.byte	0
+ 1644 003c 00       		.byte	0
+ 1645 003d 06       		.uleb128 0x6
+ 1646 003e 2E       		.uleb128 0x2e
+ 1647 003f 01       		.byte	0x1
+ 1648 0040 3F       		.uleb128 0x3f
+ 1649 0041 19       		.uleb128 0x19
+ 1650 0042 03       		.uleb128 0x3
+ 1651 0043 0E       		.uleb128 0xe
+ 1652 0044 3A       		.uleb128 0x3a
+ 1653 0045 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 34
+
+
+ 1654 0046 3B       		.uleb128 0x3b
+ 1655 0047 0B       		.uleb128 0xb
+ 1656 0048 11       		.uleb128 0x11
+ 1657 0049 01       		.uleb128 0x1
+ 1658 004a 12       		.uleb128 0x12
+ 1659 004b 06       		.uleb128 0x6
+ 1660 004c 40       		.uleb128 0x40
+ 1661 004d 18       		.uleb128 0x18
+ 1662 004e 9742     		.uleb128 0x2117
+ 1663 0050 19       		.uleb128 0x19
+ 1664 0051 01       		.uleb128 0x1
+ 1665 0052 13       		.uleb128 0x13
+ 1666 0053 00       		.byte	0
+ 1667 0054 00       		.byte	0
+ 1668 0055 07       		.uleb128 0x7
+ 1669 0056 898201   		.uleb128 0x4109
+ 1670 0059 00       		.byte	0
+ 1671 005a 11       		.uleb128 0x11
+ 1672 005b 01       		.uleb128 0x1
+ 1673 005c 31       		.uleb128 0x31
+ 1674 005d 13       		.uleb128 0x13
+ 1675 005e 00       		.byte	0
+ 1676 005f 00       		.byte	0
+ 1677 0060 08       		.uleb128 0x8
+ 1678 0061 898201   		.uleb128 0x4109
+ 1679 0064 01       		.byte	0x1
+ 1680 0065 11       		.uleb128 0x11
+ 1681 0066 01       		.uleb128 0x1
+ 1682 0067 31       		.uleb128 0x31
+ 1683 0068 13       		.uleb128 0x13
+ 1684 0069 01       		.uleb128 0x1
+ 1685 006a 13       		.uleb128 0x13
+ 1686 006b 00       		.byte	0
+ 1687 006c 00       		.byte	0
+ 1688 006d 09       		.uleb128 0x9
+ 1689 006e 8A8201   		.uleb128 0x410a
+ 1690 0071 00       		.byte	0
+ 1691 0072 02       		.uleb128 0x2
+ 1692 0073 18       		.uleb128 0x18
+ 1693 0074 9142     		.uleb128 0x2111
+ 1694 0076 18       		.uleb128 0x18
+ 1695 0077 00       		.byte	0
+ 1696 0078 00       		.byte	0
+ 1697 0079 0A       		.uleb128 0xa
+ 1698 007a 2E       		.uleb128 0x2e
+ 1699 007b 01       		.byte	0x1
+ 1700 007c 3F       		.uleb128 0x3f
+ 1701 007d 19       		.uleb128 0x19
+ 1702 007e 03       		.uleb128 0x3
+ 1703 007f 0E       		.uleb128 0xe
+ 1704 0080 3A       		.uleb128 0x3a
+ 1705 0081 0B       		.uleb128 0xb
+ 1706 0082 3B       		.uleb128 0x3b
+ 1707 0083 0B       		.uleb128 0xb
+ 1708 0084 27       		.uleb128 0x27
+ 1709 0085 19       		.uleb128 0x19
+ 1710 0086 11       		.uleb128 0x11
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 35
+
+
+ 1711 0087 01       		.uleb128 0x1
+ 1712 0088 12       		.uleb128 0x12
+ 1713 0089 06       		.uleb128 0x6
+ 1714 008a 40       		.uleb128 0x40
+ 1715 008b 18       		.uleb128 0x18
+ 1716 008c 9742     		.uleb128 0x2117
+ 1717 008e 19       		.uleb128 0x19
+ 1718 008f 01       		.uleb128 0x1
+ 1719 0090 13       		.uleb128 0x13
+ 1720 0091 00       		.byte	0
+ 1721 0092 00       		.byte	0
+ 1722 0093 0B       		.uleb128 0xb
+ 1723 0094 05       		.uleb128 0x5
+ 1724 0095 00       		.byte	0
+ 1725 0096 03       		.uleb128 0x3
+ 1726 0097 0E       		.uleb128 0xe
+ 1727 0098 3A       		.uleb128 0x3a
+ 1728 0099 0B       		.uleb128 0xb
+ 1729 009a 3B       		.uleb128 0x3b
+ 1730 009b 0B       		.uleb128 0xb
+ 1731 009c 49       		.uleb128 0x49
+ 1732 009d 13       		.uleb128 0x13
+ 1733 009e 02       		.uleb128 0x2
+ 1734 009f 17       		.uleb128 0x17
+ 1735 00a0 00       		.byte	0
+ 1736 00a1 00       		.byte	0
+ 1737 00a2 0C       		.uleb128 0xc
+ 1738 00a3 898201   		.uleb128 0x4109
+ 1739 00a6 01       		.byte	0x1
+ 1740 00a7 11       		.uleb128 0x11
+ 1741 00a8 01       		.uleb128 0x1
+ 1742 00a9 31       		.uleb128 0x31
+ 1743 00aa 13       		.uleb128 0x13
+ 1744 00ab 00       		.byte	0
+ 1745 00ac 00       		.byte	0
+ 1746 00ad 0D       		.uleb128 0xd
+ 1747 00ae 05       		.uleb128 0x5
+ 1748 00af 00       		.byte	0
+ 1749 00b0 03       		.uleb128 0x3
+ 1750 00b1 08       		.uleb128 0x8
+ 1751 00b2 3A       		.uleb128 0x3a
+ 1752 00b3 0B       		.uleb128 0xb
+ 1753 00b4 3B       		.uleb128 0x3b
+ 1754 00b5 0B       		.uleb128 0xb
+ 1755 00b6 49       		.uleb128 0x49
+ 1756 00b7 13       		.uleb128 0x13
+ 1757 00b8 02       		.uleb128 0x2
+ 1758 00b9 17       		.uleb128 0x17
+ 1759 00ba 00       		.byte	0
+ 1760 00bb 00       		.byte	0
+ 1761 00bc 0E       		.uleb128 0xe
+ 1762 00bd 34       		.uleb128 0x34
+ 1763 00be 00       		.byte	0
+ 1764 00bf 03       		.uleb128 0x3
+ 1765 00c0 0E       		.uleb128 0xe
+ 1766 00c1 3A       		.uleb128 0x3a
+ 1767 00c2 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 36
+
+
+ 1768 00c3 3B       		.uleb128 0x3b
+ 1769 00c4 0B       		.uleb128 0xb
+ 1770 00c5 49       		.uleb128 0x49
+ 1771 00c6 13       		.uleb128 0x13
+ 1772 00c7 3F       		.uleb128 0x3f
+ 1773 00c8 19       		.uleb128 0x19
+ 1774 00c9 02       		.uleb128 0x2
+ 1775 00ca 18       		.uleb128 0x18
+ 1776 00cb 00       		.byte	0
+ 1777 00cc 00       		.byte	0
+ 1778 00cd 0F       		.uleb128 0xf
+ 1779 00ce 0F       		.uleb128 0xf
+ 1780 00cf 00       		.byte	0
+ 1781 00d0 0B       		.uleb128 0xb
+ 1782 00d1 0B       		.uleb128 0xb
+ 1783 00d2 49       		.uleb128 0x49
+ 1784 00d3 13       		.uleb128 0x13
+ 1785 00d4 00       		.byte	0
+ 1786 00d5 00       		.byte	0
+ 1787 00d6 10       		.uleb128 0x10
+ 1788 00d7 34       		.uleb128 0x34
+ 1789 00d8 00       		.byte	0
+ 1790 00d9 03       		.uleb128 0x3
+ 1791 00da 0E       		.uleb128 0xe
+ 1792 00db 3A       		.uleb128 0x3a
+ 1793 00dc 0B       		.uleb128 0xb
+ 1794 00dd 3B       		.uleb128 0x3b
+ 1795 00de 05       		.uleb128 0x5
+ 1796 00df 49       		.uleb128 0x49
+ 1797 00e0 13       		.uleb128 0x13
+ 1798 00e1 3F       		.uleb128 0x3f
+ 1799 00e2 19       		.uleb128 0x19
+ 1800 00e3 3C       		.uleb128 0x3c
+ 1801 00e4 19       		.uleb128 0x19
+ 1802 00e5 00       		.byte	0
+ 1803 00e6 00       		.byte	0
+ 1804 00e7 11       		.uleb128 0x11
+ 1805 00e8 01       		.uleb128 0x1
+ 1806 00e9 01       		.byte	0x1
+ 1807 00ea 49       		.uleb128 0x49
+ 1808 00eb 13       		.uleb128 0x13
+ 1809 00ec 01       		.uleb128 0x1
+ 1810 00ed 13       		.uleb128 0x13
+ 1811 00ee 00       		.byte	0
+ 1812 00ef 00       		.byte	0
+ 1813 00f0 12       		.uleb128 0x12
+ 1814 00f1 21       		.uleb128 0x21
+ 1815 00f2 00       		.byte	0
+ 1816 00f3 49       		.uleb128 0x49
+ 1817 00f4 13       		.uleb128 0x13
+ 1818 00f5 2F       		.uleb128 0x2f
+ 1819 00f6 0B       		.uleb128 0xb
+ 1820 00f7 00       		.byte	0
+ 1821 00f8 00       		.byte	0
+ 1822 00f9 13       		.uleb128 0x13
+ 1823 00fa 2E       		.uleb128 0x2e
+ 1824 00fb 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 37
+
+
+ 1825 00fc 3F       		.uleb128 0x3f
+ 1826 00fd 19       		.uleb128 0x19
+ 1827 00fe 3C       		.uleb128 0x3c
+ 1828 00ff 19       		.uleb128 0x19
+ 1829 0100 6E       		.uleb128 0x6e
+ 1830 0101 0E       		.uleb128 0xe
+ 1831 0102 03       		.uleb128 0x3
+ 1832 0103 0E       		.uleb128 0xe
+ 1833 0104 3A       		.uleb128 0x3a
+ 1834 0105 0B       		.uleb128 0xb
+ 1835 0106 3B       		.uleb128 0x3b
+ 1836 0107 0B       		.uleb128 0xb
+ 1837 0108 00       		.byte	0
+ 1838 0109 00       		.byte	0
+ 1839 010a 00       		.byte	0
+ 1840              		.section	.debug_loc,"",%progbits
+ 1841              	.Ldebug_loc0:
+ 1842              	.LLST0:
+ 1843 0000 00000000 		.4byte	.LVL30
+ 1844 0004 1C000000 		.4byte	.LVL31
+ 1845 0008 0100     		.2byte	0x1
+ 1846 000a 50       		.byte	0x50
+ 1847 000b 1C000000 		.4byte	.LVL31
+ 1848 000f 26000000 		.4byte	.LVL33
+ 1849 0013 0400     		.2byte	0x4
+ 1850 0015 F3       		.byte	0xf3
+ 1851 0016 01       		.uleb128 0x1
+ 1852 0017 50       		.byte	0x50
+ 1853 0018 9F       		.byte	0x9f
+ 1854 0019 26000000 		.4byte	.LVL33
+ 1855 001d 30000000 		.4byte	.LVL34
+ 1856 0021 0100     		.2byte	0x1
+ 1857 0023 50       		.byte	0x50
+ 1858 0024 30000000 		.4byte	.LVL34
+ 1859 0028 40000000 		.4byte	.LFE65
+ 1860 002c 0400     		.2byte	0x4
+ 1861 002e F3       		.byte	0xf3
+ 1862 002f 01       		.uleb128 0x1
+ 1863 0030 50       		.byte	0x50
+ 1864 0031 9F       		.byte	0x9f
+ 1865 0032 00000000 		.4byte	0
+ 1866 0036 00000000 		.4byte	0
+ 1867              	.LLST1:
+ 1868 003a 00000000 		.4byte	.LVL39
+ 1869 003e 0F000000 		.4byte	.LVL40-1
+ 1870 0042 0100     		.2byte	0x1
+ 1871 0044 50       		.byte	0x50
+ 1872 0045 0F000000 		.4byte	.LVL40-1
+ 1873 0049 86000000 		.4byte	.LVL60
+ 1874 004d 0100     		.2byte	0x1
+ 1875 004f 54       		.byte	0x54
+ 1876 0050 86000000 		.4byte	.LVL60
+ 1877 0054 8C000000 		.4byte	.LFE70
+ 1878 0058 0100     		.2byte	0x1
+ 1879 005a 50       		.byte	0x50
+ 1880 005b 00000000 		.4byte	0
+ 1881 005f 00000000 		.4byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 38
+
+
+ 1882              		.section	.debug_aranges,"",%progbits
+ 1883 0000 54000000 		.4byte	0x54
+ 1884 0004 0200     		.2byte	0x2
+ 1885 0006 00000000 		.4byte	.Ldebug_info0
+ 1886 000a 04       		.byte	0x4
+ 1887 000b 00       		.byte	0
+ 1888 000c 0000     		.2byte	0
+ 1889 000e 0000     		.2byte	0
+ 1890 0010 00000000 		.4byte	.LFB66
+ 1891 0014 44000000 		.4byte	.LFE66-.LFB66
+ 1892 0018 00000000 		.4byte	.LFB67
+ 1893 001c 44000000 		.4byte	.LFE67-.LFB67
+ 1894 0020 00000000 		.4byte	.LFB68
+ 1895 0024 0C000000 		.4byte	.LFE68-.LFB68
+ 1896 0028 00000000 		.4byte	.LFB69
+ 1897 002c 68000000 		.4byte	.LFE69-.LFB69
+ 1898 0030 00000000 		.4byte	.LFB65
+ 1899 0034 40000000 		.4byte	.LFE65-.LFB65
+ 1900 0038 00000000 		.4byte	.LFB64
+ 1901 003c 5C000000 		.4byte	.LFE64-.LFB64
+ 1902 0040 00000000 		.4byte	.LFB70
+ 1903 0044 8C000000 		.4byte	.LFE70-.LFB70
+ 1904 0048 00000000 		.4byte	.LFB71
+ 1905 004c 80000000 		.4byte	.LFE71-.LFB71
+ 1906 0050 00000000 		.4byte	0
+ 1907 0054 00000000 		.4byte	0
+ 1908              		.section	.debug_ranges,"",%progbits
+ 1909              	.Ldebug_ranges0:
+ 1910 0000 00000000 		.4byte	.LFB66
+ 1911 0004 44000000 		.4byte	.LFE66
+ 1912 0008 00000000 		.4byte	.LFB67
+ 1913 000c 44000000 		.4byte	.LFE67
+ 1914 0010 00000000 		.4byte	.LFB68
+ 1915 0014 0C000000 		.4byte	.LFE68
+ 1916 0018 00000000 		.4byte	.LFB69
+ 1917 001c 68000000 		.4byte	.LFE69
+ 1918 0020 00000000 		.4byte	.LFB65
+ 1919 0024 40000000 		.4byte	.LFE65
+ 1920 0028 00000000 		.4byte	.LFB64
+ 1921 002c 5C000000 		.4byte	.LFE64
+ 1922 0030 00000000 		.4byte	.LFB70
+ 1923 0034 8C000000 		.4byte	.LFE70
+ 1924 0038 00000000 		.4byte	.LFB71
+ 1925 003c 80000000 		.4byte	.LFE71
+ 1926 0040 00000000 		.4byte	0
+ 1927 0044 00000000 		.4byte	0
+ 1928              		.section	.debug_line,"",%progbits
+ 1929              	.Ldebug_line0:
+ 1930 0000 50030000 		.section	.debug_str,"MS",%progbits,1
+ 1930      02005902 
+ 1930      00000201 
+ 1930      FB0E0D00 
+ 1930      01010101 
+ 1931              	.LASF40:
+ 1932 0000 6D6F746F 		.ascii	"motorPWM_1_Stop\000"
+ 1932      7250574D 
+ 1932      5F315F53 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 39
+
+
+ 1932      746F7000 
+ 1933              	.LASF56:
+ 1934 0010 433A5C55 		.ascii	"C:\\Users\\lucasiversen\\Desktop\\3semesterProjekt_"
+ 1934      73657273 
+ 1934      5C6C7563 
+ 1934      61736976 
+ 1934      65727365 
+ 1935 003f 7265706F 		.ascii	"repository\\PSoC kode\\NeoPixel\\NeoPixel.cydsn\000"
+ 1935      7369746F 
+ 1935      72795C50 
+ 1935      536F4320 
+ 1935      6B6F6465 
+ 1936              	.LASF21:
+ 1937 006c 73706565 		.ascii	"speedSelect\000"
+ 1937      6453656C 
+ 1937      65637400 
+ 1938              	.LASF12:
+ 1939 0078 5F5F696E 		.ascii	"__int32_t\000"
+ 1939      7433325F 
+ 1939      7400
+ 1940              	.LASF29:
+ 1941 0082 4E505F67 		.ascii	"NP_g_bOwnsBuffer\000"
+ 1941      5F624F77 
+ 1941      6E734275 
+ 1941      66666572 
+ 1941      00
+ 1942              	.LASF55:
+ 1943 0093 4D6F746F 		.ascii	"MotorApp.c\000"
+ 1943      72417070 
+ 1943      2E6300
+ 1944              	.LASF44:
+ 1945 009e 50696E32 		.ascii	"Pin2_dir1_Write\000"
+ 1945      5F646972 
+ 1945      315F5772 
+ 1945      69746500 
+ 1946              	.LASF16:
+ 1947 00ae 646F7562 		.ascii	"double\000"
+ 1947      6C6500
+ 1948              	.LASF49:
+ 1949 00b5 6D6F746F 		.ascii	"motorPWM_2_Start\000"
+ 1949      7250574D 
+ 1949      5F325F53 
+ 1949      74617274 
+ 1949      00
+ 1950              	.LASF48:
+ 1951 00c6 6D6F746F 		.ascii	"motorPWM_1_Start\000"
+ 1951      7250574D 
+ 1951      5F315F53 
+ 1951      74617274 
+ 1951      00
+ 1952              	.LASF35:
+ 1953 00d7 73746174 		.ascii	"state\000"
+ 1953      6500
+ 1954              	.LASF20:
+ 1955 00dd 6368616E 		.ascii	"changeSpeed\000"
+ 1955      67655370 
+ 1955      65656400 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 40
+
+
+ 1956              	.LASF15:
+ 1957 00e9 666C6F61 		.ascii	"float\000"
+ 1957      7400
+ 1958              	.LASF45:
+ 1959 00ef 50696E32 		.ascii	"Pin2_dir2_Write\000"
+ 1959      5F646972 
+ 1959      325F5772 
+ 1959      69746500 
+ 1960              	.LASF25:
+ 1961 00ff 44656C61 		.ascii	"DelayBased180Turn\000"
+ 1961      79426173 
+ 1961      65643138 
+ 1961      30547572 
+ 1961      6E00
+ 1962              	.LASF54:
+ 1963 0111 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1963      43313120 
+ 1963      352E342E 
+ 1963      31203230 
+ 1963      31363036 
+ 1964 0144 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1964      20726576 
+ 1964      6973696F 
+ 1964      6E203233 
+ 1964      37373135 
+ 1965 0177 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1965      66756E63 
+ 1965      74696F6E 
+ 1965      2D736563 
+ 1965      74696F6E 
+ 1966              	.LASF30:
+ 1967 019f 4E505F67 		.ascii	"NP_g_pFrameBuffer\000"
+ 1967      5F704672 
+ 1967      616D6542 
+ 1967      75666665 
+ 1967      7200
+ 1968              	.LASF19:
+ 1969 01b1 6D6F746F 		.ascii	"motorStop\000"
+ 1969      7253746F 
+ 1969      7000
+ 1970              	.LASF46:
+ 1971 01bb 6D6F746F 		.ascii	"motorPWM_1_WriteCompare\000"
+ 1971      7250574D 
+ 1971      5F315F57 
+ 1971      72697465 
+ 1971      436F6D70 
+ 1972              	.LASF3:
+ 1973 01d3 73686F72 		.ascii	"short unsigned int\000"
+ 1973      7420756E 
+ 1973      7369676E 
+ 1973      65642069 
+ 1973      6E7400
+ 1974              	.LASF38:
+ 1975 01e6 72756E6E 		.ascii	"running_\000"
+ 1975      696E675F 
+ 1975      00
+ 1976              	.LASF36:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 41
+
+
+ 1977 01ef 72616E64 		.ascii	"randState\000"
+ 1977      53746174 
+ 1977      6500
+ 1978              	.LASF1:
+ 1979 01f9 756E7369 		.ascii	"unsigned char\000"
+ 1979      676E6564 
+ 1979      20636861 
+ 1979      7200
+ 1980              	.LASF5:
+ 1981 0207 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1981      20756E73 
+ 1981      69676E65 
+ 1981      6420696E 
+ 1981      7400
+ 1982              	.LASF28:
+ 1983 0219 4E505F67 		.ascii	"NP_g_nDMA_TD\000"
+ 1983      5F6E444D 
+ 1983      415F5444 
+ 1983      00
+ 1984              	.LASF50:
+ 1985 0226 6D6F746F 		.ascii	"motorPWM_1_WritePeriod\000"
+ 1985      7250574D 
+ 1985      5F315F57 
+ 1985      72697465 
+ 1985      50657269 
+ 1986              	.LASF32:
+ 1987 023d 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1987      52784275 
+ 1987      66666572 
+ 1987      00
+ 1988              	.LASF8:
+ 1989 024a 756E7369 		.ascii	"unsigned int\000"
+ 1989      676E6564 
+ 1989      20696E74 
+ 1989      00
+ 1990              	.LASF17:
+ 1991 0257 64726976 		.ascii	"driveForwards\000"
+ 1991      65466F72 
+ 1991      77617264 
+ 1991      7300
+ 1992              	.LASF7:
+ 1993 0265 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1993      206C6F6E 
+ 1993      6720756E 
+ 1993      7369676E 
+ 1993      65642069 
+ 1994              	.LASF22:
+ 1995 027c 6368616E 		.ascii	"changeState\000"
+ 1995      67655374 
+ 1995      61746500 
+ 1996              	.LASF24:
+ 1997 0288 6368616E 		.ascii	"change\000"
+ 1997      676500
+ 1998              	.LASF13:
+ 1999 028f 696E7433 		.ascii	"int32_t\000"
+ 1999      325F7400 
+ 2000              	.LASF18:
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 42
+
+
+ 2001 0297 64726976 		.ascii	"driveBackwards\000"
+ 2001      65426163 
+ 2001      6B776172 
+ 2001      647300
+ 2002              	.LASF39:
+ 2003 02a6 64726976 		.ascii	"driveState\000"
+ 2003      65537461 
+ 2003      746500
+ 2004              	.LASF10:
+ 2005 02b1 73697A65 		.ascii	"sizetype\000"
+ 2005      74797065 
+ 2005      00
+ 2006              	.LASF6:
+ 2007 02ba 6C6F6E67 		.ascii	"long long int\000"
+ 2007      206C6F6E 
+ 2007      6720696E 
+ 2007      7400
+ 2008              	.LASF43:
+ 2009 02c8 50696E31 		.ascii	"Pin1_dir2_Write\000"
+ 2009      5F646972 
+ 2009      325F5772 
+ 2009      69746500 
+ 2010              	.LASF34:
+ 2011 02d8 64696666 		.ascii	"difficulty\000"
+ 2011      6963756C 
+ 2011      747900
+ 2012              	.LASF42:
+ 2013 02e3 50696E31 		.ascii	"Pin1_dir1_Write\000"
+ 2013      5F646972 
+ 2013      315F5772 
+ 2013      69746500 
+ 2014              	.LASF31:
+ 2015 02f3 4E505F67 		.ascii	"NP_g_nFrameBufferSize\000"
+ 2015      5F6E4672 
+ 2015      616D6542 
+ 2015      75666665 
+ 2015      7253697A 
+ 2016              	.LASF27:
+ 2017 0309 4E505F67 		.ascii	"NP_g_nDMA_Chan\000"
+ 2017      5F6E444D 
+ 2017      415F4368 
+ 2017      616E00
+ 2018              	.LASF2:
+ 2019 0318 73686F72 		.ascii	"short int\000"
+ 2019      7420696E 
+ 2019      7400
+ 2020              	.LASF33:
+ 2021 0322 62756666 		.ascii	"buffer\000"
+ 2021      657200
+ 2022              	.LASF14:
+ 2023 0329 75696E74 		.ascii	"uint8\000"
+ 2023      3800
+ 2024              	.LASF23:
+ 2025 032f 44656C61 		.ascii	"DelayBased90Turn\000"
+ 2025      79426173 
+ 2025      65643930 
+ 2025      5475726E 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\ccNxPTNQ.s 			page 43
+
+
+ 2025      00
+ 2026              	.LASF37:
+ 2027 0340 72616E64 		.ascii	"randturn\000"
+ 2027      7475726E 
+ 2027      00
+ 2028              	.LASF47:
+ 2029 0349 6D6F746F 		.ascii	"motorPWM_2_WriteCompare\000"
+ 2029      7250574D 
+ 2029      5F325F57 
+ 2029      72697465 
+ 2029      436F6D70 
+ 2030              	.LASF4:
+ 2031 0361 6C6F6E67 		.ascii	"long int\000"
+ 2031      20696E74 
+ 2031      00
+ 2032              	.LASF11:
+ 2033 036a 63686172 		.ascii	"char\000"
+ 2033      00
+ 2034              	.LASF9:
+ 2035 036f 6C6F6E67 		.ascii	"long double\000"
+ 2035      20646F75 
+ 2035      626C6500 
+ 2036              	.LASF51:
+ 2037 037b 6D6F746F 		.ascii	"motorPWM_2_WritePeriod\000"
+ 2037      7250574D 
+ 2037      5F325F57 
+ 2037      72697465 
+ 2037      50657269 
+ 2038              	.LASF0:
+ 2039 0392 7369676E 		.ascii	"signed char\000"
+ 2039      65642063 
+ 2039      68617200 
+ 2040              	.LASF41:
+ 2041 039e 6D6F746F 		.ascii	"motorPWM_2_Stop\000"
+ 2041      7250574D 
+ 2041      5F325F53 
+ 2041      746F7000 
+ 2042              	.LASF26:
+ 2043 03ae 4E505F67 		.ascii	"NP_g_nNumberOfPixels\000"
+ 2043      5F6E4E75 
+ 2043      6D626572 
+ 2043      4F665069 
+ 2043      78656C73 
+ 2044              	.LASF53:
+ 2045 03c3 43794465 		.ascii	"CyDelay\000"
+ 2045      6C617900 
+ 2046              	.LASF52:
+ 2047 03cb 72616E64 		.ascii	"rand\000"
+ 2047      00
+ 2048              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

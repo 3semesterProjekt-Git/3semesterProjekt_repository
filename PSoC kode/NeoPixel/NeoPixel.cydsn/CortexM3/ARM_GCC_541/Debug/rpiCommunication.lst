@@ -1,0 +1,1005 @@
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"rpiCommunication.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.isr_rpi_start,"ax",%progbits
+  20              		.align	2
+  21              		.global	isr_rpi_start
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	isr_rpi_start, %function
+  25              	isr_rpi_start:
+  26              	.LFB63:
+  27              		.file 1 "rpiCommunication.c"
+   1:rpiCommunication.c **** #include "rpiCommunication.h"
+   2:rpiCommunication.c **** #include "soundApp.h"
+   3:rpiCommunication.c **** #include "project.h"
+   4:rpiCommunication.c **** 
+   5:rpiCommunication.c **** CY_ISR_PROTO(isr_rpi_start)
+   6:rpiCommunication.c **** {
+  28              		.loc 1 6 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 7047     		bx	lr
+  34              		.cfi_endproc
+  35              	.LFE63:
+  36              		.size	isr_rpi_start, .-isr_rpi_start
+  37 0002 00BF     		.section	.text.isr_rpi_stop,"ax",%progbits
+  38              		.align	2
+  39              		.global	isr_rpi_stop
+  40              		.thumb
+  41              		.thumb_func
+  42              		.type	isr_rpi_stop, %function
+  43              	isr_rpi_stop:
+  44              	.LFB64:
+   7:rpiCommunication.c ****    rpiStart();    
+   8:rpiCommunication.c **** }
+   9:rpiCommunication.c **** CY_ISR_PROTO(isr_rpi_stop)
+  10:rpiCommunication.c **** {
+  45              		.loc 1 10 0
+  46              		.cfi_startproc
+  47              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 2
+
+
+  48              		@ frame_needed = 0, uses_anonymous_args = 0
+  49              		.loc 1 10 0
+  50 0000 08B5     		push	{r3, lr}
+  51              		.cfi_def_cfa_offset 8
+  52              		.cfi_offset 3, -8
+  53              		.cfi_offset 14, -4
+  11:rpiCommunication.c ****     rpiStop();
+  12:rpiCommunication.c ****     sendToSOMO(2);
+  54              		.loc 1 12 0
+  55 0002 0220     		movs	r0, #2
+  56 0004 FFF7FEFF 		bl	sendToSOMO
+  57              	.LVL0:
+  58 0008 08BD     		pop	{r3, pc}
+  59              		.cfi_endproc
+  60              	.LFE64:
+  61              		.size	isr_rpi_stop, .-isr_rpi_stop
+  62 000a 00BF     		.section	.text.score,"ax",%progbits
+  63              		.align	2
+  64              		.global	score
+  65              		.thumb
+  66              		.thumb_func
+  67              		.type	score, %function
+  68              	score:
+  69              	.LFB65:
+  13:rpiCommunication.c **** }
+  14:rpiCommunication.c **** 
+  15:rpiCommunication.c **** void score()
+  16:rpiCommunication.c **** {
+  70              		.loc 1 16 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 08B5     		push	{r3, lr}
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 3, -8
+  77              		.cfi_offset 14, -4
+  17:rpiCommunication.c ****     Pin_score_Write(0);
+  78              		.loc 1 17 0
+  79 0002 0020     		movs	r0, #0
+  80 0004 FFF7FEFF 		bl	Pin_score_Write
+  81              	.LVL1:
+  18:rpiCommunication.c ****     CyDelay(3000);
+  82              		.loc 1 18 0
+  83 0008 40F6B830 		movw	r0, #3000
+  84 000c FFF7FEFF 		bl	CyDelay
+  85              	.LVL2:
+  19:rpiCommunication.c ****     Pin_score_Write(1);
+  86              		.loc 1 19 0
+  87 0010 0120     		movs	r0, #1
+  88 0012 FFF7FEFF 		bl	Pin_score_Write
+  89              	.LVL3:
+  90 0016 08BD     		pop	{r3, pc}
+  91              		.cfi_endproc
+  92              	.LFE65:
+  93              		.size	score, .-score
+  94              		.section	.text.rpiStart,"ax",%progbits
+  95              		.align	2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 3
+
+
+  96              		.global	rpiStart
+  97              		.thumb
+  98              		.thumb_func
+  99              		.type	rpiStart, %function
+ 100              	rpiStart:
+ 101              	.LFB66:
+  20:rpiCommunication.c **** }
+  21:rpiCommunication.c **** 
+  22:rpiCommunication.c **** void rpiStart()
+  23:rpiCommunication.c **** {
+ 102              		.loc 1 23 0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106              		@ link register save eliminated.
+ 107 0000 7047     		bx	lr
+ 108              		.cfi_endproc
+ 109              	.LFE66:
+ 110              		.size	rpiStart, .-rpiStart
+ 111 0002 00BF     		.section	.text.rpiStop,"ax",%progbits
+ 112              		.align	2
+ 113              		.global	rpiStop
+ 114              		.thumb
+ 115              		.thumb_func
+ 116              		.type	rpiStop, %function
+ 117              	rpiStop:
+ 118              	.LFB67:
+  24:rpiCommunication.c ****     //rpiRunning = 1;
+  25:rpiCommunication.c **** }
+  26:rpiCommunication.c **** 
+  27:rpiCommunication.c **** void rpiStop()
+  28:rpiCommunication.c **** {
+ 119              		.loc 1 28 0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              		@ link register save eliminated.
+ 124 0000 7047     		bx	lr
+ 125              		.cfi_endproc
+ 126              	.LFE67:
+ 127              		.size	rpiStop, .-rpiStop
+ 128 0002 00BF     		.section	.text.rpiInit,"ax",%progbits
+ 129              		.align	2
+ 130              		.global	rpiInit
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.type	rpiInit, %function
+ 134              	rpiInit:
+ 135              	.LFB68:
+  29:rpiCommunication.c ****     //rpiRunning = 0;
+  30:rpiCommunication.c ****     
+  31:rpiCommunication.c **** }
+  32:rpiCommunication.c **** 
+  33:rpiCommunication.c **** void rpiInit()
+  34:rpiCommunication.c **** {
+ 136              		.loc 1 34 0
+ 137              		.cfi_startproc
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 4
+
+
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              		.loc 1 34 0
+ 141 0000 08B5     		push	{r3, lr}
+ 142              		.cfi_def_cfa_offset 8
+ 143              		.cfi_offset 3, -8
+ 144              		.cfi_offset 14, -4
+  35:rpiCommunication.c ****     Pin_score_Write(1);
+ 145              		.loc 1 35 0
+ 146 0002 0120     		movs	r0, #1
+ 147 0004 FFF7FEFF 		bl	Pin_score_Write
+ 148              	.LVL4:
+ 149 0008 08BD     		pop	{r3, pc}
+ 150              		.cfi_endproc
+ 151              	.LFE68:
+ 152              		.size	rpiInit, .-rpiInit
+ 153              		.comm	rpiRunning,4,4
+ 154              		.comm	NP_g_nFrameBufferSize,4,4
+ 155              		.comm	NP_g_pFrameBuffer,4,4
+ 156              		.comm	NP_g_bOwnsBuffer,1,1
+ 157              		.comm	NP_g_nDMA_TD,1,1
+ 158              		.comm	NP_g_nDMA_Chan,1,1
+ 159              		.comm	NP_g_nNumberOfPixels,4,4
+ 160 000a 00BF     		.text
+ 161              	.Letext0:
+ 162              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 163              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 164              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 165              		.file 5 "Generated_Source\\PSoC5/NP_funcs.h"
+ 166              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 167              		.file 7 "rpiCommunication.h"
+ 168              		.file 8 "soundApp.h"
+ 169              		.file 9 "Generated_Source\\PSoC5/Pin_score.h"
+ 170              		.file 10 "Generated_Source\\PSoC5/CyLib.h"
+ 171              		.section	.debug_info,"",%progbits
+ 172              	.Ldebug_info0:
+ 173 0000 2A020000 		.4byte	0x22a
+ 174 0004 0400     		.2byte	0x4
+ 175 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 176 000a 04       		.byte	0x4
+ 177 000b 01       		.uleb128 0x1
+ 178 000c B6000000 		.4byte	.LASF32
+ 179 0010 0C       		.byte	0xc
+ 180 0011 F6010000 		.4byte	.LASF33
+ 181 0015 1B000000 		.4byte	.LASF34
+ 182 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 183 001d 00000000 		.4byte	0
+ 184 0021 00000000 		.4byte	.Ldebug_line0
+ 185 0025 02       		.uleb128 0x2
+ 186 0026 01       		.byte	0x1
+ 187 0027 06       		.byte	0x6
+ 188 0028 76020000 		.4byte	.LASF0
+ 189 002c 02       		.uleb128 0x2
+ 190 002d 01       		.byte	0x1
+ 191 002e 08       		.byte	0x8
+ 192 002f A8000000 		.4byte	.LASF1
+ 193 0033 02       		.uleb128 0x2
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 5
+
+
+ 194 0034 02       		.byte	0x2
+ 195 0035 05       		.byte	0x5
+ 196 0036 38020000 		.4byte	.LASF2
+ 197 003a 02       		.uleb128 0x2
+ 198 003b 02       		.byte	0x2
+ 199 003c 07       		.byte	0x7
+ 200 003d 81000000 		.4byte	.LASF3
+ 201 0041 03       		.uleb128 0x3
+ 202 0042 77000000 		.4byte	.LASF9
+ 203 0046 02       		.byte	0x2
+ 204 0047 3F       		.byte	0x3f
+ 205 0048 4C000000 		.4byte	0x4c
+ 206 004c 02       		.uleb128 0x2
+ 207 004d 04       		.byte	0x4
+ 208 004e 05       		.byte	0x5
+ 209 004f 61020000 		.4byte	.LASF4
+ 210 0053 02       		.uleb128 0x2
+ 211 0054 04       		.byte	0x4
+ 212 0055 07       		.byte	0x7
+ 213 0056 61010000 		.4byte	.LASF5
+ 214 005a 02       		.uleb128 0x2
+ 215 005b 08       		.byte	0x8
+ 216 005c 05       		.byte	0x5
+ 217 005d 1A020000 		.4byte	.LASF6
+ 218 0061 02       		.uleb128 0x2
+ 219 0062 08       		.byte	0x8
+ 220 0063 07       		.byte	0x7
+ 221 0064 DF010000 		.4byte	.LASF7
+ 222 0068 04       		.uleb128 0x4
+ 223 0069 04       		.byte	0x4
+ 224 006a 05       		.byte	0x5
+ 225 006b 696E7400 		.ascii	"int\000"
+ 226 006f 02       		.uleb128 0x2
+ 227 0070 04       		.byte	0x4
+ 228 0071 07       		.byte	0x7
+ 229 0072 D2010000 		.4byte	.LASF8
+ 230 0076 03       		.uleb128 0x3
+ 231 0077 09020000 		.4byte	.LASF10
+ 232 007b 03       		.byte	0x3
+ 233 007c 2C       		.byte	0x2c
+ 234 007d 41000000 		.4byte	0x41
+ 235 0081 03       		.uleb128 0x3
+ 236 0082 4B020000 		.4byte	.LASF11
+ 237 0086 04       		.byte	0x4
+ 238 0087 C2       		.byte	0xc2
+ 239 0088 2C000000 		.4byte	0x2c
+ 240 008c 02       		.uleb128 0x2
+ 241 008d 04       		.byte	0x4
+ 242 008e 04       		.byte	0x4
+ 243 008f A2000000 		.4byte	.LASF12
+ 244 0093 02       		.uleb128 0x2
+ 245 0094 08       		.byte	0x8
+ 246 0095 04       		.byte	0x4
+ 247 0096 A9010000 		.4byte	.LASF13
+ 248 009a 02       		.uleb128 0x2
+ 249 009b 01       		.byte	0x1
+ 250 009c 08       		.byte	0x8
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 6
+
+
+ 251 009d 28020000 		.4byte	.LASF14
+ 252 00a1 05       		.uleb128 0x5
+ 253 00a2 81000000 		.4byte	0x81
+ 254 00a6 02       		.uleb128 0x2
+ 255 00a7 08       		.byte	0x8
+ 256 00a8 04       		.byte	0x4
+ 257 00a9 6A020000 		.4byte	.LASF15
+ 258 00ad 02       		.uleb128 0x2
+ 259 00ae 04       		.byte	0x4
+ 260 00af 07       		.byte	0x7
+ 261 00b0 11020000 		.4byte	.LASF16
+ 262 00b4 06       		.uleb128 0x6
+ 263 00b5 00000000 		.4byte	.LASF35
+ 264 00b9 01       		.byte	0x1
+ 265 00ba 05       		.byte	0x5
+ 266 00bb 00000000 		.4byte	.LFB63
+ 267 00bf 02000000 		.4byte	.LFE63-.LFB63
+ 268 00c3 01       		.uleb128 0x1
+ 269 00c4 9C       		.byte	0x9c
+ 270 00c5 07       		.uleb128 0x7
+ 271 00c6 0E000000 		.4byte	.LASF36
+ 272 00ca 01       		.byte	0x1
+ 273 00cb 09       		.byte	0x9
+ 274 00cc 00000000 		.4byte	.LFB64
+ 275 00d0 0A000000 		.4byte	.LFE64-.LFB64
+ 276 00d4 01       		.uleb128 0x1
+ 277 00d5 9C       		.byte	0x9c
+ 278 00d6 EA000000 		.4byte	0xea
+ 279 00da 08       		.uleb128 0x8
+ 280 00db 08000000 		.4byte	.LVL0
+ 281 00df 0C020000 		.4byte	0x20c
+ 282 00e3 09       		.uleb128 0x9
+ 283 00e4 01       		.uleb128 0x1
+ 284 00e5 50       		.byte	0x50
+ 285 00e6 01       		.uleb128 0x1
+ 286 00e7 32       		.byte	0x32
+ 287 00e8 00       		.byte	0
+ 288 00e9 00       		.byte	0
+ 289 00ea 0A       		.uleb128 0xa
+ 290 00eb 9C000000 		.4byte	.LASF19
+ 291 00ef 01       		.byte	0x1
+ 292 00f0 0F       		.byte	0xf
+ 293 00f1 00000000 		.4byte	.LFB65
+ 294 00f5 18000000 		.4byte	.LFE65-.LFB65
+ 295 00f9 01       		.uleb128 0x1
+ 296 00fa 9C       		.byte	0x9c
+ 297 00fb 37010000 		.4byte	0x137
+ 298 00ff 0B       		.uleb128 0xb
+ 299 0100 08000000 		.4byte	.LVL1
+ 300 0104 17020000 		.4byte	0x217
+ 301 0108 12010000 		.4byte	0x112
+ 302 010c 09       		.uleb128 0x9
+ 303 010d 01       		.uleb128 0x1
+ 304 010e 50       		.byte	0x50
+ 305 010f 01       		.uleb128 0x1
+ 306 0110 30       		.byte	0x30
+ 307 0111 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 7
+
+
+ 308 0112 0B       		.uleb128 0xb
+ 309 0113 10000000 		.4byte	.LVL2
+ 310 0117 22020000 		.4byte	0x222
+ 311 011b 27010000 		.4byte	0x127
+ 312 011f 09       		.uleb128 0x9
+ 313 0120 01       		.uleb128 0x1
+ 314 0121 50       		.byte	0x50
+ 315 0122 03       		.uleb128 0x3
+ 316 0123 0A       		.byte	0xa
+ 317 0124 B80B     		.2byte	0xbb8
+ 318 0126 00       		.byte	0
+ 319 0127 08       		.uleb128 0x8
+ 320 0128 16000000 		.4byte	.LVL3
+ 321 012c 17020000 		.4byte	0x217
+ 322 0130 09       		.uleb128 0x9
+ 323 0131 01       		.uleb128 0x1
+ 324 0132 50       		.byte	0x50
+ 325 0133 01       		.uleb128 0x1
+ 326 0134 31       		.byte	0x31
+ 327 0135 00       		.byte	0
+ 328 0136 00       		.byte	0
+ 329 0137 0C       		.uleb128 0xc
+ 330 0138 42020000 		.4byte	.LASF17
+ 331 013c 01       		.byte	0x1
+ 332 013d 16       		.byte	0x16
+ 333 013e 00000000 		.4byte	.LFB66
+ 334 0142 02000000 		.4byte	.LFE66-.LFB66
+ 335 0146 01       		.uleb128 0x1
+ 336 0147 9C       		.byte	0x9c
+ 337 0148 0C       		.uleb128 0xc
+ 338 0149 BD010000 		.4byte	.LASF18
+ 339 014d 01       		.byte	0x1
+ 340 014e 1B       		.byte	0x1b
+ 341 014f 00000000 		.4byte	.LFB67
+ 342 0153 02000000 		.4byte	.LFE67-.LFB67
+ 343 0157 01       		.uleb128 0x1
+ 344 0158 9C       		.byte	0x9c
+ 345 0159 0A       		.uleb128 0xa
+ 346 015a 94000000 		.4byte	.LASF20
+ 347 015e 01       		.byte	0x1
+ 348 015f 21       		.byte	0x21
+ 349 0160 00000000 		.4byte	.LFB68
+ 350 0164 0A000000 		.4byte	.LFE68-.LFB68
+ 351 0168 01       		.uleb128 0x1
+ 352 0169 9C       		.byte	0x9c
+ 353 016a 7E010000 		.4byte	0x17e
+ 354 016e 08       		.uleb128 0x8
+ 355 016f 08000000 		.4byte	.LVL4
+ 356 0173 17020000 		.4byte	0x217
+ 357 0177 09       		.uleb128 0x9
+ 358 0178 01       		.uleb128 0x1
+ 359 0179 50       		.byte	0x50
+ 360 017a 01       		.uleb128 0x1
+ 361 017b 31       		.byte	0x31
+ 362 017c 00       		.byte	0
+ 363 017d 00       		.byte	0
+ 364 017e 0D       		.uleb128 0xd
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 8
+
+
+ 365 017f 82020000 		.4byte	.LASF21
+ 366 0183 05       		.byte	0x5
+ 367 0184 17       		.byte	0x17
+ 368 0185 6F000000 		.4byte	0x6f
+ 369 0189 05       		.uleb128 0x5
+ 370 018a 03       		.byte	0x3
+ 371 018b 00000000 		.4byte	NP_g_nNumberOfPixels
+ 372 018f 0D       		.uleb128 0xd
+ 373 0190 73010000 		.4byte	.LASF22
+ 374 0194 05       		.byte	0x5
+ 375 0195 18       		.byte	0x18
+ 376 0196 81000000 		.4byte	0x81
+ 377 019a 05       		.uleb128 0x5
+ 378 019b 03       		.byte	0x3
+ 379 019c 00000000 		.4byte	NP_g_nDMA_Chan
+ 380 01a0 0D       		.uleb128 0xd
+ 381 01a1 B0010000 		.4byte	.LASF23
+ 382 01a5 05       		.byte	0x5
+ 383 01a6 19       		.byte	0x19
+ 384 01a7 81000000 		.4byte	0x81
+ 385 01ab 05       		.uleb128 0x5
+ 386 01ac 03       		.byte	0x3
+ 387 01ad 00000000 		.4byte	NP_g_nDMA_TD
+ 388 01b1 0D       		.uleb128 0xd
+ 389 01b2 98010000 		.4byte	.LASF24
+ 390 01b6 05       		.byte	0x5
+ 391 01b7 1A       		.byte	0x1a
+ 392 01b8 81000000 		.4byte	0x81
+ 393 01bc 05       		.uleb128 0x5
+ 394 01bd 03       		.byte	0x3
+ 395 01be 00000000 		.4byte	NP_g_bOwnsBuffer
+ 396 01c2 0D       		.uleb128 0xd
+ 397 01c3 4F010000 		.4byte	.LASF25
+ 398 01c7 05       		.byte	0x5
+ 399 01c8 1C       		.byte	0x1c
+ 400 01c9 D3010000 		.4byte	0x1d3
+ 401 01cd 05       		.uleb128 0x5
+ 402 01ce 03       		.byte	0x3
+ 403 01cf 00000000 		.4byte	NP_g_pFrameBuffer
+ 404 01d3 0E       		.uleb128 0xe
+ 405 01d4 04       		.byte	0x4
+ 406 01d5 A1000000 		.4byte	0xa1
+ 407 01d9 0D       		.uleb128 0xd
+ 408 01da 82010000 		.4byte	.LASF26
+ 409 01de 05       		.byte	0x5
+ 410 01df 1D       		.byte	0x1d
+ 411 01e0 6F000000 		.4byte	0x6f
+ 412 01e4 05       		.uleb128 0x5
+ 413 01e5 03       		.byte	0x3
+ 414 01e6 00000000 		.4byte	NP_g_nFrameBufferSize
+ 415 01ea 0F       		.uleb128 0xf
+ 416 01eb C5010000 		.4byte	.LASF27
+ 417 01ef 06       		.byte	0x6
+ 418 01f0 2A06     		.2byte	0x62a
+ 419 01f2 F6010000 		.4byte	0x1f6
+ 420 01f6 05       		.uleb128 0x5
+ 421 01f7 76000000 		.4byte	0x76
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 9
+
+
+ 422 01fb 0D       		.uleb128 0xd
+ 423 01fc 2D020000 		.4byte	.LASF28
+ 424 0200 07       		.byte	0x7
+ 425 0201 04       		.byte	0x4
+ 426 0202 68000000 		.4byte	0x68
+ 427 0206 05       		.uleb128 0x5
+ 428 0207 03       		.byte	0x3
+ 429 0208 00000000 		.4byte	rpiRunning
+ 430 020c 10       		.uleb128 0x10
+ 431 020d 44010000 		.4byte	.LASF29
+ 432 0211 44010000 		.4byte	.LASF29
+ 433 0215 08       		.byte	0x8
+ 434 0216 05       		.byte	0x5
+ 435 0217 10       		.uleb128 0x10
+ 436 0218 51020000 		.4byte	.LASF30
+ 437 021c 51020000 		.4byte	.LASF30
+ 438 0220 09       		.byte	0x9
+ 439 0221 26       		.byte	0x26
+ 440 0222 10       		.uleb128 0x10
+ 441 0223 97020000 		.4byte	.LASF31
+ 442 0227 97020000 		.4byte	.LASF31
+ 443 022b 0A       		.byte	0xa
+ 444 022c 77       		.byte	0x77
+ 445 022d 00       		.byte	0
+ 446              		.section	.debug_abbrev,"",%progbits
+ 447              	.Ldebug_abbrev0:
+ 448 0000 01       		.uleb128 0x1
+ 449 0001 11       		.uleb128 0x11
+ 450 0002 01       		.byte	0x1
+ 451 0003 25       		.uleb128 0x25
+ 452 0004 0E       		.uleb128 0xe
+ 453 0005 13       		.uleb128 0x13
+ 454 0006 0B       		.uleb128 0xb
+ 455 0007 03       		.uleb128 0x3
+ 456 0008 0E       		.uleb128 0xe
+ 457 0009 1B       		.uleb128 0x1b
+ 458 000a 0E       		.uleb128 0xe
+ 459 000b 55       		.uleb128 0x55
+ 460 000c 17       		.uleb128 0x17
+ 461 000d 11       		.uleb128 0x11
+ 462 000e 01       		.uleb128 0x1
+ 463 000f 10       		.uleb128 0x10
+ 464 0010 17       		.uleb128 0x17
+ 465 0011 00       		.byte	0
+ 466 0012 00       		.byte	0
+ 467 0013 02       		.uleb128 0x2
+ 468 0014 24       		.uleb128 0x24
+ 469 0015 00       		.byte	0
+ 470 0016 0B       		.uleb128 0xb
+ 471 0017 0B       		.uleb128 0xb
+ 472 0018 3E       		.uleb128 0x3e
+ 473 0019 0B       		.uleb128 0xb
+ 474 001a 03       		.uleb128 0x3
+ 475 001b 0E       		.uleb128 0xe
+ 476 001c 00       		.byte	0
+ 477 001d 00       		.byte	0
+ 478 001e 03       		.uleb128 0x3
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 10
+
+
+ 479 001f 16       		.uleb128 0x16
+ 480 0020 00       		.byte	0
+ 481 0021 03       		.uleb128 0x3
+ 482 0022 0E       		.uleb128 0xe
+ 483 0023 3A       		.uleb128 0x3a
+ 484 0024 0B       		.uleb128 0xb
+ 485 0025 3B       		.uleb128 0x3b
+ 486 0026 0B       		.uleb128 0xb
+ 487 0027 49       		.uleb128 0x49
+ 488 0028 13       		.uleb128 0x13
+ 489 0029 00       		.byte	0
+ 490 002a 00       		.byte	0
+ 491 002b 04       		.uleb128 0x4
+ 492 002c 24       		.uleb128 0x24
+ 493 002d 00       		.byte	0
+ 494 002e 0B       		.uleb128 0xb
+ 495 002f 0B       		.uleb128 0xb
+ 496 0030 3E       		.uleb128 0x3e
+ 497 0031 0B       		.uleb128 0xb
+ 498 0032 03       		.uleb128 0x3
+ 499 0033 08       		.uleb128 0x8
+ 500 0034 00       		.byte	0
+ 501 0035 00       		.byte	0
+ 502 0036 05       		.uleb128 0x5
+ 503 0037 35       		.uleb128 0x35
+ 504 0038 00       		.byte	0
+ 505 0039 49       		.uleb128 0x49
+ 506 003a 13       		.uleb128 0x13
+ 507 003b 00       		.byte	0
+ 508 003c 00       		.byte	0
+ 509 003d 06       		.uleb128 0x6
+ 510 003e 2E       		.uleb128 0x2e
+ 511 003f 00       		.byte	0
+ 512 0040 3F       		.uleb128 0x3f
+ 513 0041 19       		.uleb128 0x19
+ 514 0042 03       		.uleb128 0x3
+ 515 0043 0E       		.uleb128 0xe
+ 516 0044 3A       		.uleb128 0x3a
+ 517 0045 0B       		.uleb128 0xb
+ 518 0046 3B       		.uleb128 0x3b
+ 519 0047 0B       		.uleb128 0xb
+ 520 0048 27       		.uleb128 0x27
+ 521 0049 19       		.uleb128 0x19
+ 522 004a 11       		.uleb128 0x11
+ 523 004b 01       		.uleb128 0x1
+ 524 004c 12       		.uleb128 0x12
+ 525 004d 06       		.uleb128 0x6
+ 526 004e 40       		.uleb128 0x40
+ 527 004f 18       		.uleb128 0x18
+ 528 0050 9742     		.uleb128 0x2117
+ 529 0052 19       		.uleb128 0x19
+ 530 0053 00       		.byte	0
+ 531 0054 00       		.byte	0
+ 532 0055 07       		.uleb128 0x7
+ 533 0056 2E       		.uleb128 0x2e
+ 534 0057 01       		.byte	0x1
+ 535 0058 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 11
+
+
+ 536 0059 19       		.uleb128 0x19
+ 537 005a 03       		.uleb128 0x3
+ 538 005b 0E       		.uleb128 0xe
+ 539 005c 3A       		.uleb128 0x3a
+ 540 005d 0B       		.uleb128 0xb
+ 541 005e 3B       		.uleb128 0x3b
+ 542 005f 0B       		.uleb128 0xb
+ 543 0060 27       		.uleb128 0x27
+ 544 0061 19       		.uleb128 0x19
+ 545 0062 11       		.uleb128 0x11
+ 546 0063 01       		.uleb128 0x1
+ 547 0064 12       		.uleb128 0x12
+ 548 0065 06       		.uleb128 0x6
+ 549 0066 40       		.uleb128 0x40
+ 550 0067 18       		.uleb128 0x18
+ 551 0068 9742     		.uleb128 0x2117
+ 552 006a 19       		.uleb128 0x19
+ 553 006b 01       		.uleb128 0x1
+ 554 006c 13       		.uleb128 0x13
+ 555 006d 00       		.byte	0
+ 556 006e 00       		.byte	0
+ 557 006f 08       		.uleb128 0x8
+ 558 0070 898201   		.uleb128 0x4109
+ 559 0073 01       		.byte	0x1
+ 560 0074 11       		.uleb128 0x11
+ 561 0075 01       		.uleb128 0x1
+ 562 0076 31       		.uleb128 0x31
+ 563 0077 13       		.uleb128 0x13
+ 564 0078 00       		.byte	0
+ 565 0079 00       		.byte	0
+ 566 007a 09       		.uleb128 0x9
+ 567 007b 8A8201   		.uleb128 0x410a
+ 568 007e 00       		.byte	0
+ 569 007f 02       		.uleb128 0x2
+ 570 0080 18       		.uleb128 0x18
+ 571 0081 9142     		.uleb128 0x2111
+ 572 0083 18       		.uleb128 0x18
+ 573 0084 00       		.byte	0
+ 574 0085 00       		.byte	0
+ 575 0086 0A       		.uleb128 0xa
+ 576 0087 2E       		.uleb128 0x2e
+ 577 0088 01       		.byte	0x1
+ 578 0089 3F       		.uleb128 0x3f
+ 579 008a 19       		.uleb128 0x19
+ 580 008b 03       		.uleb128 0x3
+ 581 008c 0E       		.uleb128 0xe
+ 582 008d 3A       		.uleb128 0x3a
+ 583 008e 0B       		.uleb128 0xb
+ 584 008f 3B       		.uleb128 0x3b
+ 585 0090 0B       		.uleb128 0xb
+ 586 0091 11       		.uleb128 0x11
+ 587 0092 01       		.uleb128 0x1
+ 588 0093 12       		.uleb128 0x12
+ 589 0094 06       		.uleb128 0x6
+ 590 0095 40       		.uleb128 0x40
+ 591 0096 18       		.uleb128 0x18
+ 592 0097 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 12
+
+
+ 593 0099 19       		.uleb128 0x19
+ 594 009a 01       		.uleb128 0x1
+ 595 009b 13       		.uleb128 0x13
+ 596 009c 00       		.byte	0
+ 597 009d 00       		.byte	0
+ 598 009e 0B       		.uleb128 0xb
+ 599 009f 898201   		.uleb128 0x4109
+ 600 00a2 01       		.byte	0x1
+ 601 00a3 11       		.uleb128 0x11
+ 602 00a4 01       		.uleb128 0x1
+ 603 00a5 31       		.uleb128 0x31
+ 604 00a6 13       		.uleb128 0x13
+ 605 00a7 01       		.uleb128 0x1
+ 606 00a8 13       		.uleb128 0x13
+ 607 00a9 00       		.byte	0
+ 608 00aa 00       		.byte	0
+ 609 00ab 0C       		.uleb128 0xc
+ 610 00ac 2E       		.uleb128 0x2e
+ 611 00ad 00       		.byte	0
+ 612 00ae 3F       		.uleb128 0x3f
+ 613 00af 19       		.uleb128 0x19
+ 614 00b0 03       		.uleb128 0x3
+ 615 00b1 0E       		.uleb128 0xe
+ 616 00b2 3A       		.uleb128 0x3a
+ 617 00b3 0B       		.uleb128 0xb
+ 618 00b4 3B       		.uleb128 0x3b
+ 619 00b5 0B       		.uleb128 0xb
+ 620 00b6 11       		.uleb128 0x11
+ 621 00b7 01       		.uleb128 0x1
+ 622 00b8 12       		.uleb128 0x12
+ 623 00b9 06       		.uleb128 0x6
+ 624 00ba 40       		.uleb128 0x40
+ 625 00bb 18       		.uleb128 0x18
+ 626 00bc 9742     		.uleb128 0x2117
+ 627 00be 19       		.uleb128 0x19
+ 628 00bf 00       		.byte	0
+ 629 00c0 00       		.byte	0
+ 630 00c1 0D       		.uleb128 0xd
+ 631 00c2 34       		.uleb128 0x34
+ 632 00c3 00       		.byte	0
+ 633 00c4 03       		.uleb128 0x3
+ 634 00c5 0E       		.uleb128 0xe
+ 635 00c6 3A       		.uleb128 0x3a
+ 636 00c7 0B       		.uleb128 0xb
+ 637 00c8 3B       		.uleb128 0x3b
+ 638 00c9 0B       		.uleb128 0xb
+ 639 00ca 49       		.uleb128 0x49
+ 640 00cb 13       		.uleb128 0x13
+ 641 00cc 3F       		.uleb128 0x3f
+ 642 00cd 19       		.uleb128 0x19
+ 643 00ce 02       		.uleb128 0x2
+ 644 00cf 18       		.uleb128 0x18
+ 645 00d0 00       		.byte	0
+ 646 00d1 00       		.byte	0
+ 647 00d2 0E       		.uleb128 0xe
+ 648 00d3 0F       		.uleb128 0xf
+ 649 00d4 00       		.byte	0
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 13
+
+
+ 650 00d5 0B       		.uleb128 0xb
+ 651 00d6 0B       		.uleb128 0xb
+ 652 00d7 49       		.uleb128 0x49
+ 653 00d8 13       		.uleb128 0x13
+ 654 00d9 00       		.byte	0
+ 655 00da 00       		.byte	0
+ 656 00db 0F       		.uleb128 0xf
+ 657 00dc 34       		.uleb128 0x34
+ 658 00dd 00       		.byte	0
+ 659 00de 03       		.uleb128 0x3
+ 660 00df 0E       		.uleb128 0xe
+ 661 00e0 3A       		.uleb128 0x3a
+ 662 00e1 0B       		.uleb128 0xb
+ 663 00e2 3B       		.uleb128 0x3b
+ 664 00e3 05       		.uleb128 0x5
+ 665 00e4 49       		.uleb128 0x49
+ 666 00e5 13       		.uleb128 0x13
+ 667 00e6 3F       		.uleb128 0x3f
+ 668 00e7 19       		.uleb128 0x19
+ 669 00e8 3C       		.uleb128 0x3c
+ 670 00e9 19       		.uleb128 0x19
+ 671 00ea 00       		.byte	0
+ 672 00eb 00       		.byte	0
+ 673 00ec 10       		.uleb128 0x10
+ 674 00ed 2E       		.uleb128 0x2e
+ 675 00ee 00       		.byte	0
+ 676 00ef 3F       		.uleb128 0x3f
+ 677 00f0 19       		.uleb128 0x19
+ 678 00f1 3C       		.uleb128 0x3c
+ 679 00f2 19       		.uleb128 0x19
+ 680 00f3 6E       		.uleb128 0x6e
+ 681 00f4 0E       		.uleb128 0xe
+ 682 00f5 03       		.uleb128 0x3
+ 683 00f6 0E       		.uleb128 0xe
+ 684 00f7 3A       		.uleb128 0x3a
+ 685 00f8 0B       		.uleb128 0xb
+ 686 00f9 3B       		.uleb128 0x3b
+ 687 00fa 0B       		.uleb128 0xb
+ 688 00fb 00       		.byte	0
+ 689 00fc 00       		.byte	0
+ 690 00fd 00       		.byte	0
+ 691              		.section	.debug_aranges,"",%progbits
+ 692 0000 44000000 		.4byte	0x44
+ 693 0004 0200     		.2byte	0x2
+ 694 0006 00000000 		.4byte	.Ldebug_info0
+ 695 000a 04       		.byte	0x4
+ 696 000b 00       		.byte	0
+ 697 000c 0000     		.2byte	0
+ 698 000e 0000     		.2byte	0
+ 699 0010 00000000 		.4byte	.LFB63
+ 700 0014 02000000 		.4byte	.LFE63-.LFB63
+ 701 0018 00000000 		.4byte	.LFB64
+ 702 001c 0A000000 		.4byte	.LFE64-.LFB64
+ 703 0020 00000000 		.4byte	.LFB65
+ 704 0024 18000000 		.4byte	.LFE65-.LFB65
+ 705 0028 00000000 		.4byte	.LFB66
+ 706 002c 02000000 		.4byte	.LFE66-.LFB66
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 14
+
+
+ 707 0030 00000000 		.4byte	.LFB67
+ 708 0034 02000000 		.4byte	.LFE67-.LFB67
+ 709 0038 00000000 		.4byte	.LFB68
+ 710 003c 0A000000 		.4byte	.LFE68-.LFB68
+ 711 0040 00000000 		.4byte	0
+ 712 0044 00000000 		.4byte	0
+ 713              		.section	.debug_ranges,"",%progbits
+ 714              	.Ldebug_ranges0:
+ 715 0000 00000000 		.4byte	.LFB63
+ 716 0004 02000000 		.4byte	.LFE63
+ 717 0008 00000000 		.4byte	.LFB64
+ 718 000c 0A000000 		.4byte	.LFE64
+ 719 0010 00000000 		.4byte	.LFB65
+ 720 0014 18000000 		.4byte	.LFE65
+ 721 0018 00000000 		.4byte	.LFB66
+ 722 001c 02000000 		.4byte	.LFE66
+ 723 0020 00000000 		.4byte	.LFB67
+ 724 0024 02000000 		.4byte	.LFE67
+ 725 0028 00000000 		.4byte	.LFB68
+ 726 002c 0A000000 		.4byte	.LFE68
+ 727 0030 00000000 		.4byte	0
+ 728 0034 00000000 		.4byte	0
+ 729              		.section	.debug_line,"",%progbits
+ 730              	.Ldebug_line0:
+ 731 0000 09020000 		.section	.debug_str,"MS",%progbits,1
+ 731      0200A401 
+ 731      00000201 
+ 731      FB0E0D00 
+ 731      01010101 
+ 732              	.LASF35:
+ 733 0000 6973725F 		.ascii	"isr_rpi_start\000"
+ 733      7270695F 
+ 733      73746172 
+ 733      7400
+ 734              	.LASF36:
+ 735 000e 6973725F 		.ascii	"isr_rpi_stop\000"
+ 735      7270695F 
+ 735      73746F70 
+ 735      00
+ 736              	.LASF34:
+ 737 001b 433A5C55 		.ascii	"C:\\Users\\lucasiversen\\Desktop\\3semesterProjekt_"
+ 737      73657273 
+ 737      5C6C7563 
+ 737      61736976 
+ 737      65727365 
+ 738 004a 7265706F 		.ascii	"repository\\PSoC kode\\NeoPixel\\NeoPixel.cydsn\000"
+ 738      7369746F 
+ 738      72795C50 
+ 738      536F4320 
+ 738      6B6F6465 
+ 739              	.LASF9:
+ 740 0077 5F5F696E 		.ascii	"__int32_t\000"
+ 740      7433325F 
+ 740      7400
+ 741              	.LASF3:
+ 742 0081 73686F72 		.ascii	"short unsigned int\000"
+ 742      7420756E 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 15
+
+
+ 742      7369676E 
+ 742      65642069 
+ 742      6E7400
+ 743              	.LASF20:
+ 744 0094 72706949 		.ascii	"rpiInit\000"
+ 744      6E697400 
+ 745              	.LASF19:
+ 746 009c 73636F72 		.ascii	"score\000"
+ 746      6500
+ 747              	.LASF12:
+ 748 00a2 666C6F61 		.ascii	"float\000"
+ 748      7400
+ 749              	.LASF1:
+ 750 00a8 756E7369 		.ascii	"unsigned char\000"
+ 750      676E6564 
+ 750      20636861 
+ 750      7200
+ 751              	.LASF32:
+ 752 00b6 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 752      43313120 
+ 752      352E342E 
+ 752      31203230 
+ 752      31363036 
+ 753 00e9 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 753      20726576 
+ 753      6973696F 
+ 753      6E203233 
+ 753      37373135 
+ 754 011c 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 754      66756E63 
+ 754      74696F6E 
+ 754      2D736563 
+ 754      74696F6E 
+ 755              	.LASF29:
+ 756 0144 73656E64 		.ascii	"sendToSOMO\000"
+ 756      546F534F 
+ 756      4D4F00
+ 757              	.LASF25:
+ 758 014f 4E505F67 		.ascii	"NP_g_pFrameBuffer\000"
+ 758      5F704672 
+ 758      616D6542 
+ 758      75666665 
+ 758      7200
+ 759              	.LASF5:
+ 760 0161 6C6F6E67 		.ascii	"long unsigned int\000"
+ 760      20756E73 
+ 760      69676E65 
+ 760      6420696E 
+ 760      7400
+ 761              	.LASF22:
+ 762 0173 4E505F67 		.ascii	"NP_g_nDMA_Chan\000"
+ 762      5F6E444D 
+ 762      415F4368 
+ 762      616E00
+ 763              	.LASF26:
+ 764 0182 4E505F67 		.ascii	"NP_g_nFrameBufferSize\000"
+ 764      5F6E4672 
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 16
+
+
+ 764      616D6542 
+ 764      75666665 
+ 764      7253697A 
+ 765              	.LASF24:
+ 766 0198 4E505F67 		.ascii	"NP_g_bOwnsBuffer\000"
+ 766      5F624F77 
+ 766      6E734275 
+ 766      66666572 
+ 766      00
+ 767              	.LASF13:
+ 768 01a9 646F7562 		.ascii	"double\000"
+ 768      6C6500
+ 769              	.LASF23:
+ 770 01b0 4E505F67 		.ascii	"NP_g_nDMA_TD\000"
+ 770      5F6E444D 
+ 770      415F5444 
+ 770      00
+ 771              	.LASF18:
+ 772 01bd 72706953 		.ascii	"rpiStop\000"
+ 772      746F7000 
+ 773              	.LASF27:
+ 774 01c5 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 774      52784275 
+ 774      66666572 
+ 774      00
+ 775              	.LASF8:
+ 776 01d2 756E7369 		.ascii	"unsigned int\000"
+ 776      676E6564 
+ 776      20696E74 
+ 776      00
+ 777              	.LASF7:
+ 778 01df 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 778      206C6F6E 
+ 778      6720756E 
+ 778      7369676E 
+ 778      65642069 
+ 779              	.LASF33:
+ 780 01f6 72706943 		.ascii	"rpiCommunication.c\000"
+ 780      6F6D6D75 
+ 780      6E696361 
+ 780      74696F6E 
+ 780      2E6300
+ 781              	.LASF10:
+ 782 0209 696E7433 		.ascii	"int32_t\000"
+ 782      325F7400 
+ 783              	.LASF16:
+ 784 0211 73697A65 		.ascii	"sizetype\000"
+ 784      74797065 
+ 784      00
+ 785              	.LASF6:
+ 786 021a 6C6F6E67 		.ascii	"long long int\000"
+ 786      206C6F6E 
+ 786      6720696E 
+ 786      7400
+ 787              	.LASF14:
+ 788 0228 63686172 		.ascii	"char\000"
+ 788      00
+ARM GAS  C:\Users\LUCASI~1\AppData\Local\Temp\cc6qwY9a.s 			page 17
+
+
+ 789              	.LASF28:
+ 790 022d 72706952 		.ascii	"rpiRunning\000"
+ 790      756E6E69 
+ 790      6E6700
+ 791              	.LASF2:
+ 792 0238 73686F72 		.ascii	"short int\000"
+ 792      7420696E 
+ 792      7400
+ 793              	.LASF17:
+ 794 0242 72706953 		.ascii	"rpiStart\000"
+ 794      74617274 
+ 794      00
+ 795              	.LASF11:
+ 796 024b 75696E74 		.ascii	"uint8\000"
+ 796      3800
+ 797              	.LASF30:
+ 798 0251 50696E5F 		.ascii	"Pin_score_Write\000"
+ 798      73636F72 
+ 798      655F5772 
+ 798      69746500 
+ 799              	.LASF4:
+ 800 0261 6C6F6E67 		.ascii	"long int\000"
+ 800      20696E74 
+ 800      00
+ 801              	.LASF15:
+ 802 026a 6C6F6E67 		.ascii	"long double\000"
+ 802      20646F75 
+ 802      626C6500 
+ 803              	.LASF0:
+ 804 0276 7369676E 		.ascii	"signed char\000"
+ 804      65642063 
+ 804      68617200 
+ 805              	.LASF21:
+ 806 0282 4E505F67 		.ascii	"NP_g_nNumberOfPixels\000"
+ 806      5F6E4E75 
+ 806      6D626572 
+ 806      4F665069 
+ 806      78656C73 
+ 807              	.LASF31:
+ 808 0297 43794465 		.ascii	"CyDelay\000"
+ 808      6C617900 
+ 809              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

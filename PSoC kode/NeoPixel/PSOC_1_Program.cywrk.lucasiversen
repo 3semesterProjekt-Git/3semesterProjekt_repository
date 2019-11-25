@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PSOC_1_Program\NeoPixel\Source Files\edgeSensorApp.c">
+<ExpandedNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\TopDesign</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Pins</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Analog</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Clocks</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Interrupts</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\DMA</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\System</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Directives</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Flash Security</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\EEPROM</v>
+<v>PSOC_1_Program\NeoPixel\Header Files</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\cyapicallbacks.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\edgeSensorApp.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\LedHandler.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\MotorApp.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\rpiCommunication.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\scale.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\soundApp.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\waitingState.h</v>
+<v>PSOC_1_Program\NeoPixel\Source Files</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\edgeSensorApp.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\LedHandler.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\main.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\MotorApp.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\rpiCommunication.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\scale.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\soundApp.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\waitingState.c</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source\PSoC5</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\TopDesign</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Pins</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Analog</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Clocks</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Interrupts</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\DMA</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\System</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Directives</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\Flash Security</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.cydwr\EEPROM</v>
+<v>PSOC_1_Program\NeoPixel\Header Files</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\cyapicallbacks.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\edgeSensorApp.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\LedHandler.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\MotorApp.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\rpiCommunication.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\scale.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\soundApp.h</v>
+<v>PSOC_1_Program\NeoPixel\Header Files\waitingState.h</v>
+<v>PSOC_1_Program\NeoPixel\Source Files</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\edgeSensorApp.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\LedHandler.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\main.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\MotorApp.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\rpiCommunication.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\scale.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\soundApp.c</v>
+<v>PSOC_1_Program\NeoPixel\Source Files\waitingState.c</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source\PSoC5</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source\PSoC5\ADC_SAR_1</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source\PSoC5\ADC_SAR_1_IRQ</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source\PSoC5\ADC_SAR_1_theACLK</v>
+<v>PSOC_1_Program\NeoPixel\Generated_Source\PSoC5\ball_int</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixDrv_UDB_v1_1</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixDrv_UDB_v1_1\NeoPixDrv_UDB_v1_1.cysym</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixDrv_UDB_v1_1\NeoPixDrv_UDB_v1_1.cyudb</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\API</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\API\funcs.c</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\API\funcs.h</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\NeoPixel_v1_2.cysch</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\NeoPixel_v1_2.cysym</v>
+<v>PSOC_1_Program\NeoPixel\TopDesign</v>
+<v>PSOC_1_Program\NeoPixel\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixDrv_UDB_v1_1</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixDrv_UDB_v1_1\NeoPixDrv_UDB_v1_1.cysym</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixDrv_UDB_v1_1\NeoPixDrv_UDB_v1_1.cyudb</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\API</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\API\funcs.c</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\API\funcs.h</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\NeoPixel_v1_2.cysch</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_v1_2\NeoPixel_v1_2.cysym</v>
+<v>PSOC_1_Program\NeoPixel\TopDesign</v>
+<v>PSOC_1_Program\NeoPixel\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_INT.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_IRQ.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_theACLK.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ball_int.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ballsig.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CLK_24MHz.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CLK_500kHz.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\clock_motor.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Data.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_3.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_4.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_3.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_4.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\edgeSensorApp.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_rpi_start.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_rpi_stop.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\LED.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\LedHandler.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\MotorApp.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_1_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\motorPWM_2_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_DMA_dma.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_funcs.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_Neo_BITCNT.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_Neo_BITCNT_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_Neo_OFFTime.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_Neo_OFFTime_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_Neo_ONTime.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\NP_Neo_ONTime_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_pwm1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_pwm2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_rpi_start_stop.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_score.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin1_dir1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin1_dir2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin2_dir1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin2_dir2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\pulseCounter.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\pulseCounter_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\pulseInt.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\rpiCommunication.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\scale.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Scale_input.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\soundApp.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_BOOT.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_INT.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_IntClock.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\soundUART_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\trigger.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\triggerPWM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\triggerPWM_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\waitingState.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\NeoPixel.elf</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\NeoPixel.hex</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\NeoPixel.map</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.gpdsc</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel.rpt</v>
+<v>PSOC_1_Program\NeoPixel\NeoPixel_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_INT.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_IRQ.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_PM.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_SAR_1_theACLK.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ball_int.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\ballsig.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CLK_24MHz.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CLK_500kHz.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\clock_motor.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\Data.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_3.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echo_4.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_1.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_2.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_3.lst</v>
+<v>PSOC_1_Program\NeoPixel\CortexM3\ARM_GCC_541\Debug\Listing Files\echoInt_4.lst</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\PSoC 5LP Architecture TRM</v>
+<v>PSOC_1_Program\NeoPixel\CY8C58LP Family Datasheet</v>
+<v>PSOC_1_Program\NeoPixel\System Reference Guides</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PSOC_1_Program</v>
+<v>PSOC_1_Program\NeoPixel</v>
+<v>PSOC_1_Program\NeoPixel\PSoC 5LP Architecture TRM</v>
+<v>PSOC_1_Program\NeoPixel\CY8C58LP Family Datasheet</v>
+<v>PSOC_1_Program\NeoPixel\System Reference Guides</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\NeoPixel.cydsn\LedHandler.c" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1437, 715" SelectedTabbedMdiWindow="2cc88757-2a57-435c-9784-c8167c2702e5"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="62bc510a-bb1e-49c5-be62-0c25cf36ed83" /><DocumentWindow Key="C:\Users\lucasiversen\Desktop\3semesterProjekt_repository\PSoC kode\PSOC_1_Program\NeoPixel.cydsn\LedHandler.c" Guid="2cc88757-2a57-435c-9784-c8167c2702e5" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>
