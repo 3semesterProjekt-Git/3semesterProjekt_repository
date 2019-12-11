@@ -8,6 +8,7 @@ volatile int status = 0;
 CY_ISR(pulseInt_handler)
 {
     triggerPWM_Stop();
+    //pulseInt_Stop();
     //Reads number of counts in pulse
     pulseWidth = pulseCounter_ReadCapture();
     //Converts data to an integer of us
@@ -25,10 +26,10 @@ CY_ISR(pulseInt_handler)
                     DelayBased180Turn();
                 break;
         case 21:    //LED_Write(1);     //Venstre sensor
-                    DelayBased90Turn(1);
+                    //DelayBased90Turn(1);
                 break;
         case 31:    //LED_Write(1);     //Højre sensor
-                    DelayBased90Turn(2);
+                    //DelayBased90Turn(2);
                 break;
         case 41:    //LED_Write(1);     //Forreste højre sensor
                     DelayBased180Turn();
@@ -42,6 +43,7 @@ CY_ISR(pulseInt_handler)
     getStatus();
     //Clear capture flag
     pulseCounter_ReadStatusRegister();
+    //pulseInt_Start();
     triggerPWM_Start();
 }
 

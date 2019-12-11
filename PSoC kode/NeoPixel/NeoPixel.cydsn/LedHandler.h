@@ -8,10 +8,11 @@
 //Allocate an array for MAX NeoPixels
 unsigned char pPixelArray[MAX*3]; //amount of pixels * times RGB
 //states
-enum {START,STOP,CUPHIT, WEIGHT}; //enums for function call
+enum {START,STOP,CUPHIT, WEIGHTOFF, WEIGHTON}; //enums for function call
 //forward declaration
 void ledHandler(int);
-void WeightSequence();
+void WeightOffSequence();
+void WeightOnSequence();
 void StartSequence();
 void CupHitSequence();
 void StopSequence();

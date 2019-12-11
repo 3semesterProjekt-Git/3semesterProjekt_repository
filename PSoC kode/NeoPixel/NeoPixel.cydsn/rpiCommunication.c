@@ -1,6 +1,8 @@
 #include "rpiCommunication.h"
 #include "soundApp.h"
 #include "project.h"
+#include "LedHandler.h"
+#include "MotorApp.h"
 
 CY_ISR_PROTO(isr_rpi_start)
 {
@@ -10,6 +12,7 @@ CY_ISR_PROTO(isr_rpi_stop)
 {
     rpiStop();
     sendToSOMO(2);
+    ledHandler(STOP);
 }
 
 void score()
@@ -21,13 +24,16 @@ void score()
 
 void rpiStart()
 {
-    //rpiRunning = 1;
+    rpiRunning = 1;
 }
 
 void rpiStop()
 {
-    //rpiRunning = 0;
-    
+    if(rpiRunning == 1)
+    {
+        rpiRunning = 0;
+        motorStop();
+    }
 }
 
 void rpiInit()

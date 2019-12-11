@@ -15,17 +15,10 @@ CY_ISR_PROTO(isr_rpi_stop);
 int main(void)
 {
     NP_Start(MAX, pPixelArray, 12.8);
-    //test prog
- 
-    //ledHandler(STOP);
-    //CyDelay(2000);
-    //ledHandler(WEIGHT);
-    
-    
-    
-    
+
     running_ = 0;
-    //rpiRunning = 0;
+    rpiRunning = 0;
+    
     CyGlobalIntEnable; //init global int
     ball_int_StartEx(ball_int_handler);
     isr_rpi_start_StartEx(isr_rpi_start);

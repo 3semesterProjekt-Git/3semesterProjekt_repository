@@ -1,5 +1,5 @@
 #include "MotorApp.h"
-#include "waitingState.h"
+
 
 /*
 Dette er et to dimensionelt array der indeholder de forskellige duty cycles der kan sendes til de to motore. De er opstillet parallelt,
@@ -18,9 +18,11 @@ int driveState[7][2] = {{10, 100},
 void speedSelect()
 {    
     if(randState == 0)                      //Når randstate er 0, laves en ny randstate værdi imellem -3 og 3
+    {
+        srand(time(0)); 
         randState = rand() % 7 - 3;
-    
-    if(randState < 0)                       //Hvis randstate er under 0 rykkes en gang ned i arrayet
+    }
+    else if(randState < 0)                  //Hvis randstate er under 0 rykkes en gang ned i arrayet
     {
         changeState(-1);
         randState++;                        //randsdtate forøges så den til sidst rammer 0 og der findes en ny random værdi
@@ -95,8 +97,6 @@ void driveBackwards()                       //Denne funktion sætter motoren til
 
 void motorStop()
 {
-    
-    
     motorPWM_1_Stop();
     motorPWM_2_Stop();
     
@@ -104,8 +104,6 @@ void motorStop()
 
 void changeSpeed()                          //Denne funktion ændre placering i driveState, og hermed hvilken retning beerdroid køre
 {
-    //state = 3;
-
     motorPWM_1_Stop();
     motorPWM_2_Stop();
     
@@ -156,7 +154,7 @@ void DelayBased90Turn(int dir)
     motorPWM_1_Start();
     motorPWM_2_Start();
     
-    CyDelay(500);
+    CyDelay(1000);
     
     motorPWM_1_Stop();
     motorPWM_2_Stop();
@@ -179,7 +177,7 @@ void DelayBased180Turn()
     
     driveBackwards();
     
-    CyDelay(1000);
+    CyDelay(2000);
     
     motorPWM_1_Stop();
     motorPWM_2_Stop();
@@ -208,7 +206,4 @@ void DelayBased180Turn()
     }
 }
 
-/*void setDificulty(int dif)
-{
-    difficulty = dif;
-}*/
+

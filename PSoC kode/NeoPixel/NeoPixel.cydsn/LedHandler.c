@@ -14,7 +14,10 @@ void ledHandler(int state)
             CupHitSequence();
             break;
         case 3:
-            WeightSequence();
+            WeightOffSequence();
+            break;
+        case 4:
+            WeightOnSequence();
             break;
         default:
             break;
@@ -53,14 +56,16 @@ void StopSequence()
         CyDelay(500);
     }
 }
-void WeightSequence()
+void WeightOffSequence()
 {
     TurnOff(0, MAX);
     TurnOn(0,MAX,RED,INTENSITY);
-    TurnOn(0,MAX,GREEN,INTENSITY);
     NP_Update();
+}
+void WeightOnSequence()
+{
     TurnOff(0, MAX);
-    TurnOn(0, MAX, GREEN, INTENSITY);
+    TurnOn(0,MAX,GREEN,INTENSITY);
     NP_Update();
 }
 void CupHitSequence()
